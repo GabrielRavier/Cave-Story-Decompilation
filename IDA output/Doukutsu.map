@@ -133,6 +133,7 @@
  0001:0000DA50       __initp_eh_hooks
  0001:0000DA70       Explosion?
  0001:0000DE60       __crt_debugger_hook
+ 0001:0000DE70       Camera_Code
  0001:0000E350       RNG_Range
  0001:0000E380       Render_Numbers
  0001:0000E5F0       Upd_Win
@@ -169,6 +170,7 @@
  0001:00014250       Render_Quote_and_Gun
  0001:000146C0       Physics
  0001:000146E5       Normal_Physics
+ 0001:00015990       Quote_Air
  0001:00015AA0       GetPlayerXY
  0001:00015AC0       Move_Quote
  0001:00015B50       __crt_debugger_hook_0
@@ -205,9 +207,9 @@
  0001:0001CE60       PolarStar
  0001:0001D110       Fireball
  0001:0001D3D0       MachineGun
- 0001:0001D7B0       MissleLauncher
- 0001:0001DFD0       Bubbler1
- 0001:0001E280       Bubbler2
+ 0001:0001D7B0       Missile_Launcher
+ 0001:0001DFD0       Bubbler_Lvl_1
+ 0001:0001E280       Bubbler_Lvl_2_3
  0001:0001E580       Blade
  0001:0001E710       Nemesis
  0001:0001EA10       Spur
@@ -2574,7 +2576,7 @@
  0003:00016814       WhimsicalStar_X_Velocity
  0003:00016818       WhimsicalStar_Y_Velocity
  0003:000168CC       CurrentStarID
- 0003:00016AD8       PCurrent_Script
+ 0003:00016AD8       Current_Script
  0003:00016AE0       Script_Position
  0003:00016AE4       TextColumn
  0003:00016B0C       FaceID

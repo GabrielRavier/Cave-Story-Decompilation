@@ -168,7 +168,7 @@ int sub_40ED20();
 int __cdecl sub_40EDE0(int a1, int a2);
 int sub_40EE20();
 // int _crt_debugger_hook(void); weak
-int sub_40EE70();
+int Camera_Code();
 int __cdecl sub_40F020(_DWORD *a1, _DWORD *a2);
 int sub_40F130();
 int __cdecl sub_40F220(int a1);
@@ -240,7 +240,7 @@ int __cdecl Render_Quote_and_Gun(signed int, signed int); // idb
 int __cdecl Physics(int a1);
 int __cdecl sub_416470(int a1);
 int __cdecl sub_4168C0(int a1);
-int sub_416990();
+int Quote_Air();
 int __cdecl GetPlayerXY(int *X, int *Y); // idb
 int __cdecl Move_Quote(int New_X_Position, int New_Y_Position);
 // int _crt_debugger_hook_0(void); weak
@@ -335,15 +335,15 @@ signed int __cdecl sub_41D630(int a1, int a2);
 int sub_41D740();
 int sub_41D840();
 signed int __cdecl sub_41DA00(_DWORD *a1);
-int __cdecl Snake(int a1);
-int __cdecl PolarStar(int a1);
-int __cdecl Fireball(int a1);
-char __cdecl MachineGun(int a1);
-int __cdecl MissleLauncher(signed int a1, int a2);
-int Bubbler1();
-char __cdecl Bubbler2(int BulletID);
+int __cdecl Snake(int Level); // idb
+int __cdecl PolarStar(int Level); // idb
+int __cdecl Fireball(int); // idb
+char __cdecl MachineGun(int Level);
+int __cdecl Missile_Launcher(int Level, int Super_Or_Normal); // idb
+int Bubbler_Lvl_1();
+char __cdecl Bubbler_Lvl_2_3(int Level);
 int __cdecl Blade(int a1);
-int __cdecl Nemesis(int a1);
+int __cdecl Nemesis(int Bullet_Level);
 int sub_41F9E0();
 int __cdecl Spur(int a1);
 char sub_41FE70();
@@ -1489,7 +1489,7 @@ int CurrentStarID; // weak
 void unk_4A58D0; // idb
 char byte_4A59D0[]; // idb
 size_t dword_4A5AD4; // idb
-void *PCurrent_Script; // idb
+void *Current_Script; // idb
 char byte_4A5ADC; // weak
 char byte_4A5ADD; // weak
 int Script_Position; // idb
@@ -10786,7 +10786,8 @@ int sub_40EE20()
 // 49E1B4: using guessed type int dword_49E1B4;
 
 //----- (0040EE70) --------------------------------------------------------
-int sub_40EE70()
+// The camera code. Handles quakes.
+int Camera_Code()
 {
   int result; // eax@7
   __int16 v1; // [sp+0h] [bp-8h]@1
@@ -11199,7 +11200,7 @@ signed int sub_40F730()
     sub_473080();
     sub_472950();
     Update_All_Effects();
-    sub_40EE70();
+    Camera_Code();
     sub_40DFE0();
     FillDisplaybox_Memory((int)&unk_48F92C, 0);
     sub_40F020(&v5, &v3);
@@ -11704,7 +11705,7 @@ LABEL_8:
             sub_41FE70();
           Run_Bullet_Code();
           Update_All_Effects();
-          sub_40EE70();
+          Camera_Code();
           sub_40EDE0(v9, v6);
           if ( Game_State & 2 )
             sub_414BF0(1);
@@ -15056,7 +15057,7 @@ int __cdecl sub_4168C0(int a1)
     else
     {
       if ( !(Game_State & 4) && a1 )
-        sub_416990();
+        Quote_Air();
       Physics(a1);
     }
     result = *(_BYTE *)&Player_Flags & 0xDF;
@@ -15071,7 +15072,7 @@ int __cdecl sub_4168C0(int a1)
 // 49E6C8: using guessed type char Invincibility_Timer;
 
 //----- (00416990) --------------------------------------------------------
-int sub_416990()
+int Quote_Air()
 {
   int result; // eax@1
 
@@ -18575,12 +18576,12 @@ signed int __cdecl sub_41DA00(_DWORD *a1)
 // 4A5544: using guessed type int dword_4A5544;
 
 //----- (0041DBD0) --------------------------------------------------------
-int __cdecl Snake(int a1)
+int __cdecl Snake(int Level)
 {
   int result; // eax@8
   signed int BulletID; // [sp+4h] [bp-4h]@0
 
-  switch ( a1 )
+  switch ( Level )
   {
     case 1:
       BulletID = 1;
@@ -18648,12 +18649,12 @@ int __cdecl Snake(int a1)
 // 49E648: using guessed type int Quote_IsFacingDown;
 
 //----- (0041DE60) --------------------------------------------------------
-int __cdecl PolarStar(int a1)
+int __cdecl PolarStar(int Level)
 {
   int result; // eax@8
   signed int BulletID; // [sp+4h] [bp-4h]@0
 
-  switch ( a1 )
+  switch ( Level )
   {
     case 1:
       BulletID = 4;
@@ -18706,7 +18707,7 @@ int __cdecl PolarStar(int a1)
         Create_Bullet(BulletID, Quote_X_Position - 3072, Quote_Y_Position + 1536, 0);
         Create_Animated_Effect(Quote_X_Position - 6144, Quote_Y_Position + 1536, 3, 0);
       }
-      if ( a1 == 3 )
+      if ( Level == 3 )
         result = Play_Sound_Effect(49, 1);
       else
         result = Play_Sound_Effect(32, 1);
@@ -18806,7 +18807,7 @@ int __cdecl Fireball(int a1)
 // 49E648: using guessed type int Quote_IsFacingDown;
 
 //----- (0041E3D0) --------------------------------------------------------
-char __cdecl MachineGun(int a1)
+char __cdecl MachineGun(int Level)
 {
   int v1; // eax@1
   signed int BulletID; // [sp+4h] [bp-4h]@0
@@ -18814,7 +18815,7 @@ char __cdecl MachineGun(int a1)
   v1 = Count_Weapon_Shot_Occurences(4);
   if ( v1 <= 4 )
   {
-    switch ( a1 )
+    switch ( Level )
     {
       case 1:
         BulletID = 10;
@@ -18838,7 +18839,7 @@ char __cdecl MachineGun(int a1)
         {
           if ( Quote_IsFacingUp )
           {
-            if ( a1 == 3 )
+            if ( Level == 3 )
               Quote_Y_Velocity += 256;
             if ( *(_DWORD *)&Quote_Direction_Faced )
             {
@@ -18853,7 +18854,7 @@ char __cdecl MachineGun(int a1)
           }
           else if ( Quote_IsFacingDown )
           {
-            if ( a1 == 3 )
+            if ( Level == 3 )
             {
               if ( Quote_Y_Velocity > 0 )
                 Quote_Y_Velocity /= 2;
@@ -18885,7 +18886,7 @@ char __cdecl MachineGun(int a1)
             Create_Bullet(BulletID, Quote_X_Position - 6144, Quote_Y_Position + 1536, 0);
             Create_Animated_Effect(Quote_X_Position - 6144, Quote_Y_Position + 1536, 3, 0);
           }
-          if ( a1 == 3 )
+          if ( Level == 3 )
             LOBYTE(v1) = Play_Sound_Effect(49, 1);
           else
             LOBYTE(v1) = Play_Sound_Effect(32, 1);
@@ -18932,15 +18933,15 @@ char __cdecl MachineGun(int a1)
 // 4A5554: using guessed type int dword_4A5554;
 
 //----- (0041E7B0) --------------------------------------------------------
-int __cdecl MissleLauncher(signed int a1, int a2)
+int __cdecl Missile_Launcher(int Level, int Super_Or_Normal)
 {
   int result; // eax@2
   signed int BulletID; // [sp+10h] [bp-4h]@0
 
-  if ( a2 )
+  if ( Super_Or_Normal )
   {
-    result = a1;
-    switch ( a1 )
+    result = Level;
+    switch ( Level )
     {
       case 1:
         BulletID = 28;
@@ -18952,7 +18953,7 @@ int __cdecl MissleLauncher(signed int a1, int a2)
         BulletID = 30;
         break;
     }
-    switch ( a1 )
+    switch ( Level )
     {
       case 1:
         result = Count_Weapon_Shot_Occurences(10);
@@ -18982,7 +18983,7 @@ int __cdecl MissleLauncher(signed int a1, int a2)
   }
   else
   {
-    switch ( a1 )
+    switch ( Level )
     {
       case 1:
         BulletID = 13;
@@ -18994,8 +18995,8 @@ int __cdecl MissleLauncher(signed int a1, int a2)
         BulletID = 15;
         break;
     }
-    result = a1;
-    switch ( a1 )
+    result = Level;
+    switch ( Level )
     {
       case 1:
         result = Count_Weapon_Shot_Occurences(5);
@@ -19025,7 +19026,7 @@ int __cdecl MissleLauncher(signed int a1, int a2)
   }
   if ( !(Key_For_Shoot_Duplicate & Key_Pressed) )
     return result;
-  if ( a1 < 3 )
+  if ( Level < 3 )
   {
     if ( !Rmv_Ammo_From_Weap(1) )
     {
@@ -19142,7 +19143,7 @@ int __cdecl MissleLauncher(signed int a1, int a2)
 // 4A554C: using guessed type int dword_4A554C;
 
 //----- (0041EFD0) --------------------------------------------------------
-int Bubbler1()
+int Bubbler_Lvl_1()
 {
   int result; // eax@1
 
@@ -19221,16 +19222,16 @@ int Bubbler1()
 // 4A5558: using guessed type int dword_4A5558;
 
 //----- (0041F280) --------------------------------------------------------
-char __cdecl Bubbler2(int BulletID)
+char __cdecl Bubbler_Lvl_2_3(int Level)
 {
   int v1; // eax@1
-  int BulletIDa; // [sp+8h] [bp+8h]@2
+  int BulletID; // [sp+8h] [bp+8h]@2
 
   v1 = Count_Weapon_Shot_Occurences(7);
   if ( v1 <= 15 )
   {
-    LOBYTE(v1) = BulletID + 18;
-    BulletIDa = BulletID + 18;
+    LOBYTE(v1) = Level + 18;
+    BulletID = Level + 18;
     if ( !(Key_For_Shoot_Duplicate & Key_Held) )
       byte_49E6CA = 6;
     if ( Key_For_Shoot_Duplicate & Key_Held )
@@ -19245,12 +19246,12 @@ char __cdecl Bubbler2(int BulletID)
           {
             if ( *(_DWORD *)&Quote_Direction_Faced )
             {
-              Create_Bullet(BulletIDa, Quote_X_Position + 1536, Quote_Y_Position - 4096, 1);
+              Create_Bullet(BulletID, Quote_X_Position + 1536, Quote_Y_Position - 4096, 1);
               Create_Animated_Effect(Quote_X_Position + 1536, Quote_Y_Position - 0x2000, 3, 0);
             }
             else
             {
-              Create_Bullet(BulletIDa, Quote_X_Position - 1536, Quote_Y_Position - 4096, 1);
+              Create_Bullet(BulletID, Quote_X_Position - 1536, Quote_Y_Position - 4096, 1);
               Create_Animated_Effect(Quote_X_Position - 1536, Quote_Y_Position - 0x2000, 3, 0);
             }
           }
@@ -19258,23 +19259,23 @@ char __cdecl Bubbler2(int BulletID)
           {
             if ( *(_DWORD *)&Quote_Direction_Faced )
             {
-              Create_Bullet(BulletIDa, Quote_X_Position + 1536, Quote_Y_Position + 4096, 3);
+              Create_Bullet(BulletID, Quote_X_Position + 1536, Quote_Y_Position + 4096, 3);
               Create_Animated_Effect(Quote_X_Position + 1536, Quote_Y_Position + 0x2000, 3, 0);
             }
             else
             {
-              Create_Bullet(BulletIDa, Quote_X_Position - 1536, Quote_Y_Position + 4096, 3);
+              Create_Bullet(BulletID, Quote_X_Position - 1536, Quote_Y_Position + 4096, 3);
               Create_Animated_Effect(Quote_X_Position - 1536, Quote_Y_Position + 0x2000, 3, 0);
             }
           }
           else if ( *(_DWORD *)&Quote_Direction_Faced )
           {
-            Create_Bullet(BulletIDa, Quote_X_Position + 3072, Quote_Y_Position + 1536, 2);
+            Create_Bullet(BulletID, Quote_X_Position + 3072, Quote_Y_Position + 1536, 2);
             Create_Animated_Effect(Quote_X_Position + 6144, Quote_Y_Position + 1536, 3, 0);
           }
           else
           {
-            Create_Bullet(BulletIDa, Quote_X_Position - 3072, Quote_Y_Position + 1536, 0);
+            Create_Bullet(BulletID, Quote_X_Position - 3072, Quote_Y_Position + 1536, 0);
             Create_Animated_Effect(Quote_X_Position - 6144, Quote_Y_Position + 1536, 3, 0);
           }
           LOBYTE(v1) = Play_Sound_Effect(48, 1);
@@ -19363,12 +19364,12 @@ int __cdecl Blade(int a1)
 // 49E648: using guessed type int Quote_IsFacingDown;
 
 //----- (0041F710) --------------------------------------------------------
-int __cdecl Nemesis(int a1)
+int __cdecl Nemesis(int Bullet_Level)
 {
   int result; // eax@8
   signed int BulletID; // [sp+8h] [bp-4h]@0
 
-  switch ( a1 )
+  switch ( Bullet_Level )
   {
     case 1:
       BulletID = 34;
@@ -19421,7 +19422,7 @@ int __cdecl Nemesis(int a1)
         Create_Bullet(BulletID, Quote_X_Position - 11264, Quote_Y_Position + 1536, 0);
         result = Create_Animated_Effect(Quote_X_Position - 0x2000, Quote_Y_Position + 1536, 3, 0);
       }
-      switch ( a1 )
+      switch ( Bullet_Level )
       {
         case 1:
           result = Play_Sound_Effect(117, 1);
@@ -19648,7 +19649,7 @@ char sub_41FE70()
         LOBYTE(v0) = MachineGun(WeaponData_Level[5 * SelectedWeaponID]);
         break;
       case 5:
-        LOBYTE(v0) = MissleLauncher(WeaponData_Level[5 * SelectedWeaponID], 0);
+        LOBYTE(v0) = Missile_Launcher(WeaponData_Level[5 * SelectedWeaponID], 0);
         break;
       case 7:
         LOBYTE(v0) = 20 * SelectedWeaponID;
@@ -19656,13 +19657,13 @@ char sub_41FE70()
         switch ( v4 )
         {
           case 1:
-            LOBYTE(v0) = Bubbler1();
+            LOBYTE(v0) = Bubbler_Lvl_1();
             break;
           case 2:
-            LOBYTE(v0) = Bubbler2(2);
+            LOBYTE(v0) = Bubbler_Lvl_2_3(2);
             break;
           case 3:
-            LOBYTE(v0) = Bubbler2(3);
+            LOBYTE(v0) = Bubbler_Lvl_2_3(3);
             break;
         }
         break;
@@ -19683,7 +19684,7 @@ char sub_41FE70()
         }
         break;
       case 10:
-        LOBYTE(v0) = MissleLauncher(WeaponData_Level[5 * SelectedWeaponID], 1);
+        LOBYTE(v0) = Missile_Launcher(WeaponData_Level[5 * SelectedWeaponID], 1);
         break;
       case 12:
         LOBYTE(v0) = Nemesis(WeaponData_Level[5 * SelectedWeaponID]);
@@ -20262,8 +20263,8 @@ bool sub_4214E0()
   for ( i = 0; i < 4; ++i )
     Prep_RAM_For_Img_(dword_498298, dword_49829C, i + 30, 0);
   memset(&unk_4A58D0, 0, 0x100u);
-  PCurrent_Script = malloc(0x5000u);
-  return PCurrent_Script != 0;
+  Current_Script = malloc(0x5000u);
+  return Current_Script != 0;
 }
 // 498298: using guessed type int dword_498298;
 // 49829C: using guessed type int dword_49829C;
@@ -20276,7 +20277,7 @@ void *sub_421570()
   void *result; // eax@1
   signed int i; // [sp+0h] [bp-4h]@1
 
-  free(PCurrent_Script);
+  free(Current_Script);
   result = Destroy_Bitmap_Obj_(26);
   for ( i = 0; i < 4; ++i )
     result = Destroy_Bitmap_Obj_(i + 30);
@@ -20331,11 +20332,11 @@ int __cdecl sub_421660(char *source)
     stream = fopen(&str, "rb");
     if ( stream )
     {
-      sub_480F55((FILE *)PCurrent_Script, 1u, dword_4A5AD4, stream);
-      *((_BYTE *)PCurrent_Script + dword_4A5AD4) = 0;
+      sub_480F55((FILE *)Current_Script, 1u, dword_4A5AD4, stream);
+      *((_BYTE *)Current_Script + dword_4A5AD4) = 0;
       fclose(stream);
       strcpy(byte_4A59D0, source);
-      sub_4215C0((int)PCurrent_Script, dword_4A5AD4);
+      sub_4215C0((int)Current_Script, dword_4A5AD4);
       result = 1;
     }
     else
@@ -20369,9 +20370,9 @@ int __cdecl sub_421750(char *source)
     stream = fopen(&str, "rb");
     if ( stream )
     {
-      sub_480F55((FILE *)PCurrent_Script, 1u, v4, stream);
-      sub_4215C0((int)PCurrent_Script, v4);
-      *((_BYTE *)PCurrent_Script + v4) = 0;
+      sub_480F55((FILE *)Current_Script, 1u, v4, stream);
+      sub_4215C0((int)Current_Script, v4);
+      *((_BYTE *)Current_Script + v4) = 0;
       fclose(stream);
       sprintf(&str, "%s\\%s", byte_49E220, source);
       v6 = FileLength(&str);
@@ -20384,9 +20385,9 @@ int __cdecl sub_421750(char *source)
         stream = fopen(&str, "rb");
         if ( stream )
         {
-          sub_480F55((FILE *)((char *)PCurrent_Script + v4), 1u, v6, stream);
-          sub_4215C0((int)PCurrent_Script + v4, v6);
-          *((_BYTE *)PCurrent_Script + v6 + v4) = 0;
+          sub_480F55((FILE *)((char *)Current_Script + v4), 1u, v6, stream);
+          sub_4215C0((int)Current_Script + v4, v6);
+          *((_BYTE *)Current_Script + v6 + v4) = 0;
           fclose(stream);
           dword_4A5AD4 = v6 + v4;
           strcpy(byte_4A59D0, source);
@@ -20411,10 +20412,10 @@ int __cdecl sub_421750(char *source)
 // Getting 4 decimal digits from a TSC file and converting to hexadecimal number
 int __cdecl TSC_Dec_to_Hex(int num)
 {
-  return 1000 * (*((_BYTE *)PCurrent_Script + num) - 48)
-       + 100 * (*((_BYTE *)PCurrent_Script + num + 1) - 48)
-       + 10 * (*((_BYTE *)PCurrent_Script + num + 2) - 48)
-       + *((_BYTE *)PCurrent_Script + num + 3)
+  return 1000 * (*((_BYTE *)Current_Script + num) - 48)
+       + 100 * (*((_BYTE *)Current_Script + num + 1) - 48)
+       + 10 * (*((_BYTE *)Current_Script + num + 2) - 48)
+       + *((_BYTE *)Current_Script + num + 3)
        - 48;
 }
 
@@ -20440,9 +20441,9 @@ signed int __cdecl Call_TSC_Event(int Event)
   dword_4A5B28 = 232;
   for ( Script_Position = 0; ; ++Script_Position )
   {
-    if ( !*((_BYTE *)PCurrent_Script + Script_Position) )
+    if ( !*((_BYTE *)Current_Script + Script_Position) )
       return 0;
-    if ( *((_BYTE *)PCurrent_Script + Script_Position) != 35 )
+    if ( *((_BYTE *)Current_Script + Script_Position) != 35 )
       continue;
     v2 = TSC_Dec_to_Hex(++Script_Position);
     if ( Event == v2 )
@@ -20450,7 +20451,7 @@ signed int __cdecl Call_TSC_Event(int Event)
     if ( Event < v2 )
       return 0;
   }
-  while ( *((_BYTE *)PCurrent_Script + Script_Position) != 10 )
+  while ( *((_BYTE *)Current_Script + Script_Position) != 10 )
     ++Script_Position;
   ++Script_Position;
   return 1;
@@ -20491,9 +20492,9 @@ signed int __cdecl sub_421AF0(int a1)
   }
   for ( Script_Position = 0; ; ++Script_Position )
   {
-    if ( !*((_BYTE *)PCurrent_Script + Script_Position) )
+    if ( !*((_BYTE *)Current_Script + Script_Position) )
       return 0;
-    if ( *((_BYTE *)PCurrent_Script + Script_Position) != 35 )
+    if ( *((_BYTE *)Current_Script + Script_Position) != 35 )
       continue;
     v2 = TSC_Dec_to_Hex(++Script_Position);
     if ( a1 == v2 )
@@ -20501,7 +20502,7 @@ signed int __cdecl sub_421AF0(int a1)
     if ( a1 < v2 )
       return 0;
   }
-  while ( *((_BYTE *)PCurrent_Script + Script_Position) != 10 )
+  while ( *((_BYTE *)Current_Script + Script_Position) != 10 )
     ++Script_Position;
   ++Script_Position;
   return 1;
@@ -21136,9 +21137,9 @@ jmp_42256C_default_case:
                                                                                                                                                                                         {
                                                                                                                                                                                           if ( v7 )
                                                                                                                                                                                             goto jmp_42256C_default_case;
-                                                                                                                                                                                          if ( *((_BYTE *)PCurrent_Script + Script_Position) == '<' )
+                                                                                                                                                                                          if ( *((_BYTE *)Current_Script + Script_Position) == '<' )
                                                                                                                                                                                             break;
-                                                                                                                                                                                          if ( *((_BYTE *)PCurrent_Script + Script_Position) == 13 )
+                                                                                                                                                                                          if ( *((_BYTE *)Current_Script + Script_Position) == 13 )
                                                                                                                                                                                           {
                                                                                                                                                                                             Script_Position += 2;
                                                                                                                                                                                             TextColumn = 0;
@@ -21151,14 +21152,14 @@ jmp_42256C_default_case:
                                                                                                                                                                                           else if ( byte_4A5ADD & 0x10 )
                                                                                                                                                                                           {
                                                                                                                                                                                             for ( *(_DWORD *)Health_To_Restore = Script_Position;
-                                                                                                                                                                                                  *((_BYTE *)PCurrent_Script + *(_DWORD *)Health_To_Restore) != 60 && *((_BYTE *)PCurrent_Script + *(_DWORD *)Health_To_Restore) != 13;
+                                                                                                                                                                                                  *((_BYTE *)Current_Script + *(_DWORD *)Health_To_Restore) != 60 && *((_BYTE *)Current_Script + *(_DWORD *)Health_To_Restore) != 13;
                                                                                                                                                                                                   ++*(_DWORD *)Health_To_Restore )
                                                                                                                                                                                             {
-                                                                                                                                                                                              if ( *((_BYTE *)PCurrent_Script + *(_DWORD *)Health_To_Restore) & 0x80 )
+                                                                                                                                                                                              if ( *((_BYTE *)Current_Script + *(_DWORD *)Health_To_Restore) & 0x80 )
                                                                                                                                                                                                 ++*(_DWORD *)Health_To_Restore;
                                                                                                                                                                                             }
                                                                                                                                                                                             num = *(_DWORD *)Health_To_Restore - Script_Position;
-                                                                                                                                                                                            memcpy(destination, (char *)PCurrent_Script + Script_Position, *(_DWORD *)Health_To_Restore - Script_Position);
+                                                                                                                                                                                            memcpy(destination, (char *)Current_Script + Script_Position, *(_DWORD *)Health_To_Restore - Script_Position);
                                                                                                                                                                                             destination[num] = 0;
                                                                                                                                                                                             TextColumn = *(_DWORD *)Health_To_Restore;
                                                                                                                                                                                             sub_40CEB0(0, 0, destination, 0xFEFFFFu, dword_4A5AE8 % 4 + 30);
@@ -21170,10 +21171,10 @@ jmp_42256C_default_case:
                                                                                                                                                                                           }
                                                                                                                                                                                           else
                                                                                                                                                                                           {
-                                                                                                                                                                                            source = *((_BYTE *)PCurrent_Script + Script_Position);
+                                                                                                                                                                                            source = *((_BYTE *)Current_Script + Script_Position);
                                                                                                                                                                                             if ( source & 0x80 )
                                                                                                                                                                                             {
-                                                                                                                                                                                              v9 = *((_BYTE *)PCurrent_Script + Script_Position + 1);
+                                                                                                                                                                                              v9 = *((_BYTE *)Current_Script + Script_Position + 1);
                                                                                                                                                                                               v10 = 0;
                                                                                                                                                                                             }
                                                                                                                                                                                             else
@@ -21207,7 +21208,7 @@ jmp_42256C_default_case:
                                                                                                                                                                                             v7 = 1;
                                                                                                                                                                                           }
                                                                                                                                                                                         }
-                                                                                                                                                                                        if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 'E' || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 'N' || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 'D' )
+                                                                                                                                                                                        if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'E' || *((_BYTE *)Current_Script + Script_Position + 2) != 'N' || *((_BYTE *)Current_Script + Script_Position + 3) != 'D' )
                                                                                                                                                                                           break;
                                                                                                                                                                                         byte_4A5ADC = 0;
                                                                                                                                                                                         *(_BYTE *)&Player_Flags &= 0xFEu;
@@ -21215,49 +21216,49 @@ jmp_42256C_default_case:
                                                                                                                                                                                         FaceID = 0;
                                                                                                                                                                                         v7 = 1;
                                                                                                                                                                                       }
-                                                                                                                                                                                      if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 'L' || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 'I' || *((_BYTE *)PCurrent_Script + Script_Position + 3) != '+' )
+                                                                                                                                                                                      if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'L' || *((_BYTE *)Current_Script + Script_Position + 2) != 'I' || *((_BYTE *)Current_Script + Script_Position + 3) != '+' )
                                                                                                                                                                                         break;
                                                                                                                                                                                       *(_DWORD *)Health_To_Restore = TSC_Dec_to_Hex(Script_Position + 4);
                                                                                                                                                                                       TSC_LIplus(Health_To_Restore[0]);
                                                                                                                                                                                       Script_Position += 8;
                                                                                                                                                                                     }
-                                                                                                                                                                                    if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 'M' || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 'L' || *((_BYTE *)PCurrent_Script + Script_Position + 3) != '+' )
+                                                                                                                                                                                    if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'M' || *((_BYTE *)Current_Script + Script_Position + 2) != 'L' || *((_BYTE *)Current_Script + Script_Position + 3) != '+' )
                                                                                                                                                                                       break;
                                                                                                                                                                                     *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
                                                                                                                                                                                     TSC_MLplus(Life_To_Add[0]);
                                                                                                                                                                                     Script_Position += 8;
                                                                                                                                                                                   }
-                                                                                                                                                                                  if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 'A' || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 'E' || *((_BYTE *)PCurrent_Script + Script_Position + 3) != '+' )
+                                                                                                                                                                                  if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'A' || *((_BYTE *)Current_Script + Script_Position + 2) != 'E' || *((_BYTE *)Current_Script + Script_Position + 3) != '+' )
                                                                                                                                                                                     break;
                                                                                                                                                                                   TSC_AEplus();
                                                                                                                                                                                   Script_Position += 4;
                                                                                                                                                                                 }
-                                                                                                                                                                                if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 'I' || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 'T' || *((_BYTE *)PCurrent_Script + Script_Position + 3) != '+' )
+                                                                                                                                                                                if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'I' || *((_BYTE *)Current_Script + Script_Position + 2) != 'T' || *((_BYTE *)Current_Script + Script_Position + 3) != '+' )
                                                                                                                                                                                   break;
                                                                                                                                                                                 *(_DWORD *)Health_To_Restore = TSC_Dec_to_Hex(Script_Position + 4);
                                                                                                                                                                                 Play_Sound_Effect(38, 1);
                                                                                                                                                                                 TSC_ITplus(*(int *)Health_To_Restore);
                                                                                                                                                                                 Script_Position += 8;
                                                                                                                                                                               }
-                                                                                                                                                                              if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 'I' || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 'T' || *((_BYTE *)PCurrent_Script + Script_Position + 3) != '-' )
+                                                                                                                                                                              if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'I' || *((_BYTE *)Current_Script + Script_Position + 2) != 'T' || *((_BYTE *)Current_Script + Script_Position + 3) != '-' )
                                                                                                                                                                                 break;
                                                                                                                                                                               *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
                                                                                                                                                                               TSC_ITminus(*(int *)Life_To_Add);
                                                                                                                                                                               Script_Position += 8;
                                                                                                                                                                             }
-                                                                                                                                                                            if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 'E' || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 'Q' || *((_BYTE *)PCurrent_Script + Script_Position + 3) != '+' )
+                                                                                                                                                                            if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'E' || *((_BYTE *)Current_Script + Script_Position + 2) != 'Q' || *((_BYTE *)Current_Script + Script_Position + 3) != '+' )
                                                                                                                                                                               break;
                                                                                                                                                                             *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
                                                                                                                                                                             TSC_EQplus(*(int *)Life_To_Add, 1);
                                                                                                                                                                             Script_Position += 8;
                                                                                                                                                                           }
-                                                                                                                                                                          if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 'E' || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 'Q' || *((_BYTE *)PCurrent_Script + Script_Position + 3) != '-' )
+                                                                                                                                                                          if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'E' || *((_BYTE *)Current_Script + Script_Position + 2) != 'Q' || *((_BYTE *)Current_Script + Script_Position + 3) != '-' )
                                                                                                                                                                             break;
                                                                                                                                                                           *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
                                                                                                                                                                           TSC_EQplus(*(int *)Life_To_Add, 0);
                                                                                                                                                                           Script_Position += 8;
                                                                                                                                                                         }
-                                                                                                                                                                        if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 'A' || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 'M' || *((_BYTE *)PCurrent_Script + Script_Position + 3) != '+' )
+                                                                                                                                                                        if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'A' || *((_BYTE *)Current_Script + Script_Position + 2) != 'M' || *((_BYTE *)Current_Script + Script_Position + 3) != '+' )
                                                                                                                                                                           break;
                                                                                                                                                                         NPC_ID = TSC_Dec_to_Hex(Script_Position + 4);
                                                                                                                                                                         *(_DWORD *)Health_To_Restore = TSC_Dec_to_Hex(Script_Position + 9);
@@ -21267,18 +21268,18 @@ jmp_42256C_default_case:
                                                                                                                                                                         TSC_AMplus(NPC_ID, *(int *)Health_To_Restore);
                                                                                                                                                                         Script_Position += 13;
                                                                                                                                                                       }
-                                                                                                                                                                      if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 'A' || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 'M' || *((_BYTE *)PCurrent_Script + Script_Position + 3) != '-' )
+                                                                                                                                                                      if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'A' || *((_BYTE *)Current_Script + Script_Position + 2) != 'M' || *((_BYTE *)Current_Script + Script_Position + 3) != '-' )
                                                                                                                                                                         break;
                                                                                                                                                                       *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
                                                                                                                                                                       TSC_AMminus(*(int *)Life_To_Add);
                                                                                                                                                                       Script_Position += 8;
                                                                                                                                                                     }
-                                                                                                                                                                    if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 'Z' || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 'A' || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 'M' )
+                                                                                                                                                                    if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'Z' || *((_BYTE *)Current_Script + Script_Position + 2) != 'A' || *((_BYTE *)Current_Script + Script_Position + 3) != 'M' )
                                                                                                                                                                       break;
                                                                                                                                                                     sub_419B50();
                                                                                                                                                                     Script_Position += 4;
                                                                                                                                                                   }
-                                                                                                                                                                  if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 'T' || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 'A' || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 'M' )
+                                                                                                                                                                  if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'T' || *((_BYTE *)Current_Script + Script_Position + 2) != 'A' || *((_BYTE *)Current_Script + Script_Position + 3) != 'M' )
                                                                                                                                                                     break;
                                                                                                                                                                   *(_DWORD *)Health_To_Restore = TSC_Dec_to_Hex(Script_Position + 4);
                                                                                                                                                                   num = TSC_Dec_to_Hex(Script_Position + 9);
@@ -21286,31 +21287,31 @@ jmp_42256C_default_case:
                                                                                                                                                                   TSC_TAM(*(int *)Health_To_Restore, num, *(int *)Life_To_Add);
                                                                                                                                                                   Script_Position += 18;
                                                                                                                                                                 }
-                                                                                                                                                                if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 80 || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 83 || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 43 )
+                                                                                                                                                                if ( *((_BYTE *)Current_Script + Script_Position + 1) != 80 || *((_BYTE *)Current_Script + Script_Position + 2) != 83 || *((_BYTE *)Current_Script + Script_Position + 3) != 43 )
                                                                                                                                                                   break;
                                                                                                                                                                 *(_DWORD *)Health_To_Restore = TSC_Dec_to_Hex(Script_Position + 4);
                                                                                                                                                                 num = TSC_Dec_to_Hex(Script_Position + 9);
                                                                                                                                                                 sub_41D630(*(int *)Health_To_Restore, num);
                                                                                                                                                                 Script_Position += 13;
                                                                                                                                                               }
-                                                                                                                                                              if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 77 || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 80 || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 43 )
+                                                                                                                                                              if ( *((_BYTE *)Current_Script + Script_Position + 1) != 77 || *((_BYTE *)Current_Script + Script_Position + 2) != 80 || *((_BYTE *)Current_Script + Script_Position + 3) != 43 )
                                                                                                                                                                 break;
                                                                                                                                                               *(_DWORD *)Health_To_Restore = TSC_Dec_to_Hex(Script_Position + 4);
                                                                                                                                                               sub_414B40(*(int *)Health_To_Restore);
                                                                                                                                                               Script_Position += 8;
                                                                                                                                                             }
-                                                                                                                                                            if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 'U' || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 'N' || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 'I' )
+                                                                                                                                                            if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'U' || *((_BYTE *)Current_Script + Script_Position + 2) != 'N' || *((_BYTE *)Current_Script + Script_Position + 3) != 'I' )
                                                                                                                                                               break;
                                                                                                                                                             *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
                                                                                                                                                             sub_416C40(Life_To_Add[0]);
                                                                                                                                                             Script_Position += 8;
                                                                                                                                                           }
-                                                                                                                                                          if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 83 || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 84 || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 67 )
+                                                                                                                                                          if ( *((_BYTE *)Current_Script + Script_Position + 1) != 83 || *((_BYTE *)Current_Script + Script_Position + 2) != 84 || *((_BYTE *)Current_Script + Script_Position + 3) != 67 )
                                                                                                                                                             break;
                                                                                                                                                           sub_41A5D0();
                                                                                                                                                           Script_Position += 4;
                                                                                                                                                         }
-                                                                                                                                                        if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 84 || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 82 || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 65 )
+                                                                                                                                                        if ( *((_BYTE *)Current_Script + Script_Position + 1) != 84 || *((_BYTE *)Current_Script + Script_Position + 2) != 82 || *((_BYTE *)Current_Script + Script_Position + 3) != 65 )
                                                                                                                                                           break;
                                                                                                                                                         *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
                                                                                                                                                         NPC_ID = TSC_Dec_to_Hex(Script_Position + 9);
@@ -21322,48 +21323,48 @@ jmp_42256C_default_case:
                                                                                                                                                           return 0;
                                                                                                                                                         }
                                                                                                                                                       }
-                                                                                                                                                      if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 'M' || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 'O' || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 'V' )
+                                                                                                                                                      if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'M' || *((_BYTE *)Current_Script + Script_Position + 2) != 'O' || *((_BYTE *)Current_Script + Script_Position + 3) != 'V' )
                                                                                                                                                         break;
                                                                                                                                                       *(_DWORD *)Health_To_Restore = TSC_Dec_to_Hex(Script_Position + 4);
                                                                                                                                                       num = TSC_Dec_to_Hex(Script_Position + 9);
                                                                                                                                                       Move_Quote(*(_DWORD *)Health_To_Restore << 13, num << 13);
                                                                                                                                                       Script_Position += 13;
                                                                                                                                                     }
-                                                                                                                                                    if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 72 || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 77 || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 67 )
+                                                                                                                                                    if ( *((_BYTE *)Current_Script + Script_Position + 1) != 72 || *((_BYTE *)Current_Script + Script_Position + 2) != 77 || *((_BYTE *)Current_Script + Script_Position + 3) != 67 )
                                                                                                                                                       break;
                                                                                                                                                     sub_415220(0);
                                                                                                                                                     Script_Position += 4;
                                                                                                                                                   }
-                                                                                                                                                  if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 83 || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 77 || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 67 )
+                                                                                                                                                  if ( *((_BYTE *)Current_Script + Script_Position + 1) != 83 || *((_BYTE *)Current_Script + Script_Position + 2) != 77 || *((_BYTE *)Current_Script + Script_Position + 3) != 67 )
                                                                                                                                                     break;
                                                                                                                                                   sub_415220(1);
                                                                                                                                                   Script_Position += 4;
                                                                                                                                                 }
-                                                                                                                                                if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 70 || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 76 || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 43 )
+                                                                                                                                                if ( *((_BYTE *)Current_Script + Script_Position + 1) != 70 || *((_BYTE *)Current_Script + Script_Position + 2) != 76 || *((_BYTE *)Current_Script + Script_Position + 3) != 43 )
                                                                                                                                                   break;
                                                                                                                                                 *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
                                                                                                                                                 sub_40E890(*(signed int *)Life_To_Add);
                                                                                                                                                 Script_Position += 8;
                                                                                                                                               }
-                                                                                                                                              if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 70 || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 76 || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 45 )
+                                                                                                                                              if ( *((_BYTE *)Current_Script + Script_Position + 1) != 70 || *((_BYTE *)Current_Script + Script_Position + 2) != 76 || *((_BYTE *)Current_Script + Script_Position + 3) != 45 )
                                                                                                                                                 break;
                                                                                                                                               *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
                                                                                                                                               sub_40E8E0(*(signed int *)Life_To_Add);
                                                                                                                                               Script_Position += 8;
                                                                                                                                             }
-                                                                                                                                            if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 83 || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 75 || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 43 )
+                                                                                                                                            if ( *((_BYTE *)Current_Script + Script_Position + 1) != 83 || *((_BYTE *)Current_Script + Script_Position + 2) != 75 || *((_BYTE *)Current_Script + Script_Position + 3) != 43 )
                                                                                                                                               break;
                                                                                                                                             *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
                                                                                                                                             sub_40E970(*(signed int *)Life_To_Add);
                                                                                                                                             Script_Position += 8;
                                                                                                                                           }
-                                                                                                                                          if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 83 || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 75 || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 45 )
+                                                                                                                                          if ( *((_BYTE *)Current_Script + Script_Position + 1) != 83 || *((_BYTE *)Current_Script + Script_Position + 2) != 75 || *((_BYTE *)Current_Script + Script_Position + 3) != 45 )
                                                                                                                                             break;
                                                                                                                                           *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
                                                                                                                                           sub_40E9C0(*(signed int *)Life_To_Add);
                                                                                                                                           Script_Position += 8;
                                                                                                                                         }
-                                                                                                                                        if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 'K' || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 'E' || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 'Y' )
+                                                                                                                                        if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'K' || *((_BYTE *)Current_Script + Script_Position + 2) != 'E' || *((_BYTE *)Current_Script + Script_Position + 3) != 'Y' )
                                                                                                                                           break;
                                                                                                                                         Game_State &= 0xFFFFFFFD;
                                                                                                                                         Game_State |= 1u;
@@ -21371,29 +21372,29 @@ jmp_42256C_default_case:
                                                                                                                                         Invincibility_Timer = 0;
                                                                                                                                         Script_Position += 4;
                                                                                                                                       }
-                                                                                                                                      if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 80 || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 82 || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 73 )
+                                                                                                                                      if ( *((_BYTE *)Current_Script + Script_Position + 1) != 80 || *((_BYTE *)Current_Script + Script_Position + 2) != 82 || *((_BYTE *)Current_Script + Script_Position + 3) != 73 )
                                                                                                                                         break;
                                                                                                                                       Game_State &= 0xFFFFFFFC;
                                                                                                                                       Invincibility_Timer = 0;
                                                                                                                                       Script_Position += 4;
                                                                                                                                     }
-                                                                                                                                    if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 70 || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 82 || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 69 )
+                                                                                                                                    if ( *((_BYTE *)Current_Script + Script_Position + 1) != 70 || *((_BYTE *)Current_Script + Script_Position + 2) != 82 || *((_BYTE *)Current_Script + Script_Position + 3) != 69 )
                                                                                                                                       break;
                                                                                                                                     Game_State |= 3u;
                                                                                                                                     Script_Position += 4;
                                                                                                                                   }
-                                                                                                                                  if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 78 || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 79 || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 68 )
+                                                                                                                                  if ( *((_BYTE *)Current_Script + Script_Position + 1) != 78 || *((_BYTE *)Current_Script + Script_Position + 2) != 79 || *((_BYTE *)Current_Script + Script_Position + 3) != 68 )
                                                                                                                                     break;
                                                                                                                                   byte_4A5ADC = 2;
                                                                                                                                   Script_Position += 4;
                                                                                                                                   v7 = 1;
                                                                                                                                 }
-                                                                                                                                if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 67 || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 76 || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 82 )
+                                                                                                                                if ( *((_BYTE *)Current_Script + Script_Position + 1) != 67 || *((_BYTE *)Current_Script + Script_Position + 2) != 76 || *((_BYTE *)Current_Script + Script_Position + 3) != 82 )
                                                                                                                                   break;
                                                                                                                                 sub_421E90();
                                                                                                                                 Script_Position += 4;
                                                                                                                               }
-                                                                                                                              if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 77 || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 83 || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 71 )
+                                                                                                                              if ( *((_BYTE *)Current_Script + Script_Position + 1) != 77 || *((_BYTE *)Current_Script + Script_Position + 2) != 83 || *((_BYTE *)Current_Script + Script_Position + 3) != 71 )
                                                                                                                                 break;
                                                                                                                               sub_421E90();
                                                                                                                               byte_4A5ADD |= 3u;
@@ -21403,7 +21404,7 @@ jmp_42256C_default_case:
                                                                                                                               Script_Position += 4;
                                                                                                                               v7 = 1;
                                                                                                                             }
-                                                                                                                            if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 77 || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 83 || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 50 )
+                                                                                                                            if ( *((_BYTE *)Current_Script + Script_Position + 1) != 77 || *((_BYTE *)Current_Script + Script_Position + 2) != 83 || *((_BYTE *)Current_Script + Script_Position + 3) != 50 )
                                                                                                                               break;
                                                                                                                             sub_421E90();
                                                                                                                             byte_4A5ADD &= 0xEDu;
@@ -21414,7 +21415,7 @@ jmp_42256C_default_case:
                                                                                                                             Script_Position += 4;
                                                                                                                             v7 = 1;
                                                                                                                           }
-                                                                                                                          if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 77 || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 83 || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 51 )
+                                                                                                                          if ( *((_BYTE *)Current_Script + Script_Position + 1) != 77 || *((_BYTE *)Current_Script + Script_Position + 2) != 83 || *((_BYTE *)Current_Script + Script_Position + 3) != 51 )
                                                                                                                             break;
                                                                                                                           sub_421E90();
                                                                                                                           byte_4A5ADD &= 0xEFu;
@@ -21424,45 +21425,45 @@ jmp_42256C_default_case:
                                                                                                                           Script_Position += 4;
                                                                                                                           v7 = 1;
                                                                                                                         }
-                                                                                                                        if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 87 || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 65 || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 73 )
+                                                                                                                        if ( *((_BYTE *)Current_Script + Script_Position + 1) != 87 || *((_BYTE *)Current_Script + Script_Position + 2) != 65 || *((_BYTE *)Current_Script + Script_Position + 3) != 73 )
                                                                                                                           break;
                                                                                                                         byte_4A5ADC = 4;
                                                                                                                         dword_4A5B00 = TSC_Dec_to_Hex(Script_Position + 4);
                                                                                                                         Script_Position += 8;
                                                                                                                         v7 = 1;
                                                                                                                       }
-                                                                                                                      if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 87 || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 65 || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 83 )
+                                                                                                                      if ( *((_BYTE *)Current_Script + Script_Position + 1) != 87 || *((_BYTE *)Current_Script + Script_Position + 2) != 65 || *((_BYTE *)Current_Script + Script_Position + 3) != 83 )
                                                                                                                         break;
                                                                                                                       byte_4A5ADC = 7;
                                                                                                                       Script_Position += 4;
                                                                                                                       v7 = 1;
                                                                                                                     }
-                                                                                                                    if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 84 || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 85 || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 82 )
+                                                                                                                    if ( *((_BYTE *)Current_Script + Script_Position + 1) != 84 || *((_BYTE *)Current_Script + Script_Position + 2) != 85 || *((_BYTE *)Current_Script + Script_Position + 3) != 82 )
                                                                                                                       break;
                                                                                                                     Script_Position += 4;
                                                                                                                     byte_4A5ADD |= 0x10u;
                                                                                                                   }
-                                                                                                                  if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 83 || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 65 || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 84 )
+                                                                                                                  if ( *((_BYTE *)Current_Script + Script_Position + 1) != 83 || *((_BYTE *)Current_Script + Script_Position + 2) != 65 || *((_BYTE *)Current_Script + Script_Position + 3) != 84 )
                                                                                                                     break;
                                                                                                                   Script_Position += 4;
                                                                                                                   byte_4A5ADD |= 0x40u;
                                                                                                                 }
-                                                                                                                if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 67 || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 65 || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 84 )
+                                                                                                                if ( *((_BYTE *)Current_Script + Script_Position + 1) != 67 || *((_BYTE *)Current_Script + Script_Position + 2) != 65 || *((_BYTE *)Current_Script + Script_Position + 3) != 84 )
                                                                                                                   break;
                                                                                                                 Script_Position += 4;
                                                                                                                 byte_4A5ADD |= 0x40u;
                                                                                                               }
-                                                                                                              if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 67 || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 76 || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 79 )
+                                                                                                              if ( *((_BYTE *)Current_Script + Script_Position + 1) != 67 || *((_BYTE *)Current_Script + Script_Position + 2) != 76 || *((_BYTE *)Current_Script + Script_Position + 3) != 79 )
                                                                                                                 break;
                                                                                                               byte_4A5ADD &= 0xCCu;
                                                                                                               Script_Position += 4;
                                                                                                             }
-                                                                                                            if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 69 || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 86 || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 69 )
+                                                                                                            if ( *((_BYTE *)Current_Script + Script_Position + 1) != 69 || *((_BYTE *)Current_Script + Script_Position + 2) != 86 || *((_BYTE *)Current_Script + Script_Position + 3) != 69 )
                                                                                                               break;
                                                                                                             *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
                                                                                                             sub_421AF0(*(int *)Life_To_Add);
                                                                                                           }
-                                                                                                          if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 'Y' || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 'N' || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 'J' )
+                                                                                                          if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'Y' || *((_BYTE *)Current_Script + Script_Position + 2) != 'N' || *((_BYTE *)Current_Script + Script_Position + 3) != 'J' )
                                                                                                             break;
                                                                                                           dword_4A5B04 = TSC_Dec_to_Hex(Script_Position + 4);
                                                                                                           Script_Position += 8;
@@ -21472,7 +21473,7 @@ jmp_42256C_default_case:
                                                                                                           byte_4A5B08 = 0;
                                                                                                           v7 = 1;
                                                                                                         }
-                                                                                                        if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 70 || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 76 || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 74 )
+                                                                                                        if ( *((_BYTE *)Current_Script + Script_Position + 1) != 70 || *((_BYTE *)Current_Script + Script_Position + 2) != 76 || *((_BYTE *)Current_Script + Script_Position + 3) != 74 )
                                                                                                           break;
                                                                                                         *(_DWORD *)Health_To_Restore = TSC_Dec_to_Hex(Script_Position + 4);
                                                                                                         *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 9);
@@ -21481,7 +21482,7 @@ jmp_42256C_default_case:
                                                                                                         else
                                                                                                           Script_Position += 13;
                                                                                                       }
-                                                                                                      if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 83 || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 75 || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 74 )
+                                                                                                      if ( *((_BYTE *)Current_Script + Script_Position + 1) != 83 || *((_BYTE *)Current_Script + Script_Position + 2) != 75 || *((_BYTE *)Current_Script + Script_Position + 3) != 74 )
                                                                                                         break;
                                                                                                       *(_DWORD *)Health_To_Restore = TSC_Dec_to_Hex(Script_Position + 4);
                                                                                                       *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 9);
@@ -21490,7 +21491,7 @@ jmp_42256C_default_case:
                                                                                                       else
                                                                                                         Script_Position += 13;
                                                                                                     }
-                                                                                                    if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 73 || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 84 || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 74 )
+                                                                                                    if ( *((_BYTE *)Current_Script + Script_Position + 1) != 73 || *((_BYTE *)Current_Script + Script_Position + 2) != 84 || *((_BYTE *)Current_Script + Script_Position + 3) != 74 )
                                                                                                       break;
                                                                                                     *(_DWORD *)Health_To_Restore = TSC_Dec_to_Hex(Script_Position + 4);
                                                                                                     *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 9);
@@ -21499,7 +21500,7 @@ jmp_42256C_default_case:
                                                                                                     else
                                                                                                       Script_Position += 13;
                                                                                                   }
-                                                                                                  if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 65 || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 77 || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 74 )
+                                                                                                  if ( *((_BYTE *)Current_Script + Script_Position + 1) != 65 || *((_BYTE *)Current_Script + Script_Position + 2) != 77 || *((_BYTE *)Current_Script + Script_Position + 3) != 74 )
                                                                                                     break;
                                                                                                   *(_DWORD *)Health_To_Restore = TSC_Dec_to_Hex(Script_Position + 4);
                                                                                                   *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 9);
@@ -21508,7 +21509,7 @@ jmp_42256C_default_case:
                                                                                                   else
                                                                                                     Script_Position += 13;
                                                                                                 }
-                                                                                                if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 85 || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 78 || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 74 )
+                                                                                                if ( *((_BYTE *)Current_Script + Script_Position + 1) != 85 || *((_BYTE *)Current_Script + Script_Position + 2) != 78 || *((_BYTE *)Current_Script + Script_Position + 3) != 74 )
                                                                                                   break;
                                                                                                 *(_DWORD *)Health_To_Restore = TSC_Dec_to_Hex(Script_Position + 4);
                                                                                                 *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 9);
@@ -21517,9 +21518,9 @@ jmp_42256C_default_case:
                                                                                                 else
                                                                                                   Script_Position += 13;
                                                                                               }
-                                                                                              if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 69
-                                                                                                || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 67
-                                                                                                || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 74 )
+                                                                                              if ( *((_BYTE *)Current_Script + Script_Position + 1) != 69
+                                                                                                || *((_BYTE *)Current_Script + Script_Position + 2) != 67
+                                                                                                || *((_BYTE *)Current_Script + Script_Position + 3) != 74 )
                                                                                               {
                                                                                                 break;
                                                                                               }
@@ -21530,13 +21531,13 @@ jmp_42256C_default_case:
                                                                                               else
                                                                                                 Script_Position += 13;
                                                                                             }
-                                                                                            if ( *((_BYTE *)PCurrent_Script
+                                                                                            if ( *((_BYTE *)Current_Script
                                                                                                  + Script_Position
                                                                                                  + 1) != 78
-                                                                                              || *((_BYTE *)PCurrent_Script
+                                                                                              || *((_BYTE *)Current_Script
                                                                                                  + Script_Position
                                                                                                  + 2) != 67
-                                                                                              || *((_BYTE *)PCurrent_Script
+                                                                                              || *((_BYTE *)Current_Script
                                                                                                  + Script_Position
                                                                                                  + 3) != 74 )
                                                                                             {
@@ -21549,13 +21550,13 @@ jmp_42256C_default_case:
                                                                                             else
                                                                                               Script_Position += 13;
                                                                                           }
-                                                                                          if ( *((_BYTE *)PCurrent_Script
+                                                                                          if ( *((_BYTE *)Current_Script
                                                                                                + Script_Position
                                                                                                + 1) != 77
-                                                                                            || *((_BYTE *)PCurrent_Script
+                                                                                            || *((_BYTE *)Current_Script
                                                                                                + Script_Position
                                                                                                + 2) != 80
-                                                                                            || *((_BYTE *)PCurrent_Script
+                                                                                            || *((_BYTE *)Current_Script
                                                                                                + Script_Position
                                                                                                + 3) != 74 )
                                                                                           {
@@ -21567,13 +21568,13 @@ jmp_42256C_default_case:
                                                                                           else
                                                                                             Script_Position += 8;
                                                                                         }
-                                                                                        if ( *((_BYTE *)PCurrent_Script
+                                                                                        if ( *((_BYTE *)Current_Script
                                                                                              + Script_Position
                                                                                              + 1) != 83
-                                                                                          || *((_BYTE *)PCurrent_Script
+                                                                                          || *((_BYTE *)Current_Script
                                                                                              + Script_Position
                                                                                              + 2) != 83
-                                                                                          || *((_BYTE *)PCurrent_Script
+                                                                                          || *((_BYTE *)Current_Script
                                                                                              + Script_Position
                                                                                              + 3) != 83 )
                                                                                         {
@@ -21585,13 +21586,13 @@ jmp_42256C_default_case:
                                                                                           *(int *)Health_To_Restore);
                                                                                         Script_Position += 8;
                                                                                       }
-                                                                                      if ( *((_BYTE *)PCurrent_Script
+                                                                                      if ( *((_BYTE *)Current_Script
                                                                                            + Script_Position
                                                                                            + 1) != 67
-                                                                                        || *((_BYTE *)PCurrent_Script
+                                                                                        || *((_BYTE *)Current_Script
                                                                                            + Script_Position
                                                                                            + 2) != 83
-                                                                                        || *((_BYTE *)PCurrent_Script
+                                                                                        || *((_BYTE *)Current_Script
                                                                                            + Script_Position
                                                                                            + 3) != 83 )
                                                                                       {
@@ -21600,13 +21601,13 @@ jmp_42256C_default_case:
                                                                                       TSC_SSS_SPS__2();
                                                                                       Script_Position += 4;
                                                                                     }
-                                                                                    if ( *((_BYTE *)PCurrent_Script
+                                                                                    if ( *((_BYTE *)Current_Script
                                                                                          + Script_Position
                                                                                          + 1) != 83
-                                                                                      || *((_BYTE *)PCurrent_Script
+                                                                                      || *((_BYTE *)Current_Script
                                                                                          + Script_Position
                                                                                          + 2) != 80
-                                                                                      || *((_BYTE *)PCurrent_Script
+                                                                                      || *((_BYTE *)Current_Script
                                                                                          + Script_Position
                                                                                          + 3) != 83 )
                                                                                     {
@@ -21617,13 +21618,13 @@ jmp_42256C_default_case:
                                                                                       *(int *)Health_To_Restore);
                                                                                     Script_Position += 4;
                                                                                   }
-                                                                                  if ( *((_BYTE *)PCurrent_Script
+                                                                                  if ( *((_BYTE *)Current_Script
                                                                                        + Script_Position
                                                                                        + 1) != 67
-                                                                                    || *((_BYTE *)PCurrent_Script
+                                                                                    || *((_BYTE *)Current_Script
                                                                                        + Script_Position
                                                                                        + 2) != 80
-                                                                                    || *((_BYTE *)PCurrent_Script
+                                                                                    || *((_BYTE *)Current_Script
                                                                                        + Script_Position
                                                                                        + 3) != 83 )
                                                                                   {
@@ -21632,13 +21633,13 @@ jmp_42256C_default_case:
                                                                                   TSC_SSS_SPS__2();
                                                                                   Script_Position += 4;
                                                                                 }
-                                                                                if ( *((_BYTE *)PCurrent_Script
+                                                                                if ( *((_BYTE *)Current_Script
                                                                                      + Script_Position
                                                                                      + 1) != 81
-                                                                                  || *((_BYTE *)PCurrent_Script
+                                                                                  || *((_BYTE *)Current_Script
                                                                                      + Script_Position
                                                                                      + 2) != 85
-                                                                                  || *((_BYTE *)PCurrent_Script
+                                                                                  || *((_BYTE *)Current_Script
                                                                                      + Script_Position
                                                                                      + 3) != 65 )
                                                                                 {
@@ -21648,13 +21649,13 @@ jmp_42256C_default_case:
                                                                                 sub_40F310(*(int *)Life_To_Add);
                                                                                 Script_Position += 8;
                                                                               }
-                                                                              if ( *((_BYTE *)PCurrent_Script
+                                                                              if ( *((_BYTE *)Current_Script
                                                                                    + Script_Position
                                                                                    + 1) != 70
-                                                                                || *((_BYTE *)PCurrent_Script
+                                                                                || *((_BYTE *)Current_Script
                                                                                    + Script_Position
                                                                                    + 2) != 76
-                                                                                || *((_BYTE *)PCurrent_Script
+                                                                                || *((_BYTE *)Current_Script
                                                                                    + Script_Position
                                                                                    + 3) != 65 )
                                                                               {
@@ -21663,13 +21664,13 @@ jmp_42256C_default_case:
                                                                               Explosion_(0, 0, 2);
                                                                               Script_Position += 4;
                                                                             }
-                                                                            if ( *((_BYTE *)PCurrent_Script
+                                                                            if ( *((_BYTE *)Current_Script
                                                                                  + Script_Position
                                                                                  + 1) != 70
-                                                                              || *((_BYTE *)PCurrent_Script
+                                                                              || *((_BYTE *)Current_Script
                                                                                  + Script_Position
                                                                                  + 2) != 65
-                                                                              || *((_BYTE *)PCurrent_Script
+                                                                              || *((_BYTE *)Current_Script
                                                                                  + Script_Position
                                                                                  + 3) != 73 )
                                                                             {
@@ -21681,13 +21682,13 @@ jmp_42256C_default_case:
                                                                             Script_Position += 8;
                                                                             v7 = 1;
                                                                           }
-                                                                          if ( *((_BYTE *)PCurrent_Script
+                                                                          if ( *((_BYTE *)Current_Script
                                                                                + Script_Position
                                                                                + 1) != 70
-                                                                            || *((_BYTE *)PCurrent_Script
+                                                                            || *((_BYTE *)Current_Script
                                                                                + Script_Position
                                                                                + 2) != 65
-                                                                            || *((_BYTE *)PCurrent_Script
+                                                                            || *((_BYTE *)Current_Script
                                                                                + Script_Position
                                                                                + 3) != 79 )
                                                                           {
@@ -21699,13 +21700,13 @@ jmp_42256C_default_case:
                                                                           Script_Position += 8;
                                                                           v7 = 1;
                                                                         }
-                                                                        if ( *((_BYTE *)PCurrent_Script
+                                                                        if ( *((_BYTE *)Current_Script
                                                                              + Script_Position
                                                                              + 1) != 77
-                                                                          || *((_BYTE *)PCurrent_Script
+                                                                          || *((_BYTE *)Current_Script
                                                                              + Script_Position
                                                                              + 2) != 78
-                                                                          || *((_BYTE *)PCurrent_Script
+                                                                          || *((_BYTE *)Current_Script
                                                                              + Script_Position
                                                                              + 3) != 65 )
                                                                         {
@@ -21714,13 +21715,13 @@ jmp_42256C_default_case:
                                                                         sub_414310();
                                                                         Script_Position += 4;
                                                                       }
-                                                                      if ( *((_BYTE *)PCurrent_Script
+                                                                      if ( *((_BYTE *)Current_Script
                                                                            + Script_Position
                                                                            + 1) != 70
-                                                                        || *((_BYTE *)PCurrent_Script
+                                                                        || *((_BYTE *)Current_Script
                                                                            + Script_Position
                                                                            + 2) != 79
-                                                                        || *((_BYTE *)PCurrent_Script
+                                                                        || *((_BYTE *)Current_Script
                                                                            + Script_Position
                                                                            + 3) != 77 )
                                                                       {
@@ -21730,9 +21731,9 @@ jmp_42256C_default_case:
                                                                       sub_40F220(*(int *)Life_To_Add);
                                                                       Script_Position += 8;
                                                                     }
-                                                                    if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 70
-                                                                      || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 79
-                                                                      || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 78 )
+                                                                    if ( *((_BYTE *)Current_Script + Script_Position + 1) != 70
+                                                                      || *((_BYTE *)Current_Script + Script_Position + 2) != 79
+                                                                      || *((_BYTE *)Current_Script + Script_Position + 3) != 78 )
                                                                     {
                                                                       break;
                                                                     }
@@ -21741,9 +21742,9 @@ jmp_42256C_default_case:
                                                                     sub_40F250(*(int *)Health_To_Restore, num);
                                                                     Script_Position += 13;
                                                                   }
-                                                                  if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 'F'
-                                                                    || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 'O'
-                                                                    || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 'B' )
+                                                                  if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'F'
+                                                                    || *((_BYTE *)Current_Script + Script_Position + 2) != 'O'
+                                                                    || *((_BYTE *)Current_Script + Script_Position + 3) != 'B' )
                                                                   {
                                                                     break;
                                                                   }
@@ -21752,9 +21753,9 @@ jmp_42256C_default_case:
                                                                   sub_40F2D0(*(int *)Health_To_Restore, num);
                                                                   Script_Position += 13;
                                                                 }
-                                                                if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 'S'
-                                                                  || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 'O'
-                                                                  || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 'U' )
+                                                                if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'S'
+                                                                  || *((_BYTE *)Current_Script + Script_Position + 2) != 'O'
+                                                                  || *((_BYTE *)Current_Script + Script_Position + 3) != 'U' )
                                                                 {
                                                                   break;
                                                                 }
@@ -21762,9 +21763,9 @@ jmp_42256C_default_case:
                                                                 Play_Sound_Effect(*(int *)Life_To_Add, 1);
                                                                 Script_Position += 8;
                                                               }
-                                                              if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 'C'
-                                                                || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 'M'
-                                                                || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 'U' )
+                                                              if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'C'
+                                                                || *((_BYTE *)Current_Script + Script_Position + 2) != 'M'
+                                                                || *((_BYTE *)Current_Script + Script_Position + 3) != 'U' )
                                                               {
                                                                 break;
                                                               }
@@ -21772,27 +21773,27 @@ jmp_42256C_default_case:
                                                               Tsc_CMU(*(int *)Life_To_Add);
                                                               Script_Position += 8;
                                                             }
-                                                            if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 70
-                                                              || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 77
-                                                              || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 85 )
+                                                            if ( *((_BYTE *)Current_Script + Script_Position + 1) != 70
+                                                              || *((_BYTE *)Current_Script + Script_Position + 2) != 77
+                                                              || *((_BYTE *)Current_Script + Script_Position + 3) != 85 )
                                                             {
                                                               break;
                                                             }
                                                             __setargv_0();
                                                             Script_Position += 4;
                                                           }
-                                                          if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 'R'
-                                                            || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 'M'
-                                                            || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 'U' )
+                                                          if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'R'
+                                                            || *((_BYTE *)Current_Script + Script_Position + 2) != 'M'
+                                                            || *((_BYTE *)Current_Script + Script_Position + 3) != 'U' )
                                                           {
                                                             break;
                                                           }
                                                           Tsc_RMU();
                                                           Script_Position += 4;
                                                         }
-                                                        if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 77
-                                                          || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 76
-                                                          || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 80 )
+                                                        if ( *((_BYTE *)Current_Script + Script_Position + 1) != 77
+                                                          || *((_BYTE *)Current_Script + Script_Position + 2) != 76
+                                                          || *((_BYTE *)Current_Script + Script_Position + 3) != 80 )
                                                         {
                                                           break;
                                                         }
@@ -21804,9 +21805,9 @@ jmp_42256C_default_case:
                                                         if ( v3 == 2 )
                                                           return 2;
                                                       }
-                                                      if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 83
-                                                        || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 76
-                                                        || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 80 )
+                                                      if ( *((_BYTE *)Current_Script + Script_Position + 1) != 83
+                                                        || *((_BYTE *)Current_Script + Script_Position + 2) != 76
+                                                        || *((_BYTE *)Current_Script + Script_Position + 3) != 80 )
                                                       {
                                                         break;
                                                       }
@@ -21819,9 +21820,9 @@ jmp_42256C_default_case:
                                                       sub_421AF0(*(int *)Life_To_Add);
                                                       Game_State &= 0xFFFFFFFC;
                                                     }
-                                                    if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 68
-                                                      || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 78
-                                                      || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 80 )
+                                                    if ( *((_BYTE *)Current_Script + Script_Position + 1) != 68
+                                                      || *((_BYTE *)Current_Script + Script_Position + 2) != 78
+                                                      || *((_BYTE *)Current_Script + Script_Position + 3) != 80 )
                                                     {
                                                       break;
                                                     }
@@ -21829,9 +21830,9 @@ jmp_42256C_default_case:
                                                     sub_470250(*(int *)Life_To_Add);
                                                     Script_Position += 8;
                                                   }
-                                                  if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 68
-                                                    || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 78
-                                                    || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 65 )
+                                                  if ( *((_BYTE *)Current_Script + Script_Position + 1) != 68
+                                                    || *((_BYTE *)Current_Script + Script_Position + 2) != 78
+                                                    || *((_BYTE *)Current_Script + Script_Position + 3) != 65 )
                                                   {
                                                     break;
                                                   }
@@ -21839,9 +21840,9 @@ jmp_42256C_default_case:
                                                   sub_4702D0(*(int *)Life_To_Add, 1);
                                                   Script_Position += 8;
                                                 }
-                                                if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 66
-                                                  || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 79
-                                                  || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 65 )
+                                                if ( *((_BYTE *)Current_Script + Script_Position + 1) != 66
+                                                  || *((_BYTE *)Current_Script + Script_Position + 2) != 79
+                                                  || *((_BYTE *)Current_Script + Script_Position + 3) != 65 )
                                                 {
                                                   break;
                                                 }
@@ -21849,9 +21850,9 @@ jmp_42256C_default_case:
                                                 sub_472940(*(int *)Life_To_Add);
                                                 Script_Position += 8;
                                               }
-                                              if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 67
-                                                || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 78
-                                                || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 80 )
+                                              if ( *((_BYTE *)Current_Script + Script_Position + 1) != 67
+                                                || *((_BYTE *)Current_Script + Script_Position + 2) != 78
+                                                || *((_BYTE *)Current_Script + Script_Position + 3) != 80 )
                                               {
                                                 break;
                                               }
@@ -21861,9 +21862,9 @@ jmp_42256C_default_case:
                                               sub_46FAB0(*(int *)Health_To_Restore, num, *(int *)Life_To_Add);
                                               Script_Position += 18;
                                             }
-                                            if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 65
-                                              || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 78
-                                              || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 80 )
+                                            if ( *((_BYTE *)Current_Script + Script_Position + 1) != 65
+                                              || *((_BYTE *)Current_Script + Script_Position + 2) != 78
+                                              || *((_BYTE *)Current_Script + Script_Position + 3) != 80 )
                                             {
                                               break;
                                             }
@@ -21873,9 +21874,9 @@ jmp_42256C_default_case:
                                             sub_46FF90(*(int *)Health_To_Restore, num, *(int *)Life_To_Add);
                                             Script_Position += 18;
                                           }
-                                          if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 73
-                                            || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 78
-                                            || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 80 )
+                                          if ( *((_BYTE *)Current_Script + Script_Position + 1) != 73
+                                            || *((_BYTE *)Current_Script + Script_Position + 2) != 78
+                                            || *((_BYTE *)Current_Script + Script_Position + 3) != 80 )
                                           {
                                             break;
                                           }
@@ -21885,9 +21886,9 @@ jmp_42256C_default_case:
                                           sub_46FD10(*(int *)Health_To_Restore, num, *(int *)Life_To_Add);
                                           Script_Position += 18;
                                         }
-                                        if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 83
-                                          || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 78
-                                          || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 80 )
+                                        if ( *((_BYTE *)Current_Script + Script_Position + 1) != 83
+                                          || *((_BYTE *)Current_Script + Script_Position + 2) != 78
+                                          || *((_BYTE *)Current_Script + Script_Position + 3) != 80 )
                                         {
                                           break;
                                         }
@@ -21906,9 +21907,9 @@ jmp_42256C_default_case:
                                           256);
                                         Script_Position += 23;
                                       }
-                                      if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 77
-                                        || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 78
-                                        || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 80 )
+                                      if ( *((_BYTE *)Current_Script + Script_Position + 1) != 77
+                                        || *((_BYTE *)Current_Script + Script_Position + 2) != 78
+                                        || *((_BYTE *)Current_Script + Script_Position + 3) != 80 )
                                       {
                                         break;
                                       }
@@ -21923,9 +21924,9 @@ jmp_42256C_default_case:
                                         *(int *)Life_To_Add);
                                       Script_Position += 23;
                                     }
-                                    if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 83
-                                      || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 77
-                                      || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 80 )
+                                    if ( *((_BYTE *)Current_Script + Script_Position + 1) != 83
+                                      || *((_BYTE *)Current_Script + Script_Position + 2) != 77
+                                      || *((_BYTE *)Current_Script + Script_Position + 3) != 80 )
                                     {
                                       break;
                                     }
@@ -21934,9 +21935,9 @@ jmp_42256C_default_case:
                                     sub_413A20(*(int *)Health_To_Restore, num);
                                     Script_Position += 13;
                                   }
-                                  if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 67
-                                    || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 77
-                                    || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 80 )
+                                  if ( *((_BYTE *)Current_Script + Script_Position + 1) != 67
+                                    || *((_BYTE *)Current_Script + Script_Position + 2) != 77
+                                    || *((_BYTE *)Current_Script + Script_Position + 3) != 80 )
                                   {
                                     break;
                                   }
@@ -21946,9 +21947,9 @@ jmp_42256C_default_case:
                                   sub_413A60(*(int *)Health_To_Restore, num, Life_To_Add[0]);
                                   Script_Position += 18;
                                 }
-                                if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 66
-                                  || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 83
-                                  || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 76 )
+                                if ( *((_BYTE *)Current_Script + Script_Position + 1) != 66
+                                  || *((_BYTE *)Current_Script + Script_Position + 2) != 83
+                                  || *((_BYTE *)Current_Script + Script_Position + 3) != 76 )
                                 {
                                   break;
                                 }
@@ -21959,9 +21960,9 @@ jmp_42256C_default_case:
                                   sub_47B500();
                                 Script_Position += 8;
                               }
-                              if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 77
-                                || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 89
-                                || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 68 )
+                              if ( *((_BYTE *)Current_Script + Script_Position + 1) != 77
+                                || *((_BYTE *)Current_Script + Script_Position + 2) != 89
+                                || *((_BYTE *)Current_Script + Script_Position + 3) != 68 )
                               {
                                 break;
                               }
@@ -21969,9 +21970,9 @@ jmp_42256C_default_case:
                               sub_416B70(Life_To_Add[0]);
                               Script_Position += 8;
                             }
-                            if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 77
-                              || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 89
-                              || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 66 )
+                            if ( *((_BYTE *)Current_Script + Script_Position + 1) != 77
+                              || *((_BYTE *)Current_Script + Script_Position + 2) != 89
+                              || *((_BYTE *)Current_Script + Script_Position + 3) != 66 )
                             {
                               break;
                             }
@@ -21979,45 +21980,45 @@ jmp_42256C_default_case:
                             sub_470150(*(int *)Life_To_Add);
                             Script_Position += 8;
                           }
-                          if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 77
-                            || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 77
-                            || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 48 )
+                          if ( *((_BYTE *)Current_Script + Script_Position + 1) != 77
+                            || *((_BYTE *)Current_Script + Script_Position + 2) != 77
+                            || *((_BYTE *)Current_Script + Script_Position + 3) != 48 )
                           {
                             break;
                           }
                           _crt_debugger_hook_0();
                           Script_Position += 4;
                         }
-                        if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 73
-                          || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 78
-                          || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 73 )
+                        if ( *((_BYTE *)Current_Script + Script_Position + 1) != 73
+                          || *((_BYTE *)Current_Script + Script_Position + 2) != 78
+                          || *((_BYTE *)Current_Script + Script_Position + 3) != 73 )
                         {
                           break;
                         }
                         sub_41D550(AppWinHandle);
                         Script_Position += 4;
                       }
-                      if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 83
-                        || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 86
-                        || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 80 )
+                      if ( *((_BYTE *)Current_Script + Script_Position + 1) != 83
+                        || *((_BYTE *)Current_Script + Script_Position + 2) != 86
+                        || *((_BYTE *)Current_Script + Script_Position + 3) != 80 )
                       {
                         break;
                       }
                       sub_41D040(0);
                       Script_Position += 4;
                     }
-                    if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 76
-                      || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 68
-                      || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 80 )
+                    if ( *((_BYTE *)Current_Script + Script_Position + 1) != 76
+                      || *((_BYTE *)Current_Script + Script_Position + 2) != 68
+                      || *((_BYTE *)Current_Script + Script_Position + 3) != 80 )
                     {
                       break;
                     }
                     if ( !sub_41D260(0) )
                       sub_41D550(AppWinHandle);
                   }
-                  if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 'F'
-                    || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 'A'
-                    || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 'C' )
+                  if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'F'
+                    || *((_BYTE *)Current_Script + Script_Position + 2) != 'A'
+                    || *((_BYTE *)Current_Script + Script_Position + 3) != 'C' )
                   {
                     break;
                   }
@@ -22029,9 +22030,9 @@ jmp_42256C_default_case:
                   }
                   Script_Position += 8;
                 }
-                if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 'F'
-                  || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 'A'
-                  || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 'C' )
+                if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'F'
+                  || *((_BYTE *)Current_Script + Script_Position + 2) != 'A'
+                  || *((_BYTE *)Current_Script + Script_Position + 3) != 'C' )
                 {
                   break;
                 }
@@ -22043,9 +22044,9 @@ jmp_42256C_default_case:
                 }
                 Script_Position += 8;
               }
-              if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 71
-                || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 73
-                || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 84 )
+              if ( *((_BYTE *)Current_Script + Script_Position + 1) != 71
+                || *((_BYTE *)Current_Script + Script_Position + 2) != 73
+                || *((_BYTE *)Current_Script + Script_Position + 3) != 84 )
               {
                 break;
               }
@@ -22054,9 +22055,9 @@ jmp_42256C_default_case:
               dword_4A5B18 = 128;
               Script_Position += 8;
             }
-            if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 78
-              || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 85
-              || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 77 )
+            if ( *((_BYTE *)Current_Script + Script_Position + 1) != 78
+              || *((_BYTE *)Current_Script + Script_Position + 2) != 85
+              || *((_BYTE *)Current_Script + Script_Position + 3) != 77 )
             {
               break;
             }
@@ -22064,9 +22065,9 @@ jmp_42256C_default_case:
             sub_421D10(*(int *)Life_To_Add);
             Script_Position += 8;
           }
-          if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 67
-            || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 82
-            || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 69 )
+          if ( *((_BYTE *)Current_Script + Script_Position + 1) != 67
+            || *((_BYTE *)Current_Script + Script_Position + 2) != 82
+            || *((_BYTE *)Current_Script + Script_Position + 3) != 69 )
           {
             break;
           }
@@ -22074,9 +22075,9 @@ jmp_42256C_default_case:
           sub_40D440();
           Script_Position += 4;
         }
-        if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 83
-          || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 73
-          || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 76 )
+        if ( *((_BYTE *)Current_Script + Script_Position + 1) != 83
+          || *((_BYTE *)Current_Script + Script_Position + 2) != 73
+          || *((_BYTE *)Current_Script + Script_Position + 3) != 76 )
         {
           break;
         }
@@ -22084,18 +22085,18 @@ jmp_42256C_default_case:
         sub_40DB40(*(int *)Life_To_Add);
         Script_Position += 8;
       }
-      if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 67
-        || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 73
-        || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 76 )
+      if ( *((_BYTE *)Current_Script + Script_Position + 1) != 67
+        || *((_BYTE *)Current_Script + Script_Position + 2) != 73
+        || *((_BYTE *)Current_Script + Script_Position + 3) != 76 )
       {
         break;
       }
       sub_40DB60();
       Script_Position += 4;
     }
-    if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 88
-      || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 88
-      || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 49 )
+    if ( *((_BYTE *)Current_Script + Script_Position + 1) != 88
+      || *((_BYTE *)Current_Script + Script_Position + 2) != 88
+      || *((_BYTE *)Current_Script + Script_Position + 3) != 49 )
     {
       break;
     }
@@ -22108,16 +22109,16 @@ jmp_42256C_default_case:
       return 2;
     Script_Position += 8;
   }
-  if ( *((_BYTE *)PCurrent_Script + Script_Position + 1) != 'E'
-    || *((_BYTE *)PCurrent_Script + Script_Position + 2) != 'S'
-    || *((_BYTE *)PCurrent_Script + Script_Position + 3) != 'C' )
+  if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'E'
+    || *((_BYTE *)Current_Script + Script_Position + 2) != 'S'
+    || *((_BYTE *)Current_Script + Script_Position + 3) != 'C' )
   {
     sprintf(
       &str,
       "不明のコード:<%c%c%c",
-      *((_BYTE *)PCurrent_Script + Script_Position + 1),
-      *((_BYTE *)PCurrent_Script + Script_Position + 2),
-      *((_BYTE *)PCurrent_Script + Script_Position + 3));
+      *((_BYTE *)Current_Script + Script_Position + 1),
+      *((_BYTE *)Current_Script + Script_Position + 2),
+      *((_BYTE *)Current_Script + Script_Position + 3));
     MessageBoxA(0, &str, "エラー", 0);
     result = 0;
   }
