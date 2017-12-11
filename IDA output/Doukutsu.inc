@@ -1,6 +1,6 @@
 ; ---------------------------------------------------------------------------
 
-_SYSTEM_INFO::$41710344DA04EC56A327D4EA11DEF6D2::$AA04DEB0C6383F89F13D312A174572A9 struc ; (sizeof=0x4,	mappedto_19) ; XREF: ...
+_SYSTEM_INFO::$41710344DA04EC56A327D4EA11DEF6D2::$AA04DEB0C6383F89F13D312A174572A9 struc ; (sizeof=0x4,	mappedto_20) ; XREF: ...
 wProcessorArchitecture dw ?
 wReserved	dw ?
 _SYSTEM_INFO::$41710344DA04EC56A327D4EA11DEF6D2::$AA04DEB0C6383F89F13D312A174572A9 ends
@@ -29,7 +29,7 @@ _SYSTEM_INFO	ends
 
 ; ---------------------------------------------------------------------------
 
-FILE		struc ;	(sizeof=0x20, mappedto_18) ; XREF: ...
+FILE		struc ;	(sizeof=0x20, mappedto_19) ; XREF: ...
 _ptr		dd ?			; offset
 _cnt		dd ?
 _base		dd ?			; offset
@@ -42,14 +42,14 @@ FILE		ends
 
 ; ---------------------------------------------------------------------------
 
-_LARGE_INTEGER::$837407842DC9087486FDFA5FEB63B74E struc	; (sizeof=0x8, mappedto_17) ; XREF: ...
+_LARGE_INTEGER::$837407842DC9087486FDFA5FEB63B74E struc	; (sizeof=0x8, mappedto_18) ; XREF: ...
 LowPart		dd ?
 HighPart	dd ?
 _LARGE_INTEGER::$837407842DC9087486FDFA5FEB63B74E ends
 
 ; ---------------------------------------------------------------------------
 
-LARGE_INTEGER	union ;	(sizeof=0x8, mappedto_16) ; XREF: ...
+LARGE_INTEGER	union ;	(sizeof=0x8, mappedto_17) ; XREF: ...
 anonymous_0	_LARGE_INTEGER::$837407842DC9087486FDFA5FEB63B74E ?
 u		_LARGE_INTEGER::$837407842DC9087486FDFA5FEB63B74E ?
 QuadPart	dq ?
@@ -57,14 +57,14 @@ LARGE_INTEGER	ends
 
 ; ---------------------------------------------------------------------------
 
-_FILETIME	struc ;	(sizeof=0x8, mappedto_15) ; XREF: ...
+_FILETIME	struc ;	(sizeof=0x8, mappedto_16) ; XREF: ...
 dwLowDateTime	dd ?
 dwHighDateTime	dd ?
 _FILETIME	ends
 
 ; ---------------------------------------------------------------------------
 
-_cpinfo		struc ;	(sizeof=0x14, mappedto_14) ; XREF: ...
+_cpinfo		struc ;	(sizeof=0x14, mappedto_15) ; XREF: ...
 MaxCharSize	dd ?
 DefaultChar	db 2 dup(?)
 LeadByte	db 12 dup(?)
@@ -73,7 +73,7 @@ _cpinfo		ends
 
 ; ---------------------------------------------------------------------------
 
-_SECURITY_ATTRIBUTES struc ; (sizeof=0xC, mappedto_13) ; XREF: ...
+_SECURITY_ATTRIBUTES struc ; (sizeof=0xC, mappedto_14) ; XREF: ...
 nLength		dd ?
 lpSecurityDescriptor dd	?		; offset
 bInheritHandle	dd ?
@@ -81,7 +81,7 @@ _SECURITY_ATTRIBUTES ends
 
 ; ---------------------------------------------------------------------------
 
-_MEMORY_BASIC_INFORMATION struc	; (sizeof=0x1C,	mappedto_12) ; XREF: ...
+_MEMORY_BASIC_INFORMATION struc	; (sizeof=0x1C,	mappedto_13) ; XREF: ...
 BaseAddress	dd ?			; offset
 AllocationBase	dd ?			; offset
 AllocationProtect dd ?
@@ -93,7 +93,7 @@ _MEMORY_BASIC_INFORMATION ends
 
 ; ---------------------------------------------------------------------------
 
-_STARTUPINFOA	struc ;	(sizeof=0x44, mappedto_11) ; XREF: ...
+_STARTUPINFOA	struc ;	(sizeof=0x44, mappedto_12) ; XREF: ...
 cb		dd ?
 lpReserved	dd ?			; offset
 lpDesktop	dd ?			; offset
@@ -116,14 +116,14 @@ _STARTUPINFOA	ends
 
 ; ---------------------------------------------------------------------------
 
-timecaps_tag	struc ;	(sizeof=0x8, mappedto_10) ; XREF: ...
+timecaps_tag	struc ;	(sizeof=0x8, mappedto_11) ; XREF: ...
 wPeriodMin	dd ?
 wPeriodMax	dd ?
 timecaps_tag	ends
 
 ; ---------------------------------------------------------------------------
 
-MSG		struc ;	(sizeof=0x1C, mappedto_9) ; XREF: ...
+MSG		struc ;	(sizeof=0x1C, mappedto_10) ; XREF: ...
 hwnd		dd ?			; offset
 message		dd ?
 wParam		dd ?
@@ -134,7 +134,7 @@ MSG		ends
 
 ; ---------------------------------------------------------------------------
 
-tagMSG		struc ;	(sizeof=0x1C, mappedto_8)
+tagMSG		struc ;	(sizeof=0x1C, mappedto_9)
 hwnd		dd ?			; offset
 message		dd ?
 wParam		dd ?
@@ -145,7 +145,7 @@ tagMSG		ends
 
 ; ---------------------------------------------------------------------------
 
-WNDCLASSEXA	struc ;	(sizeof=0x30, mappedto_7) ; XREF: ...
+WNDCLASSEXA	struc ;	(sizeof=0x30, mappedto_8) ; XREF: ...
 cbSize		dd ?
 style		dd ?
 lpfnWndProc	dd ?			; offset
@@ -162,7 +162,7 @@ WNDCLASSEXA	ends
 
 ; ---------------------------------------------------------------------------
 
-RECT		struc ;	(sizeof=0x10, mappedto_6) ; XREF: ...
+RECT		struc ;	(sizeof=0x10, mappedto_7) ; XREF: ...
 left		dd ?
 top		dd ?
 right		dd ?
@@ -171,14 +171,14 @@ RECT		ends
 
 ; ---------------------------------------------------------------------------
 
-POINT		struc ;	(sizeof=0x8, mappedto_5) ; XREF: ...
+POINT		struc ;	(sizeof=0x8, mappedto_6) ; XREF: ...
 x		dd ?
 y		dd ?
 POINT		ends
 
 ; ---------------------------------------------------------------------------
 
-WINDOWPLACEMENT	struc ;	(sizeof=0x2C, mappedto_4) ; XREF: ...
+WINDOWPLACEMENT	struc ;	(sizeof=0x2C, mappedto_5) ; XREF: ...
 length		dd ?
 flags		dd ?
 showCmd		dd ?
@@ -189,7 +189,7 @@ WINDOWPLACEMENT	ends
 
 ; ---------------------------------------------------------------------------
 
-tagRECT		struc ;	(sizeof=0x10, mappedto_3) ; XREF: ...
+tagRECT		struc ;	(sizeof=0x10, mappedto_4) ; XREF: ...
 left		dd ?
 top		dd ?
 right		dd ?
@@ -198,7 +198,7 @@ tagRECT		ends
 
 ; ---------------------------------------------------------------------------
 
-CPPEH_RECORD	struc ;	(sizeof=0x18, mappedto_2) ; XREF: ...
+CPPEH_RECORD	struc ;	(sizeof=0x18, mappedto_3) ; XREF: ...
 old_esp		dd ?
 exc_ptr		dd ?			; offset
 prev_er		dd ?			; offset
@@ -209,10 +209,16 @@ CPPEH_RECORD	ends
 
 ; ---------------------------------------------------------------------------
 
-_msEH		struc ;	(sizeof=0xC, mappedto_1) ; XREF: ...
+_msEH		struc ;	(sizeof=0xC, mappedto_2) ; XREF: ...
 _unk		dd ?			; base 16
 FilterProc	dd ?			; offset
 ExitProc	dd ?			; offset
 _msEH		ends
+
+; ---------------------------------------------------------------------------
+
+struct_0	struc ;	(sizeof=0x478, mappedto_1)
+anonymous_0	db 1144	dup(?)		; string(C)
+struct_0	ends
 
 

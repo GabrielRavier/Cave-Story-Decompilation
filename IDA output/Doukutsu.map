@@ -81,9 +81,11 @@
  0001:000083C4       Call_nem_lvl_1
  0001:000083DF       Call_nem_lvl_2
  0001:000083FB       Call_nem_lvl_3
+ 0001:00008621       glb_409621
+ 0001:00008628       loc_409628
  0001:00008650       Clear_All_Effects
  0001:00008670       No_Effect
- 0001:00008680       Pulsing_Disc_Particles
+ 0001:00008680       Random_Fountain_Pulsing_Disc_Particles
  0001:00008772       Initiate_Disk
  0001:00008880       Rising_Disc_And_Exploding_Diamond
  0001:00008B80       Star
@@ -92,11 +94,11 @@
  0001:00008F60       Booster_Smoke
  0001:00009120       Drowned_Quote
  0001:000091B0       Exclamation
- 0001:00009280       Level_Up_Down
+ 0001:00009280       Level_Up_Or_Down
  0001:000093F0       Red_Damage_Rings
- 0001:000095A0       White_Explosion_Disc
+ 0001:000095A0       Big_Explosion
  0001:00009650       Headbump_Sparks
- 0001:000097E0       Unknown_Effect
+ 0001:000097E0       Unknown_Unused_Effect
  0001:000098F0       Small_White_Explosion_Disc
  0001:000099E0       Empty__Effect_
  0001:00009AA0       Push_Jump_Key_Effect
@@ -116,19 +118,27 @@
  0001:0000A7A0       Destroy_Bitmap_Obj?
  0001:0000A800       Load_Image_From_Res
  0001:0000AAC0       Load_Image_From_File
- 0001:0000AFD0       LoadImageFileC
+ 0001:0000AE10       Load_Image_From_Resource_Reloadable?
+ 0001:0000AFD0       LoadImage_Must_Prep_RAM
  0001:0000B1D0       Prep_RAM_For_Img?
  0001:0000B320       Blit_Rect_From_Img_File_To_Region
  0001:0000B3C0       Render_Graphics
  0001:0000B5B0       Draw_Obj
+ 0001:0000B7A0       Blit_For_Dmg_Num?
  0001:0000B8B0       Set_BG_Color
- 0001:0000B9E0       FillDisplaybox_Memory
- 0001:0000BA80       FillDisplaybox_Memory?
- 0001:0000BB60       Upd_Scr_With_Wind_sub_40CB60
+ 0001:0000B9E0       FillRects_Memory
+ 0001:0000BA80       FillRects_Memory?
+ 0001:0000BB30       Upd_Scr_With_Wind_sub_sub
+ 0001:0000BB60       Upd_Scr_With_Wind_sub
  0001:0000BD50       Create_Font
+ 0001:0000BE00       Output_Text
+ 0001:0000BEB0       Draw_Text_To_Screen
  0001:0000BF70       Delete_Font_Obj
  0001:0000C010       Draw_From_Slot_0x25
+ 0001:0000C150       Draws_Some_Text
+ 0001:0000C240       Draws_Some_Text_
  0001:0000CE90       ___setargv
+ 0001:0000D770       TSC_FAI_and_FAO
  0001:0000D930       Check_Flag
  0001:0000DA50       __initp_eh_hooks
  0001:0000DA70       Explosion?
@@ -138,6 +148,7 @@
  0001:0000E380       Render_Numbers
  0001:0000E5F0       Upd_Win
  0001:0000E9B0       Title_Screen_Code
+ 0001:0000F304       Call_Render_Graphics_Mychar_Top_Selection
  0001:0000F400       Main_Game_Loop
  0001:0000F990       Get_Version_Number
  0001:0000FD10       Check_for_file
@@ -164,12 +175,18 @@
  0001:000122A6       jmp_Return_1_3
  0001:00012570       MessageQueue
  0001:00012950       __fptrap
+ 0001:00012AF0       Render_Background_Layer?
+ 0001:00012C60       Render_Foreground_Layer_And_Star_Block?
+ 0001:00012E40       Render_Caret_pbm?
+ 0001:00013250       TSC_MNA
+ 0001:000132C5       MNA_Render_Graphics_On_Title_Screen?
  0001:00013B20       memset_init_maps
  0001:000140FA       Play_Quote_Walk_3
  0001:0001412E       Play_Quote_Walk_4
  0001:00014250       Render_Quote_and_Gun
+ 0001:00014395       Render_Gun_Left
  0001:000146C0       Physics
- 0001:000146E5       Normal_Physics
+ 0001:000146E5       Underwater_Physics
  0001:00015990       Quote_Air
  0001:00015AA0       GetPlayerXY
  0001:00015AC0       Move_Quote
@@ -186,6 +203,9 @@
  0001:000167F8       Play_Quote_Hit_Ground_1
  0001:0001690A       Play_Quote_Hit_Ground_2
  0001:00016A1A       Play_Quote_Hit_Ground_3
+ 0001:00016E40       Tile_Code
+ 0001:000170F7       No_NPC_Tile
+ 0001:0001769C       jmp_417EC1
  0001:00017E2A       Play_Quote_Hit_Ground_4
  0001:000186F0       EXP_Add
  0001:0001882B       Play_Level_Up_AND_Create_Level_Up_Effect
@@ -195,12 +215,14 @@
  0001:00018951       Add_Invincibility
  0001:00018C60       TSC_LIplus
  0001:00018CB0       TSC_MLplus
- 0001:00018D10       Render_XP_Bar
+ 0001:00018D10       Render_XP_Bar_And_Misc
+ 0001:000190B0       Render_Weapon_Icons
  0001:000191D0       Render_Health_Bar
  0001:00019350       Underwater_Timer
  0001:000197C0       Get_Hell_Time
  0001:0001B230       fptc
  0001:0001B880       ___setargv_0
+ 0001:0001BB10       Sound_Thingy
  0001:0001BFC0       Check_Profile_DAT
  0001:0001C738       Return____
  0001:0001CBD0       Snake
@@ -2454,7 +2476,7 @@
  0003:0000ACC8       WeaponObj_?
  0003:0000ACCC       WeaponObj_FrameID
  0003:0000ACD0       WeaponObj_Direction
- 0003:0000ACD4       WeaponObj_Displaybox
+ 0003:0000ACD4       WeaponObj_Rects
  0003:0000ACE4       WeaponObj_Distance
  0003:0000ACE8       WeaponObj_?????
  0003:0000ACEC       WeaponObj_Max_Distance
@@ -2552,6 +2574,7 @@
  0003:0000F6C0       LvBarFlashesLeft
  0003:0000F6C4       ExpToGained
  0003:0000F6C8       Invincibility_Timer
+ 0003:0000F6CA       Time_Between_Shots
  0003:0000F6CC       Quote_Health_Current
  0003:0000F6CE       NumWhimStars
  0003:0000F6D0       Quote_Health_Max
@@ -2564,6 +2587,8 @@
  0003:00015DA8       TimerHandle
  0003:00015DAC       IsTimerActive
  0003:00016540       Y_Position
+ 0003:0001654C       Empty_Effect_Timer
+ 0003:00016554       Machine_Gun_Reload_Timer
  0003:00016568       SoundBufferArray
  0003:000167E8       DirectSoundObj
  0003:000167F0       CurrentMapID
@@ -2601,7 +2626,7 @@
  0003:00016FE0       Event_DeathGraphic
  0003:00016FE4       Event_Direction
  0003:00016FE8       Event_Flags
- 0003:00016FEC       Event_Displaybox
+ 0003:00016FEC       Event_Rects
  0003:00016FFC       Event_FrameTimer
  0003:00017000       Event_FrameNum
  0003:00017004       Event_ObjectTimer
@@ -2617,6 +2642,39 @@
  0003:00017038       ?????
  0003:0001703C       Event_Damage
  0003:00017040       Event_Parent
+ 0003:00017220       Is_NPC_Alive
+ 0003:00017224       Collision_Flag
+ 0003:00017228       NPC_X_Position
+ 0003:0001722C       NPC_Y_Position
+ 0003:00017230       NPC_X_Velocity
+ 0003:00017234       NPC_Y_Velocity
+ 0003:00017238       NPC_Generic?_X_Acceleration?
+ 0003:0001723C       NPC_Generic?_Y_Acceleration?
+ 0003:00017240       NPC_X_Position_Curly_AI
+ 0003:00017244       NPC_Y_Position_Curly_AI
+ 0003:00017248       NPC_Type
+ 0003:0001724C       NPC_Unknown
+ 0003:00017250       NPC_Event_Number
+ 0003:00017254       NPC_Spritesheet
+ 0003:00017258       NPC_Sound_When_Hit
+ 0003:0001725C       NPC_Death_Sound
+ 0003:00017260       NPC_Current_Health
+ 0003:00017264       NPC_EXP_Health_Missiles_Dropped
+ 0003:00017268       NPC_Explosion_Size
+ 0003:0001726C       NPC_Direction
+ 0003:00017270       NPC_Flags
+ 0003:00017274       NPC_Rects
+ 0003:00017284       NPC_Generic?_Counter?
+ 0003:00017288       NPC_Generic
+ 0003:0001728C       NPC_Generic_2
+ 0003:00017290       NPC_Generic_3
+ 0003:00017294       NPC_Generic_4
+ 0003:00017298       NPC_Generic_5
+ 0003:0001729C       NPC_Hitbox
+ 0003:000172BC       NPC_Touching_Bullet_Flag
+ 0003:000172C0       NPC_Damage_Taken
+ 0003:000172C4       NPC_Damage_On_Contact
+ 0003:000172C8       NPC_Parent_Variable
  0003:0002CA00       Unused_RAM
  0003:0002CA34       NPCStruct_Flags
  0003:0002CA36       NPCStruct_Health
@@ -2627,7 +2685,7 @@
  0003:0002CA3C       NPCStruct_Exp
  0003:0002CA40       NPCStruct_Damage
  0003:0002CA44       NPCStruct_Hitbox
- 0003:0002CA48       NPCStruct_Displaybox
+ 0003:0002CA48       NPCStruct_Rects
  0003:0002CA98       Omega_Health
  0003:0002CC64       X_Position
  0003:0002D9A8       Filename

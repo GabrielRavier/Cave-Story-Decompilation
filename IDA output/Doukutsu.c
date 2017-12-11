@@ -26,7 +26,7 @@ int Rend_Inv_Win_();
 signed int Inv_Menu_Code();
 signed int __cdecl Chk_If_Has_Item(int a1);
 signed int __cdecl Chk_If_Has_Weap(int a1);
-signed int __cdecl Rmv_Ammo_From_Weap(int Ammo_Count); // idb
+signed int __cdecl Rmv_Ammo_From_Weap(int Ammo_To_Remove); // idb
 signed int __cdecl Add_Ammo_To_Weap(int Ammo_To_Add); // idb
 int TSC_AEplus();
 int Switch_to_Next_Weap();
@@ -81,7 +81,7 @@ int Run_Bullet_Code();
 signed int sub_4095C0();
 void *Clear_All_Effects();
 // int __cdecl No_Effect(_DWORD); weak
-int __cdecl Pulsing_Disc_Particles(BOOL mode); // idb
+int __cdecl Random_Fountain_Pulsing_Disc_Particles(BOOL mode); // idb
 int __cdecl Rising_Disc_And_Exploding_Diamond(BOOL mode); // idb
 int __cdecl Star(BOOL mode); // idb
 int __cdecl Fireball_Impact(BOOL mode); // idb
@@ -89,18 +89,18 @@ int __cdecl ZzZ___(BOOL mode); // idb
 int __cdecl Booster_Smoke(BOOL mode); // idb
 signed int __cdecl Drowned_Quote(BOOL mode); // idb
 signed int __cdecl Exclamation(BOOL mode); // idb
-signed int __cdecl Level_Up_Down(BOOL mode); // idb
+signed int __cdecl Level_Up_Or_Down(BOOL mode); // idb
 signed int __cdecl Red_Damage_Rings(BOOL mode); // idb
-signed int __cdecl White_Explosion_Disc(BOOL mode); // idb
+signed int __cdecl Big_Explosion(BOOL mode); // idb
 signed int __cdecl Headbump_Sparks(BOOL mode); // idb
-int __cdecl Unknown_Effect(int a1);
+int __cdecl Unknown_Unused_Effect(int a1);
 signed int __cdecl Small_White_Explosion_Disc(BOOL mode); // idb
 signed int __cdecl Empty__Effect_(BOOL mode); // idb
 signed int __cdecl Push_Jump_Key_Effect(BOOL mode); // idb
 int Update_All_Effects();
 int __cdecl Draw_All_Effect_Obj(signed int a1, signed int a2);
 int __cdecl Create_Animated_Effect(int X_Position, int Y_Position, int Effect_ID, int Effect_Mode); // idb
-int __cdecl Load_Config_dat(char *); // idb
+int __cdecl Load_Config_dat(char *str1); // idb
 void *__cdecl Set_Default_Config_dat(void *ptr);
 bool __stdcall Version_Button(HWND hWnd, UINT a2, WPARAM a3, LPARAM a4);
 bool __stdcall Mute_Button(HWND hWnd, UINT a2, WPARAM a3, LPARAM a4);
@@ -113,25 +113,25 @@ void *__cdecl DDRAW_Destroy_(int a1);
 void *__cdecl Destroy_Bitmap_Obj_(int a1);
 int __cdecl Load_Image_From_Res(char *Ptr_Graphic, int GraphicID); // idb
 int __cdecl Load_Image_From_File(char *source, int destination); // idb
-int __cdecl sub_40BE10(char *, int); // idb
-int __cdecl LoadImageFileC(char *source, int destination); // idb
+int __cdecl Load_Image_From_Resource_Reloadable_(char *, int); // idb
+int __cdecl LoadImage_Must_Prep_RAM(char *source, int destination); // idb
 signed int __cdecl Prep_RAM_For_Img_(int a1, int a2, signed int a3, int a4);
-int __cdecl Blit_Rect_From_Img_File_To_Region(int a1, int a2);
-int __cdecl Render_Graphics(int Dst_Displaybox, int X_Position, int Y_Position, int Src_Displaybox, int GraphicsID); // idb
-int __cdecl Draw_Obj(int Dst_Displaybox, int X_Position, int Y_Position, int Src_Displaybox, int); // idb
-int __cdecl sub_40C7A0(int a1, int a2, int a3, int a4, int a5);
+int __cdecl Blit_Rect_From_Img_File_To_Region(int DstRect, int X_Position);
+int __cdecl Render_Graphics(int Dst_Rects, int X_Position, int Y_Position, int Src_Rects, int GraphicsID); // idb
+int __cdecl Draw_Obj(int Dst_Rects, int X_Position, int Y_Position, int Src_Rects, int); // idb
+int __cdecl Blit_For_Dmg_Num_(int a1, int a2, int a3, int a4, int a5);
 int __cdecl Set_BG_Color(COLORREF color); // idb
-int __cdecl FillDisplaybox_Memory(int Ptr_Img_Displaybox, int Mask_Color); // idb
-int __cdecl FillDisplaybox_Memory_(int a1, int a2, int a3);
-signed int sub_40CB30();
-int Upd_Scr_With_Wind_sub_40CB60();
+int __cdecl FillRects_Memory(int Ptr_Img_Rects, int Mask_Color); // idb
+int __cdecl FillRects_Memory_(int a1, int a2, int a3);
+signed int Upd_Scr_With_Wind_sub_sub();
+int Upd_Scr_With_Wind_sub();
 HFONT __cdecl Create_Font(LPCSTR a1);
-int __cdecl sub_40CEB0(int, int, char *, COLORREF, int); // idb
+int __cdecl Draw_Text_To_Screen(int X_Position, int Y_Position, char *Ptr_String, COLORREF color, int DDraw_Thingy); // idb
 // int Delete_Font_Obj(void); weak
 int sub_40CF90();
 int Draw_From_Slot_0x25();
-int __cdecl sub_40D150(int, int, char *, int); // idb
-int sub_40D240();
+int __cdecl Draws_Some_Text(int, int, char *, int); // idb
+int Draws_Some_Text_();
 int sub_40D2D0();
 int sub_40D350();
 int __cdecl sub_40D3A0(int a1);
@@ -151,7 +151,7 @@ void sub_40DEA0();
 char __cdecl sub_40DEC0(char a1);
 char __cdecl sub_40DF50(char a1);
 int sub_40DFE0();
-int sub_40E770();
+int TSC_FAI_and_FAO();
 bool sub_40E830();
 void *sub_40E850();
 void *sub_40E870();
@@ -221,11 +221,11 @@ char __cdecl sub_4139A0(signed int a1, signed int a2);
 char *__cdecl sub_413A00(int a1, int a2);
 int __cdecl sub_413A20(int a1, int a2);
 signed int __cdecl sub_413A60(int a1, int a2, unsigned __int8 a3);
-int __cdecl sub_413AF0(signed int a1, signed int a2);
-int __cdecl sub_413C60(signed int a1, signed int a2);
-int __cdecl sub_413E40(signed int a1, signed int a2);
+int __cdecl Render_Background_Layer_(signed int a1, signed int a2);
+int __cdecl Render_Foreground_Layer_And_Star_Block_(signed int a1, signed int a2);
+int __cdecl Render_Caret_pbm_(signed int a1, signed int a2);
 int __cdecl sub_4140F0(char *); // idb
-int __cdecl sub_414250(int a1);
+int __cdecl TSC_MNA(int a1);
 void sub_414310();
 int sub_414330();
 void __cdecl sub_4143C0(signed int a1);
@@ -270,7 +270,7 @@ signed int __cdecl sub_417C00(int a1, int a2);
 signed int __cdecl sub_417C90(int a1, int a2);
 signed int __cdecl sub_417D20(int a1, int a2);
 signed int __cdecl sub_417DB0(int a1, int a2);
-int sub_417E40();
+int Tile_Code();
 signed int __cdecl sub_4187F0(int a1);
 char __cdecl sub_418B10(int a1);
 signed int __cdecl sub_418C20(int a1);
@@ -284,8 +284,8 @@ int sub_419B50();
 int __cdecl sub_419BA0(int a1, int a2);
 int __cdecl TSC_LIplus(__int16 Health_To_Restore); // idb
 int __cdecl TSC_MLplus(__int16 Life_To_Add); // idb
-int __cdecl Render_XP_Bar(int a1);
-int sub_41A0B0();
+int __cdecl Render_XP_Bar_And_Misc(int a1);
+int Render_Weapon_Icons();
 int __cdecl Render_Health_Bar(int a1);
 int __cdecl Underwater_Timer(int X_Position, int Y_Position); // idb
 int __cdecl sub_41A430(int X_Position, int Y_Position);
@@ -325,7 +325,7 @@ void sub_41C7F0();
 // int __setargv_0(void); weak
 int sub_41C890();
 void sub_41C8F0();
-signed int __cdecl sub_41CB10(int a1, int a2);
+signed int __cdecl Sound_Thingy(int a1, int a2);
 bool Check_Profile_DAT(void);
 signed int __cdecl sub_41D040(int a1);
 signed int __cdecl sub_41D260(int a1);
@@ -540,7 +540,7 @@ int __cdecl NPC150(int a1);
 int __cdecl NPC151(int a1);
 int __cdecl NPC152(int a1);
 int __cdecl NPC153(int a1);
-int __cdecl NPC154(int a1);
+int __cdecl NPC154(int NPC_Vars_Pointer);
 int __cdecl NPC155(int a1);
 int __cdecl NPC156(int a1);
 signed int __cdecl NPC157(int a1);
@@ -1223,7 +1223,7 @@ int WeaponObj_In_Use[] = { 0 }; // weak
 int WeaponObj_X_Position[] = { 0 }; // weak
 int WeaponObj_Y_Position[] = { 0 }; // weak
 char WeaponObj_Direction[] = { '\0' }; // weak
-tagRECT WeaponObj_Displaybox = { 0, 0, 0, 0 }; // idb
+tagRECT WeaponObj_Rects = { 0, 0, 0, 0 }; // idb
 int WeaponObj_Max_Distance[] = { 0 }; // weak
 int WeaponObj_Damage[] = { 0 }; // weak
 int WeaponObj_Num_Impacts[] = { 0 }; // weak
@@ -1314,7 +1314,7 @@ int dword_49DB34; // weak
 int dword_49DB38; // weak
 char byte_49DB3C[]; // weak
 char byte_49DC68[]; // weak
-char asc_49DC69[1311]; // weak
+char byte_49DC69[1311]; // weak
 int dword_49E188; // weak
 int dword_49E18C; // weak
 int OccasionalFlash; // weak
@@ -1375,7 +1375,7 @@ void word_49E588; // idb
 char byte_49E58C; // weak
 int dword_49E590; // weak
 int dword_49E594; // weak
-char byte_49E598[]; // idb
+char Ptr_String[]; // idb
 void byte_49E5B8; // idb
 void Player_Flags; // idb
 int Tile_On_Which_Quote_Is; // weak
@@ -1413,7 +1413,7 @@ int WeaponRenderbox_Down; // weak
 int LvBarFlashesLeft; // weak
 int ExpToGained; // weak
 char Invincibility_Timer; // weak
-char byte_49E6CA; // weak
+char Time_Between_Shots; // weak
 char byte_49E6CB; // weak
 __int16 Quote_Health_Current; // weak
 __int16 NumWhimStars; // weak
@@ -1457,9 +1457,9 @@ int dword_4A5504[]; // weak
 int Y_Position; // idb
 int dword_4A5544; // weak
 int dword_4A5548; // weak
-int dword_4A554C; // weak
+int Empty_Effect_Timer; // weak
 int dword_4A5550; // weak
-int dword_4A5554; // weak
+int Machine_Gun_Reload_Timer; // weak
 int dword_4A5558; // weak
 int dword_4A555C; // weak
 int dword_4A5560; // weak
@@ -1526,40 +1526,38 @@ int Event_AltVel_Y[]; // weak
 int Event_Unknown1[]; // weak
 int Event_Unknown2[]; // weak
 int dword_4A6218; // weak
-void byte_4A6220; // idb
-int dword_4A6224[]; // weak
-int dword_4A6228[]; // weak
-int dword_4A622C[]; // weak
-int dword_4A6230[]; // weak
-int dword_4A6234[]; // weak
-int dword_4A6248[]; // weak
-int dword_4A624C[]; // weak
-int dword_4A6250[]; // weak
-int dword_4A6254[]; // weak
-int dword_4A6258[]; // weak
-int dword_4A625C[]; // weak
-int dword_4A6260[]; // weak
-int dword_4A6264[]; // weak
-int dword_4A6268[]; // weak
-int dword_4A626C[]; // weak
-__int16 word_4A6270[]; // weak
-_UNKNOWN unk_4A6274; // weak
-int dword_4A6284[]; // weak
-int dword_4A6288[]; // weak
-int dword_4A628C[]; // weak
-int dword_4A6290[]; // weak
-int dword_4A6294[]; // weak
-int dword_4A6298[]; // weak
-int dword_4A62A0[]; // weak
-int dword_4A62A4[]; // weak
-int dword_4A62A8[]; // weak
+void Is_NPC_Alive; // idb
+int Collision_Flag[]; // weak
+int NPC_X_Position[]; // weak
+int NPC_Y_Position[]; // weak
+int NPC_X_Velocity[]; // weak
+int NPC_Y_Velocity[]; // weak
+int NPC_Type[]; // weak
+int NPC_Unknown[]; // weak
+int NPC_Event_Number[]; // weak
+int NPC_Spritesheet[]; // weak
+int NPC_Sound_When_Hit[]; // weak
+int NPC_Death_Sound[]; // weak
+int NPC_Current_Health[]; // weak
+int NPC_EXP_Health_Missiles_Dropped[]; // weak
+int NPC_Explosion_Size[]; // weak
+int NPC_Direction[]; // weak
+__int16 NPC_Flags[]; // weak
+tagRECT NPC_Rects; // idb
+int NPC_Generic__Counter_[]; // weak
+int NPC_Generic[]; // weak
+int NPC_Generic_2[]; // weak
+int NPC_Generic_3[]; // weak
+int NPC_Generic_4[]; // weak
+int NPC_Generic_5[]; // weak
+tagRECT NPC_Hitbox; // idb
 int dword_4A62AC[]; // weak
 int dword_4A62B0[]; // weak
 int dword_4A62B4[]; // weak
-char byte_4A62BC[]; // weak
-int dword_4A62C0[]; // weak
-int dword_4A62C4[]; // weak
-int dword_4A62C8[]; // weak
+char NPC_Touching_Bullet_Flag[]; // weak
+int NPC_Damage_Taken[]; // weak
+int NPC_Damage_On_Contact[]; // weak
+int NPC_Parent_Variable[]; // weak
 int dword_4BBA20; // weak
 int dword_4BBA24; // weak
 int dword_4BBA28; // weak
@@ -1571,7 +1569,7 @@ char NPCStruct_DeathSnd; // weak
 int NPCStruct_Exp; // weak
 int NPCStruct_Damage; // weak
 int NPCStruct_Hitbox; // weak
-tagRECT NPCStruct_Displaybox; // idb
+tagRECT NPCStruct_Rects; // idb
 void byte_4BBA58; // idb
 int dword_4BBA5C[]; // weak
 int dword_4BBA60; // idb
@@ -2104,7 +2102,7 @@ int Rend_Inv_Win_()
   int v3; // [sp+4h] [bp-F0h]@1
   int v4; // [sp+8h] [bp-ECh]@1
   int v5; // [sp+Ch] [bp-E8h]@1
-  int Dst_Displaybox; // [sp+10h] [bp-E4h]@1
+  int Dst_Rects; // [sp+10h] [bp-E4h]@1
   int v7; // [sp+14h] [bp-E0h]@1
   int v8; // [sp+18h] [bp-DCh]@1
   int v9; // [sp+1Ch] [bp-D8h]@1
@@ -2153,7 +2151,7 @@ int Rend_Inv_Win_()
   int v52; // [sp+C8h] [bp-2Ch]@1
   int v53; // [sp+CCh] [bp-28h]@1
   int v54; // [sp+D0h] [bp-24h]@1
-  int Src_Displaybox; // [sp+D4h] [bp-20h]@1
+  int Src_Rects; // [sp+D4h] [bp-20h]@1
   int v56; // [sp+D8h] [bp-1Ch]@1
   int v57; // [sp+DCh] [bp-18h]@1
   int v58; // [sp+E0h] [bp-14h]@1
@@ -2174,7 +2172,7 @@ int Rend_Inv_Win_()
   v35 = 80;
   v36 = 96;
   v37 = 88;
-  Dst_Displaybox = 0;
+  Dst_Rects = 0;
   v7 = 0;
   v8 = 320;
   v9 = 240;
@@ -2202,7 +2200,7 @@ int Rend_Inv_Win_()
   v60 = 56;
   v61 = 144;
   v62 = 64;
-  Src_Displaybox = 0;
+  Src_Rects = 0;
   v56 = 0;
   v57 = 244;
   v58 = 8;
@@ -2214,20 +2212,20 @@ int Rend_Inv_Win_()
   v11 = 16;
   v12 = 244;
   v13 = 24;
-  Render_Graphics((int)&Dst_Displaybox, 38, 8, (int)&Src_Displaybox, 26);
+  Render_Graphics((int)&Dst_Rects, 38, 8, (int)&Src_Rects, 26);
   for ( i = 1; i < 18; ++i )
-    Render_Graphics((int)&Dst_Displaybox, 38, 8 * i + 8, (int)&v51, 26);
-  Render_Graphics((int)&Dst_Displaybox, 38, 8 * i + 8, (int)&v10, 26);
+    Render_Graphics((int)&Dst_Rects, 38, 8 * i + 8, (int)&v51, 26);
+  Render_Graphics((int)&Dst_Rects, 38, 8 * i + 8, (int)&v10, 26);
   if ( InventoryLabelPos > 16 )
     --InventoryLabelPos;
-  Render_Graphics((int)&Dst_Displaybox, 48, InventoryLabelPos, (int)&v46, 26);
-  Render_Graphics((int)&Dst_Displaybox, 48, InventoryLabelPos + 52, (int)&v59, 26);
+  Render_Graphics((int)&Dst_Rects, 48, InventoryLabelPos, (int)&v46, 26);
+  Render_Graphics((int)&Dst_Rects, 48, InventoryLabelPos + 52, (int)&v59, 26);
   ++MenuRectFlash;
   if ( InventoryViewType )
-    Render_Graphics((int)&Dst_Displaybox, 40 * SelectedWeaponID + 48, 24, (int)&v42, 26);
+    Render_Graphics((int)&Dst_Rects, 40 * SelectedWeaponID + 48, 24, (int)&v42, 26);
   else
     Render_Graphics(
-      (int)&Dst_Displaybox,
+      (int)&Dst_Rects,
       40 * SelectedWeaponID + 48,
       24,
       (int)(&v38 + 4 * (((unsigned int)MenuRectFlash >> 1) % 2)),
@@ -2238,9 +2236,9 @@ int Rend_Inv_Win_()
     v32 = v30 + 16;
     v31 = 16 * (*((_DWORD *)&WeaponData_ID + 5 * i) / 16);
     v33 = v31 + 16;
-    Render_Graphics((int)&Dst_Displaybox, 40 * i + 48, 24, (int)&v30, 12);
-    Render_Graphics((int)&Dst_Displaybox, 40 * i + 48, 56, (int)&v26, 26);
-    Render_Graphics((int)&Dst_Displaybox, 40 * i + 48, 40, (int)&v34, 26);
+    Render_Graphics((int)&Dst_Rects, 40 * i + 48, 24, (int)&v30, 12);
+    Render_Graphics((int)&Dst_Rects, 40 * i + 48, 56, (int)&v26, 26);
+    Render_Graphics((int)&Dst_Rects, 40 * i + 48, 40, (int)&v34, 26);
     Render_Numbers(40 * i + 48, 40, WeaponData_Level[5 * i], 0);
     if ( WeaponData_MaxAmmo[5 * i] )
     {
@@ -2249,20 +2247,20 @@ int Rend_Inv_Win_()
     }
     else
     {
-      Render_Graphics((int)&Dst_Displaybox, 40 * i + 64, 48, (int)&v2, 26);
-      Render_Graphics((int)&Dst_Displaybox, 40 * i + 64, 56, (int)&v2, 26);
+      Render_Graphics((int)&Dst_Rects, 40 * i + 64, 48, (int)&v2, 26);
+      Render_Graphics((int)&Dst_Rects, 40 * i + 64, 56, (int)&v2, 26);
     }
   }
   if ( InventoryViewType == 1 )
     result = Render_Graphics(
-               (int)&Dst_Displaybox,
+               (int)&Dst_Rects,
                32 * (SelectedItemID % 6) + 48,
                16 * (SelectedItemID / 6) + 76,
                (int)(&v18 + 4 * (((unsigned int)MenuRectFlash >> 1) % 2)),
                26);
   else
     result = Render_Graphics(
-               (int)&Dst_Displaybox,
+               (int)&Dst_Rects,
                32 * (SelectedItemID % 6) + 48,
                16 * (SelectedItemID / 6) + 76,
                (int)&v22,
@@ -2274,7 +2272,7 @@ int Rend_Inv_Win_()
     v16 = 32 * v1 + 32;
     v15 = 16 * (*((_DWORD *)Quote_Inventory + i) / 8);
     v17 = v15 + 16;
-    Render_Graphics((int)&Dst_Displaybox, 32 * (i % 6) + 48, 16 * (i / 6) + 76, (int)&v14, 8);
+    Render_Graphics((int)&Dst_Rects, 32 * (i % 6) + 48, 16 * (i / 6) + 76, (int)&v14, 8);
     result = i + 1;
   }
   return result;
@@ -2294,14 +2292,14 @@ signed int Inv_Menu_Code()
   int v2; // [sp+4h] [bp-124h]@8
   char v3[4]; // [sp+8h] [bp-120h]@1
   int v4; // [sp+110h] [bp-18h]@1
-  int Dst_Displaybox; // [sp+114h] [bp-14h]@1
+  int Dst_Rects; // [sp+114h] [bp-14h]@1
   int v6; // [sp+118h] [bp-10h]@1
   int v7; // [sp+11Ch] [bp-Ch]@1
   int v8; // [sp+120h] [bp-8h]@1
   int i; // [sp+124h] [bp-4h]@1
 
   v4 = dword_498B20;
-  Dst_Displaybox = 0;
+  Dst_Rects = 0;
   v6 = 0;
   v7 = 320;
   v8 = 240;
@@ -2334,7 +2332,7 @@ signed int Inv_Menu_Code()
       return 0;
     if ( v1 == 2 )
       return 2;
-    Draw_Obj((int)&Dst_Displaybox, 0, 0, (int)&Dst_Displaybox, 10);
+    Draw_Obj((int)&Dst_Rects, 0, 0, (int)&Dst_Rects, 10);
     Rend_Inv_Win_();
     sub_421F10();
     Display_FPS();
@@ -2396,7 +2394,7 @@ signed int __cdecl Chk_If_Has_Weap(int a1)
 }
 
 //----- (00401FA0) --------------------------------------------------------
-signed int __cdecl Rmv_Ammo_From_Weap(int Ammo_Count)
+signed int __cdecl Rmv_Ammo_From_Weap(int Ammo_To_Remove)
 {
   signed int result; // eax@2
 
@@ -2404,7 +2402,7 @@ signed int __cdecl Rmv_Ammo_From_Weap(int Ammo_Count)
   {
     if ( *(_DWORD *)&WeaponData_Ammo[20 * SelectedWeaponID] )
     {
-      *(_DWORD *)&WeaponData_Ammo[20 * SelectedWeaponID] -= Ammo_Count;
+      *(_DWORD *)&WeaponData_Ammo[20 * SelectedWeaponID] -= Ammo_To_Remove;
       if ( *(_DWORD *)&WeaponData_Ammo[20 * SelectedWeaponID] < 0 )
         *(_DWORD *)&WeaponData_Ammo[20 * SelectedWeaponID] = 0;
       result = 1;
@@ -2545,7 +2543,7 @@ signed int __cdecl Bckgrd_(char *source, int a2)
       BackgroundSizeX = v8;
       BackgroundSizeY = v9;
       dword_499C74 = 1;
-      if ( LoadImageFileC(source, 28) )
+      if ( LoadImage_Must_Prep_RAM(source, 28) )
       {
         BackgroundMode = a2;
         GlobalWaterDepth = 1966080;
@@ -2609,12 +2607,12 @@ int __cdecl Bckgrd_Code(signed int a1, signed int a2)
   int Y_Positiona; // [sp+8h] [bp-14h]@9
   int Y_Positionb; // [sp+8h] [bp-14h]@16
   int Y_Positionc; // [sp+8h] [bp-14h]@23
-  int Src_Displaybox; // [sp+Ch] [bp-10h]@1
+  int Src_Rects; // [sp+Ch] [bp-10h]@1
   int v12; // [sp+10h] [bp-Ch]@1
   int v13; // [sp+14h] [bp-8h]@1
   int v14; // [sp+18h] [bp-4h]@1
 
-  Src_Displaybox = 0;
+  Src_Rects = 0;
   v12 = 0;
   v13 = BackgroundSizeX;
   v14 = BackgroundSizeY;
@@ -2625,7 +2623,7 @@ int __cdecl Bckgrd_Code(signed int a1, signed int a2)
       for ( Y_Position = 0; Y_Position < 240; Y_Position += BackgroundSizeY )
       {
         for ( X_Position = 0; X_Position < 320; X_Position += BackgroundSizeX )
-          result = Draw_Obj((int)&FullscreenRect, X_Position, Y_Position, (int)&Src_Displaybox, 28);
+          result = Draw_Obj((int)&FullscreenRect, X_Position, Y_Position, (int)&Src_Rects, 28);
       }
       break;
     case 1:
@@ -2633,7 +2631,7 @@ int __cdecl Bckgrd_Code(signed int a1, signed int a2)
       for ( Y_Positiona = -(a2 / 2 / 512 % BackgroundSizeY); Y_Positiona < 240; Y_Positiona += BackgroundSizeY )
       {
         for ( X_Positiona = -(a1 / 2 / 512 % BackgroundSizeX); X_Positiona < 320; X_Positiona += BackgroundSizeX )
-          Draw_Obj((int)&FullscreenRect, X_Positiona, Y_Positiona, (int)&Src_Displaybox, 28);
+          Draw_Obj((int)&FullscreenRect, X_Positiona, Y_Positiona, (int)&Src_Rects, 28);
         result = BackgroundSizeY + Y_Positiona;
       }
       break;
@@ -2644,7 +2642,7 @@ int __cdecl Bckgrd_Code(signed int a1, signed int a2)
         result = a1 / 512 / BackgroundSizeX;
         for ( X_Positionb = -(a1 / 512 % BackgroundSizeX); X_Positionb < 320; X_Positionb += BackgroundSizeX )
         {
-          Draw_Obj((int)&FullscreenRect, X_Positionb, Y_Positionb, (int)&Src_Displaybox, 28);
+          Draw_Obj((int)&FullscreenRect, X_Positionb, Y_Positionb, (int)&Src_Rects, 28);
           result = BackgroundSizeX + X_Positionb;
         }
       }
@@ -2655,7 +2653,7 @@ int __cdecl Bckgrd_Code(signed int a1, signed int a2)
         result = dword_499C8C / 512 / BackgroundSizeX;
         for ( X_Positionc = -(dword_499C8C / 512 % BackgroundSizeX); X_Positionc < 320; X_Positionc += BackgroundSizeX )
         {
-          Draw_Obj((int)&FullscreenRect, X_Positionc, Y_Positionc, (int)&Src_Displaybox, 28);
+          Draw_Obj((int)&FullscreenRect, X_Positionc, Y_Positionc, (int)&Src_Rects, 28);
           result = BackgroundSizeX + X_Positionc;
         }
       }
@@ -2664,37 +2662,37 @@ int __cdecl Bckgrd_Code(signed int a1, signed int a2)
     case 7:
       v12 = 0;
       v14 = 88;
-      Src_Displaybox = 0;
+      Src_Rects = 0;
       v13 = 320;
-      Draw_Obj((int)&FullscreenRect, 0, 0, (int)&Src_Displaybox, 28);
+      Draw_Obj((int)&FullscreenRect, 0, 0, (int)&Src_Rects, 28);
       v12 = 88;
       v14 = 123;
-      Src_Displaybox = dword_499C8C / 2;
+      Src_Rects = dword_499C8C / 2;
       v13 = 320;
-      Draw_Obj((int)&FullscreenRect, 0, 88, (int)&Src_Displaybox, 28);
-      Src_Displaybox = 0;
-      Draw_Obj((int)&FullscreenRect, 320 - dword_499C8C / 2 % 320, 88, (int)&Src_Displaybox, 28);
+      Draw_Obj((int)&FullscreenRect, 0, 88, (int)&Src_Rects, 28);
+      Src_Rects = 0;
+      Draw_Obj((int)&FullscreenRect, 320 - dword_499C8C / 2 % 320, 88, (int)&Src_Rects, 28);
       v12 = 123;
       v14 = 146;
-      Src_Displaybox = dword_499C8C % 320;
+      Src_Rects = dword_499C8C % 320;
       v13 = 320;
-      Draw_Obj((int)&FullscreenRect, 0, 123, (int)&Src_Displaybox, 28);
-      Src_Displaybox = 0;
-      Draw_Obj((int)&FullscreenRect, 320 - dword_499C8C % 320, 123, (int)&Src_Displaybox, 28);
+      Draw_Obj((int)&FullscreenRect, 0, 123, (int)&Src_Rects, 28);
+      Src_Rects = 0;
+      Draw_Obj((int)&FullscreenRect, 320 - dword_499C8C % 320, 123, (int)&Src_Rects, 28);
       v12 = 146;
       v14 = 176;
-      Src_Displaybox = 2 * dword_499C8C % 320;
+      Src_Rects = 2 * dword_499C8C % 320;
       v13 = 320;
-      Draw_Obj((int)&FullscreenRect, 0, 146, (int)&Src_Displaybox, 28);
-      Src_Displaybox = 0;
-      Draw_Obj((int)&FullscreenRect, 320 - 2 * dword_499C8C % 320, 146, (int)&Src_Displaybox, 28);
+      Draw_Obj((int)&FullscreenRect, 0, 146, (int)&Src_Rects, 28);
+      Src_Rects = 0;
+      Draw_Obj((int)&FullscreenRect, 320 - 2 * dword_499C8C % 320, 146, (int)&Src_Rects, 28);
       v12 = 176;
       v14 = 240;
-      Src_Displaybox = 4 * dword_499C8C % 320;
+      Src_Rects = 4 * dword_499C8C % 320;
       v13 = 320;
-      Draw_Obj((int)&FullscreenRect, 0, 176, (int)&Src_Displaybox, 28);
-      Src_Displaybox = 0;
-      result = Draw_Obj((int)&FullscreenRect, 320 - 4 * dword_499C8C % 320, 176, (int)&Src_Displaybox, 28);
+      Draw_Obj((int)&FullscreenRect, 0, 176, (int)&Src_Rects, 28);
+      Src_Rects = 0;
+      result = Draw_Obj((int)&FullscreenRect, 320 - 4 * dword_499C8C % 320, 176, (int)&Src_Rects, 28);
       break;
     default:
       return result;
@@ -2717,7 +2715,7 @@ int __cdecl Rend_Map_Bckgrd(signed int a1, signed int a2)
   int v5; // [sp+10h] [bp-34h]@1
   int v6; // [sp+14h] [bp-30h]@1
   int v7; // [sp+18h] [bp-2Ch]@1
-  int Src_Displaybox; // [sp+1Ch] [bp-28h]@1
+  int Src_Rects; // [sp+1Ch] [bp-28h]@1
   int v9; // [sp+20h] [bp-24h]@1
   int v10; // [sp+24h] [bp-20h]@1
   int v11; // [sp+28h] [bp-1Ch]@1
@@ -2732,7 +2730,7 @@ int __cdecl Rend_Map_Bckgrd(signed int a1, signed int a2)
   v5 = 0;
   v6 = 32;
   v7 = 16;
-  Src_Displaybox = 0;
+  Src_Rects = 0;
   v9 = 16;
   v10 = 32;
   v11 = 48;
@@ -2754,7 +2752,7 @@ int __cdecl Rend_Map_Bckgrd(signed int a1, signed int a2)
         for ( j = v13; j < v14; ++j )
         {
           X_Position = (j << 14) / 512 - a1 / 512;
-          Render_Graphics((int)&FullscreenRect, X_Position, Y_Position, (int)&Src_Displaybox, 28);
+          Render_Graphics((int)&FullscreenRect, X_Position, Y_Position, (int)&Src_Rects, 28);
           if ( !i )
             Render_Graphics((int)&FullscreenRect, X_Position, Y_Position, (int)&v4, 28);
           result = j + 1;
@@ -3462,7 +3460,7 @@ int __cdecl Render_Bullets(signed int a1, signed int a2)
         (int)&FullscreenRect,
         v4 / 512 - a1 / 512,
         v5 / 512 - a2 / 512,
-        (int)(&WeaponObj_Displaybox + 8 * i),
+        (int)(&WeaponObj_Rects + 8 * i),
         17);
     }
     result = i + 1;
@@ -7135,7 +7133,7 @@ signed int sub_4095C0()
       return 0;
     if ( WeaponObj_In_Use[32 * i] & 0x80 )
       break;
-LABEL_2:
+For_Loop_Restart:
     ;
   }
   switch ( WeaponObj_ShotID[32 * i] )
@@ -7159,7 +7157,7 @@ LABEL_2:
       result = 1;
       break;
     default:
-      goto LABEL_2;
+      goto For_Loop_Restart;
   }
   return result;
 }
@@ -7174,7 +7172,7 @@ void *Clear_All_Effects()
 
 //----- (00409680) --------------------------------------------------------
 // mode 0: blue discs, mode 1: red discs
-int __cdecl Pulsing_Disc_Particles(BOOL mode)
+int __cdecl Random_Fountain_Pulsing_Disc_Particles(BOOL mode)
 {
   int *v1; // edx@7
   int result; // eax@7
@@ -7837,7 +7835,7 @@ signed int __cdecl Exclamation(BOOL mode)
 
 //----- (0040A280) --------------------------------------------------------
 // mode 0: level up, mode 1: level down
-signed int __cdecl Level_Up_Down(BOOL mode)
+signed int __cdecl Level_Up_Or_Down(BOOL mode)
 {
   int *v1; // eax@12
   int v2; // ecx@12
@@ -8005,7 +8003,7 @@ signed int __cdecl Red_Damage_Rings(BOOL mode)
 
 //----- (0040A5A0) --------------------------------------------------------
 // mode 0 only
-signed int __cdecl White_Explosion_Disc(BOOL mode)
+signed int __cdecl Big_Explosion(BOOL mode)
 {
   int *v1; // eax@4
   int v2; // ecx@4
@@ -8108,7 +8106,7 @@ signed int __cdecl Headbump_Sparks(BOOL mode)
 }
 
 //----- (0040A7E0) --------------------------------------------------------
-int __cdecl Unknown_Effect(int a1)
+int __cdecl Unknown_Unused_Effect(int a1)
 {
   int *v1; // eax@4
   int v2; // ecx@4
@@ -8374,6 +8372,7 @@ int __cdecl Create_Animated_Effect(int X_Position, int Y_Position, int Effect_ID
 // 49BCD8: using guessed type int EffectObj_Y_Offset[];
 
 //----- (0040AD60) --------------------------------------------------------
+// Load Config.dat, check string DOUKUTSU20041206 (return 0 if not equal)
 int __cdecl Load_Config_dat(char *str1)
 {
   int result; // eax@2
@@ -8412,6 +8411,7 @@ int __cdecl Load_Config_dat(char *str1)
 // 498B20: using guessed type int dword_498B20;
 
 //----- (0040AE30) --------------------------------------------------------
+// Sets Config.dat to default values (Called if check above fails)
 void *__cdecl Set_Default_Config_dat(void *ptr)
 {
   void *result; // eax@1
@@ -8431,6 +8431,7 @@ void *__cdecl Set_Default_Config_dat(void *ptr)
 }
 
 //----- (0040AEC0) --------------------------------------------------------
+// Runs when you hit "Version" menu button
 bool __stdcall Version_Button(HWND hWnd, UINT a2, WPARAM a3, LPARAM a4)
 {
   bool result; // eax@4
@@ -8465,6 +8466,7 @@ bool __stdcall Version_Button(HWND hWnd, UINT a2, WPARAM a3, LPARAM a4)
 // 498B20: using guessed type int dword_498B20;
 
 //----- (0040AFC0) --------------------------------------------------------
+// Runs when you hit "Mute" menu button
 bool __stdcall Mute_Button(HWND hWnd, UINT a2, WPARAM a3, LPARAM a4)
 {
   bool result; // eax@4
@@ -8517,6 +8519,7 @@ bool __stdcall Mute_Button(HWND hWnd, UINT a2, WPARAM a3, LPARAM a4)
 // 4A4D64: using guessed type int dword_4A4D64;
 
 //----- (0040B1D0) --------------------------------------------------------
+// Runs when you hit "Debug Save" menu button
 bool __stdcall Debug_Save_Button(HWND hDlg, UINT a2, WPARAM a3, LPARAM a4)
 {
   bool result; // eax@4
@@ -8552,6 +8555,7 @@ bool __stdcall Debug_Save_Button(HWND hDlg, UINT a2, WPARAM a3, LPARAM a4)
 // 498B20: using guessed type int dword_498B20;
 
 //----- (0040B290) --------------------------------------------------------
+// Runs when you hit "Quit" menu button
 bool __stdcall Quit_Button(HWND hDlg, UINT a2, WPARAM a3, LPARAM lpString)
 {
   bool result; // eax@4
@@ -8594,6 +8598,7 @@ int __cdecl Change_Screen_Offsets(int New_Screen_Offset_Y, int New_Screen_Offset
 // 49CDAC: using guessed type int Screen_Offset_Y;
 
 //----- (0040B340) --------------------------------------------------------
+// Update Screen with window? Also contains FPS delimiter
 int __cdecl Upd_Scr_With_Wind_(HWND hWnd)
 {
   while ( 1 )
@@ -8621,9 +8626,9 @@ int __cdecl Upd_Scr_With_Wind_(HWND hWnd)
     &Fullscreen_Rect,
     0x1000000,
     0);
-  if ( Upd_Scr_With_Wind_sub_40CB60() )
+  if ( Upd_Scr_With_Wind_sub() )
   {
-    sub_40D240();
+    Draws_Some_Text_();
     sub_414330();
     sub_425790();
   }
@@ -8737,6 +8742,7 @@ signed int __cdecl DDRAW_Setup_(int a1, int a2, int a3)
 // 49D378: using guessed type int Fullscreen_Height;
 
 //----- (0040B6C0) --------------------------------------------------------
+// DDRAW destroy? (Called on program exit)
 void *__cdecl DDRAW_Destroy_(int a1)
 {
   signed int i; // [sp+0h] [bp-4h]@1
@@ -8767,6 +8773,7 @@ void *__cdecl DDRAW_Destroy_(int a1)
 // 49CDC0: using guessed type int dword_49CDC0;
 
 //----- (0040B7A0) --------------------------------------------------------
+// Destroy bitmap objects? (Called on program exit)
 void *__cdecl Destroy_Bitmap_Obj_(int a1)
 {
   if ( Image_Res_Surface[a1] )
@@ -8778,6 +8785,7 @@ void *__cdecl Destroy_Bitmap_Obj_(int a1)
 }
 
 //----- (0040B800) --------------------------------------------------------
+// Load Image from Resource
 int __cdecl Load_Image_From_Res(char *Ptr_Graphic, int GraphicID)
 {
   int result; // eax@2
@@ -8886,6 +8894,7 @@ int __cdecl Load_Image_From_Res(char *Ptr_Graphic, int GraphicID)
 // 49CDE8: using guessed type int dword_49CDE8[];
 
 //----- (0040BAC0) --------------------------------------------------------
+// Load Image from file (Permanent)
 int __cdecl Load_Image_From_File(char *source, int destination)
 {
   int result; // eax@2
@@ -9009,7 +9018,8 @@ int __cdecl Load_Image_From_File(char *source, int destination)
 // 49CDE8: using guessed type int dword_49CDE8[];
 
 //----- (0040BE10) --------------------------------------------------------
-int __cdecl sub_40BE10(char *source, int a2)
+// Load Image (From Resource and reloadable??)
+int __cdecl Load_Image_From_Resource_Reloadable_(char *source, int a2)
 {
   int result; // eax@2
   HINSTANCE v3; // eax@3
@@ -9073,7 +9083,8 @@ int __cdecl sub_40BE10(char *source, int a2)
 // 49CDE4: using guessed type int dword_49CDE4[];
 
 //----- (0040BFD0) --------------------------------------------------------
-int __cdecl LoadImageFileC(char *source, int destination)
+// Load Image (Reloadable, must prep RAM first)
+int __cdecl LoadImage_Must_Prep_RAM(char *source, int destination)
 {
   int result; // eax@2
   HINSTANCE v3; // eax@5
@@ -9214,16 +9225,16 @@ signed int __cdecl Prep_RAM_For_Img_(int a1, int a2, signed int a3, int a4)
 // 49CDE8: using guessed type int dword_49CDE8[];
 
 //----- (0040C320) --------------------------------------------------------
-int __cdecl Blit_Rect_From_Img_File_To_Region(int a1, int a2)
+int __cdecl Blit_Rect_From_Img_File_To_Region(int DstRect, int X_Position)
 {
   memset(&DDBLTFX_ScreenCopy, 0, 0x64u);
   *(_DWORD *)&DDBLTFX_ScreenCopy = 100;
-  RECT_ScreenCopy = GraphicScale * *(_DWORD *)a2;
-  dword_49D444 = GraphicScale * *(_DWORD *)(a2 + 4);
-  dword_49D448 = GraphicScale * *(_DWORD *)(a2 + 8);
-  dword_49D44C = GraphicScale * *(_DWORD *)(a2 + 12);
-  return (*((int (__stdcall **)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD))Image_Res_Surface[a1]->lpVtbl + 5))(
-           Image_Res_Surface[a1],
+  RECT_ScreenCopy = GraphicScale * *(_DWORD *)X_Position;
+  dword_49D444 = GraphicScale * *(_DWORD *)(X_Position + 4);
+  dword_49D448 = GraphicScale * *(_DWORD *)(X_Position + 8);
+  dword_49D44C = GraphicScale * *(_DWORD *)(X_Position + 12);
+  return (*((int (__stdcall **)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD))Image_Res_Surface[DstRect]->lpVtbl + 5))(
+           Image_Res_Surface[DstRect],
            &RECT_ScreenCopy,
            DD7_SurfaceB,
            &RECT_ScreenCopy,
@@ -9237,31 +9248,28 @@ int __cdecl Blit_Rect_From_Img_File_To_Region(int a1, int a2)
 // 49D44C: using guessed type int dword_49D44C;
 
 //----- (0040C3C0) --------------------------------------------------------
-int __cdecl Render_Graphics(int Dst_Displaybox, int X_Position, int Y_Position, int Src_Displaybox, int GraphicsID)
+int __cdecl Render_Graphics(int Dst_Rects, int X_Position, int Y_Position, int Src_Rects, int GraphicsID)
 {
-  Blit_Rect_4C4.left = *(_DWORD *)Src_Displaybox;
-  Blit_Rect_4C4.top = *(_DWORD *)(Src_Displaybox + 4);
-  Blit_Rect_4C4.right = *(_DWORD *)(Src_Displaybox + 8);
-  Blit_Rect_4C4.bottom = *(_DWORD *)(Src_Displaybox + 12);
-  if ( *(_DWORD *)(Src_Displaybox + 8) + X_Position - *(_DWORD *)Src_Displaybox > *(_DWORD *)(Dst_Displaybox + 8) )
-    Blit_Rect_4C4.right -= *(_DWORD *)(Src_Displaybox + 8)
-                         + X_Position
-                         - *(_DWORD *)Src_Displaybox
-                         - *(_DWORD *)(Dst_Displaybox + 8);
-  if ( X_Position < *(_DWORD *)Dst_Displaybox )
+  Blit_Rect_4C4.left = *(_DWORD *)Src_Rects;
+  Blit_Rect_4C4.top = *(_DWORD *)(Src_Rects + 4);
+  Blit_Rect_4C4.right = *(_DWORD *)(Src_Rects + 8);
+  Blit_Rect_4C4.bottom = *(_DWORD *)(Src_Rects + 12);
+  if ( *(_DWORD *)(Src_Rects + 8) + X_Position - *(_DWORD *)Src_Rects > *(_DWORD *)(Dst_Rects + 8) )
+    Blit_Rect_4C4.right -= *(_DWORD *)(Src_Rects + 8) + X_Position - *(_DWORD *)Src_Rects - *(_DWORD *)(Dst_Rects + 8);
+  if ( X_Position < *(_DWORD *)Dst_Rects )
   {
-    Blit_Rect_4C4.left += *(_DWORD *)Dst_Displaybox - X_Position;
-    X_Position = *(_DWORD *)Dst_Displaybox;
+    Blit_Rect_4C4.left += *(_DWORD *)Dst_Rects - X_Position;
+    X_Position = *(_DWORD *)Dst_Rects;
   }
-  if ( *(_DWORD *)(Src_Displaybox + 12) + Y_Position - *(_DWORD *)(Src_Displaybox + 4) > *(_DWORD *)(Dst_Displaybox + 12) )
-    Blit_Rect_4C4.bottom -= *(_DWORD *)(Src_Displaybox + 12)
+  if ( *(_DWORD *)(Src_Rects + 12) + Y_Position - *(_DWORD *)(Src_Rects + 4) > *(_DWORD *)(Dst_Rects + 12) )
+    Blit_Rect_4C4.bottom -= *(_DWORD *)(Src_Rects + 12)
                           + Y_Position
-                          - *(_DWORD *)(Src_Displaybox + 4)
-                          - *(_DWORD *)(Dst_Displaybox + 12);
-  if ( Y_Position < *(_DWORD *)(Dst_Displaybox + 4) )
+                          - *(_DWORD *)(Src_Rects + 4)
+                          - *(_DWORD *)(Dst_Rects + 12);
+  if ( Y_Position < *(_DWORD *)(Dst_Rects + 4) )
   {
-    Blit_Rect_4C4.top += *(_DWORD *)(Dst_Displaybox + 4) - Y_Position;
-    Y_Position = *(_DWORD *)(Dst_Displaybox + 4);
+    Blit_Rect_4C4.top += *(_DWORD *)(Dst_Rects + 4) - Y_Position;
+    Y_Position = *(_DWORD *)(Dst_Rects + 4);
   }
   Blit_Rect_4B4.left = GraphicScale * X_Position;
   Blit_Rect_4B4.top = GraphicScale * Y_Position;
@@ -9283,31 +9291,28 @@ int __cdecl Render_Graphics(int Dst_Displaybox, int X_Position, int Y_Position, 
 
 //----- (0040C5B0) --------------------------------------------------------
 // Render_Graphics for backgrounds
-int __cdecl Draw_Obj(int Dst_Displaybox, int X_Position, int Y_Position, int Src_Displaybox, int a5)
+int __cdecl Draw_Obj(int Dst_Rects, int X_Position, int Y_Position, int Src_Rects, int a5)
 {
-  Blit_Rect_4E4.left = *(_DWORD *)Src_Displaybox;
-  Blit_Rect_4E4.top = *(_DWORD *)(Src_Displaybox + 4);
-  Blit_Rect_4E4.right = *(_DWORD *)(Src_Displaybox + 8);
-  Blit_Rect_4E4.bottom = *(_DWORD *)(Src_Displaybox + 12);
-  if ( *(_DWORD *)(Src_Displaybox + 8) + X_Position - *(_DWORD *)Src_Displaybox > *(_DWORD *)(Dst_Displaybox + 8) )
-    Blit_Rect_4E4.right -= *(_DWORD *)(Src_Displaybox + 8)
-                         + X_Position
-                         - *(_DWORD *)Src_Displaybox
-                         - *(_DWORD *)(Dst_Displaybox + 8);
-  if ( X_Position < *(_DWORD *)Dst_Displaybox )
+  Blit_Rect_4E4.left = *(_DWORD *)Src_Rects;
+  Blit_Rect_4E4.top = *(_DWORD *)(Src_Rects + 4);
+  Blit_Rect_4E4.right = *(_DWORD *)(Src_Rects + 8);
+  Blit_Rect_4E4.bottom = *(_DWORD *)(Src_Rects + 12);
+  if ( *(_DWORD *)(Src_Rects + 8) + X_Position - *(_DWORD *)Src_Rects > *(_DWORD *)(Dst_Rects + 8) )
+    Blit_Rect_4E4.right -= *(_DWORD *)(Src_Rects + 8) + X_Position - *(_DWORD *)Src_Rects - *(_DWORD *)(Dst_Rects + 8);
+  if ( X_Position < *(_DWORD *)Dst_Rects )
   {
-    Blit_Rect_4E4.left += *(_DWORD *)Dst_Displaybox - X_Position;
-    X_Position = *(_DWORD *)Dst_Displaybox;
+    Blit_Rect_4E4.left += *(_DWORD *)Dst_Rects - X_Position;
+    X_Position = *(_DWORD *)Dst_Rects;
   }
-  if ( *(_DWORD *)(Src_Displaybox + 12) + Y_Position - *(_DWORD *)(Src_Displaybox + 4) > *(_DWORD *)(Dst_Displaybox + 12) )
-    Blit_Rect_4E4.bottom -= *(_DWORD *)(Src_Displaybox + 12)
+  if ( *(_DWORD *)(Src_Rects + 12) + Y_Position - *(_DWORD *)(Src_Rects + 4) > *(_DWORD *)(Dst_Rects + 12) )
+    Blit_Rect_4E4.bottom -= *(_DWORD *)(Src_Rects + 12)
                           + Y_Position
-                          - *(_DWORD *)(Src_Displaybox + 4)
-                          - *(_DWORD *)(Dst_Displaybox + 12);
-  if ( Y_Position < *(_DWORD *)(Dst_Displaybox + 4) )
+                          - *(_DWORD *)(Src_Rects + 4)
+                          - *(_DWORD *)(Dst_Rects + 12);
+  if ( Y_Position < *(_DWORD *)(Dst_Rects + 4) )
   {
-    Blit_Rect_4E4.top += *(_DWORD *)(Dst_Displaybox + 4) - Y_Position;
-    Y_Position = *(_DWORD *)(Dst_Displaybox + 4);
+    Blit_Rect_4E4.top += *(_DWORD *)(Dst_Rects + 4) - Y_Position;
+    Y_Position = *(_DWORD *)(Dst_Rects + 4);
   }
   Blit_Rect_4D4.left = GraphicScale * X_Position;
   Blit_Rect_4D4.top = GraphicScale * Y_Position;
@@ -9328,7 +9333,8 @@ int __cdecl Draw_Obj(int Dst_Displaybox, int X_Position, int Y_Position, int Src
 // 48F914: using guessed type int GraphicScale;
 
 //----- (0040C7A0) --------------------------------------------------------
-int __cdecl sub_40C7A0(int a1, int a2, int a3, int a4, int a5)
+// Some kind of blit? Used for damage numbers
+int __cdecl Blit_For_Dmg_Num_(int a1, int a2, int a3, int a4, int a5)
 {
   dword_49D504 = GraphicScale * *(_DWORD *)a3;
   dword_49D508 = GraphicScale * *(_DWORD *)(a3 + 4);
@@ -9413,15 +9419,15 @@ int __cdecl Set_BG_Color(COLORREF color)
 }
 
 //----- (0040C9E0) --------------------------------------------------------
-int __cdecl FillDisplaybox_Memory(int Ptr_Img_Displaybox, int Mask_Color)
+int __cdecl FillRects_Memory(int Ptr_Img_Rects, int Mask_Color)
 {
   memset(DDBLTFX_Clear, 0, 0x64u);
   *(_DWORD *)DDBLTFX_Clear = 100;
   *(_DWORD *)asc_49D578 = Mask_Color;
-  Rect_Clear = GraphicScale * *(_DWORD *)Ptr_Img_Displaybox;
-  dword_49D518 = GraphicScale * *(_DWORD *)(Ptr_Img_Displaybox + 4);
-  dword_49D51C = GraphicScale * *(_DWORD *)(Ptr_Img_Displaybox + 8);
-  dword_49D520 = GraphicScale * *(_DWORD *)(Ptr_Img_Displaybox + 12);
+  Rect_Clear = GraphicScale * *(_DWORD *)Ptr_Img_Rects;
+  dword_49D518 = GraphicScale * *(_DWORD *)(Ptr_Img_Rects + 4);
+  dword_49D51C = GraphicScale * *(_DWORD *)(Ptr_Img_Rects + 8);
+  dword_49D520 = GraphicScale * *(_DWORD *)(Ptr_Img_Rects + 12);
   return (*((int (__stdcall **)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD))DD7_SurfaceB->lpVtbl + 5))(
            DD7_SurfaceB,
            &Rect_Clear,
@@ -9437,7 +9443,7 @@ int __cdecl FillDisplaybox_Memory(int Ptr_Img_Displaybox, int Mask_Color)
 // 49D520: using guessed type int dword_49D520;
 
 //----- (0040CA80) --------------------------------------------------------
-int __cdecl FillDisplaybox_Memory_(int a1, int a2, int a3)
+int __cdecl FillRects_Memory_(int a1, int a2, int a3)
 {
   memset(asc_49D5A0, 0, 0x64u);
   *(_DWORD *)asc_49D5A0 = 100;
@@ -9463,13 +9469,13 @@ int __cdecl FillDisplaybox_Memory_(int a1, int a2, int a3)
 // 49D598: using guessed type int dword_49D598;
 
 //----- (0040CB30) --------------------------------------------------------
-signed int sub_40CB30()
+signed int Upd_Scr_With_Wind_sub_sub()
 {
   return 1;
 }
 
 //----- (0040CB60) --------------------------------------------------------
-int Upd_Scr_With_Wind_sub_40CB60()
+int Upd_Scr_With_Wind_sub()
 {
   int result; // eax@2
   int v1; // [sp+0h] [bp-1Ch]@14
@@ -9489,13 +9495,13 @@ int Upd_Scr_With_Wind_sub_40CB60()
       {
         ++v7;
         (*((void (__cdecl **)(_DWORD))DD7_SurfaceA->lpVtbl + 27))(DD7_SurfaceA);
-        sub_40CB30();
+        Upd_Scr_With_Wind_sub_sub();
       }
       if ( (*((int (__cdecl **)(_DWORD))DD7_SurfaceB->lpVtbl + 24))(DD7_SurfaceB) == -2005532222 )
       {
         ++v7;
         (*((void (__cdecl **)(_DWORD))DD7_SurfaceB->lpVtbl + 27))(DD7_SurfaceB);
-        sub_40CB30();
+        Upd_Scr_With_Wind_sub_sub();
       }
       for ( destination = 0; destination < 40; ++destination )
       {
@@ -9505,7 +9511,7 @@ int Upd_Scr_With_Wind_sub_40CB60()
           {
             ++v7;
             (*((void (__cdecl **)(_DWORD))Image_Res_Surface[destination]->lpVtbl + 27))(Image_Res_Surface[destination]);
-            sub_40CB30();
+            Upd_Scr_With_Wind_sub_sub();
             if ( !dword_49CDE8[9 * destination] )
             {
               v1 = dword_49CDE4[9 * destination];
@@ -9516,13 +9522,13 @@ int Upd_Scr_With_Wind_sub_40CB60()
                   v3 = 0;
                   v4 = dword_49CDDC[9 * destination];
                   v5 = dword_49CDE0[9 * destination];
-                  FillDisplaybox_Memory_((int)&v2, 0, destination);
+                  FillRects_Memory_((int)&v2, 0, destination);
                   break;
                 case 2:
-                  sub_40BE10((char *)ptr + 36 * destination, destination);
+                  Load_Image_From_Resource_Reloadable_((char *)ptr + 36 * destination, destination);
                   break;
                 case 3:
-                  LoadImageFileC((char *)ptr + 36 * destination, destination);
+                  LoadImage_Must_Prep_RAM((char *)ptr + 36 * destination, destination);
                   break;
               }
             }
@@ -9580,20 +9586,25 @@ HFONT __cdecl Create_Font(LPCSTR a1)
 // 48F914: using guessed type int GraphicScale;
 
 //----- (0040CEB0) --------------------------------------------------------
-int __cdecl sub_40CEB0(int a1, int a2, char *str, COLORREF a4, int a5)
+// Draws text to screen (Message box writing?)
+int __cdecl Draw_Text_To_Screen(int X_Position, int Y_Position, char *Ptr_String, COLORREF color, int DDraw_Thingy)
 {
   int v5; // eax@1
   HDC v7; // [sp+0h] [bp-8h]@1
   HGDIOBJ v8; // [sp+4h] [bp-4h]@1
 
-  (*((void (__cdecl **)(_DWORD, _DWORD))Image_Res_Surface[a5]->lpVtbl + 17))(Image_Res_Surface[a5], &v7);
+  (*((void (__cdecl **)(_DWORD, _DWORD))Image_Res_Surface[DDraw_Thingy]->lpVtbl + 17))(
+    Image_Res_Surface[DDraw_Thingy],
+    &v7);
   v8 = SelectObject(v7, Handle_Font_Object[0]);
   SetBkMode(v7, 1);
-  SetTextColor(v7, a4);
-  v5 = strlen(str);
-  TextOutA(v7, GraphicScale * a1, GraphicScale * a2, str, v5);
+  SetTextColor(v7, color);
+  v5 = strlen(Ptr_String);
+  TextOutA(v7, GraphicScale * X_Position, GraphicScale * Y_Position, Ptr_String, v5);
   SelectObject(v7, v8);
-  return (*((int (__cdecl **)(_DWORD, _DWORD))Image_Res_Surface[a5]->lpVtbl + 26))(Image_Res_Surface[a5], v7);
+  return (*((int (__cdecl **)(_DWORD, _DWORD))Image_Res_Surface[DDraw_Thingy]->lpVtbl + 26))(
+           Image_Res_Surface[DDraw_Thingy],
+           v7);
 }
 // 48F914: using guessed type int GraphicScale;
 
@@ -9617,11 +9628,12 @@ int sub_40CF90()
 // 49D630: using guessed type int dword_49D630[];
 
 //----- (0040D010) --------------------------------------------------------
+// Draws something from Bitmap Slot 0x25
 int Draw_From_Slot_0x25()
 {
   int result; // eax@5
   signed int i; // [sp+0h] [bp-14h]@1
-  int Src_Displaybox; // [sp+4h] [bp-10h]@4
+  int Src_Rects; // [sp+4h] [bp-10h]@4
   int v3; // [sp+8h] [bp-Ch]@4
   int v4; // [sp+Ch] [bp-8h]@4
   int v5; // [sp+10h] [bp-4h]@4
@@ -9630,25 +9642,20 @@ int Draw_From_Slot_0x25()
   {
     if ( *((_DWORD *)&dword_49D628 + 20 * i) & 0x80 )
     {
-      Src_Displaybox = 0;
+      Src_Rects = 0;
       v4 = 320;
       v3 = 16 * i;
       v5 = 16 * i + 16;
-      Render_Graphics(
-        (int)&unk_48F92C,
-        dword_49D62C[20 * i] / 512,
-        dword_49D630[20 * i] / 512,
-        (int)&Src_Displaybox,
-        35);
-      Src_Displaybox = 24 * (dword_49D634[20 * i] % 13);
-      v4 = Src_Displaybox + 24;
+      Render_Graphics((int)&unk_48F92C, dword_49D62C[20 * i] / 512, dword_49D630[20 * i] / 512, (int)&Src_Rects, 35);
+      Src_Rects = 24 * (dword_49D634[20 * i] % 13);
+      v4 = Src_Rects + 24;
       v3 = 24 * (dword_49D634[20 * i] / 13);
       v5 = v3 + 24;
       Render_Graphics(
         (int)&unk_48F92C,
         dword_49D62C[20 * i] / 512 - 24,
         dword_49D630[20 * i] / 512 - 8,
-        (int)&Src_Displaybox,
+        (int)&Src_Rects,
         37);
     }
     result = i + 1;
@@ -9660,12 +9667,13 @@ int Draw_From_Slot_0x25()
 // 49D634: using guessed type int dword_49D634[];
 
 //----- (0040D150) --------------------------------------------------------
-int __cdecl sub_40D150(int a1, int a2, char *source, int a4)
+// Draws some text
+int __cdecl Draws_Some_Text(int a1, int a2, char *Ptr_String, int a4)
 {
   int result; // eax@4
   signed int i; // [sp+0h] [bp-14h]@1
   int v6; // [sp+4h] [bp-10h]@6
-  int v7; // [sp+8h] [bp-Ch]@6
+  int Y_Position; // [sp+8h] [bp-Ch]@6
   int v8; // [sp+Ch] [bp-8h]@6
   int v9; // [sp+10h] [bp-4h]@6
 
@@ -9677,13 +9685,13 @@ int __cdecl sub_40D150(int a1, int a2, char *source, int a4)
     dword_49D62C[20 * i] = a1;
     dword_49D630[20 * i] = a2;
     dword_49D634[20 * i] = a4;
-    strcpy(&asc_49D638[80 * i], source);
+    strcpy(&asc_49D638[80 * i], Ptr_String);
     v6 = 0;
     v8 = 320;
-    v7 = 16 * i;
+    Y_Position = 16 * i;
     v9 = 16 * i + 16;
-    FillDisplaybox_Memory_((int)&v6, 0, 35);
-    result = sub_40CEB0(0, v7, source, 0xFEFFFFu, 35);
+    FillRects_Memory_((int)&v6, 0, 35);
+    result = Draw_Text_To_Screen(0, Y_Position, Ptr_String, 0xFEFFFFu, 35);
   }
   return result;
 }
@@ -9692,12 +9700,13 @@ int __cdecl sub_40D150(int a1, int a2, char *source, int a4)
 // 49D634: using guessed type int dword_49D634[];
 
 //----- (0040D240) --------------------------------------------------------
-int sub_40D240()
+// Draws some text
+int Draws_Some_Text_()
 {
   int result; // eax@5
   signed int i; // [sp+0h] [bp-14h]@1
   int v2; // [sp+4h] [bp-10h]@4
-  int v3; // [sp+8h] [bp-Ch]@4
+  int Y_Position; // [sp+8h] [bp-Ch]@4
   int v4; // [sp+Ch] [bp-8h]@4
   int v5; // [sp+10h] [bp-4h]@4
 
@@ -9707,10 +9716,10 @@ int sub_40D240()
     {
       v2 = 0;
       v4 = 320;
-      v3 = 16 * i;
+      Y_Position = 16 * i;
       v5 = 16 * i + 16;
-      FillDisplaybox_Memory_((int)&v2, 0, 35);
-      sub_40CEB0(0, v3, &asc_49D638[80 * i], 0xFEFFFFu, 35);
+      FillRects_Memory_((int)&v2, 0, 35);
+      Draw_Text_To_Screen(0, Y_Position, &asc_49D638[80 * i], 0xFEFFFFu, 35);
     }
     result = i + 1;
   }
@@ -9718,6 +9727,7 @@ int sub_40D240()
 }
 
 //----- (0040D2D0) --------------------------------------------------------
+// Does some odd stuff with a few variables based on what's the value of 49D608
 int sub_40D2D0()
 {
   int result; // eax@1
@@ -9750,16 +9760,16 @@ int sub_40D2D0()
 //----- (0040D350) --------------------------------------------------------
 int sub_40D350()
 {
-  int Src_Displaybox; // [sp+0h] [bp-10h]@1
+  int Src_Rects; // [sp+0h] [bp-10h]@1
   int v2; // [sp+4h] [bp-Ch]@1
   int v3; // [sp+8h] [bp-8h]@1
   int v4; // [sp+Ch] [bp-4h]@1
 
-  Src_Displaybox = 0;
+  Src_Rects = 0;
   v2 = 0;
   v3 = 160;
   v4 = 240;
-  return Render_Graphics((int)&unk_48F92C, dword_49D60C / 512, 0, (int)&Src_Displaybox, 36);
+  return Render_Graphics((int)&unk_48F92C, dword_49D60C / 512, 0, (int)&Src_Rects, 36);
 }
 // 49D60C: using guessed type int dword_49D60C;
 
@@ -9771,7 +9781,7 @@ int __cdecl sub_40D3A0(int a1)
 
   v3 = dword_498B20;
   sprintf(&str, "CREDIT%02d", a1);
-  return sub_40BE10(&str, 36);
+  return Load_Image_From_Resource_Reloadable_(&str, 36);
 }
 // 498B20: using guessed type int dword_498B20;
 
@@ -9828,7 +9838,7 @@ signed int sub_40D440()
         dword_49D60C = -81920;
         dword_49D608 = 0;
         FullscreenRect = 160;
-        if ( LoadImageFileC("casts", 37) )
+        if ( LoadImage_Must_Prep_RAM("casts", 37) )
         {
           memset(&dword_49D628, 0, 0x500u);
           result = 1;
@@ -9921,7 +9931,7 @@ int sub_40D620()
           destination[num] = 0;
           dword_49D618 = Music_To_Play + 1;
           v2 = sub_40DB00((int)dword_49D614 + Music_To_Play + 1);
-          result = sub_40D150(dword_49D624, 126976, destination, v2);
+          result = Draws_Some_Text(dword_49D624, 126976, destination, v2);
           dword_49D618 += 4;
           return result;
         case 45:
@@ -10051,11 +10061,11 @@ int __cdecl sub_40DB70(HWND hWnd, int a2)
   int v8; // [sp+18h] [bp-3Ch]@1
   int v9; // [sp+1Ch] [bp-38h]@1
   int v10; // [sp+20h] [bp-34h]@1
-  int Dst_Displaybox; // [sp+24h] [bp-30h]@1
+  int Dst_Rects; // [sp+24h] [bp-30h]@1
   int v12; // [sp+28h] [bp-2Ch]@1
   int v13; // [sp+2Ch] [bp-28h]@1
   int v14; // [sp+30h] [bp-24h]@1
-  int Src_Displaybox; // [sp+34h] [bp-20h]@1
+  int Src_Rects; // [sp+34h] [bp-20h]@1
   int v16; // [sp+38h] [bp-1Ch]@1
   int v17; // [sp+3Ch] [bp-18h]@1
   int v18; // [sp+40h] [bp-14h]@1
@@ -10064,11 +10074,11 @@ int __cdecl sub_40DB70(HWND hWnd, int a2)
   int v21; // [sp+4Ch] [bp-8h]@1
   int v22; // [sp+50h] [bp-4h]@1
 
-  Dst_Displaybox = 80;
+  Dst_Rects = 80;
   v12 = 80;
   v13 = 240;
   v14 = 160;
-  Src_Displaybox = 0;
+  Src_Rects = 0;
   v16 = 0;
   v17 = 160;
   v18 = 80;
@@ -10126,10 +10136,10 @@ int __cdecl sub_40DB70(HWND hWnd, int a2)
     {
       v10 += 51;
     }
-    FillDisplaybox_Memory((int)&unk_48F92C, 0);
-    Render_Graphics((int)&Dst_Displaybox, 80, 80, (int)&Src_Displaybox, 21);
-    Render_Graphics((int)&Dst_Displaybox, v9 / 512 - 20, v10 / 512 - 12, (int)&v19, 21);
-    Render_Graphics((int)&Dst_Displaybox, 80, 128, (int)&v5, 21);
+    FillRects_Memory((int)&unk_48F92C, 0);
+    Render_Graphics((int)&Dst_Rects, 80, 80, (int)&Src_Rects, 21);
+    Render_Graphics((int)&Dst_Rects, v9 / 512 - 20, v10 / 512 - 12, (int)&v19, 21);
+    Render_Graphics((int)&Dst_Rects, 80, 128, (int)&v5, 21);
     sub_41A430(16, 8);
     Display_FPS();
     if ( !Upd_Scr_With_Wind_(hWnd) )
@@ -10142,12 +10152,12 @@ int __cdecl sub_40DB70(HWND hWnd, int a2)
 //----- (0040DD70) --------------------------------------------------------
 int __cdecl sub_40DD70(HWND hWnd)
 {
-  int Src_Displaybox; // [sp+0h] [bp-10h]@1
+  int Src_Rects; // [sp+0h] [bp-10h]@1
   int v3; // [sp+4h] [bp-Ch]@1
   int v4; // [sp+8h] [bp-8h]@1
   int v5; // [sp+Ch] [bp-4h]@1
 
-  Src_Displaybox = 0;
+  Src_Rects = 0;
   v3 = 128;
   v4 = 208;
   v5 = 144;
@@ -10169,8 +10179,8 @@ int __cdecl sub_40DD70(HWND hWnd)
       Key_Pressed = 0;
       return 2;
     }
-    FillDisplaybox_Memory((int)&unk_48F92C, 0);
-    Render_Graphics((int)&unk_48F92C, 56, 112, (int)&Src_Displaybox, 26);
+    FillRects_Memory((int)&unk_48F92C, 0);
+    Render_Graphics((int)&unk_48F92C, 56, 112, (int)&Src_Rects, 26);
     Display_FPS();
   }
   while ( Upd_Scr_With_Wind_(hWnd) );
@@ -10208,7 +10218,7 @@ char __cdecl sub_40DEC0(char a1)
   *(_DWORD *)&dword_49DB30 = 2;
   dword_49DB38 = 0;
   result = a1;
-  asc_49DC69[299] = a1;
+  byte_49DC69[299] = a1;
   dword_49DB34 = 0;
   for ( i = 0; i < 15; ++i )
   {
@@ -10234,7 +10244,7 @@ char __cdecl sub_40DF50(char a1)
   *(_DWORD *)&dword_49DB30 = 1;
   dword_49DB38 = 0;
   result = a1;
-  asc_49DC69[299] = a1;
+  byte_49DC69[299] = a1;
   dword_49DB34 = 1;
   for ( i = 0; i < 15; ++i )
   {
@@ -10295,7 +10305,7 @@ int sub_40DFE0()
   if ( *(_DWORD *)&dword_49DB30 == 1 )
   {
     dword_49DB34 = 0;
-    switch ( asc_49DC69[299] )
+    switch ( byte_49DC69[299] )
     {
       case 0:
         for ( i = 0; i < 15; ++i )
@@ -10396,7 +10406,7 @@ int sub_40DFE0()
   }
   else if ( *(_DWORD *)&dword_49DB30 == 2 )
   {
-    switch ( asc_49DC69[299] )
+    switch ( byte_49DC69[299] )
     {
       case 0:
         for ( i7 = 0; i7 < 15; ++i7 )
@@ -10496,12 +10506,12 @@ int sub_40DFE0()
 // 49DB38: using guessed type int dword_49DB38;
 
 //----- (0040E770) --------------------------------------------------------
-int sub_40E770()
+int TSC_FAI_and_FAO()
 {
   int result; // eax@2
   signed int j; // [sp+0h] [bp-18h]@6
   signed int i; // [sp+4h] [bp-14h]@4
-  int Src_Displaybox; // [sp+8h] [bp-10h]@8
+  int Src_Rects; // [sp+8h] [bp-10h]@8
   int v4; // [sp+Ch] [bp-Ch]@1
   int v5; // [sp+10h] [bp-8h]@8
   int v6; // [sp+14h] [bp-4h]@1
@@ -10510,7 +10520,7 @@ int sub_40E770()
   v6 = 16;
   if ( dword_49DB34 )
   {
-    result = FillDisplaybox_Memory((int)&FullscreenRect, Mask_Color);
+    result = FillRects_Memory((int)&FullscreenRect, Mask_Color);
   }
   else if ( *(_DWORD *)&dword_49DB30 )
   {
@@ -10518,9 +10528,9 @@ int sub_40E770()
     {
       for ( j = 0; j < 20; ++j )
       {
-        Src_Displaybox = 16 * *(&byte_49DB3C[20 * i] + j);
-        v5 = Src_Displaybox + 16;
-        result = Render_Graphics((int)&FullscreenRect, 16 * j, 16 * i, (int)&Src_Displaybox, 6);
+        Src_Rects = 16 * *(&byte_49DB3C[20 * i] + j);
+        v5 = Src_Rects + 16;
+        result = Render_Graphics((int)&FullscreenRect, 16 * j, 16 * i, (int)&Src_Rects, 6);
       }
     }
   }
@@ -10538,13 +10548,13 @@ bool sub_40E830()
 //----- (0040E850) --------------------------------------------------------
 void *sub_40E850()
 {
-  return memset(&asc_49DC69[311], 0, 0x3E8u);
+  return memset(&byte_49DC69[311], 0, 0x3E8u);
 }
 
 //----- (0040E870) --------------------------------------------------------
 void *sub_40E870()
 {
-  return memset(&asc_49DC69[303], 0, 8u);
+  return memset(&byte_49DC69[303], 0, 8u);
 }
 
 //----- (0040E890) --------------------------------------------------------
@@ -10553,7 +10563,7 @@ int __cdecl sub_40E890(signed int a1)
   int result; // eax@1
 
   result = a1 / 8;
-  asc_49DC69[a1 / 8 + 311] |= 1 << a1 % 8;
+  byte_49DC69[a1 / 8 + 311] |= 1 << a1 % 8;
   return result;
 }
 
@@ -10563,14 +10573,14 @@ int __cdecl sub_40E8E0(signed int a1)
   int result; // eax@1
 
   result = a1 / 8;
-  asc_49DC69[a1 / 8 + 311] &= ~(1 << a1 % 8);
+  byte_49DC69[a1 / 8 + 311] &= ~(1 << a1 % 8);
   return result;
 }
 
 //----- (0040E930) --------------------------------------------------------
 bool __cdecl Check_Flag(signed int Flag_hashtag)
 {
-  return ((1 << Flag_hashtag % 8) & (unsigned __int8)asc_49DC69[Flag_hashtag / 8 + 311]) != 0;
+  return ((1 << Flag_hashtag % 8) & (unsigned __int8)byte_49DC69[Flag_hashtag / 8 + 311]) != 0;
 }
 
 //----- (0040E970) --------------------------------------------------------
@@ -10579,7 +10589,7 @@ int __cdecl sub_40E970(signed int a1)
   int result; // eax@1
 
   result = a1 / 8;
-  asc_49DC69[a1 / 8 + 303] |= 1 << a1 % 8;
+  byte_49DC69[a1 / 8 + 303] |= 1 << a1 % 8;
   return result;
 }
 
@@ -10589,14 +10599,14 @@ int __cdecl sub_40E9C0(signed int a1)
   int result; // eax@1
 
   result = a1 / 8;
-  asc_49DC69[a1 / 8 + 303] &= ~(1 << a1 % 8);
+  byte_49DC69[a1 / 8 + 303] &= ~(1 << a1 % 8);
   return result;
 }
 
 //----- (0040EA10) --------------------------------------------------------
 bool __cdecl sub_40EA10(signed int a1)
 {
-  return ((1 << a1 % 8) & (unsigned __int8)asc_49DC69[a1 / 8 + 303]) != 0;
+  return ((1 << a1 % 8) & (unsigned __int8)byte_49DC69[a1 / 8 + 303]) != 0;
 }
 
 //----- (0040EA70) --------------------------------------------------------
@@ -10776,8 +10786,8 @@ int sub_40EE20()
 
   if ( OccasionalFlash )
   {
-    FillDisplaybox_Memory((int)&dword_49E1A4, FlashColor);
-    result = FillDisplaybox_Memory((int)&dword_49E1B4, FlashColor);
+    FillRects_Memory((int)&dword_49E1A4, FlashColor);
+    result = FillRects_Memory((int)&dword_49E1B4, FlashColor);
   }
   return result;
 }
@@ -10894,13 +10904,13 @@ int *__cdecl sub_40F250(int a1, int a2)
   int *result; // eax@4
   signed int i; // [sp+0h] [bp-4h]@1
 
-  for ( i = 0; i < 512 && dword_4A6250[43 * i] != a1; ++i )
+  for ( i = 0; i < 512 && NPC_Event_Number[43 * i] != a1; ++i )
     result = (int *)(i + 1);
   if ( i != 512 )
   {
-    result = &dword_4A6228[43 * i];
-    dword_49E1D0 = (int)&dword_4A6228[43 * i];
-    dword_49E1D4 = (int)&dword_4A622C[43 * i];
+    result = &NPC_X_Position[43 * i];
+    dword_49E1D0 = (int)&NPC_X_Position[43 * i];
+    dword_49E1D4 = (int)&NPC_Y_Position[43 * i];
     dword_49E1D8 = a2;
   }
   return result;
@@ -10908,9 +10918,9 @@ int *__cdecl sub_40F250(int a1, int a2)
 // 49E1D0: using guessed type int dword_49E1D0;
 // 49E1D4: using guessed type int dword_49E1D4;
 // 49E1D8: using guessed type int dword_49E1D8;
-// 4A6228: using guessed type int dword_4A6228[];
-// 4A622C: using guessed type int dword_4A622C[];
-// 4A6250: using guessed type int dword_4A6250[];
+// 4A6228: using guessed type int NPC_X_Position[];
+// 4A622C: using guessed type int NPC_Y_Position[];
+// 4A6250: using guessed type int NPC_Event_Number[];
 
 //----- (0040F2D0) --------------------------------------------------------
 int *__cdecl sub_40F2D0(int a1, int a2)
@@ -10969,13 +10979,13 @@ int __cdecl RNG_Range(int minimum, int maximum)
 int __cdecl Render_Numbers(int X_Position, int Y_Position, int Numbers_To_Display, int Number_Of_Digits)
 {
   int result; // eax@6
-  int Dst_Displaybox; // [sp+0h] [bp-D0h]@1
+  int Dst_Rects; // [sp+0h] [bp-D0h]@1
   int v6; // [sp+4h] [bp-CCh]@1
   int v7; // [sp+8h] [bp-C8h]@1
   int v8; // [sp+Ch] [bp-C4h]@1
   int v9; // [sp+10h] [bp-C0h]@3
   int v10; // [sp+14h] [bp-BCh]@3
-  int Src_Displaybox; // [sp+18h] [bp-B8h]@1
+  int Src_Rects; // [sp+18h] [bp-B8h]@1
   int v12; // [sp+1Ch] [bp-B4h]@1
   int v13; // [sp+20h] [bp-B0h]@1
   int v14; // [sp+24h] [bp-ACh]@1
@@ -11021,11 +11031,11 @@ int __cdecl Render_Numbers(int X_Position, int Y_Position, int Numbers_To_Displa
   int v54; // [sp+C8h] [bp-8h]@1
   int v55; // [sp+CCh] [bp-4h]@1
 
-  Dst_Displaybox = 0;
+  Dst_Rects = 0;
   v6 = 0;
   v7 = 320;
   v8 = 240;
-  Src_Displaybox = 0;
+  Src_Rects = 0;
   v12 = 56;
   v13 = 8;
   v14 = 64;
@@ -11086,12 +11096,7 @@ int __cdecl Render_Numbers(int X_Position, int Y_Position, int Numbers_To_Displa
       ++v9;
     }
     if ( Number_Of_Digits && v10 == 2 || v9 || v10 == 3 )
-      result = Render_Graphics(
-                 (int)&Dst_Displaybox,
-                 X_Position + 8 * v10,
-                 Y_Position,
-                 (int)(&Src_Displaybox + 4 * v51),
-                 26);
+      result = Render_Graphics((int)&Dst_Rects, X_Position + 8 * v10, Y_Position, (int)(&Src_Rects + 4 * v51), 26);
     ++v10;
   }
   return result;
@@ -11193,7 +11198,7 @@ signed int sub_40F730()
     sub_473000();
     Bckgrd_Modes_();
     _crt_debugger_hook_1();
-    sub_417E40();
+    Tile_Code();
     sub_419030();
     sub_419450();
     sub_471160();
@@ -11202,23 +11207,23 @@ signed int sub_40F730()
     Update_All_Effects();
     Camera_Code();
     sub_40DFE0();
-    FillDisplaybox_Memory((int)&unk_48F92C, 0);
+    FillRects_Memory((int)&unk_48F92C, 0);
     sub_40F020(&v5, &v3);
     Bckgrd_Code(v5, v3);
-    sub_413AF0(v5, v3);
+    Render_Background_Layer_(v5, v3);
     sub_472770(v5, v3);
     sub_46F810(v5, v3);
-    sub_413E40(v5, v3);
-    sub_413C60(v5, v3);
+    Render_Caret_pbm_(v5, v3);
+    Render_Foreground_Layer_And_Star_Block_(v5, v3);
     Rend_Map_Bckgrd(v5, v3);
     Draw_All_Effect_Obj(v5, v3);
-    sub_40E770();
+    TSC_FAI_and_FAO();
     v1 = Tsc_Parser();
     if ( !v1 )
       return 0;
     if ( v1 == 2 )
       return 1;
-    sub_414250(0);
+    TSC_MNA(0);
     sub_421F10();
     Display_FPS();
     if ( !Upd_Scr_With_Wind_(AppWinHandle) )
@@ -11228,7 +11233,7 @@ signed int sub_40F730()
   v4 = GetTickCount();
   while ( GetTickCount() < v4 + 500 )
   {
-    FillDisplaybox_Memory((int)&FullscreenRect, 0);
+    FillRects_Memory((int)&FullscreenRect, 0);
     Display_FPS();
     if ( !Upd_Scr_With_Wind_(AppWinHandle) )
       return 0;
@@ -11358,7 +11363,7 @@ signed int Title_Screen_Code()
   int v109; // [sp+1ACh] [bp-44h]@1
   int Mask_Color; // [sp+1B0h] [bp-40h]@1
   int GraphicsID; // [sp+1B4h] [bp-3Ch]@39
-  int Src_Displaybox; // [sp+1B8h] [bp-38h]@1
+  int Src_Rects; // [sp+1B8h] [bp-38h]@1
   int v113; // [sp+1BCh] [bp-34h]@1
   int v114; // [sp+1C0h] [bp-30h]@1
   int v115; // [sp+1C4h] [bp-2Ch]@1
@@ -11389,7 +11394,7 @@ signed int Title_Screen_Code()
   v123 = 16;
   v124 = 192;
   v125 = 32;
-  Src_Displaybox = 152;
+  Src_Rects = 152;
   v113 = 80;
   v114 = 208;
   v115 = 88;
@@ -11542,8 +11547,8 @@ signed int Title_Screen_Code()
     Update_All_Effects();
     if ( ++v87 >= 40 )
       v87 = 0;
-    FillDisplaybox_Memory((int)&FullscreenRect, Mask_Color);
-    Render_Graphics((int)&FullscreenRect, 100, 216, (int)&Src_Displaybox, 26);
+    FillRects_Memory((int)&FullscreenRect, Mask_Color);
+    Render_Graphics((int)&FullscreenRect, 100, 216, (int)&Src_Rects, 26);
     Render_Graphics((int)&FullscreenRect, 156, 216, (int)&v88, 26);
     Render_Numbers(140, 216, Numbers_To_Display, 0);
     Render_Numbers(156, 216, v108, 0);
@@ -11615,7 +11620,7 @@ signed int Title_Screen_Code()
   v57 = GetTickCount();
   while ( GetTickCount() < v57 + 1000 )
   {
-    FillDisplaybox_Memory((int)&FullscreenRect, 0);
+    FillRects_Memory((int)&FullscreenRect, 0);
     Display_FPS();
     if ( !Upd_Scr_With_Wind_(AppWinHandle) )
       return 0;
@@ -11693,7 +11698,7 @@ LABEL_8:
           sub_426360();
           Bckgrd_Modes_();
           _crt_debugger_hook_1();
-          sub_417E40();
+          Tile_Code();
           sub_419030();
           sub_419450();
           sub_471160();
@@ -11719,23 +11724,23 @@ LABEL_8:
           sub_40CF90();
         }
         sub_40DFE0();
-        FillDisplaybox_Memory((int)&unk_48F92C, Mask_Color);
+        FillRects_Memory((int)&unk_48F92C, Mask_Color);
         sub_40F020(&v9, &v6);
         Bckgrd_Code(v9, v6);
-        sub_413AF0(v9, v6);
+        Render_Background_Layer_(v9, v6);
         sub_472770(v9, v6);
         sub_46F810(v9, v6);
         Render_Bullets(v9, v6);
         Render_Quote_and_Gun(v9, v6);
         sub_4213B0(v9, v6);
-        sub_413E40(v9, v6);
-        sub_413C60(v9, v6);
+        Render_Caret_pbm_(v9, v6);
+        Render_Foreground_Layer_And_Star_Block_(v9, v6);
         Rend_Map_Bckgrd(v9, v6);
         sub_40EE20();
         Draw_All_Effect_Obj(v9, v6);
         sub_426430(v9, v6);
         sub_47B540();
-        sub_40E770();
+        TSC_FAI_and_FAO();
         if ( !(Game_State & 4) )
         {
           if ( Key_For_Menu & Key_Pressed )
@@ -11777,14 +11782,14 @@ LABEL_8:
           if ( v2 == 2 )
             return 1;
         }
-        sub_414250(0);
+        TSC_MNA(0);
         sub_41A430(16, 8);
         if ( Game_State & 2 )
         {
           Render_Health_Bar(1);
-          Render_XP_Bar(1);
+          Render_XP_Bar_And_Misc(1);
           Underwater_Timer(120, 104);
-          sub_41A0B0();
+          Render_Weapon_Icons();
         }
         if ( Game_State & 8 )
         {
@@ -12645,18 +12650,18 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
   int v10; // eax@39
   int v11; // ST1C_4@47
   int v12; // eax@47
-  int Ptr_Img_Displaybox; // [sp+1Ch] [bp-124h]@57
+  int Ptr_Img_Rects; // [sp+1Ch] [bp-124h]@57
   int v14; // [sp+20h] [bp-120h]@57
   int v15; // [sp+24h] [bp-11Ch]@57
   int v16; // [sp+28h] [bp-118h]@57
-  int Src_Displaybox; // [sp+2Ch] [bp-114h]@57
+  int Src_Rects; // [sp+2Ch] [bp-114h]@57
   int v18; // [sp+30h] [bp-110h]@57
   int v19; // [sp+34h] [bp-10Ch]@57
   int v20; // [sp+38h] [bp-108h]@57
   int v21; // [sp+3Ch] [bp-104h]@57
   int v22; // [sp+40h] [bp-100h]@53
   HMENU v23; // [sp+44h] [bp-FCh]@41
-  char v24; // [sp+48h] [bp-F8h]@3
+  char str1; // [sp+48h] [bp-F8h]@3
   CHAR v25; // [sp+68h] [bp-D8h]@62
   int v26; // [sp+A8h] [bp-98h]@17
   int v27; // [sp+ACh] [bp-94h]@5
@@ -12700,8 +12705,8 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
     PathRemoveFileSpecA(FullExePath);
     strcpy(byte_49E220, FullExePath);
     strcat(byte_49E220, "\\data");
-    if ( !Load_Config_dat(&v24) )
-      Set_Default_Config_dat(&v24);
+    if ( !Load_Config_dat(&str1) )
+      Set_Default_Config_dat(&str1);
     if ( v27 )
     {
       if ( v27 == 1 )
@@ -12894,17 +12899,17 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
         break;
       default:
 Switch_412780_default:
-        Src_Displaybox = 0;
+        Src_Rects = 0;
         v18 = 0;
         v19 = 64;
         v20 = 8;
-        Ptr_Img_Displaybox = 0;
+        Ptr_Img_Rects = 0;
         v14 = 0;
         v15 = 320;
         v16 = 240;
         v21 = Load_Image_From_File("Loading", 15);
-        FillDisplaybox_Memory((int)&Ptr_Img_Displaybox, 0);
-        Render_Graphics((int)&Ptr_Img_Displaybox, 128, 116, (int)&Src_Displaybox, 15);
+        FillRects_Memory((int)&Ptr_Img_Rects, 0);
+        Render_Graphics((int)&Ptr_Img_Rects, 128, 116, (int)&Src_Rects, 15);
         if ( Upd_Scr_With_Wind_(AppWinHandle) )
         {
           sub_4200C0((int)hWnd);
@@ -13486,13 +13491,13 @@ signed int __cdecl sub_413A60(int a1, int a2, unsigned __int8 a3)
 }
 
 //----- (00413AF0) --------------------------------------------------------
-int __cdecl sub_413AF0(signed int a1, signed int a2)
+int __cdecl Render_Background_Layer_(signed int a1, signed int a2)
 {
   int result; // eax@1
   int i; // [sp+0h] [bp-30h]@1
   int v4; // [sp+Ch] [bp-24h]@6
   int j; // [sp+18h] [bp-18h]@3
-  int Src_Displaybox; // [sp+1Ch] [bp-14h]@7
+  int Src_Rects; // [sp+1Ch] [bp-14h]@7
   int v7; // [sp+20h] [bp-10h]@7
   int v8; // [sp+24h] [bp-Ch]@7
   int v9; // [sp+28h] [bp-8h]@7
@@ -13509,16 +13514,11 @@ int __cdecl sub_413AF0(signed int a1, signed int a2)
       result = (unsigned __int8)sub_4139A0(j, i);
       if ( (signed int)(unsigned __int8)result < 32 )
       {
-        Src_Displaybox = 16 * (*((_BYTE *)dword_49E480 + v4) % 16);
+        Src_Rects = 16 * (*((_BYTE *)dword_49E480 + v4) % 16);
         v7 = 16 * ((signed int)*((_BYTE *)dword_49E480 + v4) >> 4);
-        v8 = Src_Displaybox + 16;
+        v8 = Src_Rects + 16;
         v9 = v7 + 16;
-        result = Render_Graphics(
-                   (int)&FullscreenRect,
-                   16 * j - 8 - a1 / 512,
-                   16 * i - 8 - a2 / 512,
-                   (int)&Src_Displaybox,
-                   2);
+        result = Render_Graphics((int)&FullscreenRect, 16 * j - 8 - a1 / 512, 16 * i - 8 - a2 / 512, (int)&Src_Rects, 2);
       }
     }
   }
@@ -13527,7 +13527,7 @@ int __cdecl sub_413AF0(signed int a1, signed int a2)
 // 48F91C: using guessed type int FullscreenRect;
 
 //----- (00413C60) --------------------------------------------------------
-int __cdecl sub_413C60(signed int a1, signed int a2)
+int __cdecl Render_Foreground_Layer_And_Star_Block_(signed int a1, signed int a2)
 {
   int result; // eax@1
   int i; // [sp+0h] [bp-40h]@1
@@ -13540,7 +13540,7 @@ int __cdecl sub_413C60(signed int a1, signed int a2)
   int v10; // [sp+20h] [bp-20h]@1
   int v11; // [sp+24h] [bp-1Ch]@1
   int j; // [sp+28h] [bp-18h]@3
-  int Src_Displaybox; // [sp+2Ch] [bp-14h]@9
+  int Src_Rects; // [sp+2Ch] [bp-14h]@9
   int v14; // [sp+30h] [bp-10h]@9
   int v15; // [sp+34h] [bp-Ch]@9
   int v16; // [sp+38h] [bp-8h]@9
@@ -13564,16 +13564,11 @@ int __cdecl sub_413C60(signed int a1, signed int a2)
       v4 = (unsigned __int8)result;
       if ( (signed int)(unsigned __int8)result >= 64 && (signed int)(unsigned __int8)result < 128 )
       {
-        Src_Displaybox = 16 * (*((_BYTE *)dword_49E480 + v9) % 16);
+        Src_Rects = 16 * (*((_BYTE *)dword_49E480 + v9) % 16);
         v14 = 16 * ((signed int)*((_BYTE *)dword_49E480 + v9) >> 4);
-        v15 = Src_Displaybox + 16;
+        v15 = Src_Rects + 16;
         v16 = v14 + 16;
-        result = Render_Graphics(
-                   (int)&FullscreenRect,
-                   16 * j - 8 - a1 / 512,
-                   16 * i - 8 - a2 / 512,
-                   (int)&Src_Displaybox,
-                   2);
+        result = Render_Graphics((int)&FullscreenRect, 16 * j - 8 - a1 / 512, 16 * i - 8 - a2 / 512, (int)&Src_Rects, 2);
         if ( v4 == 67 )
           result = Render_Graphics((int)&FullscreenRect, 16 * j - 8 - a1 / 512, 16 * i - 8 - a2 / 512, (int)&v5, 20);
       }
@@ -13584,7 +13579,7 @@ int __cdecl sub_413C60(signed int a1, signed int a2)
 // 48F91C: using guessed type int FullscreenRect;
 
 //----- (00413E40) --------------------------------------------------------
-int __cdecl sub_413E40(signed int a1, signed int a2)
+int __cdecl Render_Caret_pbm_(signed int a1, signed int a2)
 {
   signed int v2; // eax@1
   int result; // eax@2
@@ -13594,7 +13589,7 @@ int __cdecl sub_413E40(signed int a1, signed int a2)
   int v7; // [sp+Ch] [bp-28h]@6
   int v8; // [sp+18h] [bp-1Ch]@1
   int j; // [sp+1Ch] [bp-18h]@3
-  int Src_Displaybox; // [sp+20h] [bp-14h]@15
+  int Src_Rects; // [sp+20h] [bp-14h]@15
   int v11; // [sp+24h] [bp-10h]@15
   int v12; // [sp+28h] [bp-Ch]@15
   int v13; // [sp+2Ch] [bp-8h]@15
@@ -13619,14 +13614,14 @@ int __cdecl sub_413E40(signed int a1, signed int a2)
           case 128:
           case 160:
             v4 = (unsigned __int8)byte_49E58C % 16;
-            Src_Displaybox = v4 + 224;
+            Src_Rects = v4 + 224;
             v12 = v4 + 240;
             v11 = 48;
             v13 = 64;
             break;
           case 129:
           case 161:
-            Src_Displaybox = 224;
+            Src_Rects = 224;
             v12 = 240;
             v5 = (unsigned __int8)byte_49E58C % 16;
             v11 = v5 + 48;
@@ -13634,14 +13629,14 @@ int __cdecl sub_413E40(signed int a1, signed int a2)
             break;
           case 130:
           case 162:
-            Src_Displaybox = 240 - (unsigned __int8)byte_49E58C % 16;
-            v12 = Src_Displaybox + 16;
+            Src_Rects = 240 - (unsigned __int8)byte_49E58C % 16;
+            v12 = Src_Rects + 16;
             v11 = 48;
             v13 = 64;
             break;
           case 131:
           case 163:
-            Src_Displaybox = 224;
+            Src_Rects = 224;
             v12 = 240;
             v11 = 64 - (unsigned __int8)byte_49E58C % 16;
             v13 = v11 + 16;
@@ -13649,7 +13644,7 @@ int __cdecl sub_413E40(signed int a1, signed int a2)
           default:
             break;
         }
-        Render_Graphics((int)&FullscreenRect, 16 * j - 8 - a1 / 512, 16 * i - 8 - a2 / 512, (int)&Src_Displaybox, 19);
+        Render_Graphics((int)&FullscreenRect, 16 * j - 8 - a1 / 512, 16 * i - 8 - a2 / 512, (int)&Src_Rects, 19);
       }
     }
   }
@@ -13721,21 +13716,21 @@ int __cdecl sub_4140F0(char *source)
       ++*(&v2 + i);
     source = &v2;
   }
-  strcpy(byte_49E598, source);
-  i = strlen(byte_49E598);
-  FillDisplaybox_Memory_((int)&unk_493650, 0, 13);
-  sub_40CEB0((160 - 6 * i) / 2 + 6, 1, byte_49E598, 0x220011u, 13);
-  return sub_40CEB0((160 - 6 * i) / 2 + 6, 0, byte_49E598, 0xFEFFFFu, 13);
+  strcpy(Ptr_String, source);
+  i = strlen(Ptr_String);
+  FillRects_Memory_((int)&unk_493650, 0, 13);
+  Draw_Text_To_Screen((160 - 6 * i) / 2 + 6, 1, Ptr_String, 0x220011u, 13);
+  return Draw_Text_To_Screen((160 - 6 * i) / 2 + 6, 0, Ptr_String, 0xFEFFFFu, 13);
 }
 // 498B20: using guessed type int dword_498B20;
 // 49E590: using guessed type int dword_49E590;
 // 49E594: using guessed type int dword_49E594;
 
 //----- (00414250) --------------------------------------------------------
-int __cdecl sub_414250(int a1)
+int __cdecl TSC_MNA(int a1)
 {
   int result; // eax@2
-  int Ptr_Img_Displaybox; // [sp+0h] [bp-20h]@2
+  int Ptr_Img_Rects; // [sp+0h] [bp-20h]@2
   int v3; // [sp+4h] [bp-1Ch]@2
   int v4; // [sp+8h] [bp-18h]@2
   int v5; // [sp+Ch] [bp-14h]@2
@@ -13750,11 +13745,11 @@ int __cdecl sub_414250(int a1)
   v9 = 16;
   if ( a1 )
   {
-    Ptr_Img_Displaybox = 0;
+    Ptr_Img_Rects = 0;
     v4 = 320;
     v3 = 7;
     v5 = 24;
-    FillDisplaybox_Memory((int)&Ptr_Img_Displaybox, 0);
+    FillRects_Memory((int)&Ptr_Img_Rects, 0);
     result = Render_Graphics((int)&FullscreenRect, 74, 10, (int)&unk_493650, 13);
   }
   else if ( dword_49E590 )
@@ -13783,10 +13778,10 @@ int sub_414330()
 {
   size_t v0; // ST14_4@1
 
-  v0 = strlen(byte_49E598);
-  FillDisplaybox_Memory_((int)&unk_493650, 0, 13);
-  sub_40CEB0((signed int)(160 - 6 * v0) / 2 + 6, 1, byte_49E598, 0x220011u, 13);
-  return sub_40CEB0((signed int)(160 - 6 * v0) / 2 + 6, 0, byte_49E598, 0xFEFFFFu, 13);
+  v0 = strlen(Ptr_String);
+  FillRects_Memory_((int)&unk_493650, 0, 13);
+  Draw_Text_To_Screen((signed int)(160 - 6 * v0) / 2 + 6, 1, Ptr_String, 0x220011u, 13);
+  return Draw_Text_To_Screen((signed int)(160 - 6 * v0) / 2 + 6, 0, Ptr_String, 0xFEFFFFu, 13);
 }
 
 //----- (004143C0) --------------------------------------------------------
@@ -13866,21 +13861,21 @@ void __cdecl sub_4143C0(signed int a1)
           && v18 != 116
           && v18 != 119 )
         {
-          sub_40C7A0(i, a1, (int)&v13, 9, 26);
+          Blit_For_Dmg_Num_(i, a1, (int)&v13, 9, 26);
         }
         else
         {
-          sub_40C7A0(i, a1, (int)&v9, 9, 26);
+          Blit_For_Dmg_Num_(i, a1, (int)&v9, 9, 26);
         }
       }
       else
       {
-        sub_40C7A0(i, a1, (int)&v5, 9, 26);
+        Blit_For_Dmg_Num_(i, a1, (int)&v5, 9, 26);
       }
     }
     else
     {
-      sub_40C7A0(i, a1, (int)&v1, 9, 26);
+      Blit_For_Dmg_Num_(i, a1, (int)&v1, 9, 26);
     }
   }
 }
@@ -13891,12 +13886,12 @@ signed int sub_414640()
   int v1; // [sp+0h] [bp-50h]@32
   int v2; // [sp+4h] [bp-4Ch]@15
   int v3; // [sp+8h] [bp-48h]@4
-  int Ptr_Img_Displaybox; // [sp+Ch] [bp-44h]@9
+  int Ptr_Img_Rects; // [sp+Ch] [bp-44h]@9
   int v5; // [sp+10h] [bp-40h]@9
   int v6; // [sp+14h] [bp-3Ch]@9
   int v7; // [sp+18h] [bp-38h]@9
   int v8; // [sp+1Ch] [bp-34h]@1
-  int Src_Displaybox; // [sp+20h] [bp-30h]@12
+  int Src_Rects; // [sp+20h] [bp-30h]@12
   int v10; // [sp+24h] [bp-2Ch]@12
   int v11; // [sp+28h] [bp-28h]@12
   int v12; // [sp+2Ch] [bp-24h]@12
@@ -13927,23 +13922,23 @@ signed int sub_414640()
         return 2;
     }
     Draw_Obj((int)&FullscreenRect, 0, 0, (int)&FullscreenRect, 10);
-    Ptr_Img_Displaybox = 160 - i * *(signed __int16 *)&word_49E586 / 8 / 2;
+    Ptr_Img_Rects = 160 - i * *(signed __int16 *)&word_49E586 / 8 / 2;
     v6 = i * *(signed __int16 *)&word_49E586 / 8 / 2 + 160;
     v5 = 120 - i * *(signed __int16 *)&word_49E588 / 8 / 2;
     v7 = i * *(signed __int16 *)&word_49E588 / 8 / 2 + 120;
-    sub_414250(1);
-    FillDisplaybox_Memory((int)&Ptr_Img_Displaybox, 0);
+    TSC_MNA(1);
+    FillRects_Memory((int)&Ptr_Img_Rects, 0);
     Display_FPS();
     if ( !Upd_Scr_With_Wind_(AppWinHandle) )
       return 0;
   }
-  Src_Displaybox = 0;
+  Src_Rects = 0;
   v11 = *(signed __int16 *)&word_49E586;
   v10 = 0;
   v12 = *(signed __int16 *)&word_49E588;
-  v6 = --Ptr_Img_Displaybox + *(signed __int16 *)&word_49E586 + 2;
+  v6 = --Ptr_Img_Rects + *(signed __int16 *)&word_49E586 + 2;
   v7 = --v5 + *(signed __int16 *)&word_49E588 + 2;
-  FillDisplaybox_Memory_((int)&Src_Displaybox, 0, 9);
+  FillRects_Memory_((int)&Src_Rects, 0, 9);
   v16 = 0;
   v14 = 0;
   while ( 1 )
@@ -13960,15 +13955,15 @@ signed int sub_414640()
         return 2;
     }
     Draw_Obj((int)&FullscreenRect, 0, 0, (int)&FullscreenRect, 10);
-    FillDisplaybox_Memory((int)&Ptr_Img_Displaybox, 0);
+    FillRects_Memory((int)&Ptr_Img_Rects, 0);
     if ( v16 < *(signed __int16 *)&word_49E588 )
       sub_4143C0(v16++);
     if ( v16 < *(signed __int16 *)&word_49E588 )
       sub_4143C0(v16++);
-    Render_Graphics((int)&FullscreenRect, Ptr_Img_Displaybox + 1, v5 + 1, (int)&Src_Displaybox, 9);
-    sub_414250(1);
+    Render_Graphics((int)&FullscreenRect, Ptr_Img_Rects + 1, v5 + 1, (int)&Src_Rects, 9);
+    TSC_MNA(1);
     if ( ((signed int)(unsigned __int8)++v14 >> 3) % 2 )
-      Render_Graphics((int)&FullscreenRect, v13 + Ptr_Img_Displaybox + 1, v8 + v5 + 1, (int)&v17, 26);
+      Render_Graphics((int)&FullscreenRect, v13 + Ptr_Img_Rects + 1, v8 + v5 + 1, (int)&v17, 26);
     Display_FPS();
     if ( !Upd_Scr_With_Wind_(AppWinHandle) )
       return 0;
@@ -13985,12 +13980,12 @@ signed int sub_414640()
         return 2;
     }
     Draw_Obj((int)&FullscreenRect, 0, 0, (int)&FullscreenRect, 10);
-    Ptr_Img_Displaybox = 160 - i * *(signed __int16 *)&word_49E586 / 8 / 2;
+    Ptr_Img_Rects = 160 - i * *(signed __int16 *)&word_49E586 / 8 / 2;
     v6 = i * *(signed __int16 *)&word_49E586 / 8 / 2 + 160;
     v5 = 120 - i * *(signed __int16 *)&word_49E588 / 8 / 2;
     v7 = i * *(signed __int16 *)&word_49E588 / 8 / 2 + 120;
-    sub_414250(1);
-    FillDisplaybox_Memory((int)&Ptr_Img_Displaybox, 0);
+    TSC_MNA(1);
+    FillRects_Memory((int)&Ptr_Img_Rects, 0);
     Display_FPS();
     if ( !Upd_Scr_With_Wind_(AppWinHandle) )
       return 0;
@@ -14387,7 +14382,7 @@ int __cdecl Render_Quote_and_Gun(signed int a1, signed int a2)
   int v9; // [sp+18h] [bp-1Ch]@22
   int v10; // [sp+1Ch] [bp-18h]@22
   int v11; // [sp+20h] [bp-14h]@7
-  int Src_Displaybox; // [sp+24h] [bp-10h]@20
+  int Src_Rects; // [sp+24h] [bp-10h]@20
   int v13; // [sp+28h] [bp-Ch]@20
   int v14; // [sp+2Ch] [bp-8h]@20
   int v15; // [sp+30h] [bp-4h]@20
@@ -14444,7 +14439,7 @@ int __cdecl Render_Quote_and_Gun(signed int a1, signed int a2)
     result = ((signed int)(unsigned __int8)Invincibility_Timer >> 1) % 2;
     if ( !result )
     {
-      Src_Displaybox = dword_49E69C;
+      Src_Rects = dword_49E69C;
       v13 = dword_49E6A0;
       v14 = dword_49E6A4;
       v15 = dword_49E6A8;
@@ -14457,7 +14452,7 @@ int __cdecl Render_Quote_and_Gun(signed int a1, signed int a2)
         (int)&FullscreenRect,
         (Quote_X_Position - QuoteSizebox_Left) / 512 - a1 / 512,
         (Quote_Y_Position - QuoteSizebox_Up) / 512 - a2 / 512,
-        (int)&Src_Displaybox,
+        (int)&Src_Rects,
         16);
       v3 = 56;
       v4 = 96;
@@ -15190,12 +15185,12 @@ LABEL_13:
   for ( i = 0; i < 512; ++i )
   {
     result = (int *)(172 * i);
-    if ( dword_4A6250[43 * i] == a1 )
+    if ( NPC_Event_Number[43 * i] == a1 )
       break;
   }
   if ( i != 512 )
   {
-    if ( Quote_X_Position <= dword_4A6228[43 * i] )
+    if ( Quote_X_Position <= NPC_X_Position[43 * i] )
       *(_DWORD *)&Quote_Direction_Faced = 2;
     else
       *(_DWORD *)&Quote_Direction_Faced = 0;
@@ -15204,8 +15199,8 @@ LABEL_13:
   return result;
 }
 // 49E66C: using guessed type int Quote_X_Velocity;
-// 4A6228: using guessed type int dword_4A6228[];
-// 4A6250: using guessed type int dword_4A6250[];
+// 4A6228: using guessed type int NPC_X_Position[];
+// 4A6250: using guessed type int NPC_Event_Number[];
 
 //----- (00416C40) --------------------------------------------------------
 int __cdecl sub_416C40(unsigned __int8 a1)
@@ -15705,7 +15700,7 @@ signed int __cdecl sub_417DB0(int a1, int a2)
 // 49E688: using guessed type int QuoteHitbox_Down;
 
 //----- (00417E40) --------------------------------------------------------
-int sub_417E40()
+int Tile_Code()
 {
   int result; // eax@36
   int v1; // [sp+4h] [bp-30h]@1
@@ -16051,79 +16046,79 @@ char sub_419030()
     for ( i = 0; i < 512; ++i )
     {
       LOBYTE(v0) = -84 * i;
-      if ( *((_BYTE *)&byte_4A6220 + 172 * i) & 0x80 )
+      if ( *((_BYTE *)&Is_NPC_Alive + 172 * i) & 0x80 )
       {
-        if ( word_4A6270[86 * i] & 1 )
+        if ( NPC_Flags[86 * i] & 1 )
         {
-          v0 = sub_4187F0((int)&byte_4A6220 + 172 * i);
+          v0 = sub_4187F0((int)&Is_NPC_Alive + 172 * i);
           v3 = v0;
           Tile_On_Which_Quote_Is |= v0;
         }
-        else if ( word_4A6270[86 * i] & 0x40 )
+        else if ( NPC_Flags[86 * i] & 0x40 )
         {
-          v1 = sub_418C20((int)&byte_4A6220 + 172 * i);
+          v1 = sub_418C20((int)&Is_NPC_Alive + 172 * i);
           v3 = v1;
           v0 = v1 | Tile_On_Which_Quote_Is;
           Tile_On_Which_Quote_Is = v0;
         }
         else
         {
-          LOBYTE(v0) = sub_418B10((int)&byte_4A6220 + 172 * i);
+          LOBYTE(v0) = sub_418B10((int)&Is_NPC_Alive + 172 * i);
           v3 = (unsigned __int8)v0;
         }
         if ( v3 )
         {
           LOBYTE(v0) = -84 * i;
-          if ( dword_4A6248[43 * i] == 1 )
+          if ( NPC_Type[43 * i] == 1 )
           {
             Play_Sound_Effect(14, 1);
-            EXP_Add(dword_4A6264[43 * i]);
+            EXP_Add(NPC_EXP_Health_Missiles_Dropped[43 * i]);
             LOBYTE(v0) = -84 * i;
-            *((_BYTE *)&byte_4A6220 + 172 * i) = 0;
+            *((_BYTE *)&Is_NPC_Alive + 172 * i) = 0;
           }
         }
-        if ( v3 && dword_4A6248[43 * i] == 86 )
+        if ( v3 && NPC_Type[43 * i] == 86 )
         {
           Play_Sound_Effect(42, 1);
-          sub_419BA0(dword_4A6250[43 * i], dword_4A6264[43 * i]);
+          sub_419BA0(NPC_Event_Number[43 * i], NPC_EXP_Health_Missiles_Dropped[43 * i]);
           LOBYTE(v0) = -84 * i;
-          *((_BYTE *)&byte_4A6220 + 172 * i) = 0;
+          *((_BYTE *)&Is_NPC_Alive + 172 * i) = 0;
         }
-        if ( v3 && dword_4A6248[43 * i] == 87 )
+        if ( v3 && NPC_Type[43 * i] == 87 )
         {
           Play_Sound_Effect(20, 1);
-          LOBYTE(v0) = TSC_LIplus(dword_4A6264[43 * i]);
-          *((_BYTE *)&byte_4A6220 + 172 * i) = 0;
+          LOBYTE(v0) = TSC_LIplus(NPC_EXP_Health_Missiles_Dropped[43 * i]);
+          *((_BYTE *)&Is_NPC_Alive + 172 * i) = 0;
         }
         if ( !(Game_State & 4) )
         {
           if ( v3 )
           {
             LOBYTE(v0) = -84 * i;
-            if ( word_4A6270[86 * i] & 0x100 )
-              LOBYTE(v0) = Call_TSC_Event(dword_4A6250[43 * i]);
+            if ( NPC_Flags[86 * i] & 0x100 )
+              LOBYTE(v0) = Call_TSC_Event(NPC_Event_Number[43 * i]);
           }
         }
         if ( Game_State & 2 )
         {
-          LOWORD(v0) = word_4A6270[86 * i] & 0x2000;
+          LOWORD(v0) = NPC_Flags[86 * i] & 0x2000;
           if ( !(_WORD)v0 )
           {
-            if ( word_4A6270[86 * i] & 0x80 )
+            if ( NPC_Flags[86 * i] & 0x80 )
             {
-              if ( v3 & 4 && dword_4A6230[43 * i] < 0 )
-                Take_Damage(dword_4A62C4[43 * i]);
-              if ( v3 & 1 && dword_4A6230[43 * i] > 0 )
-                Take_Damage(dword_4A62C4[43 * i]);
-              if ( v3 & 8 && dword_4A6234[43 * i] < 0 )
-                Take_Damage(dword_4A62C4[43 * i]);
+              if ( v3 & 4 && NPC_X_Velocity[43 * i] < 0 )
+                Take_Damage(NPC_Damage_On_Contact[43 * i]);
+              if ( v3 & 1 && NPC_X_Velocity[43 * i] > 0 )
+                Take_Damage(NPC_Damage_On_Contact[43 * i]);
+              if ( v3 & 8 && NPC_Y_Velocity[43 * i] < 0 )
+                Take_Damage(NPC_Damage_On_Contact[43 * i]);
               LOBYTE(v0) = v3 & 2;
-              if ( v3 & 2 && dword_4A6234[43 * i] > 0 )
-                LOBYTE(v0) = Take_Damage(dword_4A62C4[43 * i]);
+              if ( v3 & 2 && NPC_Y_Velocity[43 * i] > 0 )
+                LOBYTE(v0) = Take_Damage(NPC_Damage_On_Contact[43 * i]);
             }
-            else if ( v3 && dword_4A62C4[43 * i] && !(Game_State & 4) )
+            else if ( v3 && NPC_Damage_On_Contact[43 * i] && !(Game_State & 4) )
             {
-              LOBYTE(v0) = Take_Damage(dword_4A62C4[43 * i]);
+              LOBYTE(v0) = Take_Damage(NPC_Damage_On_Contact[43 * i]);
             }
           }
         }
@@ -16134,9 +16129,9 @@ char sub_419030()
             LOBYTE(v0) = *(_BYTE *)&Player_Flags & 1;
             if ( *(_BYTE *)&Player_Flags & 1 )
             {
-              if ( word_4A6270[86 * i] & 0x2000 )
+              if ( NPC_Flags[86 * i] & 0x2000 )
               {
-                LOBYTE(v0) = Call_TSC_Event(dword_4A6250[43 * i]);
+                LOBYTE(v0) = Call_TSC_Event(NPC_Event_Number[43 * i]);
                 Quote_X_Velocity = 0;
                 byte_49E6E5 = 0;
               }
@@ -16154,13 +16149,13 @@ char sub_419030()
 // 49E63C: using guessed type int Tile_On_Which_Quote_Is;
 // 49E66C: using guessed type int Quote_X_Velocity;
 // 49E6E5: using guessed type char byte_49E6E5;
-// 4A6230: using guessed type int dword_4A6230[];
-// 4A6234: using guessed type int dword_4A6234[];
-// 4A6248: using guessed type int dword_4A6248[];
-// 4A6250: using guessed type int dword_4A6250[];
-// 4A6264: using guessed type int dword_4A6264[];
-// 4A6270: using guessed type __int16 word_4A6270[];
-// 4A62C4: using guessed type int dword_4A62C4[];
+// 4A6230: using guessed type int NPC_X_Velocity[];
+// 4A6234: using guessed type int NPC_Y_Velocity[];
+// 4A6248: using guessed type int NPC_Type[];
+// 4A6250: using guessed type int NPC_Event_Number[];
+// 4A6264: using guessed type int NPC_EXP_Health_Missiles_Dropped[];
+// 4A6270: using guessed type __int16 NPC_Flags[];
+// 4A62C4: using guessed type int NPC_Damage_On_Contact[];
 
 //----- (00419450) --------------------------------------------------------
 int sub_419450()
@@ -16473,14 +16468,14 @@ int __cdecl TSC_MLplus(__int16 Life_To_Add)
 // 49E6D0: using guessed type __int16 Quote_Health_Max;
 
 //----- (00419D10) --------------------------------------------------------
-int __cdecl Render_XP_Bar(int a1)
+int __cdecl Render_XP_Bar_And_Misc(int a1)
 {
   int result; // eax@9
-  int Dst_Displaybox; // [sp+0h] [bp-90h]@1
+  int Dst_Rects; // [sp+0h] [bp-90h]@1
   int v3; // [sp+4h] [bp-8Ch]@1
   int v4; // [sp+8h] [bp-88h]@1
   int v5; // [sp+Ch] [bp-84h]@1
-  int Src_Displaybox; // [sp+10h] [bp-80h]@1
+  int Src_Rects; // [sp+10h] [bp-80h]@1
   int v7; // [sp+14h] [bp-7Ch]@1
   int v8; // [sp+18h] [bp-78h]@1
   int v9; // [sp+1Ch] [bp-74h]@1
@@ -16521,11 +16516,11 @@ int __cdecl Render_XP_Bar(int a1)
   v33 = 80;
   v34 = 96;
   v35 = 88;
-  Dst_Displaybox = 0;
+  Dst_Rects = 0;
   v3 = 0;
   v4 = 320;
   v5 = 240;
-  Src_Displaybox = 80;
+  Src_Rects = 80;
   v7 = 48;
   v8 = 96;
   v9 = 56;
@@ -16540,13 +16535,13 @@ int __cdecl Render_XP_Bar(int a1)
   }
   else
   {
-    Render_Graphics((int)&Dst_Displaybox, WeaponIconXOffset + 48, 16, (int)&Src_Displaybox, 26);
-    Render_Graphics((int)&Dst_Displaybox, WeaponIconXOffset + 48, 24, (int)&Src_Displaybox, 26);
+    Render_Graphics((int)&Dst_Rects, WeaponIconXOffset + 48, 16, (int)&Src_Rects, 26);
+    Render_Graphics((int)&Dst_Rects, WeaponIconXOffset + 48, 24, (int)&Src_Rects, 26);
   }
   if ( a1 != 1 || (result = ((signed int)(unsigned __int8)Invincibility_Timer >> 1) % 2) == 0 )
   {
-    Render_Graphics((int)&Dst_Displaybox, WeaponIconXOffset + 32, 24, (int)&v28, 26);
-    Render_Graphics((int)&Dst_Displaybox, WeaponIconXOffset, 32, (int)&v32, 26);
+    Render_Graphics((int)&Dst_Rects, WeaponIconXOffset + 32, 24, (int)&v28, 26);
+    Render_Graphics((int)&Dst_Rects, WeaponIconXOffset, 32, (int)&v32, 26);
     Render_Numbers(WeaponIconXOffset - 8, 32, WeaponData_Level[5 * SelectedWeaponID], 0);
     v19 = 0;
     v20 = 72;
@@ -16568,24 +16563,24 @@ int __cdecl Render_XP_Bar(int a1)
     v37 = *((_DWORD *)&WeaponData_ID + 5 * SelectedWeaponID);
     v27 = WeaponData_Energy[5 * SelectedWeaponID];
     v14 = *(&ROM_WeaponExpTables[3 * v37] + v36);
-    Render_Graphics((int)&Dst_Displaybox, WeaponIconXOffset + 24, 32, (int)&v19, 26);
+    Render_Graphics((int)&Dst_Rects, WeaponIconXOffset + 24, 32, (int)&v19, 26);
     if ( v36 != 2 || WeaponData_Energy[5 * SelectedWeaponID] != ROM_WeaponExpTables[3 * v37 + 2] )
     {
       if ( v14 )
         v12 += 40 * v27 / v14;
       else
         v12 = 0;
-      result = Render_Graphics((int)&Dst_Displaybox, WeaponIconXOffset + 24, 32, (int)&v10, 26);
+      result = Render_Graphics((int)&Dst_Rects, WeaponIconXOffset + 24, 32, (int)&v10, 26);
     }
     else
     {
-      result = Render_Graphics((int)&Dst_Displaybox, WeaponIconXOffset + 24, 32, (int)&v23, 26);
+      result = Render_Graphics((int)&Dst_Rects, WeaponIconXOffset + 24, 32, (int)&v23, 26);
     }
     if ( LvBarFlashesLeft )
     {
       result = ((signed int)(unsigned __int8)byte_49E6F8++ >> 1) % 2;
       if ( result )
-        result = Render_Graphics((int)&Dst_Displaybox, WeaponIconXOffset + 24, 32, (int)&v15, 26);
+        result = Render_Graphics((int)&Dst_Rects, WeaponIconXOffset + 24, 32, (int)&v15, 26);
     }
   }
   return result;
@@ -16600,18 +16595,18 @@ int __cdecl Render_XP_Bar(int a1)
 // 49E6F8: using guessed type char byte_49E6F8;
 
 //----- (0041A0B0) --------------------------------------------------------
-int sub_41A0B0()
+int Render_Weapon_Icons()
 {
   int result; // eax@2
   int i; // [sp+0h] [bp-1Ch]@1
   int X_Position; // [sp+4h] [bp-18h]@7
   int j; // [sp+8h] [bp-14h]@5
-  int Src_Displaybox; // [sp+Ch] [bp-10h]@1
+  int Src_Rects; // [sp+Ch] [bp-10h]@1
   int v5; // [sp+10h] [bp-Ch]@1
   int v6; // [sp+14h] [bp-8h]@1
   int v7; // [sp+18h] [bp-4h]@1
 
-  Src_Displaybox = 0;
+  Src_Rects = 0;
   v5 = 0;
   v6 = 0;
   v7 = 16;
@@ -16642,9 +16637,9 @@ int sub_41A0B0()
         X_Position -= 16 * i + 48;
       if ( X_Position < 72 && X_Position >= 24 )
         X_Position -= 48;
-      Src_Displaybox = 16 * *((_DWORD *)&WeaponData_ID + 5 * j);
-      v6 = Src_Displaybox + 16;
-      Render_Graphics((int)&FullscreenRect, X_Position, 16, (int)&Src_Displaybox, 12);
+      Src_Rects = 16 * *((_DWORD *)&WeaponData_ID + 5 * j);
+      v6 = Src_Rects + 16;
+      Render_Graphics((int)&FullscreenRect, X_Position, 16, (int)&Src_Rects, 12);
     }
   }
   return result;
@@ -16656,7 +16651,7 @@ int sub_41A0B0()
 int __cdecl Render_Health_Bar(int a1)
 {
   int result; // eax@2
-  int Src_Displaybox; // [sp+0h] [bp-30h]@1
+  int Src_Rects; // [sp+0h] [bp-30h]@1
   int v3; // [sp+4h] [bp-2Ch]@1
   int v4; // [sp+8h] [bp-28h]@1
   int v5; // [sp+Ch] [bp-24h]@1
@@ -16669,7 +16664,7 @@ int __cdecl Render_Health_Bar(int a1)
   int v12; // [sp+28h] [bp-8h]@1
   int v13; // [sp+2Ch] [bp-4h]@1
 
-  Src_Displaybox = 0;
+  Src_Rects = 0;
   v3 = 40;
   v4 = 232;
   v5 = 48;
@@ -16696,7 +16691,7 @@ int __cdecl Render_Health_Bar(int a1)
     v4 = 64;
     v12 = 40 * Quote_Health_Current / Quote_Health_Max - 1;
     v8 = 40 * YellowHealthBar / Quote_Health_Max - 1;
-    Render_Graphics((int)&FullscreenRect, 16, 40, (int)&Src_Displaybox, 26);
+    Render_Graphics((int)&FullscreenRect, 16, 40, (int)&Src_Rects, 26);
     Render_Graphics((int)&FullscreenRect, 40, 40, (int)&v6, 26);
     Render_Graphics((int)&FullscreenRect, 40, 40, (int)&v10, 26);
     result = Render_Numbers(8, 40, YellowHealthBar, 0);
@@ -16713,7 +16708,7 @@ int __cdecl Render_Health_Bar(int a1)
 int __cdecl Underwater_Timer(int X_Position, int Y_Position)
 {
   int result; // eax@1
-  int Src_Displaybox; // [sp+0h] [bp-20h]@1
+  int Src_Rects; // [sp+0h] [bp-20h]@1
   int v4; // [sp+4h] [bp-1Ch]@1
   int v5; // [sp+8h] [bp-18h]@1
   int v6; // [sp+Ch] [bp-14h]@1
@@ -16722,7 +16717,7 @@ int __cdecl Underwater_Timer(int X_Position, int Y_Position)
   int v9; // [sp+18h] [bp-8h]@1
   int v10; // [sp+1Ch] [bp-4h]@1
 
-  Src_Displaybox = 112;
+  Src_Rects = 112;
   v4 = 72;
   v5 = 144;
   v6 = 80;
@@ -16738,7 +16733,7 @@ int __cdecl Underwater_Timer(int X_Position, int Y_Position)
     if ( Air % 30 <= 10 )
       result = Render_Graphics((int)&FullscreenRect, X_Position, Y_Position, (int)&v7, 26);
     else
-      result = Render_Graphics((int)&FullscreenRect, X_Position, Y_Position, (int)&Src_Displaybox, 26);
+      result = Render_Graphics((int)&FullscreenRect, X_Position, Y_Position, (int)&Src_Rects, 26);
   }
   return result;
 }
@@ -16751,7 +16746,7 @@ int __cdecl Underwater_Timer(int X_Position, int Y_Position)
 int __cdecl sub_41A430(int X_Position, int Y_Position)
 {
   int result; // eax@1
-  int Src_Displaybox; // [sp+0h] [bp-30h]@1
+  int Src_Rects; // [sp+0h] [bp-30h]@1
   int v4; // [sp+4h] [bp-2Ch]@1
   int v5; // [sp+8h] [bp-28h]@1
   int v6; // [sp+Ch] [bp-24h]@1
@@ -16764,7 +16759,7 @@ int __cdecl sub_41A430(int X_Position, int Y_Position)
   int v13; // [sp+28h] [bp-8h]@1
   int v14; // [sp+2Ch] [bp-4h]@1
 
-  Src_Displaybox = 112;
+  Src_Rects = 112;
   v4 = 104;
   v5 = 120;
   v6 = 112;
@@ -16786,11 +16781,11 @@ int __cdecl sub_41A430(int X_Position, int Y_Position)
       if ( NikumaruTime % 30 <= 10 )
         Render_Graphics((int)&FullscreenRect, X_Position, Y_Position, (int)&v7, 26);
       else
-        Render_Graphics((int)&FullscreenRect, X_Position, Y_Position, (int)&Src_Displaybox, 26);
+        Render_Graphics((int)&FullscreenRect, X_Position, Y_Position, (int)&Src_Rects, 26);
     }
     else
     {
-      Render_Graphics((int)&FullscreenRect, X_Position, Y_Position, (int)&Src_Displaybox, 26);
+      Render_Graphics((int)&FullscreenRect, X_Position, Y_Position, (int)&Src_Rects, 26);
     }
     Render_Numbers(X_Position, Y_Position, NikumaruTime / 3000, 0);
     Render_Numbers(X_Position + 20, Y_Position, NikumaruTime / 50 % 60, 1);
@@ -17995,7 +17990,7 @@ void sub_41C8F0()
 }
 
 //----- (0041CB10) --------------------------------------------------------
-signed int __cdecl sub_41CB10(int a1, int a2)
+signed int __cdecl Sound_Thingy(int a1, int a2)
 {
   int v2; // ST40_4@24
   __int64 v3; // rax@24
@@ -18192,7 +18187,7 @@ signed int __cdecl sub_41D040(int a1)
     memcpy(&v18, Quote_Inventory, 0x80u);
     memcpy(&v19, &dword_4A5500, 0x40u);
     memcpy(&v20, &byte_49E5B8, 0x80u);
-    memcpy(&v22, &asc_49DC69[311], 0x3E8u);
+    memcpy(&v22, &byte_49DC69[311], 0x3E8u);
     sub_481981((FILE *)&ptr, 0x604u, 1u, stream);
     fclose(stream);
     result = 1;
@@ -18265,7 +18260,7 @@ signed int __cdecl sub_41D260(int a1)
       memcpy(Quote_Inventory, &v18, 0x80u);
       memcpy(&dword_4A5500, &v19, 0x40u);
       memcpy(&byte_49E5B8, &v20, 0x80u);
-      memcpy(&asc_49DC69[311], &v21, 0x3E8u);
+      memcpy(&byte_49DC69[311], &v21, 0x3E8u);
       Tsc_CMU(Music_To_Play);
       sub_414B50();
       if ( sub_420BE0(v4, 0, 0, 1) )
@@ -18437,7 +18432,7 @@ int sub_41D840()
   int v2; // [sp+4h] [bp-58h]@10
   int v3; // [sp+8h] [bp-54h]@10
   int v4; // [sp+Ch] [bp-50h]@10
-  int Dst_Displaybox; // [sp+10h] [bp-4Ch]@1
+  int Dst_Rects; // [sp+10h] [bp-4Ch]@1
   int v6; // [sp+14h] [bp-48h]@1
   int v7; // [sp+18h] [bp-44h]@1
   int v8; // [sp+1Ch] [bp-40h]@1
@@ -18450,14 +18445,14 @@ int sub_41D840()
   int v15; // [sp+38h] [bp-24h]@1
   int v16; // [sp+3Ch] [bp-20h]@1
   int v17; // [sp+40h] [bp-1Ch]@1
-  int Src_Displaybox; // [sp+44h] [bp-18h]@1
+  int Src_Rects; // [sp+44h] [bp-18h]@1
   int v19; // [sp+48h] [bp-14h]@1
   int v20; // [sp+4Ch] [bp-10h]@1
   int v21; // [sp+50h] [bp-Ch]@1
   int v22; // [sp+54h] [bp-8h]@7
   int j; // [sp+58h] [bp-4h]@7
 
-  Dst_Displaybox = 0;
+  Dst_Rects = 0;
   v6 = 0;
   v7 = 320;
   v8 = 240;
@@ -18469,13 +18464,13 @@ int sub_41D840()
   v15 = 104;
   v16 = 112;
   v17 = 120;
-  Src_Displaybox = 80;
+  Src_Rects = 80;
   v19 = 64;
   v20 = 144;
   v21 = 72;
   if ( Y_Position > 46 )
     --Y_Position;
-  Render_Graphics((int)&Dst_Displaybox, 128, Y_Position, (int)&Src_Displaybox, 26);
+  Render_Graphics((int)&Dst_Rects, 128, Y_Position, (int)&Src_Rects, 26);
   for ( i = 0; *((_DWORD *)&dword_4A5500 + 2 * i); ++i )
     ;
   result = dword_4A5548++ + 1;
@@ -18483,7 +18478,7 @@ int sub_41D840()
   {
     v22 = (320 - 40 * i) / 2;
     result = Render_Graphics(
-               (int)&Dst_Displaybox,
+               (int)&Dst_Rects,
                v22 + 40 * dword_4A5544,
                64,
                (int)(&v10 + 4 * (((unsigned int)dword_4A5548 >> 1) % 2)),
@@ -18497,7 +18492,7 @@ int sub_41D840()
       v3 = v1 + 32;
       v2 = 16 * (*((_DWORD *)&dword_4A5500 + 2 * j) / 8);
       v4 = v2 + 16;
-      result = Render_Graphics((int)&Dst_Displaybox, v22 + 40 * j, 64, (int)&v1, 14);
+      result = Render_Graphics((int)&Dst_Rects, v22 + 40 * j, 64, (int)&v1, 14);
     }
   }
   return result;
@@ -18512,13 +18507,13 @@ signed int __cdecl sub_41DA00(_DWORD *a1)
   int v3; // [sp+4h] [bp-124h]@3
   char v4[4]; // [sp+8h] [bp-120h]@1
   int v5; // [sp+114h] [bp-14h]@1
-  int Dst_Displaybox; // [sp+118h] [bp-10h]@1
+  int Dst_Rects; // [sp+118h] [bp-10h]@1
   int v7; // [sp+11Ch] [bp-Ch]@1
   int v8; // [sp+120h] [bp-8h]@1
   int v9; // [sp+124h] [bp-4h]@1
 
   v5 = dword_498B20;
-  Dst_Displaybox = 0;
+  Dst_Rects = 0;
   v7 = 0;
   v8 = 320;
   v9 = 240;
@@ -18545,7 +18540,7 @@ signed int __cdecl sub_41DA00(_DWORD *a1)
       return 0;
     if ( v2 == 2 )
       return 2;
-    Render_Graphics((int)&Dst_Displaybox, 0, 0, (int)&Dst_Displaybox, 10);
+    Render_Graphics((int)&Dst_Rects, 0, 0, (int)&Dst_Rects, 10);
     sub_41D840();
     sub_421F10();
     if ( Key_For_Jump & Key_Pressed )
@@ -18828,13 +18823,13 @@ char __cdecl MachineGun(int Level)
         break;
     }
     if ( !(Key_For_Shoot_Duplicate & Key_Held) )
-      byte_49E6CA = 6;
+      Time_Between_Shots = 6;
     if ( Key_For_Shoot_Duplicate & Key_Held )
     {
-      LOBYTE(v1) = byte_49E6CA++ + 1;
-      if ( (signed int)(unsigned __int8)byte_49E6CA >= 6 )
+      LOBYTE(v1) = Time_Between_Shots++ + 1;
+      if ( (signed int)(unsigned __int8)Time_Between_Shots >= 6 )
       {
-        byte_49E6CA = 0;
+        Time_Between_Shots = 0;
         if ( Rmv_Ammo_From_Weap(1) )
         {
           if ( Quote_IsFacingUp )
@@ -18894,28 +18889,28 @@ char __cdecl MachineGun(int Level)
         else
         {
           LOBYTE(v1) = Play_Sound_Effect(37, 1);
-          if ( !dword_4A554C )
+          if ( !Empty_Effect_Timer )
           {
             LOBYTE(v1) = Create_Animated_Effect(Quote_X_Position, Quote_Y_Position, 16, 0);
-            dword_4A554C = 50;
+            Empty_Effect_Timer = 50;
           }
         }
       }
     }
     else
     {
-      LOBYTE(v1) = dword_4A5554++ + 1;
+      LOBYTE(v1) = Machine_Gun_Reload_Timer++ + 1;
       if ( EquippedItems & 8 )
       {
-        if ( dword_4A5554 > 1 )
+        if ( Machine_Gun_Reload_Timer > 1 )
         {
-          dword_4A5554 = 0;
+          Machine_Gun_Reload_Timer = 0;
           LOBYTE(v1) = Add_Ammo_To_Weap(1);
         }
       }
-      else if ( dword_4A5554 > 4 )
+      else if ( Machine_Gun_Reload_Timer > 4 )
       {
-        dword_4A5554 = 0;
+        Machine_Gun_Reload_Timer = 0;
         LOBYTE(v1) = Add_Ammo_To_Weap(1);
       }
     }
@@ -18928,9 +18923,9 @@ char __cdecl MachineGun(int Level)
 // 49E648: using guessed type int Quote_IsFacingDown;
 // 49E650: using guessed type int EquippedItems;
 // 49E670: using guessed type int Quote_Y_Velocity;
-// 49E6CA: using guessed type char byte_49E6CA;
-// 4A554C: using guessed type int dword_4A554C;
-// 4A5554: using guessed type int dword_4A5554;
+// 49E6CA: using guessed type char Time_Between_Shots;
+// 4A554C: using guessed type int Empty_Effect_Timer;
+// 4A5554: using guessed type int Machine_Gun_Reload_Timer;
 
 //----- (0041E7B0) --------------------------------------------------------
 int __cdecl Missile_Launcher(int Level, int Super_Or_Normal)
@@ -19031,10 +19026,10 @@ int __cdecl Missile_Launcher(int Level, int Super_Or_Normal)
     if ( !Rmv_Ammo_From_Weap(1) )
     {
       result = Play_Sound_Effect(37, 1);
-      if ( !dword_4A554C )
+      if ( !Empty_Effect_Timer )
       {
         result = Create_Animated_Effect(Quote_X_Position, Quote_Y_Position, 16, 0);
-        dword_4A554C = 50;
+        Empty_Effect_Timer = 50;
       }
       return result;
     }
@@ -19129,10 +19124,10 @@ int __cdecl Missile_Launcher(int Level, int Super_Or_Normal)
     return Play_Sound_Effect(32, 1);
   }
   result = Play_Sound_Effect(37, 1);
-  if ( !dword_4A554C )
+  if ( !Empty_Effect_Timer )
   {
     result = Create_Animated_Effect(Quote_X_Position, Quote_Y_Position, 16, 0);
-    dword_4A554C = 50;
+    Empty_Effect_Timer = 50;
   }
   return result;
 }
@@ -19140,7 +19135,7 @@ int __cdecl Missile_Launcher(int Level, int Super_Or_Normal)
 // 49E214: using guessed type int Key_Pressed;
 // 49E644: using guessed type int Quote_IsFacingUp;
 // 49E648: using guessed type int Quote_IsFacingDown;
-// 4A554C: using guessed type int dword_4A554C;
+// 4A554C: using guessed type int Empty_Effect_Timer;
 
 //----- (0041EFD0) --------------------------------------------------------
 int Bubbler_Lvl_1()
@@ -19195,10 +19190,10 @@ int Bubbler_Lvl_1()
       else
       {
         result = Play_Sound_Effect(37, 1);
-        if ( !dword_4A554C )
+        if ( !Empty_Effect_Timer )
         {
           result = Create_Animated_Effect(Quote_X_Position, Quote_Y_Position, 16, 0);
-          dword_4A554C = 50;
+          Empty_Effect_Timer = 50;
         }
       }
     }
@@ -19218,7 +19213,7 @@ int Bubbler_Lvl_1()
 // 49E214: using guessed type int Key_Pressed;
 // 49E644: using guessed type int Quote_IsFacingUp;
 // 49E648: using guessed type int Quote_IsFacingDown;
-// 4A554C: using guessed type int dword_4A554C;
+// 4A554C: using guessed type int Empty_Effect_Timer;
 // 4A5558: using guessed type int dword_4A5558;
 
 //----- (0041F280) --------------------------------------------------------
@@ -19233,13 +19228,13 @@ char __cdecl Bubbler_Lvl_2_3(int Level)
     LOBYTE(v1) = Level + 18;
     BulletID = Level + 18;
     if ( !(Key_For_Shoot_Duplicate & Key_Held) )
-      byte_49E6CA = 6;
+      Time_Between_Shots = 6;
     if ( Key_For_Shoot_Duplicate & Key_Held )
     {
-      LOBYTE(v1) = byte_49E6CA++ + 1;
-      if ( (signed int)(unsigned __int8)byte_49E6CA >= 7 )
+      LOBYTE(v1) = Time_Between_Shots++ + 1;
+      if ( (signed int)(unsigned __int8)Time_Between_Shots >= 7 )
       {
-        byte_49E6CA = 0;
+        Time_Between_Shots = 0;
         if ( Rmv_Ammo_From_Weap(1) )
         {
           if ( Quote_IsFacingUp )
@@ -19283,10 +19278,10 @@ char __cdecl Bubbler_Lvl_2_3(int Level)
         else
         {
           LOBYTE(v1) = Play_Sound_Effect(37, 1);
-          if ( !dword_4A554C )
+          if ( !Empty_Effect_Timer )
           {
             LOBYTE(v1) = Create_Animated_Effect(Quote_X_Position, Quote_Y_Position, 16, 0);
-            dword_4A554C = 50;
+            Empty_Effect_Timer = 50;
           }
         }
       }
@@ -19303,8 +19298,8 @@ char __cdecl Bubbler_Lvl_2_3(int Level)
 // 49E210: using guessed type int Key_Held;
 // 49E644: using guessed type int Quote_IsFacingUp;
 // 49E648: using guessed type int Quote_IsFacingDown;
-// 49E6CA: using guessed type char byte_49E6CA;
-// 4A554C: using guessed type int dword_4A554C;
+// 49E6CA: using guessed type char Time_Between_Shots;
+// 4A554C: using guessed type int Empty_Effect_Timer;
 // 4A555C: using guessed type int dword_4A555C;
 
 //----- (0041F580) --------------------------------------------------------
@@ -19619,8 +19614,8 @@ char sub_41FE70()
   int v3; // [sp+0h] [bp-Ch]@23
   int v4; // [sp+4h] [bp-8h]@15
 
-  if ( dword_4A554C )
-    LOBYTE(v0) = dword_4A554C-- - 1;
+  if ( Empty_Effect_Timer )
+    LOBYTE(v0) = Empty_Effect_Timer-- - 1;
   if ( dword_4A5564 )
     --dword_4A5564;
   if ( Key_For_Shoot_Duplicate & Key_Pressed )
@@ -19702,7 +19697,7 @@ char sub_41FE70()
 // 499BCC: using guessed type int WeaponData_Level[];
 // 499C68: using guessed type int SelectedWeaponID;
 // 49E214: using guessed type int Key_Pressed;
-// 4A554C: using guessed type int dword_4A554C;
+// 4A554C: using guessed type int Empty_Effect_Timer;
 // 4A5564: using guessed type int dword_4A5564;
 
 //----- (004200C0) --------------------------------------------------------
@@ -19911,7 +19906,7 @@ size_t __cdecl Sound_Loader(int Ptr_Sound, int Channels, int SoundID)
         v21 = Ptr_Sound;
         for ( i = 0; i < Channels; ++i )
         {
-          if ( !sub_41CB10(v21, (int)v18) )
+          if ( !Sound_Thingy(v21, (int)v18) )
           {
             if ( v18 )
               free(v18);
@@ -19995,7 +19990,7 @@ signed int __cdecl sub_420BE0(int a1, int Event, int a3, int a4)
   v6 = 0;
   strcpy(&destination, "stage");
   sprintf(&str, "%s\\Prt%s", &destination, &ROM_MapHeaders_Tileset_Name[200 * a1]);
-  if ( !LoadImageFileC(&str, 2) )
+  if ( !LoadImage_Must_Prep_RAM(&str, 2) )
     v6 = 1;
   sprintf(&str, "%s\\%s.pxa", &destination, &ROM_MapHeaders_Tileset_Name[200 * a1]);
   if ( !sub_4138A0((int)&str) )
@@ -20014,10 +20009,10 @@ signed int __cdecl sub_420BE0(int a1, int Event, int a3, int a4)
     v6 = 1;
   strcpy(&destination, "Npc");
   sprintf(&str, "%s\\Npc%s", &destination, &ROM_MapHeaders_Sprite_File_A[200 * a1]);
-  if ( !LoadImageFileC(&str, 21) )
+  if ( !LoadImage_Must_Prep_RAM(&str, 21) )
     v6 = 1;
   sprintf(&str, "%s\\Npc%s", &destination, &ROM_MapHeaders_Sprite_File_B[50 * a1]);
-  if ( !LoadImageFileC(&str, 22) )
+  if ( !LoadImage_Must_Prep_RAM(&str, 22) )
     v6 = 1;
   if ( v6 )
   {
@@ -20205,7 +20200,7 @@ int __cdecl sub_4213B0(signed int a1, signed int a2)
 {
   int result; // eax@1
   signed int i; // [sp+0h] [bp-34h]@3
-  int Src_Displaybox; // [sp+4h] [bp-30h]@1
+  int Src_Rects; // [sp+4h] [bp-30h]@1
   int v5; // [sp+8h] [bp-2Ch]@1
   int v6; // [sp+Ch] [bp-28h]@1
   int v7; // [sp+10h] [bp-24h]@1
@@ -20218,7 +20213,7 @@ int __cdecl sub_4213B0(signed int a1, signed int a2)
   int v14; // [sp+2Ch] [bp-8h]@1
   int v15; // [sp+30h] [bp-4h]@1
 
-  Src_Displaybox = 192;
+  Src_Rects = 192;
   v5 = 0;
   v6 = 200;
   v7 = 8;
@@ -20241,7 +20236,7 @@ int __cdecl sub_4213B0(signed int a1, signed int a2)
                    (int)&FullscreenRect,
                    WhimsicalStar_X_Position[17 * i] / 512 - a1 / 512 - 4,
                    WhimsicalStar_Y_Position[17 * i] / 512 - a2 / 512 - 4,
-                   (int)(&Src_Displaybox + 4 * i),
+                   (int)(&Src_Rects + 4 * i),
                    16);
     }
   }
@@ -20487,7 +20482,7 @@ signed int __cdecl sub_421AF0(int a1)
   for ( i = 0; i < 4; ++i )
   {
     dword_4A5AEC[i] = 16 * i;
-    FillDisplaybox_Memory_((int)asc_498290, 0, i + 30);
+    FillRects_Memory_((int)asc_498290, 0, i + 30);
     memset((char *)&unk_4A58D0 + 64 * i, 0, 0x40u);
   }
   for ( Script_Position = 0; ; ++Script_Position )
@@ -20541,7 +20536,7 @@ void *sub_421C80()
   {
     byte_4A5ADC = 3;
     Game_State |= 4u;
-    FillDisplaybox_Memory_((int)asc_498290, 0, dword_4A5AE8 % 4 + 30);
+    FillRects_Memory_((int)asc_498290, 0, dword_4A5AE8 % 4 + 30);
     result = memset((char *)&unk_4A58D0 + 64 * (dword_4A5AE8 % 4), 0, 0x40u);
   }
   return result;
@@ -20555,7 +20550,7 @@ void *sub_421C80()
 void *__cdecl sub_421D10(int a1)
 {
   void *result; // eax@7
-  char source; // [sp+0h] [bp-2Ch]@5
+  char Ptr_String; // [sp+0h] [bp-2Ch]@5
   char v3[7]; // [sp+1h] [bp-2Bh]@7
   int v4; // [sp+8h] [bp-24h]@1
   int v5; // [sp+Ch] [bp-20h]@1
@@ -20579,19 +20574,19 @@ void *__cdecl sub_421D10(int a1)
     if ( v12 / *(&v7 + i) || v5 )
     {
       v6 = v12 / *(&v7 + i);
-      *(&source + v10) = v6 + 48;
+      *(&Ptr_String + v10) = v6 + 48;
       v5 = 1;
       v12 -= *(&v7 + i) * v6;
       ++v10;
     }
   }
-  *(&source + v10) = v12 + 48;
+  *(&Ptr_String + v10) = v12 + 48;
   v3[v10] = 0;
-  sub_40CEB0(6 * TextColumn, 0, &source, 0xFEFFFFu, dword_4A5AE8 % 4 + 30);
-  strcat((char *)&unk_4A58D0 + 64 * (dword_4A5AE8 % 4), &source);
+  Draw_Text_To_Screen(6 * TextColumn, 0, &Ptr_String, 0xFEFFFFu, dword_4A5AE8 % 4 + 30);
+  strcat((char *)&unk_4A58D0 + 64 * (dword_4A5AE8 % 4), &Ptr_String);
   Play_Sound_Effect(2, 1);
   byte_4A5B30 = 0;
-  result = (void *)(TextColumn + strlen(&source));
+  result = (void *)(TextColumn + strlen(&Ptr_String));
   TextColumn = (int)result;
   if ( (signed int)result >= 35 )
   {
@@ -20620,7 +20615,7 @@ int sub_421E90()
   for ( i = 0; i < 4; ++i )
   {
     dword_4A5AEC[i] = 16 * i;
-    FillDisplaybox_Memory_((int)asc_498290, 0, i + 30);
+    FillRects_Memory_((int)asc_498290, 0, i + 30);
     memset((char *)&unk_4A58D0 + 64 * i, 0, 0x40u);
     result = i + 1;
   }
@@ -20640,7 +20635,7 @@ int sub_421F10()
   int v3; // [sp+4h] [bp-C4h]@7
   int v4; // [sp+8h] [bp-C0h]@7
   int v5; // [sp+Ch] [bp-BCh]@7
-  int Src_Displaybox; // [sp+10h] [bp-B8h]@7
+  int Src_Rects; // [sp+10h] [bp-B8h]@7
   int v7; // [sp+14h] [bp-B4h]@7
   int v8; // [sp+18h] [bp-B0h]@7
   int v9; // [sp+1Ch] [bp-ACh]@7
@@ -20677,7 +20672,7 @@ int sub_421F10()
   int v40; // [sp+98h] [bp-30h]@28
   int v41; // [sp+9Ch] [bp-2Ch]@28
   int v42; // [sp+A0h] [bp-28h]@28
-  int Ptr_Img_Displaybox; // [sp+A4h] [bp-24h]@21
+  int Ptr_Img_Rects; // [sp+A4h] [bp-24h]@21
   int v44; // [sp+A8h] [bp-20h]@21
   int v45; // [sp+ACh] [bp-1Ch]@21
   int v46; // [sp+B0h] [bp-18h]@21
@@ -20702,7 +20697,7 @@ int sub_421F10()
     }
     if ( byte_4A5ADD & 2 )
     {
-      Src_Displaybox = 0;
+      Src_Rects = 0;
       v7 = 0;
       v8 = 244;
       v9 = 8;
@@ -20714,7 +20709,7 @@ int sub_421F10()
       v3 = 16;
       v4 = 244;
       v5 = 24;
-      Render_Graphics((int)&unk_48F92C, 38, dword_4A5B20 - 10, (int)&Src_Displaybox, 26);
+      Render_Graphics((int)&unk_48F92C, 38, dword_4A5B20 - 10, (int)&Src_Rects, 26);
       for ( Y_Position = 1; Y_Position < 7; ++Y_Position )
         Render_Graphics((int)&unk_48F92C, 38, dword_4A5B20 + 8 * Y_Position - 10, (int)&v10, 26);
       Render_Graphics((int)&unk_48F92C, 38, dword_4A5B20 + 8 * Y_Position - 10, (int)&v2, 26);
@@ -20740,11 +20735,11 @@ int sub_421F10()
     v1 = (unsigned __int8)byte_4A5B30++ % 20;
     if ( v1 > 12 && byte_4A5ADC == 2 )
     {
-      Ptr_Img_Displaybox = 6 * TextColumn + v47 + 52;
+      Ptr_Img_Rects = 6 * TextColumn + v47 + 52;
       v44 = dword_4A5B2C + dword_4A5B20 + dword_4A5AEC[dword_4A5AE8 % 4];
       v45 = 6 * TextColumn + v47 + 57;
       v46 = v44 + 11;
-      FillDisplaybox_Memory((int)&Ptr_Img_Displaybox, 16711679);
+      FillRects_Memory((int)&Ptr_Img_Rects, 16711679);
     }
     v48 = 0;
     v49 = 0;
@@ -20778,19 +20773,19 @@ int sub_421F10()
         ++dword_4A5B18;
       if ( dword_4A5B14 >= 1000 )
       {
-        Ptr_Img_Displaybox = 32 * ((dword_4A5B14 - 1000) % 8);
-        v45 = Ptr_Img_Displaybox + 32;
+        Ptr_Img_Rects = 32 * ((dword_4A5B14 - 1000) % 8);
+        v45 = Ptr_Img_Rects + 32;
         v44 = 16 * ((dword_4A5B14 - 1000) / 8);
         v46 = 16 * ((dword_4A5B14 - 1000) / 8) + 16;
-        Render_Graphics((int)&unk_48F92C, 140, dword_4A5B18, (int)&Ptr_Img_Displaybox, 8);
+        Render_Graphics((int)&unk_48F92C, 140, dword_4A5B18, (int)&Ptr_Img_Rects, 8);
       }
       else
       {
-        Ptr_Img_Displaybox = 16 * (dword_4A5B14 % 16);
-        v45 = Ptr_Img_Displaybox + 16;
+        Ptr_Img_Rects = 16 * (dword_4A5B14 % 16);
+        v45 = Ptr_Img_Rects + 16;
         v44 = 16 * (dword_4A5B14 / 16);
         v46 = 16 * (dword_4A5B14 / 16) + 16;
-        Render_Graphics((int)&unk_48F92C, 148, dword_4A5B18, (int)&Ptr_Img_Displaybox, 12);
+        Render_Graphics((int)&unk_48F92C, 148, dword_4A5B18, (int)&Ptr_Img_Rects, 12);
       }
     }
     v30 = 152;
@@ -20842,7 +20837,7 @@ int Tsc_Parser(void)
   char destination[72]; // [sp+50h] [bp-78h]@443
   int v6; // [sp+98h] [bp-30h]@1
   int v7; // [sp+9Ch] [bp-2Ch]@6
-  char source; // [sp+A0h] [bp-28h]@446
+  char Ptr_String; // [sp+A0h] [bp-28h]@446
   char v9; // [sp+A1h] [bp-27h]@447
   char v10; // [sp+A2h] [bp-26h]@447
   __int16 Life_To_Add[2]; // [sp+A4h] [bp-24h]@20
@@ -21162,7 +21157,7 @@ jmp_42256C_default_case:
                                                                                                                                                                                             memcpy(destination, (char *)Current_Script + Script_Position, *(_DWORD *)Health_To_Restore - Script_Position);
                                                                                                                                                                                             destination[num] = 0;
                                                                                                                                                                                             TextColumn = *(_DWORD *)Health_To_Restore;
-                                                                                                                                                                                            sub_40CEB0(0, 0, destination, 0xFEFFFFu, dword_4A5AE8 % 4 + 30);
+                                                                                                                                                                                            Draw_Text_To_Screen(0, 0, destination, 0xFEFFFFu, dword_4A5AE8 % 4 + 30);
                                                                                                                                                                                             sprintf((char *)&unk_4A58D0 + 64 * (dword_4A5AE8 % 4), destination);
                                                                                                                                                                                             Script_Position += num;
                                                                                                                                                                                             if ( TextColumn >= 35 )
@@ -21171,8 +21166,8 @@ jmp_42256C_default_case:
                                                                                                                                                                                           }
                                                                                                                                                                                           else
                                                                                                                                                                                           {
-                                                                                                                                                                                            source = *((_BYTE *)Current_Script + Script_Position);
-                                                                                                                                                                                            if ( source & 0x80 )
+                                                                                                                                                                                            Ptr_String = *((_BYTE *)Current_Script + Script_Position);
+                                                                                                                                                                                            if ( Ptr_String & 0x80 )
                                                                                                                                                                                             {
                                                                                                                                                                                               v9 = *((_BYTE *)Current_Script + Script_Position + 1);
                                                                                                                                                                                               v10 = 0;
@@ -21181,14 +21176,14 @@ jmp_42256C_default_case:
                                                                                                                                                                                             {
                                                                                                                                                                                               v9 = 0;
                                                                                                                                                                                             }
-                                                                                                                                                                                            if ( source == 61 )
-                                                                                                                                                                                              sub_40C7A0(6 * TextColumn, 2, (int)&v12, dword_4A5AE8 % 4 + 30, 26);
+                                                                                                                                                                                            if ( Ptr_String == 61 )
+                                                                                                                                                                                              Blit_For_Dmg_Num_(6 * TextColumn, 2, (int)&v12, dword_4A5AE8 % 4 + 30, 26);
                                                                                                                                                                                             else
-                                                                                                                                                                                              sub_40CEB0(6 * TextColumn, 0, &source, 0xFEFFFFu, dword_4A5AE8 % 4 + 30);
-                                                                                                                                                                                            strcat((char *)&unk_4A58D0 + 64 * (dword_4A5AE8 % 4), &source);
+                                                                                                                                                                                              Draw_Text_To_Screen(6 * TextColumn, 0, &Ptr_String, 0xFEFFFFu, dword_4A5AE8 % 4 + 30);
+                                                                                                                                                                                            strcat((char *)&unk_4A58D0 + 64 * (dword_4A5AE8 % 4), &Ptr_String);
                                                                                                                                                                                             Play_Sound_Effect(2, 1);
                                                                                                                                                                                             byte_4A5B30 = 0;
-                                                                                                                                                                                            if ( source & 0x80 )
+                                                                                                                                                                                            if ( Ptr_String & 0x80 )
                                                                                                                                                                                             {
                                                                                                                                                                                               Script_Position += 2;
                                                                                                                                                                                               TextColumn += 2;
@@ -22166,8 +22161,8 @@ int sub_425790()
 
   for ( i = 0; i < 4; ++i )
   {
-    FillDisplaybox_Memory_((int)asc_498290, 0, i + 30);
-    sub_40CEB0(0, 0, (char *)&unk_4A58D0 + 64 * i, 0xFEFFFFu, i + 30);
+    FillRects_Memory_((int)asc_498290, 0, i + 30);
+    Draw_Text_To_Screen(0, 0, (char *)&unk_4A58D0 + 64 * i, 0xFEFFFFu, i + 30);
     result = i + 1;
   }
   return result;
@@ -22566,11 +22561,11 @@ int __cdecl sub_425BF0(int a1, int a2, int a3)
   v5 = 48;
   v6 = 48;
   v7 = 56;
-  FillDisplaybox_Memory_((int)&Event_AltVel_X[10 * v15], 0, 29);
+  FillRects_Memory_((int)&Event_AltVel_X[10 * v15], 0, 29);
   if ( v16 )
-    result = sub_40C7A0(Event_AltVel_X[10 * v15], Event_AltVel_Y[10 * v15], (int)&v4, 29, 26);
+    result = Blit_For_Dmg_Num_(Event_AltVel_X[10 * v15], Event_AltVel_Y[10 * v15], (int)&v4, 29, 26);
   else
-    result = sub_40C7A0(Event_AltVel_X[10 * v15], Event_AltVel_Y[10 * v15], (int)&v8, 29, 26);
+    result = Blit_For_Dmg_Num_(Event_AltVel_X[10 * v15], Event_AltVel_Y[10 * v15], (int)&v8, 29, 26);
   for ( i = 3; i >= 0; --i )
   {
     if ( v12 || !i || v14[i] )
@@ -22578,7 +22573,7 @@ int __cdecl sub_425BF0(int a1, int a2, int a3)
       v12 = 1;
       if ( v16 )
         v14[i] += 10;
-      sub_40C7A0(8 * (3 - i) + 8, Event_AltVel_Y[10 * v15], (int)(&v18 + 4 * v14[i]), 29, 26);
+      Blit_For_Dmg_Num_(8 * (3 - i) + 8, Event_AltVel_Y[10 * v15], (int)(&v18 + 4 * v14[i]), 29, 26);
     }
     result = i - 1;
   }
@@ -28159,7 +28154,7 @@ LABEL_34:
       *(_DWORD *)(a1 + 16) = 0;
       *(_DWORD *)(a1 + 20) = 0;
       *(_DWORD *)(a1 + 116) = 14;
-      for ( i = 0; i < 512 && dword_4A6250[43 * i] != 501; ++i )
+      for ( i = 0; i < 512 && NPC_Event_Number[43 * i] != 501; ++i )
         ;
       if ( i == 512 )
       {
@@ -28167,7 +28162,7 @@ LABEL_34:
       }
       else
       {
-        *(_DWORD *)(a1 + 168) = (char *)&byte_4A6220 + 172 * i;
+        *(_DWORD *)(a1 + 168) = (char *)&Is_NPC_Alive + 172 * i;
 LABEL_46:
         if ( *(_DWORD *)(*(_DWORD *)(a1 + 168) + 76) )
           *(_DWORD *)(a1 + 76) = 0;
@@ -28287,7 +28282,7 @@ LABEL_71:
   }
   return result;
 }
-// 4A6250: using guessed type int dword_4A6250[];
+// 4A6250: using guessed type int NPC_Event_Number[];
 // 4BBA28: using guessed type int dword_4BBA28;
 // 4BBA30: using guessed type int dword_4BBA30;
 
@@ -31923,12 +31918,12 @@ int __cdecl NPC66(int a1)
   }
   else
   {
-    for ( i = 0; i < 512 && dword_4A6250[43 * i] != 1000; ++i )
+    for ( i = 0; i < 512 && NPC_Event_Number[43 * i] != 1000; ++i )
       ;
     if ( i == 512 )
       goto LABEL_31;
-    *(_DWORD *)(a1 + 32) = dword_4A6228[43 * i];
-    *(_DWORD *)(a1 + 36) = dword_4A622C[43 * i];
+    *(_DWORD *)(a1 + 32) = NPC_X_Position[43 * i];
+    *(_DWORD *)(a1 + 36) = NPC_Y_Position[43 * i];
     *(_DWORD *)(a1 + 108) = i;
     v1 = Angle_Calculator(*(_DWORD *)(a1 + 8) - *(_DWORD *)(a1 + 32), *(_DWORD *)(a1 + 12) - *(_DWORD *)(a1 + 36));
     *(_DWORD *)(a1 + 16) = 2 * COS_function(v1);
@@ -31949,7 +31944,7 @@ int __cdecl NPC66(int a1)
   {
     *(_DWORD *)(a1 + 116) = 2;
     *(_DWORD *)(a1 + 104) = 2;
-    *((_BYTE *)&byte_4A6220 + 172 * *(_DWORD *)(a1 + 108)) = 0;
+    *((_BYTE *)&Is_NPC_Alive + 172 * *(_DWORD *)(a1 + 108)) = 0;
     Play_Sound_Effect(21, 1);
   }
 LABEL_31:
@@ -31964,9 +31959,9 @@ LABEL_31:
   *(_DWORD *)(v3 + 12) = v2[3];
   return result;
 }
-// 4A6228: using guessed type int dword_4A6228[];
-// 4A622C: using guessed type int dword_4A622C[];
-// 4A6250: using guessed type int dword_4A6250[];
+// 4A6228: using guessed type int NPC_X_Position[];
+// 4A622C: using guessed type int NPC_Y_Position[];
+// 4A6250: using guessed type int NPC_Event_Number[];
 
 //----- (004345E0) --------------------------------------------------------
 int __cdecl NPC67(int a1)
@@ -44074,7 +44069,7 @@ LABEL_21:
 }
 
 //----- (00446500) --------------------------------------------------------
-int __cdecl NPC154(int a1)
+int __cdecl NPC154(int NPC_Vars_Pointer)
 {
   char *v1; // edx@21
   int result; // eax@21
@@ -44082,56 +44077,56 @@ int __cdecl NPC154(int a1)
   int v4; // edx@22
   int v5; // [sp+0h] [bp-4h]@1
 
-  v5 = *(_DWORD *)(a1 + 116);
+  v5 = *(_DWORD *)(NPC_Vars_Pointer + 116);
   if ( v5 )
   {
     if ( v5 == 1 )
     {
-      if ( *(_DWORD *)(a1 + 4) & 8 )
+      if ( *(_DWORD *)(NPC_Vars_Pointer + 4) & 8 )
       {
-        *(_DWORD *)(a1 + 104) = 10;
-        *(_DWORD *)(a1 + 100) = 0;
-        *(_DWORD *)(a1 + 116) = 2;
-        *(_DWORD *)(a1 + 120) = 0;
+        *(_DWORD *)(NPC_Vars_Pointer + 104) = 10;
+        *(_DWORD *)(NPC_Vars_Pointer + 100) = 0;
+        *(_DWORD *)(NPC_Vars_Pointer + 116) = 2;
+        *(_DWORD *)(NPC_Vars_Pointer + 120) = 0;
       }
     }
     else if ( v5 == 2 )
     {
-      *(_DWORD *)(a1 + 16) = 8 * *(_DWORD *)(a1 + 16) / 9;
-      if ( ++*(_DWORD *)(a1 + 100) > 3 )
+      *(_DWORD *)(NPC_Vars_Pointer + 16) = 8 * *(_DWORD *)(NPC_Vars_Pointer + 16) / 9;
+      if ( ++*(_DWORD *)(NPC_Vars_Pointer + 100) > 3 )
       {
-        *(_DWORD *)(a1 + 100) = 0;
-        ++*(_DWORD *)(a1 + 104);
+        *(_DWORD *)(NPC_Vars_Pointer + 100) = 0;
+        ++*(_DWORD *)(NPC_Vars_Pointer + 104);
       }
-      if ( *(_DWORD *)(a1 + 104) > 11 )
-        *(_DWORD *)(a1 + 104) = 10;
-      if ( ++*(_DWORD *)(a1 + 120) > 50 )
-        *(_BYTE *)a1 |= 8u;
+      if ( *(_DWORD *)(NPC_Vars_Pointer + 104) > 11 )
+        *(_DWORD *)(NPC_Vars_Pointer + 104) = 10;
+      if ( ++*(_DWORD *)(NPC_Vars_Pointer + 120) > 50 )
+        *(_BYTE *)NPC_Vars_Pointer |= 8u;
     }
   }
   else
   {
-    *(_WORD *)(a1 + 80) &= 0xFFDFu;
-    *(_WORD *)(a1 + 80) &= 0xFFF7u;
-    *(_DWORD *)(a1 + 164) = 0;
-    *(_DWORD *)(a1 + 116) = 1;
-    *(_DWORD *)(a1 + 104) = 9;
-    *(_DWORD *)(a1 + 20) = -512;
-    if ( *(_DWORD *)(a1 + 76) )
-      *(_DWORD *)(a1 + 16) = -256;
+    *(_WORD *)(NPC_Vars_Pointer + 80) &= 0xFFDFu;
+    *(_WORD *)(NPC_Vars_Pointer + 80) &= 0xFFF7u;
+    *(_DWORD *)(NPC_Vars_Pointer + 164) = 0;
+    *(_DWORD *)(NPC_Vars_Pointer + 116) = 1;
+    *(_DWORD *)(NPC_Vars_Pointer + 104) = 9;
+    *(_DWORD *)(NPC_Vars_Pointer + 20) = -512;
+    if ( *(_DWORD *)(NPC_Vars_Pointer + 76) )
+      *(_DWORD *)(NPC_Vars_Pointer + 16) = -256;
     else
-      *(_DWORD *)(a1 + 16) = 256;
+      *(_DWORD *)(NPC_Vars_Pointer + 16) = 256;
     Play_Sound_Effect(53, 1);
   }
-  *(_DWORD *)(a1 + 20) += 32;
-  if ( *(_DWORD *)(a1 + 20) > 1535 )
-    *(_DWORD *)(a1 + 20) = 1535;
-  *(_DWORD *)(a1 + 8) += *(_DWORD *)(a1 + 16);
-  *(_DWORD *)(a1 + 12) += *(_DWORD *)(a1 + 20);
-  if ( *(_DWORD *)(a1 + 76) )
+  *(_DWORD *)(NPC_Vars_Pointer + 20) += 32;
+  if ( *(_DWORD *)(NPC_Vars_Pointer + 20) > 1535 )
+    *(_DWORD *)(NPC_Vars_Pointer + 20) = 1535;
+  *(_DWORD *)(NPC_Vars_Pointer + 8) += *(_DWORD *)(NPC_Vars_Pointer + 16);
+  *(_DWORD *)(NPC_Vars_Pointer + 12) += *(_DWORD *)(NPC_Vars_Pointer + 20);
+  if ( *(_DWORD *)(NPC_Vars_Pointer + 76) )
   {
-    v3 = (char *)&unk_4983F0 + 16 * *(_DWORD *)(a1 + 104);
-    v4 = a1 + 84;
+    v3 = (char *)&unk_4983F0 + 16 * *(_DWORD *)(NPC_Vars_Pointer + 104);
+    v4 = NPC_Vars_Pointer + 84;
     *(_DWORD *)v4 = *(_DWORD *)v3;
     *(_DWORD *)(v4 + 4) = *((_DWORD *)v3 + 1);
     result = *((_DWORD *)v3 + 2);
@@ -44140,8 +44135,8 @@ int __cdecl NPC154(int a1)
   }
   else
   {
-    v1 = (char *)&unk_4982A0 + 16 * *(_DWORD *)(a1 + 104);
-    result = a1 + 84;
+    v1 = (char *)&unk_4982A0 + 16 * *(_DWORD *)(NPC_Vars_Pointer + 104);
+    result = NPC_Vars_Pointer + 84;
     *(_DWORD *)result = *(_DWORD *)v1;
     *(_DWORD *)(result + 4) = *((_DWORD *)v1 + 1);
     *(_DWORD *)(result + 8) = *((_DWORD *)v1 + 2);
@@ -61502,9 +61497,9 @@ int __cdecl NPC302(int a1)
       }
       for ( i = 170; i < 512; ++i )
       {
-        if ( *((_BYTE *)&byte_4A6220 + 172 * i) & 0x80 && dword_4A6250[43 * i] == *(_DWORD *)(a1 + 76) )
+        if ( *((_BYTE *)&Is_NPC_Alive + 172 * i) & 0x80 && NPC_Event_Number[43 * i] == *(_DWORD *)(a1 + 76) )
         {
-          *(_DWORD *)(a1 + 168) = (char *)&byte_4A6220 + 172 * i;
+          *(_DWORD *)(a1 + 168) = (char *)&Is_NPC_Alive + 172 * i;
           break;
         }
       }
@@ -61525,7 +61520,7 @@ LABEL_21:
   }
   return result;
 }
-// 4A6250: using guessed type int dword_4A6250[];
+// 4A6250: using guessed type int NPC_Event_Number[];
 
 //----- (00462AF0) --------------------------------------------------------
 int __cdecl NPC303(int a1)
@@ -68896,7 +68891,7 @@ signed int __cdecl NPC360_Thank_You(int a1)
 //----- (0046EB30) --------------------------------------------------------
 void *sub_46EB30()
 {
-  return memset(&byte_4A6220, 0, 0x15800u);
+  return memset(&Is_NPC_Alive, 0, 0x15800u);
 }
 
 //----- (0046EB50) --------------------------------------------------------
@@ -68926,34 +68921,34 @@ signed int __cdecl sub_46EB50(int a1)
     if ( !memcmp(&ptr1, off_498540, 3u) )
     {
       sub_480F55((FILE *)&v14, 4u, 1u, stream);
-      memset(&byte_4A6220, 0, 0x15800u);
+      memset(&Is_NPC_Alive, 0, 0x15800u);
       v13 = 170;
       for ( i = 0; i < v14; ++i )
       {
         sub_480F55((FILE *)&v4, 0xCu, 1u, stream);
-        dword_4A626C[43 * v13] = (v9 & 0x1000) != 0 ? 2 : 0;
-        dword_4A6248[43 * v13] = v8;
-        dword_4A6250[43 * v13] = v7;
-        dword_4A624C[43 * v13] = v6;
-        dword_4A6228[43 * v13] = v4 << 13;
-        dword_4A622C[43 * v13] = v5 << 13;
-        word_4A6270[86 * v13] = v9;
-        word_4A6270[86 * v13] |= *((_WORD *)NPCStruct_Flags + 12 * dword_4A6248[43 * v13]);
-        dword_4A6264[43 * v13] = *((_DWORD *)NPCStruct_Flags + 6 * dword_4A6248[43 * v13] + 2);
-        sub_46EE50((int)&byte_4A6220 + 172 * v13);
-        if ( word_4A6270[86 * v13] & 0x800 )
+        NPC_Direction[43 * v13] = (v9 & 0x1000) != 0 ? 2 : 0;
+        NPC_Type[43 * v13] = v8;
+        NPC_Event_Number[43 * v13] = v7;
+        NPC_Unknown[43 * v13] = v6;
+        NPC_X_Position[43 * v13] = v4 << 13;
+        NPC_Y_Position[43 * v13] = v5 << 13;
+        NPC_Flags[86 * v13] = v9;
+        NPC_Flags[86 * v13] |= *((_WORD *)NPCStruct_Flags + 12 * NPC_Type[43 * v13]);
+        NPC_EXP_Health_Missiles_Dropped[43 * v13] = *((_DWORD *)NPCStruct_Flags + 6 * NPC_Type[43 * v13] + 2);
+        sub_46EE50((int)&Is_NPC_Alive + 172 * v13);
+        if ( NPC_Flags[86 * v13] & 0x800 )
         {
-          if ( Check_Flag(dword_4A624C[43 * v13]) == 1 )
-            *((_BYTE *)&byte_4A6220 + 172 * v13) |= 0x80u;
+          if ( Check_Flag(NPC_Unknown[43 * v13]) == 1 )
+            *((_BYTE *)&Is_NPC_Alive + 172 * v13) |= 0x80u;
         }
-        else if ( word_4A6270[86 * v13] & 0x4000 )
+        else if ( NPC_Flags[86 * v13] & 0x4000 )
         {
-          if ( !Check_Flag(dword_4A624C[43 * v13]) )
-            *((_BYTE *)&byte_4A6220 + 172 * v13) |= 0x80u;
+          if ( !Check_Flag(NPC_Unknown[43 * v13]) )
+            *((_BYTE *)&Is_NPC_Alive + 172 * v13) |= 0x80u;
         }
         else
         {
-          *((_BYTE *)&byte_4A6220 + 172 * v13) = -128;
+          *((_BYTE *)&Is_NPC_Alive + 172 * v13) = -128;
         }
         ++v13;
       }
@@ -68972,14 +68967,14 @@ signed int __cdecl sub_46EB50(int a1)
   return result;
 }
 // 498B20: using guessed type int dword_498B20;
-// 4A6228: using guessed type int dword_4A6228[];
-// 4A622C: using guessed type int dword_4A622C[];
-// 4A6248: using guessed type int dword_4A6248[];
-// 4A624C: using guessed type int dword_4A624C[];
-// 4A6250: using guessed type int dword_4A6250[];
-// 4A6264: using guessed type int dword_4A6264[];
-// 4A626C: using guessed type int dword_4A626C[];
-// 4A6270: using guessed type __int16 word_4A6270[];
+// 4A6228: using guessed type int NPC_X_Position[];
+// 4A622C: using guessed type int NPC_Y_Position[];
+// 4A6248: using guessed type int NPC_Type[];
+// 4A624C: using guessed type int NPC_Unknown[];
+// 4A6250: using guessed type int NPC_Event_Number[];
+// 4A6264: using guessed type int NPC_EXP_Health_Missiles_Dropped[];
+// 4A626C: using guessed type int NPC_Direction[];
+// 4A6270: using guessed type __int16 NPC_Flags[];
 
 //----- (0046EE50) --------------------------------------------------------
 int __cdecl sub_46EE50(int a1)
@@ -69013,34 +69008,34 @@ int __cdecl NPC_Create(int NPC_ID, int X_Position, int Y_Position, int X_Velocit
   int i; // [sp+0h] [bp-4h]@1
 
   result = a8;
-  for ( i = a8; i < 512 && *((_BYTE *)&byte_4A6220 + 172 * i); ++i )
+  for ( i = a8; i < 512 && *((_BYTE *)&Is_NPC_Alive + 172 * i); ++i )
     result = i + 1;
   if ( i != 512 )
   {
-    memset((char *)&byte_4A6220 + 172 * i, 0, 0xACu);
-    *((_BYTE *)&byte_4A6220 + 172 * i) |= 0x80u;
-    dword_4A626C[43 * i] = a6;
-    dword_4A6248[43 * i] = NPC_ID;
-    dword_4A6228[43 * i] = X_Position;
-    dword_4A622C[43 * i] = Y_Position;
-    dword_4A6230[43 * i] = X_Velocity;
-    dword_4A6234[43 * i] = Y_Velocity;
-    dword_4A62C8[43 * i] = a7;
-    word_4A6270[86 * i] = *((_WORD *)NPCStruct_Flags + 12 * dword_4A6248[43 * i]);
-    dword_4A6264[43 * i] = *((_DWORD *)NPCStruct_Flags + 6 * dword_4A6248[43 * i] + 2);
-    result = sub_46EE50((int)&byte_4A6220 + 172 * i);
+    memset((char *)&Is_NPC_Alive + 172 * i, 0, 0xACu);
+    *((_BYTE *)&Is_NPC_Alive + 172 * i) |= 0x80u;
+    NPC_Direction[43 * i] = a6;
+    NPC_Type[43 * i] = NPC_ID;
+    NPC_X_Position[43 * i] = X_Position;
+    NPC_Y_Position[43 * i] = Y_Position;
+    NPC_X_Velocity[43 * i] = X_Velocity;
+    NPC_Y_Velocity[43 * i] = Y_Velocity;
+    NPC_Parent_Variable[43 * i] = a7;
+    NPC_Flags[86 * i] = *((_WORD *)NPCStruct_Flags + 12 * NPC_Type[43 * i]);
+    NPC_EXP_Health_Missiles_Dropped[43 * i] = *((_DWORD *)NPCStruct_Flags + 6 * NPC_Type[43 * i] + 2);
+    result = sub_46EE50((int)&Is_NPC_Alive + 172 * i);
   }
   return result;
 }
-// 4A6228: using guessed type int dword_4A6228[];
-// 4A622C: using guessed type int dword_4A622C[];
-// 4A6230: using guessed type int dword_4A6230[];
-// 4A6234: using guessed type int dword_4A6234[];
-// 4A6248: using guessed type int dword_4A6248[];
-// 4A6264: using guessed type int dword_4A6264[];
-// 4A626C: using guessed type int dword_4A626C[];
-// 4A6270: using guessed type __int16 word_4A6270[];
-// 4A62C8: using guessed type int dword_4A62C8[];
+// 4A6228: using guessed type int NPC_X_Position[];
+// 4A622C: using guessed type int NPC_Y_Position[];
+// 4A6230: using guessed type int NPC_X_Velocity[];
+// 4A6234: using guessed type int NPC_Y_Velocity[];
+// 4A6248: using guessed type int NPC_Type[];
+// 4A6264: using guessed type int NPC_EXP_Health_Missiles_Dropped[];
+// 4A626C: using guessed type int NPC_Direction[];
+// 4A6270: using guessed type __int16 NPC_Flags[];
+// 4A62C8: using guessed type int NPC_Parent_Variable[];
 
 //----- (0046F150) --------------------------------------------------------
 int __cdecl sub_46F150(int X_Position, int Y_Position, int maximum, int a4)
@@ -69085,18 +69080,18 @@ int __cdecl Spawn_Exp(int X_Position, int Y_Position, signed int XP_Amount)
   int v4; // [sp+0h] [bp-8h]@0
   signed int i; // [sp+4h] [bp-4h]@1
 
-  for ( i = 256; XP_Amount; result = sub_46EE50((int)&byte_4A6220 + 172 * i) )
+  for ( i = 256; XP_Amount; result = sub_46EE50((int)&Is_NPC_Alive + 172 * i) )
   {
     while ( i < 512 )
     {
       result = 172 * i;
-      if ( !*((_BYTE *)&byte_4A6220 + 172 * i) )
+      if ( !*((_BYTE *)&Is_NPC_Alive + 172 * i) )
         break;
       ++i;
     }
     if ( i == 512 )
       break;
-    memset((char *)&byte_4A6220 + 172 * i, 0, 0xACu);
+    memset((char *)&Is_NPC_Alive + 172 * i, 0, 0xACu);
     if ( XP_Amount < 20 )
     {
       if ( XP_Amount < 5 )
@@ -69118,22 +69113,22 @@ int __cdecl Spawn_Exp(int X_Position, int Y_Position, signed int XP_Amount)
       XP_Amount -= 20;
       v4 = 20;
     }
-    *((_BYTE *)&byte_4A6220 + 172 * i) |= 0x80u;
-    dword_4A626C[43 * i] = 0;
-    dword_4A6248[43 * i] = 1;
-    dword_4A6228[43 * i] = X_Position;
-    dword_4A622C[43 * i] = Y_Position;
-    word_4A6270[86 * i] = *((_WORD *)NPCStruct_Flags + 12 * dword_4A6248[43 * i]);
-    dword_4A6264[43 * i] = v4;
+    *((_BYTE *)&Is_NPC_Alive + 172 * i) |= 0x80u;
+    NPC_Direction[43 * i] = 0;
+    NPC_Type[43 * i] = 1;
+    NPC_X_Position[43 * i] = X_Position;
+    NPC_Y_Position[43 * i] = Y_Position;
+    NPC_Flags[86 * i] = *((_WORD *)NPCStruct_Flags + 12 * NPC_Type[43 * i]);
+    NPC_EXP_Health_Missiles_Dropped[43 * i] = v4;
   }
   return result;
 }
-// 4A6228: using guessed type int dword_4A6228[];
-// 4A622C: using guessed type int dword_4A622C[];
-// 4A6248: using guessed type int dword_4A6248[];
-// 4A6264: using guessed type int dword_4A6264[];
-// 4A626C: using guessed type int dword_4A626C[];
-// 4A6270: using guessed type __int16 word_4A6270[];
+// 4A6228: using guessed type int NPC_X_Position[];
+// 4A622C: using guessed type int NPC_Y_Position[];
+// 4A6248: using guessed type int NPC_Type[];
+// 4A6264: using guessed type int NPC_EXP_Health_Missiles_Dropped[];
+// 4A626C: using guessed type int NPC_Direction[];
+// 4A6270: using guessed type __int16 NPC_Flags[];
 
 //----- (0046F430) --------------------------------------------------------
 signed int __cdecl Spawn_Missiles(int a1, int a2, int a3)
@@ -69167,7 +69162,7 @@ signed int __cdecl Spawn_Missiles(int a1, int a2, int a3)
   {
     i = RNG_Range(1, 10 * v5);
     v7 = ptr[i % v5];
-    for ( i = 256; i < 512 && *((_BYTE *)&byte_4A6220 + 172 * i); ++i )
+    for ( i = 256; i < 512 && *((_BYTE *)&Is_NPC_Alive + 172 * i); ++i )
       ;
     if ( i == 512 )
     {
@@ -69175,16 +69170,16 @@ signed int __cdecl Spawn_Missiles(int a1, int a2, int a3)
     }
     else
     {
-      memset((char *)&byte_4A6220 + 172 * i, 0, 0xACu);
-      *((_BYTE *)&byte_4A6220 + 172 * i) |= 0x80u;
-      dword_4A626C[43 * i] = 0;
-      dword_4A6250[43 * i] = v7;
-      dword_4A6248[43 * i] = 86;
-      dword_4A6228[43 * i] = a1;
-      dword_4A622C[43 * i] = a2;
-      word_4A6270[86 * i] = *((_WORD *)NPCStruct_Flags + 12 * dword_4A6248[43 * i]);
-      dword_4A6264[43 * i] = a3;
-      sub_46EE50((int)&byte_4A6220 + 172 * i);
+      memset((char *)&Is_NPC_Alive + 172 * i, 0, 0xACu);
+      *((_BYTE *)&Is_NPC_Alive + 172 * i) |= 0x80u;
+      NPC_Direction[43 * i] = 0;
+      NPC_Event_Number[43 * i] = v7;
+      NPC_Type[43 * i] = 86;
+      NPC_X_Position[43 * i] = a1;
+      NPC_Y_Position[43 * i] = a2;
+      NPC_Flags[86 * i] = *((_WORD *)NPCStruct_Flags + 12 * NPC_Type[43 * i]);
+      NPC_EXP_Health_Missiles_Dropped[43 * i] = a3;
+      sub_46EE50((int)&Is_NPC_Alive + 172 * i);
       result = 1;
     }
   }
@@ -69194,13 +69189,13 @@ signed int __cdecl Spawn_Missiles(int a1, int a2, int a3)
   }
   return result;
 }
-// 4A6228: using guessed type int dword_4A6228[];
-// 4A622C: using guessed type int dword_4A622C[];
-// 4A6248: using guessed type int dword_4A6248[];
-// 4A6250: using guessed type int dword_4A6250[];
-// 4A6264: using guessed type int dword_4A6264[];
-// 4A626C: using guessed type int dword_4A626C[];
-// 4A6270: using guessed type __int16 word_4A6270[];
+// 4A6228: using guessed type int NPC_X_Position[];
+// 4A622C: using guessed type int NPC_Y_Position[];
+// 4A6248: using guessed type int NPC_Type[];
+// 4A6250: using guessed type int NPC_Event_Number[];
+// 4A6264: using guessed type int NPC_EXP_Health_Missiles_Dropped[];
+// 4A626C: using guessed type int NPC_Direction[];
+// 4A6270: using guessed type __int16 NPC_Flags[];
 // 46F430: using guessed type int ptr[10];
 
 //----- (0046F630) --------------------------------------------------------
@@ -69209,7 +69204,7 @@ signed int __cdecl Spawn_HP(int a1, int a2, int a3)
   signed int result; // eax@6
   signed int i; // [sp+0h] [bp-4h]@1
 
-  for ( i = 256; i < 512 && *((_BYTE *)&byte_4A6220 + 172 * i); ++i )
+  for ( i = 256; i < 512 && *((_BYTE *)&Is_NPC_Alive + 172 * i); ++i )
     ;
   if ( i == 512 )
   {
@@ -69217,25 +69212,25 @@ signed int __cdecl Spawn_HP(int a1, int a2, int a3)
   }
   else
   {
-    memset((char *)&byte_4A6220 + 172 * i, 0, 0xACu);
-    *((_BYTE *)&byte_4A6220 + 172 * i) |= 0x80u;
-    dword_4A626C[43 * i] = 0;
-    dword_4A6248[43 * i] = 87;
-    dword_4A6228[43 * i] = a1;
-    dword_4A622C[43 * i] = a2;
-    word_4A6270[86 * i] = *((_WORD *)NPCStruct_Flags + 12 * dword_4A6248[43 * i]);
-    dword_4A6264[43 * i] = a3;
-    sub_46EE50((int)&byte_4A6220 + 172 * i);
+    memset((char *)&Is_NPC_Alive + 172 * i, 0, 0xACu);
+    *((_BYTE *)&Is_NPC_Alive + 172 * i) |= 0x80u;
+    NPC_Direction[43 * i] = 0;
+    NPC_Type[43 * i] = 87;
+    NPC_X_Position[43 * i] = a1;
+    NPC_Y_Position[43 * i] = a2;
+    NPC_Flags[86 * i] = *((_WORD *)NPCStruct_Flags + 12 * NPC_Type[43 * i]);
+    NPC_EXP_Health_Missiles_Dropped[43 * i] = a3;
+    sub_46EE50((int)&Is_NPC_Alive + 172 * i);
     result = 1;
   }
   return result;
 }
-// 4A6228: using guessed type int dword_4A6228[];
-// 4A622C: using guessed type int dword_4A622C[];
-// 4A6248: using guessed type int dword_4A6248[];
-// 4A6264: using guessed type int dword_4A6264[];
-// 4A626C: using guessed type int dword_4A626C[];
-// 4A6270: using guessed type __int16 word_4A6270[];
+// 4A6228: using guessed type int NPC_X_Position[];
+// 4A622C: using guessed type int NPC_Y_Position[];
+// 4A6248: using guessed type int NPC_Type[];
+// 4A6264: using guessed type int NPC_EXP_Health_Missiles_Dropped[];
+// 4A626C: using guessed type int NPC_Direction[];
+// 4A6270: using guessed type __int16 NPC_Flags[];
 
 //----- (0046F760) --------------------------------------------------------
 int __cdecl sub_46F760(void *ptr)
@@ -69270,47 +69265,47 @@ void __cdecl sub_46F810(signed int a1, signed int a2)
 
   for ( i = 0; i < 512; ++i )
   {
-    if ( *((_BYTE *)&byte_4A6220 + 172 * i) & 0x80 )
+    if ( *((_BYTE *)&Is_NPC_Alive + 172 * i) & 0x80 )
     {
-      if ( byte_4A62BC[172 * i] )
+      if ( NPC_Touching_Bullet_Flag[172 * i] )
       {
-        v7 = 2 * (((signed int)(unsigned __int8)byte_4A62BC[172 * i] >> 1) % 2) - 1;
+        v7 = 2 * (((signed int)(unsigned __int8)NPC_Touching_Bullet_Flag[172 * i] >> 1) % 2) - 1;
       }
       else
       {
         v7 = 0;
-        if ( word_4A6270[86 * i] & 0x8000 && dword_4A62C0[43 * i] )
+        if ( NPC_Flags[86 * i] & 0x8000 && NPC_Damage_Taken[43 * i] )
         {
-          sub_425BF0((int)&dword_4A6228[43 * i], (int)&dword_4A622C[43 * i], dword_4A62C0[43 * i]);
-          dword_4A62C0[43 * i] = 0;
+          sub_425BF0((int)&NPC_X_Position[43 * i], (int)&NPC_Y_Position[43 * i], NPC_Damage_Taken[43 * i]);
+          NPC_Damage_Taken[43 * i] = 0;
         }
       }
-      if ( dword_4A626C[43 * i] )
+      if ( NPC_Direction[43 * i] )
         v5 = dword_4A62B4[43 * i];
       else
         v5 = dword_4A62AC[43 * i];
-      v2 = dword_4A622C[43 * i] - dword_4A62B0[43 * i];
+      v2 = NPC_Y_Position[43 * i] - dword_4A62B0[43 * i];
       v3 = (((WORD2(v2) & 0x1FF) + (signed int)v2) >> 9) - a2 / 512;
-      v4 = dword_4A6228[43 * i] - v5;
+      v4 = NPC_X_Position[43 * i] - v5;
       Render_Graphics(
         (int)&FullscreenRect,
         v7 + (((WORD2(v4) & 0x1FF) + (signed int)v4) >> 9) - a1 / 512,
         v3,
-        (int)&unk_4A6274 + 172 * i,
-        dword_4A6254[43 * i]);
+        (int)&NPC_Rects + 172 * i,
+        NPC_Spritesheet[43 * i]);
     }
   }
 }
 // 48F91C: using guessed type int FullscreenRect;
-// 4A6228: using guessed type int dword_4A6228[];
-// 4A622C: using guessed type int dword_4A622C[];
-// 4A6254: using guessed type int dword_4A6254[];
-// 4A626C: using guessed type int dword_4A626C[];
-// 4A6270: using guessed type __int16 word_4A6270[];
+// 4A6228: using guessed type int NPC_X_Position[];
+// 4A622C: using guessed type int NPC_Y_Position[];
+// 4A6254: using guessed type int NPC_Spritesheet[];
+// 4A626C: using guessed type int NPC_Direction[];
+// 4A6270: using guessed type __int16 NPC_Flags[];
 // 4A62AC: using guessed type int dword_4A62AC[];
 // 4A62B0: using guessed type int dword_4A62B0[];
 // 4A62B4: using guessed type int dword_4A62B4[];
-// 4A62C0: using guessed type int dword_4A62C0[];
+// 4A62C0: using guessed type int NPC_Damage_Taken[];
 
 //----- (0046FA00) --------------------------------------------------------
 int sub_46FA00()
@@ -69320,18 +69315,18 @@ int sub_46FA00()
 
   for ( i = 0; i < 512; ++i )
   {
-    if ( *((_BYTE *)&byte_4A6220 + 172 * i) & 0x80 )
+    if ( *((_BYTE *)&Is_NPC_Alive + 172 * i) & 0x80 )
     {
-      ROM_Ptr_NPC_Code[dword_4A6248[43 * i]]((int)&byte_4A6220 + 172 * i);
-      if ( byte_4A62BC[172 * i] )
-        --byte_4A62BC[172 * i];
+      ROM_Ptr_NPC_Code[NPC_Type[43 * i]]((int)&Is_NPC_Alive + 172 * i);
+      if ( NPC_Touching_Bullet_Flag[172 * i] )
+        --NPC_Touching_Bullet_Flag[172 * i];
     }
     result = i + 1;
   }
   return result;
 }
 // 498548: using guessed type int (__cdecl *ROM_Ptr_NPC_Code[48])(int);
-// 4A6248: using guessed type int dword_4A6248[];
+// 4A6248: using guessed type int NPC_Type[];
 
 //----- (0046FAB0) --------------------------------------------------------
 int __cdecl sub_46FAB0(int a1, int a2, int a3)
@@ -69341,57 +69336,57 @@ int __cdecl sub_46FAB0(int a1, int a2, int a3)
 
   for ( i = 0; i < 512; ++i )
   {
-    if ( *((_BYTE *)&byte_4A6220 + 172 * i) & 0x80 && dword_4A6250[43 * i] == a1 )
+    if ( *((_BYTE *)&Is_NPC_Alive + 172 * i) & 0x80 && NPC_Event_Number[43 * i] == a1 )
     {
-      word_4A6270[86 * i] &= 0x7F00u;
-      dword_4A6248[43 * i] = a2;
-      word_4A6270[86 * i] |= *((_WORD *)NPCStruct_Flags + 12 * dword_4A6248[43 * i]);
-      dword_4A6264[43 * i] = *((_DWORD *)NPCStruct_Flags + 6 * dword_4A6248[43 * i] + 2);
-      sub_46EE50((int)&byte_4A6220 + 172 * i);
-      *((_BYTE *)&byte_4A6220 + 172 * i) |= 0x80u;
-      dword_4A6294[43 * i] = 0;
-      dword_4A6298[43 * i] = 0;
-      dword_4A628C[43 * i] = 0;
-      dword_4A6290[43 * i] = 0;
-      dword_4A6288[43 * i] = 0;
-      dword_4A6284[43 * i] = 0;
-      dword_4A6230[43 * i] = 0;
-      dword_4A6234[43 * i] = 0;
+      NPC_Flags[86 * i] &= 0x7F00u;
+      NPC_Type[43 * i] = a2;
+      NPC_Flags[86 * i] |= *((_WORD *)NPCStruct_Flags + 12 * NPC_Type[43 * i]);
+      NPC_EXP_Health_Missiles_Dropped[43 * i] = *((_DWORD *)NPCStruct_Flags + 6 * NPC_Type[43 * i] + 2);
+      sub_46EE50((int)&Is_NPC_Alive + 172 * i);
+      *((_BYTE *)&Is_NPC_Alive + 172 * i) |= 0x80u;
+      NPC_Generic_4[43 * i] = 0;
+      NPC_Generic_5[43 * i] = 0;
+      NPC_Generic_2[43 * i] = 0;
+      NPC_Generic_3[43 * i] = 0;
+      NPC_Generic[43 * i] = 0;
+      NPC_Generic__Counter_[43 * i] = 0;
+      NPC_X_Velocity[43 * i] = 0;
+      NPC_Y_Velocity[43 * i] = 0;
       if ( a3 != 5 )
       {
         if ( a3 == 4 )
         {
-          if ( dword_4A6228[43 * i] >= Quote_X_Position )
-            dword_4A626C[43 * i] = 0;
+          if ( NPC_X_Position[43 * i] >= Quote_X_Position )
+            NPC_Direction[43 * i] = 0;
           else
-            dword_4A626C[43 * i] = 2;
+            NPC_Direction[43 * i] = 2;
         }
         else
         {
-          dword_4A626C[43 * i] = a3;
+          NPC_Direction[43 * i] = a3;
         }
       }
-      ROM_Ptr_NPC_Code[a2]((int)&byte_4A6220 + 172 * i);
+      ROM_Ptr_NPC_Code[a2]((int)&Is_NPC_Alive + 172 * i);
     }
     result = i + 1;
   }
   return result;
 }
 // 498548: using guessed type int (__cdecl *ROM_Ptr_NPC_Code[48])(int);
-// 4A6228: using guessed type int dword_4A6228[];
-// 4A6230: using guessed type int dword_4A6230[];
-// 4A6234: using guessed type int dword_4A6234[];
-// 4A6248: using guessed type int dword_4A6248[];
-// 4A6250: using guessed type int dword_4A6250[];
-// 4A6264: using guessed type int dword_4A6264[];
-// 4A626C: using guessed type int dword_4A626C[];
-// 4A6270: using guessed type __int16 word_4A6270[];
-// 4A6284: using guessed type int dword_4A6284[];
-// 4A6288: using guessed type int dword_4A6288[];
-// 4A628C: using guessed type int dword_4A628C[];
-// 4A6290: using guessed type int dword_4A6290[];
-// 4A6294: using guessed type int dword_4A6294[];
-// 4A6298: using guessed type int dword_4A6298[];
+// 4A6228: using guessed type int NPC_X_Position[];
+// 4A6230: using guessed type int NPC_X_Velocity[];
+// 4A6234: using guessed type int NPC_Y_Velocity[];
+// 4A6248: using guessed type int NPC_Type[];
+// 4A6250: using guessed type int NPC_Event_Number[];
+// 4A6264: using guessed type int NPC_EXP_Health_Missiles_Dropped[];
+// 4A626C: using guessed type int NPC_Direction[];
+// 4A6270: using guessed type __int16 NPC_Flags[];
+// 4A6284: using guessed type int NPC_Generic__Counter_[];
+// 4A6288: using guessed type int NPC_Generic[];
+// 4A628C: using guessed type int NPC_Generic_2[];
+// 4A6290: using guessed type int NPC_Generic_3[];
+// 4A6294: using guessed type int NPC_Generic_4[];
+// 4A6298: using guessed type int NPC_Generic_5[];
 
 //----- (0046FD10) --------------------------------------------------------
 int __cdecl sub_46FD10(int a1, int a2, int a3)
@@ -69401,58 +69396,58 @@ int __cdecl sub_46FD10(int a1, int a2, int a3)
 
   for ( i = 0; i < 512; ++i )
   {
-    if ( *((_BYTE *)&byte_4A6220 + 172 * i) & 0x80 && dword_4A6250[43 * i] == a1 )
+    if ( *((_BYTE *)&Is_NPC_Alive + 172 * i) & 0x80 && NPC_Event_Number[43 * i] == a1 )
     {
-      word_4A6270[86 * i] &= 0x7F00u;
-      word_4A6270[86 * i] |= 0x2000u;
-      dword_4A6248[43 * i] = a2;
-      word_4A6270[86 * i] |= *((_WORD *)NPCStruct_Flags + 12 * dword_4A6248[43 * i]);
-      dword_4A6264[43 * i] = *((_DWORD *)NPCStruct_Flags + 6 * dword_4A6248[43 * i] + 2);
-      sub_46EE50((int)&byte_4A6220 + 172 * i);
-      *((_BYTE *)&byte_4A6220 + 172 * i) |= 0x80u;
-      dword_4A6294[43 * i] = 0;
-      dword_4A6298[43 * i] = 0;
-      dword_4A628C[43 * i] = 0;
-      dword_4A6290[43 * i] = 0;
-      dword_4A6288[43 * i] = 0;
-      dword_4A6284[43 * i] = 0;
-      dword_4A6230[43 * i] = 0;
-      dword_4A6234[43 * i] = 0;
+      NPC_Flags[86 * i] &= 0x7F00u;
+      NPC_Flags[86 * i] |= 0x2000u;
+      NPC_Type[43 * i] = a2;
+      NPC_Flags[86 * i] |= *((_WORD *)NPCStruct_Flags + 12 * NPC_Type[43 * i]);
+      NPC_EXP_Health_Missiles_Dropped[43 * i] = *((_DWORD *)NPCStruct_Flags + 6 * NPC_Type[43 * i] + 2);
+      sub_46EE50((int)&Is_NPC_Alive + 172 * i);
+      *((_BYTE *)&Is_NPC_Alive + 172 * i) |= 0x80u;
+      NPC_Generic_4[43 * i] = 0;
+      NPC_Generic_5[43 * i] = 0;
+      NPC_Generic_2[43 * i] = 0;
+      NPC_Generic_3[43 * i] = 0;
+      NPC_Generic[43 * i] = 0;
+      NPC_Generic__Counter_[43 * i] = 0;
+      NPC_X_Velocity[43 * i] = 0;
+      NPC_Y_Velocity[43 * i] = 0;
       if ( a3 != 5 )
       {
         if ( a3 == 4 )
         {
-          if ( dword_4A6228[43 * i] >= Quote_X_Position )
-            dword_4A626C[43 * i] = 0;
+          if ( NPC_X_Position[43 * i] >= Quote_X_Position )
+            NPC_Direction[43 * i] = 0;
           else
-            dword_4A626C[43 * i] = 2;
+            NPC_Direction[43 * i] = 2;
         }
         else
         {
-          dword_4A626C[43 * i] = (char)a3;
+          NPC_Direction[43 * i] = (char)a3;
         }
       }
-      ROM_Ptr_NPC_Code[a2]((int)&byte_4A6220 + 172 * i);
+      ROM_Ptr_NPC_Code[a2]((int)&Is_NPC_Alive + 172 * i);
     }
     result = i + 1;
   }
   return result;
 }
 // 498548: using guessed type int (__cdecl *ROM_Ptr_NPC_Code[48])(int);
-// 4A6228: using guessed type int dword_4A6228[];
-// 4A6230: using guessed type int dword_4A6230[];
-// 4A6234: using guessed type int dword_4A6234[];
-// 4A6248: using guessed type int dword_4A6248[];
-// 4A6250: using guessed type int dword_4A6250[];
-// 4A6264: using guessed type int dword_4A6264[];
-// 4A626C: using guessed type int dword_4A626C[];
-// 4A6270: using guessed type __int16 word_4A6270[];
-// 4A6284: using guessed type int dword_4A6284[];
-// 4A6288: using guessed type int dword_4A6288[];
-// 4A628C: using guessed type int dword_4A628C[];
-// 4A6290: using guessed type int dword_4A6290[];
-// 4A6294: using guessed type int dword_4A6294[];
-// 4A6298: using guessed type int dword_4A6298[];
+// 4A6228: using guessed type int NPC_X_Position[];
+// 4A6230: using guessed type int NPC_X_Velocity[];
+// 4A6234: using guessed type int NPC_Y_Velocity[];
+// 4A6248: using guessed type int NPC_Type[];
+// 4A6250: using guessed type int NPC_Event_Number[];
+// 4A6264: using guessed type int NPC_EXP_Health_Missiles_Dropped[];
+// 4A626C: using guessed type int NPC_Direction[];
+// 4A6270: using guessed type __int16 NPC_Flags[];
+// 4A6284: using guessed type int NPC_Generic__Counter_[];
+// 4A6288: using guessed type int NPC_Generic[];
+// 4A628C: using guessed type int NPC_Generic_2[];
+// 4A6290: using guessed type int NPC_Generic_3[];
+// 4A6294: using guessed type int NPC_Generic_4[];
+// 4A6298: using guessed type int NPC_Generic_5[];
 
 //----- (0046FF90) --------------------------------------------------------
 int __cdecl sub_46FF90(int a1, int a2, int a3)
@@ -69463,9 +69458,9 @@ int __cdecl sub_46FF90(int a1, int a2, int a3)
   for ( i = 0; i < 512; ++i )
   {
     result = 172 * i;
-    if ( *((_BYTE *)&byte_4A6220 + 172 * i) & 0x80 )
+    if ( *((_BYTE *)&Is_NPC_Alive + 172 * i) & 0x80 )
     {
-      result = dword_4A6250[43 * i];
+      result = NPC_Event_Number[43 * i];
       if ( result == a1 )
         break;
     }
@@ -69473,34 +69468,34 @@ int __cdecl sub_46FF90(int a1, int a2, int a3)
   if ( i != 512 )
   {
     result = a2;
-    dword_4A6294[43 * i] = a2;
+    NPC_Generic_4[43 * i] = a2;
     if ( a3 != 5 )
     {
       if ( a3 == 4 )
       {
-        if ( dword_4A6228[43 * i] >= Quote_X_Position )
+        if ( NPC_X_Position[43 * i] >= Quote_X_Position )
         {
-          dword_4A626C[43 * i] = 0;
+          NPC_Direction[43 * i] = 0;
         }
         else
         {
           result = 172 * i;
-          dword_4A626C[43 * i] = 2;
+          NPC_Direction[43 * i] = 2;
         }
       }
       else
       {
         result = a3;
-        dword_4A626C[43 * i] = a3;
+        NPC_Direction[43 * i] = a3;
       }
     }
   }
   return result;
 }
-// 4A6228: using guessed type int dword_4A6228[];
-// 4A6250: using guessed type int dword_4A6250[];
-// 4A626C: using guessed type int dword_4A626C[];
-// 4A6294: using guessed type int dword_4A6294[];
+// 4A6228: using guessed type int NPC_X_Position[];
+// 4A6250: using guessed type int NPC_Event_Number[];
+// 4A626C: using guessed type int NPC_Direction[];
+// 4A6294: using guessed type int NPC_Generic_4[];
 
 //----- (00470060) --------------------------------------------------------
 int __cdecl sub_470060(int a1, int a2, int a3, int a4)
@@ -69511,9 +69506,9 @@ int __cdecl sub_470060(int a1, int a2, int a3, int a4)
   for ( i = 0; i < 512; ++i )
   {
     result = 172 * i;
-    if ( *((_BYTE *)&byte_4A6220 + 172 * i) & 0x80 )
+    if ( *((_BYTE *)&Is_NPC_Alive + 172 * i) & 0x80 )
     {
-      result = dword_4A6250[43 * i];
+      result = NPC_Event_Number[43 * i];
       if ( result == a1 )
         break;
     }
@@ -69521,35 +69516,35 @@ int __cdecl sub_470060(int a1, int a2, int a3, int a4)
   if ( i != 512 )
   {
     result = a2;
-    dword_4A6228[43 * i] = a2;
-    dword_4A622C[43 * i] = a3;
+    NPC_X_Position[43 * i] = a2;
+    NPC_Y_Position[43 * i] = a3;
     if ( a4 != 5 )
     {
       if ( a4 == 4 )
       {
         result = 172 * i;
-        if ( dword_4A6228[43 * i] >= Quote_X_Position )
+        if ( NPC_X_Position[43 * i] >= Quote_X_Position )
         {
           result = 172 * i;
-          dword_4A626C[43 * i] = 0;
+          NPC_Direction[43 * i] = 0;
         }
         else
         {
-          dword_4A626C[43 * i] = 2;
+          NPC_Direction[43 * i] = 2;
         }
       }
       else
       {
-        dword_4A626C[43 * i] = (char)a4;
+        NPC_Direction[43 * i] = (char)a4;
       }
     }
   }
   return result;
 }
-// 4A6228: using guessed type int dword_4A6228[];
-// 4A622C: using guessed type int dword_4A622C[];
-// 4A6250: using guessed type int dword_4A6250[];
-// 4A626C: using guessed type int dword_4A626C[];
+// 4A6228: using guessed type int NPC_X_Position[];
+// 4A622C: using guessed type int NPC_Y_Position[];
+// 4A6250: using guessed type int NPC_Event_Number[];
+// 4A626C: using guessed type int NPC_Direction[];
 
 //----- (00470150) --------------------------------------------------------
 int __cdecl sub_470150(int a1)
@@ -69572,10 +69567,10 @@ int __cdecl sub_470150(int a1)
     {
       while ( v2 < 512 )
       {
-        if ( *((_BYTE *)&byte_4A6220 + 172 * v2) & 0x80 )
+        if ( *((_BYTE *)&Is_NPC_Alive + 172 * v2) & 0x80 )
         {
           result = 172 * v2;
-          if ( dword_4A6250[43 * v2] == a1 )
+          if ( NPC_Event_Number[43 * v2] == a1 )
             break;
         }
         ++v2;
@@ -69583,7 +69578,7 @@ int __cdecl sub_470150(int a1)
       if ( v2 != 512 )
       {
         result = 172 * v2;
-        if ( dword_4A6228[43 * v2] >= Quote_X_Position )
+        if ( NPC_X_Position[43 * v2] >= Quote_X_Position )
         {
           *(_DWORD *)&Quote_Direction_Faced = 2;
           Quote_X_Velocity = -512;
@@ -69605,8 +69600,8 @@ int __cdecl sub_470150(int a1)
 }
 // 49E66C: using guessed type int Quote_X_Velocity;
 // 49E670: using guessed type int Quote_Y_Velocity;
-// 4A6228: using guessed type int dword_4A6228[];
-// 4A6250: using guessed type int dword_4A6250[];
+// 4A6228: using guessed type int NPC_X_Position[];
+// 4A6250: using guessed type int NPC_Event_Number[];
 
 //----- (00470250) --------------------------------------------------------
 int __cdecl sub_470250(int a1)
@@ -69616,20 +69611,20 @@ int __cdecl sub_470250(int a1)
 
   for ( i = 0; i < 512; ++i )
   {
-    if ( *((_BYTE *)&byte_4A6220 + 172 * i) & 0x80 )
+    if ( *((_BYTE *)&Is_NPC_Alive + 172 * i) & 0x80 )
     {
-      if ( dword_4A6250[43 * i] == a1 )
+      if ( NPC_Event_Number[43 * i] == a1 )
       {
-        *((_BYTE *)&byte_4A6220 + 172 * i) = 0;
-        sub_40E890(dword_4A624C[43 * i]);
+        *((_BYTE *)&Is_NPC_Alive + 172 * i) = 0;
+        sub_40E890(NPC_Unknown[43 * i]);
       }
     }
     result = i + 1;
   }
   return result;
 }
-// 4A624C: using guessed type int dword_4A624C[];
-// 4A6250: using guessed type int dword_4A6250[];
+// 4A624C: using guessed type int NPC_Unknown[];
+// 4A6250: using guessed type int NPC_Event_Number[];
 
 //----- (004702D0) --------------------------------------------------------
 int __cdecl sub_4702D0(int a1, int a2)
@@ -69640,26 +69635,26 @@ int __cdecl sub_4702D0(int a1, int a2)
 
   for ( i = 0; i < 512; ++i )
   {
-    if ( *((_BYTE *)&byte_4A6220 + 172 * i) & 0x80 )
+    if ( *((_BYTE *)&Is_NPC_Alive + 172 * i) & 0x80 )
     {
-      if ( dword_4A6248[43 * i] == a1 )
+      if ( NPC_Type[43 * i] == a1 )
       {
-        *((_BYTE *)&byte_4A6220 + 172 * i) = 0;
-        sub_40E890(dword_4A624C[43 * i]);
+        *((_BYTE *)&Is_NPC_Alive + 172 * i) = 0;
+        sub_40E890(NPC_Unknown[43 * i]);
         if ( a2 )
         {
-          Play_Sound_Effect(dword_4A625C[43 * i], 1);
-          v3 = dword_4A6268[43 * i];
+          Play_Sound_Effect(NPC_Death_Sound[43 * i], 1);
+          v3 = NPC_Explosion_Size[43 * i];
           switch ( v3 )
           {
             case 1:
-              sub_46F150(dword_4A6228[43 * i], dword_4A622C[43 * i], dword_4A62B4[43 * i], 4);
+              sub_46F150(NPC_X_Position[43 * i], NPC_Y_Position[43 * i], dword_4A62B4[43 * i], 4);
               break;
             case 2:
-              sub_46F150(dword_4A6228[43 * i], dword_4A622C[43 * i], dword_4A62B4[43 * i], 8);
+              sub_46F150(NPC_X_Position[43 * i], NPC_Y_Position[43 * i], dword_4A62B4[43 * i], 8);
               break;
             case 3:
-              sub_46F150(dword_4A6228[43 * i], dword_4A622C[43 * i], dword_4A62B4[43 * i], 16);
+              sub_46F150(NPC_X_Position[43 * i], NPC_Y_Position[43 * i], dword_4A62B4[43 * i], 16);
               break;
           }
         }
@@ -69669,12 +69664,12 @@ int __cdecl sub_4702D0(int a1, int a2)
   }
   return result;
 }
-// 4A6228: using guessed type int dword_4A6228[];
-// 4A622C: using guessed type int dword_4A622C[];
-// 4A6248: using guessed type int dword_4A6248[];
-// 4A624C: using guessed type int dword_4A624C[];
-// 4A625C: using guessed type int dword_4A625C[];
-// 4A6268: using guessed type int dword_4A6268[];
+// 4A6228: using guessed type int NPC_X_Position[];
+// 4A622C: using guessed type int NPC_Y_Position[];
+// 4A6248: using guessed type int NPC_Type[];
+// 4A624C: using guessed type int NPC_Unknown[];
+// 4A625C: using guessed type int NPC_Death_Sound[];
+// 4A6268: using guessed type int NPC_Explosion_Size[];
 // 4A62B4: using guessed type int dword_4A62B4[];
 
 //----- (00470490) --------------------------------------------------------
@@ -69684,23 +69679,23 @@ signed int __cdecl sub_470490(int a1)
 
   for ( i = 0; i < 512; ++i )
   {
-    if ( *((_BYTE *)&byte_4A6220 + 172 * i) & 0x80 && dword_4A6248[43 * i] == a1 )
+    if ( *((_BYTE *)&Is_NPC_Alive + 172 * i) & 0x80 && NPC_Type[43 * i] == a1 )
       return 1;
   }
   return 0;
 }
-// 4A6248: using guessed type int dword_4A6248[];
+// 4A6248: using guessed type int NPC_Type[];
 
 //----- (004704F0) --------------------------------------------------------
 bool __cdecl sub_4704F0(int a1)
 {
   signed int i; // [sp+0h] [bp-4h]@1
 
-  for ( i = 0; i < 512 && (!(*((_BYTE *)&byte_4A6220 + 172 * i) & 0x80) || dword_4A6250[43 * i] != a1); ++i )
+  for ( i = 0; i < 512 && (!(*((_BYTE *)&Is_NPC_Alive + 172 * i) & 0x80) || NPC_Event_Number[43 * i] != a1); ++i )
     ;
   return i < 512;
 }
-// 4A6250: using guessed type int dword_4A6250[];
+// 4A6250: using guessed type int NPC_Event_Number[];
 
 //----- (004705C0) --------------------------------------------------------
 int __cdecl sub_4705C0(int a1, int a2, int a3)
@@ -70034,31 +70029,31 @@ void sub_471160()
   v23 = 2;
   for ( i = 0; i < 512; ++i )
   {
-    if ( *((_BYTE *)&byte_4A6220 + 172 * i) & 0x80 && !(word_4A6270[86 * i] & 8) )
+    if ( *((_BYTE *)&Is_NPC_Alive + 172 * i) & 0x80 && !(NPC_Flags[86 * i] & 8) )
     {
-      if ( dword_4A6268[43 * i] < 3 )
+      if ( NPC_Explosion_Size[43 * i] < 3 )
       {
         v4 = 4;
-        v2 = dword_4A6228[43 * i] / 16;
+        v2 = NPC_X_Position[43 * i] / 16;
         v25 = ((WORD2(v2) & 0x1FF) + (signed int)v2) >> 9;
-        v3 = dword_4A622C[43 * i] / 16;
+        v3 = NPC_Y_Position[43 * i] / 16;
         v26 = ((WORD2(v3) & 0x1FF) + (signed int)v3) >> 9;
       }
       else
       {
         v4 = 9;
-        v0 = dword_4A6228[43 * i] - 4096;
+        v0 = NPC_X_Position[43 * i] - 4096;
         v25 = (((BYTE4(v0) & 0xF) + (signed int)v0) >> 4) / 512;
-        v1 = dword_4A622C[43 * i] - 4096;
+        v1 = NPC_Y_Position[43 * i] - 4096;
         v26 = (((BYTE4(v1) & 0xF) + (signed int)v1) >> 4) / 512;
       }
-      dword_4A6224[43 * i] = 0;
+      Collision_Flag[43 * i] = 0;
       for ( j = 0; j < v4; ++j )
       {
         switch ( sub_4139A0(*(&v5 + j) + v25, *(&v15 + j) + v26) )
         {
           case 0x44:
-            if ( !(word_4A6270[86 * i] & 2) )
+            if ( !(NPC_Flags[86 * i] & 2) )
               goto LABEL_13;
             break;
           case 3:
@@ -70066,118 +70061,118 @@ void sub_471160()
           case 0x41:
           case 0x43:
 LABEL_13:
-            sub_4705C0((int)&byte_4A6220 + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
+            sub_4705C0((int)&Is_NPC_Alive + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
             break;
           case 0x50:
-            sub_470870((int)&byte_4A6220 + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
+            sub_470870((int)&Is_NPC_Alive + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
             break;
           case 0x51:
-            sub_470970((int)&byte_4A6220 + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
+            sub_470970((int)&Is_NPC_Alive + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
             break;
           case 0x52:
-            sub_470A70((int)&byte_4A6220 + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
+            sub_470A70((int)&Is_NPC_Alive + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
             break;
           case 0x53:
-            sub_470B70((int)&byte_4A6220 + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
+            sub_470B70((int)&Is_NPC_Alive + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
             break;
           case 0x54:
-            sub_470C70((int)&byte_4A6220 + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
+            sub_470C70((int)&Is_NPC_Alive + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
             break;
           case 0x55:
-            sub_470D80((int)&byte_4A6220 + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
+            sub_470D80((int)&Is_NPC_Alive + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
             break;
           case 0x56:
-            sub_470E90((int)&byte_4A6220 + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
+            sub_470E90((int)&Is_NPC_Alive + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
             break;
           case 0x57:
-            sub_470FA0((int)&byte_4A6220 + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
+            sub_470FA0((int)&Is_NPC_Alive + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
             break;
           case 2:
           case 0x60:
           case 0x62:
-            sub_4710B0((int)&byte_4A6220 + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
+            sub_4710B0((int)&Is_NPC_Alive + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
             break;
           case 4:
           case 0x61:
           case 0x64:
-            sub_4705C0((int)&byte_4A6220 + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
-            sub_4710B0((int)&byte_4A6220 + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
+            sub_4705C0((int)&Is_NPC_Alive + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
+            sub_4710B0((int)&Is_NPC_Alive + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
             break;
           case 0x70:
-            sub_470870((int)&byte_4A6220 + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
-            sub_4710B0((int)&byte_4A6220 + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
+            sub_470870((int)&Is_NPC_Alive + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
+            sub_4710B0((int)&Is_NPC_Alive + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
             break;
           case 0x71:
-            sub_470970((int)&byte_4A6220 + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
-            sub_4710B0((int)&byte_4A6220 + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
+            sub_470970((int)&Is_NPC_Alive + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
+            sub_4710B0((int)&Is_NPC_Alive + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
             break;
           case 0x72:
-            sub_470A70((int)&byte_4A6220 + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
-            sub_4710B0((int)&byte_4A6220 + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
+            sub_470A70((int)&Is_NPC_Alive + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
+            sub_4710B0((int)&Is_NPC_Alive + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
             break;
           case 0x73:
-            sub_470B70((int)&byte_4A6220 + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
-            sub_4710B0((int)&byte_4A6220 + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
+            sub_470B70((int)&Is_NPC_Alive + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
+            sub_4710B0((int)&Is_NPC_Alive + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
             break;
           case 0x74:
-            sub_470C70((int)&byte_4A6220 + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
-            sub_4710B0((int)&byte_4A6220 + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
+            sub_470C70((int)&Is_NPC_Alive + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
+            sub_4710B0((int)&Is_NPC_Alive + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
             break;
           case 0x75:
-            sub_470D80((int)&byte_4A6220 + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
-            sub_4710B0((int)&byte_4A6220 + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
+            sub_470D80((int)&Is_NPC_Alive + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
+            sub_4710B0((int)&Is_NPC_Alive + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
             break;
           case 0x76:
-            sub_470E90((int)&byte_4A6220 + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
-            sub_4710B0((int)&byte_4A6220 + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
+            sub_470E90((int)&Is_NPC_Alive + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
+            sub_4710B0((int)&Is_NPC_Alive + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
             break;
           case 0x77:
-            sub_470FA0((int)&byte_4A6220 + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
-            sub_4710B0((int)&byte_4A6220 + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
+            sub_470FA0((int)&Is_NPC_Alive + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
+            sub_4710B0((int)&Is_NPC_Alive + 172 * i, *(&v5 + j) + v25, *(&v15 + j) + v26);
             break;
           case 0xA0:
-            dword_4A6224[43 * i] |= 0x100u;
+            Collision_Flag[43 * i] |= 0x100u;
             goto LABEL_33;
           case 0x80:
 LABEL_33:
-            dword_4A6224[43 * i] |= 0x1000u;
+            Collision_Flag[43 * i] |= 0x1000u;
             break;
           case 0xA1:
-            dword_4A6224[43 * i] |= 0x100u;
+            Collision_Flag[43 * i] |= 0x100u;
             goto LABEL_35;
           case 0x81:
 LABEL_35:
-            dword_4A6224[43 * i] |= 0x2000u;
+            Collision_Flag[43 * i] |= 0x2000u;
             break;
           case 0xA2:
-            dword_4A6224[43 * i] |= 0x100u;
+            Collision_Flag[43 * i] |= 0x100u;
             goto LABEL_37;
           case 0x82:
 LABEL_37:
-            dword_4A6224[43 * i] |= 0x4000u;
+            Collision_Flag[43 * i] |= 0x4000u;
             break;
           case 0xA3:
-            dword_4A6224[43 * i] |= 0x100u;
+            Collision_Flag[43 * i] |= 0x100u;
             goto LABEL_39;
           case 0x83:
 LABEL_39:
-            dword_4A6224[43 * i] |= 0x8000u;
+            Collision_Flag[43 * i] |= 0x8000u;
             break;
           default:
             break;
         }
-        if ( dword_4A622C[43 * i] > GlobalWaterDepth + 2048 )
-          dword_4A6224[43 * i] |= 0x100u;
+        if ( NPC_Y_Position[43 * i] > GlobalWaterDepth + 2048 )
+          Collision_Flag[43 * i] |= 0x100u;
       }
     }
   }
 }
 // 499C90: using guessed type int GlobalWaterDepth;
-// 4A6224: using guessed type int dword_4A6224[];
-// 4A6228: using guessed type int dword_4A6228[];
-// 4A622C: using guessed type int dword_4A622C[];
-// 4A6268: using guessed type int dword_4A6268[];
-// 4A6270: using guessed type __int16 word_4A6270[];
+// 4A6224: using guessed type int Collision_Flag[];
+// 4A6228: using guessed type int NPC_X_Position[];
+// 4A622C: using guessed type int NPC_Y_Position[];
+// 4A6268: using guessed type int NPC_Explosion_Size[];
+// 4A6270: using guessed type __int16 NPC_Flags[];
 
 //----- (00471B80) --------------------------------------------------------
 void *__cdecl sub_471B80(void *a1, int a2)
@@ -70256,65 +70251,72 @@ int sub_471D50()
 
   for ( i = 0; i < 512; ++i )
   {
-    if ( !(*((_BYTE *)&byte_4A6220 + 172 * i) & 0x80) || word_4A6270[86 * i] & 0x20 && word_4A6270[86 * i] & 0x2000 )
+    if ( !(*((_BYTE *)&Is_NPC_Alive + 172 * i) & 0x80) || NPC_Flags[86 * i] & 0x20 && NPC_Flags[86 * i] & 0x2000 )
       goto LABEL_2;
     for ( j = 0; j < 64; ++j )
     {
       if ( WeaponObj_In_Use[32 * j] & 0x80 && WeaponObj_Damage[32 * j] != -1 )
       {
         v14 = 0;
-        if ( word_4A6270[86 * i] & 0x20
-          && dword_4A6228[43 * i] - dword_4A62A4[43 * i] < dword_499CF8[32 * j] + WeaponObj_X_Position[32 * j]
-          && dword_4A62A4[43 * i] + dword_4A6228[43 * i] > WeaponObj_X_Position[32 * j] - dword_499CF8[32 * j]
-          && dword_4A622C[43 * i] - dword_4A62A0[43 * i] < dword_499CFC[32 * j] + WeaponObj_Y_Position[32 * j]
-          && dword_4A62A8[43 * i] + dword_4A622C[43 * i] > WeaponObj_Y_Position[32 * j] - dword_499CFC[32 * j] )
+        if ( NPC_Flags[86 * i] & 0x20
+          && NPC_X_Position[43 * i] - *(&NPC_Hitbox.right + 43 * i) < dword_499CF8[32 * j]
+                                                                    + WeaponObj_X_Position[32 * j]
+          && *(&NPC_Hitbox.right + 43 * i) + NPC_X_Position[43 * i] > WeaponObj_X_Position[32 * j]
+                                                                    - dword_499CF8[32 * j]
+          && NPC_Y_Position[43 * i] - *(&NPC_Hitbox.top + 43 * i) < dword_499CFC[32 * j] + WeaponObj_Y_Position[32 * j]
+          && *(&NPC_Hitbox.bottom + 43 * i) + NPC_Y_Position[43 * i] > WeaponObj_Y_Position[32 * j]
+                                                                     - dword_499CFC[32 * j] )
         {
           v14 = 1;
         }
-        else if ( word_4A6270[86 * i] & 4
-               && dword_4A6228[43 * i] - dword_4A62A4[43 * i] < dword_499D00[32 * j] + WeaponObj_X_Position[32 * j]
-               && dword_4A62A4[43 * i] + dword_4A6228[43 * i] > WeaponObj_X_Position[32 * j] - dword_499D00[32 * j]
-               && dword_4A622C[43 * i] - dword_4A62A0[43 * i] < dword_499D04[32 * j] + WeaponObj_Y_Position[32 * j]
-               && dword_4A62A8[43 * i] + dword_4A622C[43 * i] > WeaponObj_Y_Position[32 * j] - dword_499D04[32 * j] )
+        else if ( NPC_Flags[86 * i] & 4
+               && NPC_X_Position[43 * i] - *(&NPC_Hitbox.right + 43 * i) < dword_499D00[32 * j]
+                                                                         + WeaponObj_X_Position[32 * j]
+               && *(&NPC_Hitbox.right + 43 * i) + NPC_X_Position[43 * i] > WeaponObj_X_Position[32 * j]
+                                                                         - dword_499D00[32 * j]
+               && NPC_Y_Position[43 * i] - *(&NPC_Hitbox.top + 43 * i) < dword_499D04[32 * j]
+                                                                       + WeaponObj_Y_Position[32 * j]
+               && *(&NPC_Hitbox.bottom + 43 * i) + NPC_Y_Position[43 * i] > WeaponObj_Y_Position[32 * j]
+                                                                          - dword_499D04[32 * j] )
         {
           v14 = 1;
         }
         if ( v14 )
         {
-          if ( word_4A6270[86 * i] & 0x20 )
+          if ( NPC_Flags[86 * i] & 0x20 )
           {
-            dword_4A6260[43 * i] -= WeaponObj_Damage[32 * j];
-            if ( dword_4A6260[43 * i] >= 1 )
+            NPC_Current_Health[43 * i] -= WeaponObj_Damage[32 * j];
+            if ( NPC_Current_Health[43 * i] >= 1 )
             {
-              if ( (signed int)(unsigned __int8)byte_4A62BC[172 * i] < 14 )
+              if ( (signed int)(unsigned __int8)NPC_Touching_Bullet_Flag[172 * i] < 14 )
               {
-                v1 = dword_4A622C[43 * i] + WeaponObj_Y_Position[32 * j];
+                v1 = NPC_Y_Position[43 * i] + WeaponObj_Y_Position[32 * j];
                 v2 = ((signed int)v1 - HIDWORD(v1)) >> 1;
-                v3 = dword_4A6228[43 * i] + WeaponObj_X_Position[32 * j];
+                v3 = NPC_X_Position[43 * i] + WeaponObj_X_Position[32 * j];
                 Create_Animated_Effect(((signed int)v3 - HIDWORD(v3)) >> 1, v2, 11, 0);
-                v4 = dword_4A622C[43 * i] + WeaponObj_Y_Position[32 * j];
+                v4 = NPC_Y_Position[43 * i] + WeaponObj_Y_Position[32 * j];
                 v5 = ((signed int)v4 - HIDWORD(v4)) >> 1;
-                v6 = dword_4A6228[43 * i] + WeaponObj_X_Position[32 * j];
+                v6 = NPC_X_Position[43 * i] + WeaponObj_X_Position[32 * j];
                 Create_Animated_Effect(((signed int)v6 - HIDWORD(v6)) >> 1, v5, 11, 0);
-                v7 = dword_4A622C[43 * i] + WeaponObj_Y_Position[32 * j];
+                v7 = NPC_Y_Position[43 * i] + WeaponObj_Y_Position[32 * j];
                 v8 = ((signed int)v7 - HIDWORD(v7)) >> 1;
-                v9 = dword_4A6228[43 * i] + WeaponObj_X_Position[32 * j];
+                v9 = NPC_X_Position[43 * i] + WeaponObj_X_Position[32 * j];
                 Create_Animated_Effect(((signed int)v9 - HIDWORD(v9)) >> 1, v8, 11, 0);
-                Play_Sound_Effect(dword_4A6258[43 * i], 1);
-                byte_4A62BC[172 * i] = 16;
+                Play_Sound_Effect(NPC_Sound_When_Hit[43 * i], 1);
+                NPC_Touching_Bullet_Flag[172 * i] = 16;
               }
-              if ( word_4A6270[86 * i] & 0x8000 )
-                dword_4A62C0[43 * i] -= WeaponObj_Damage[32 * j];
+              if ( NPC_Flags[86 * i] & 0x8000 )
+                NPC_Damage_Taken[43 * i] -= WeaponObj_Damage[32 * j];
             }
             else
             {
-              dword_4A6260[43 * i] = 0;
-              if ( word_4A6270[86 * i] & 0x8000 )
-                dword_4A62C0[43 * i] -= WeaponObj_Damage[32 * j];
-              if ( *(_BYTE *)&Player_Flags & 0x80 && word_4A6270[86 * i] & 0x200 )
-                Call_TSC_Event(dword_4A6250[43 * i]);
+              NPC_Current_Health[43 * i] = 0;
+              if ( NPC_Flags[86 * i] & 0x8000 )
+                NPC_Damage_Taken[43 * i] -= WeaponObj_Damage[32 * j];
+              if ( *(_BYTE *)&Player_Flags & 0x80 && NPC_Flags[86 * i] & 0x200 )
+                Call_TSC_Event(NPC_Event_Number[43 * i]);
               else
-                *((_BYTE *)&byte_4A6220 + 172 * i) |= 8u;
+                *((_BYTE *)&Is_NPC_Alive + 172 * i) |= 8u;
             }
           }
           else if ( WeaponObj_ShotID[32 * j] != 13
@@ -70325,9 +70327,9 @@ int sub_471D50()
                  && WeaponObj_ShotID[32 * j] != 30
                  && !(WeaponObj_Flags[32 * j] & 0x10) )
           {
-            v10 = dword_4A622C[43 * i] + WeaponObj_Y_Position[32 * j];
+            v10 = NPC_Y_Position[43 * i] + WeaponObj_Y_Position[32 * j];
             v11 = ((signed int)v10 - HIDWORD(v10)) >> 1;
-            v12 = dword_4A6228[43 * i] + WeaponObj_X_Position[32 * j];
+            v12 = NPC_X_Position[43 * i] + WeaponObj_X_Position[32 * j];
             Create_Animated_Effect(((signed int)v12 - HIDWORD(v12)) >> 1, v11, 2, 2);
             Play_Sound_Effect(31, 1);
             WeaponObj_Num_Impacts[32 * j] = 0;
@@ -70337,8 +70339,8 @@ int sub_471D50()
         }
       }
     }
-    if ( *((_BYTE *)&byte_4A6220 + 172 * i) & 8 )
-      sub_471B80((char *)&byte_4A6220 + 172 * i, 1);
+    if ( *((_BYTE *)&Is_NPC_Alive + 172 * i) & 8 )
+      sub_471B80((char *)&Is_NPC_Alive + 172 * i, 1);
 LABEL_2:
     result = i + 1;
   }
@@ -70355,16 +70357,13 @@ LABEL_2:
 // 499CFC: using guessed type int dword_499CFC[];
 // 499D00: using guessed type int dword_499D00[];
 // 499D04: using guessed type int dword_499D04[];
-// 4A6228: using guessed type int dword_4A6228[];
-// 4A622C: using guessed type int dword_4A622C[];
-// 4A6250: using guessed type int dword_4A6250[];
-// 4A6258: using guessed type int dword_4A6258[];
-// 4A6260: using guessed type int dword_4A6260[];
-// 4A6270: using guessed type __int16 word_4A6270[];
-// 4A62A0: using guessed type int dword_4A62A0[];
-// 4A62A4: using guessed type int dword_4A62A4[];
-// 4A62A8: using guessed type int dword_4A62A8[];
-// 4A62C0: using guessed type int dword_4A62C0[];
+// 4A6228: using guessed type int NPC_X_Position[];
+// 4A622C: using guessed type int NPC_Y_Position[];
+// 4A6250: using guessed type int NPC_Event_Number[];
+// 4A6258: using guessed type int NPC_Sound_When_Hit[];
+// 4A6260: using guessed type int NPC_Current_Health[];
+// 4A6270: using guessed type __int16 NPC_Flags[];
+// 4A62C0: using guessed type int NPC_Damage_Taken[];
 
 //----- (00472400) --------------------------------------------------------
 int __cdecl sub_472400(LPCSTR lpFileName)
@@ -74660,7 +74659,7 @@ signed int __cdecl sub_47B460(int a1)
   signed int result; // eax@6
   signed int i; // [sp+0h] [bp-4h]@1
 
-  for ( i = 0; i < 512 && dword_4A6250[43 * i] != a1; ++i )
+  for ( i = 0; i < 512 && NPC_Event_Number[43 * i] != a1; ++i )
     ;
   if ( i == 512 )
   {
@@ -74669,24 +74668,24 @@ signed int __cdecl sub_47B460(int a1)
   else
   {
     NPCStruct_Hitbox = 1;
-    NPCStruct_Displaybox.top = dword_4A6260[43 * i];
-    NPCStruct_Displaybox.right = dword_4A6260[43 * i];
-    NPCStruct_Displaybox.left = (LONG)&dword_4A6260[43 * i];
+    NPCStruct_Rects.top = NPC_Current_Health[43 * i];
+    NPCStruct_Rects.right = NPC_Current_Health[43 * i];
+    NPCStruct_Rects.left = (LONG)&NPC_Current_Health[43 * i];
     result = 1;
   }
   return result;
 }
-// 4A6250: using guessed type int dword_4A6250[];
-// 4A6260: using guessed type int dword_4A6260[];
+// 4A6250: using guessed type int NPC_Event_Number[];
+// 4A6260: using guessed type int NPC_Current_Health[];
 // 4BBA44: using guessed type int NPCStruct_Hitbox;
 
 //----- (0047B500) --------------------------------------------------------
 signed int sub_47B500()
 {
   NPCStruct_Hitbox = 1;
-  NPCStruct_Displaybox.top = Omega_Health[0];
-  NPCStruct_Displaybox.right = Omega_Health[0];
-  NPCStruct_Displaybox.left = (LONG)Omega_Health;
+  NPCStruct_Rects.top = Omega_Health[0];
+  NPCStruct_Rects.right = Omega_Health[0];
+  NPCStruct_Rects.left = (LONG)Omega_Health;
   return 1;
 }
 // 4BBA44: using guessed type int NPCStruct_Hitbox;
@@ -74696,7 +74695,7 @@ signed int sub_47B500()
 LONG sub_47B540()
 {
   LONG result; // eax@2
-  int Src_Displaybox; // [sp+0h] [bp-50h]@1
+  int Src_Rects; // [sp+0h] [bp-50h]@1
   int v2; // [sp+4h] [bp-4Ch]@1
   int v3; // [sp+8h] [bp-48h]@1
   int v4; // [sp+Ch] [bp-44h]@1
@@ -74721,7 +74720,7 @@ LONG sub_47B540()
   v10 = 48;
   v11 = 32;
   v12 = 56;
-  Src_Displaybox = 0;
+  Src_Rects = 0;
   v2 = 0;
   v3 = 244;
   v4 = 8;
@@ -74739,20 +74738,20 @@ LONG sub_47B540()
   v8 = 40;
   if ( NPCStruct_Hitbox )
   {
-    result = NPCStruct_Displaybox.left;
-    if ( *(_DWORD *)NPCStruct_Displaybox.left >= 1 )
+    result = NPCStruct_Rects.left;
+    if ( *(_DWORD *)NPCStruct_Rects.left >= 1 )
     {
-      v19 = 198 * *(_DWORD *)NPCStruct_Displaybox.left / NPCStruct_Displaybox.top;
-      if ( NPCStruct_Displaybox.right <= *(_DWORD *)NPCStruct_Displaybox.left )
+      v19 = 198 * *(_DWORD *)NPCStruct_Rects.left / NPCStruct_Rects.top;
+      if ( NPCStruct_Rects.right <= *(_DWORD *)NPCStruct_Rects.left )
       {
-        NPCStruct_Displaybox.bottom = 0;
+        NPCStruct_Rects.bottom = 0;
       }
-      else if ( ++NPCStruct_Displaybox.bottom > 30 )
+      else if ( ++NPCStruct_Rects.bottom > 30 )
       {
-        --NPCStruct_Displaybox.right;
+        --NPCStruct_Rects.right;
       }
-      v7 = 198 * NPCStruct_Displaybox.right / NPCStruct_Displaybox.top;
-      Render_Graphics((int)&FullscreenRect, 32, 220, (int)&Src_Displaybox, 26);
+      v7 = 198 * NPCStruct_Rects.right / NPCStruct_Rects.top;
+      Render_Graphics((int)&FullscreenRect, 32, 220, (int)&Src_Rects, 26);
       Render_Graphics((int)&FullscreenRect, 32, 228, (int)&v13, 26);
       Render_Graphics((int)&FullscreenRect, 72, 224, (int)&v5, 26);
       Render_Graphics((int)&FullscreenRect, 72, 224, (int)&v17, 26);

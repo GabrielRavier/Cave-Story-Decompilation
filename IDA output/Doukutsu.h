@@ -9,9 +9,15 @@
 #define __int32 int
 #define __int64 long long
 
-struct _SCOPETABLE_ENTRY;
-
 /* 1 */
+#pragma pack(push, 8)
+struct struct_0
+{
+  char anonymous_0[1144];
+};
+#pragma pack(pop)
+
+/* 2 */
 #pragma pack(push, 8)
 struct _msEH
 {
@@ -21,27 +27,20 @@ struct _msEH
 };
 #pragma pack(pop)
 
-/* 25 */
-typedef struct _SCOPETABLE_ENTRY *PSCOPETABLE_ENTRY;
-
-/* 26 */
-struct _EH3_EXCEPTION_REGISTRATION
-{
-  struct _EH3_EXCEPTION_REGISTRATION *Next;
-  PVOID ExceptionHandler;
-  PSCOPETABLE_ENTRY ScopeTable;
-  DWORD TryLevel;
-};
-
-/* 2 */
+/* 3 */
+#pragma pack(push, 8)
 struct CPPEH_RECORD
 {
   DWORD old_esp;
   EXCEPTION_POINTERS *exc_ptr;
-  struct _EH3_EXCEPTION_REGISTRATION registration;
+  EXCEPTION_RECORD *prev_er;
+  int (__stdcall *handler)(int code);
+  _msEH *msEH_ptr;
+  DWORD disabled;
 };
+#pragma pack(pop)
 
-/* 3 */
+/* 4 */
 #pragma pack(push, 8)
 struct tagRECT
 {
@@ -52,7 +51,7 @@ struct tagRECT
 };
 #pragma pack(pop)
 
-/* 5 */
+/* 6 */
 #pragma pack(push, 8)
 struct POINT
 {
@@ -61,7 +60,7 @@ struct POINT
 };
 #pragma pack(pop)
 
-/* 6 */
+/* 7 */
 #pragma pack(push, 8)
 struct RECT
 {
@@ -72,7 +71,7 @@ struct RECT
 };
 #pragma pack(pop)
 
-/* 4 */
+/* 5 */
 #pragma pack(push, 8)
 struct WINDOWPLACEMENT
 {
@@ -85,7 +84,7 @@ struct WINDOWPLACEMENT
 };
 #pragma pack(pop)
 
-/* 7 */
+/* 8 */
 #pragma pack(push, 8)
 struct WNDCLASSEXA
 {
@@ -104,7 +103,7 @@ struct WNDCLASSEXA
 };
 #pragma pack(pop)
 
-/* 8 */
+/* 9 */
 #pragma pack(push, 8)
 struct tagMSG
 {
@@ -117,7 +116,7 @@ struct tagMSG
 };
 #pragma pack(pop)
 
-/* 9 */
+/* 10 */
 #pragma pack(push, 8)
 struct MSG
 {
@@ -130,7 +129,7 @@ struct MSG
 };
 #pragma pack(pop)
 
-/* 10 */
+/* 11 */
 #pragma pack(push, 8)
 struct timecaps_tag
 {
@@ -139,7 +138,7 @@ struct timecaps_tag
 };
 #pragma pack(pop)
 
-/* 11 */
+/* 12 */
 #pragma pack(push, 8)
 struct _STARTUPINFOA
 {
@@ -164,7 +163,7 @@ struct _STARTUPINFOA
 };
 #pragma pack(pop)
 
-/* 12 */
+/* 13 */
 #pragma pack(push, 8)
 struct _MEMORY_BASIC_INFORMATION
 {
@@ -178,7 +177,7 @@ struct _MEMORY_BASIC_INFORMATION
 };
 #pragma pack(pop)
 
-/* 13 */
+/* 14 */
 #pragma pack(push, 8)
 struct _SECURITY_ATTRIBUTES
 {
@@ -188,7 +187,7 @@ struct _SECURITY_ATTRIBUTES
 };
 #pragma pack(pop)
 
-/* 14 */
+/* 15 */
 #pragma pack(push, 8)
 struct _cpinfo
 {
@@ -199,7 +198,7 @@ struct _cpinfo
 };
 #pragma pack(pop)
 
-/* 15 */
+/* 16 */
 #pragma pack(push, 8)
 struct _FILETIME
 {
@@ -208,7 +207,7 @@ struct _FILETIME
 };
 #pragma pack(pop)
 
-/* 17 */
+/* 18 */
 #pragma pack(push, 8)
 struct _LARGE_INTEGER::$837407842DC9087486FDFA5FEB63B74E
 {
@@ -217,7 +216,7 @@ struct _LARGE_INTEGER::$837407842DC9087486FDFA5FEB63B74E
 };
 #pragma pack(pop)
 
-/* 16 */
+/* 17 */
 #pragma pack(push, 8)
 union LARGE_INTEGER
 {
@@ -227,7 +226,7 @@ union LARGE_INTEGER
 };
 #pragma pack(pop)
 
-/* 18 */
+/* 19 */
 #pragma pack(push, 8)
 struct FILE
 {
@@ -242,7 +241,7 @@ struct FILE
 };
 #pragma pack(pop)
 
-/* 19 */
+/* 20 */
 #pragma pack(push, 8)
 struct _SYSTEM_INFO::$41710344DA04EC56A327D4EA11DEF6D2::$AA04DEB0C6383F89F13D312A174572A9
 {
@@ -250,65 +249,4 @@ struct _SYSTEM_INFO::$41710344DA04EC56A327D4EA11DEF6D2::$AA04DEB0C6383F89F13D312
   WORD wReserved;
 };
 #pragma pack(pop)
-
-/* 20 */
-union __declspec(align(8)) __m64
-{
-  unsigned __int64 m64_u64;
-  float m64_f32[2];
-  __int8 m64_i8[8];
-  __int16 m64_i16[4];
-  __int32 m64_i32[2];
-  __int64 m64_i64;
-  unsigned __int8 m64_u8[8];
-  unsigned __int16 m64_u16[4];
-  unsigned __int32 m64_u32[2];
-};
-
-/* 21 */
-union __declspec(align(16)) __m128
-{
-  float m128_f32[4];
-  unsigned __int64 m128_u64[2];
-  __int8 m128_i8[16];
-  __int16 m128_i16[8];
-  __int32 m128_i32[4];
-  __int64 m128_i64[2];
-  unsigned __int8 m128_u8[16];
-  unsigned __int16 m128_u16[8];
-  unsigned __int32 m128_u32[4];
-};
-
-/* 22 */
-struct __m128d
-{
-  double m128d_f64[2];
-};
-
-/* 23 */
-union __declspec(align(16)) __m128i
-{
-  __int8 m128i_i8[16];
-  __int16 m128i_i16[8];
-  __int32 m128i_i32[4];
-  __int64 m128i_i64[2];
-  unsigned __int8 m128i_u8[16];
-  unsigned __int16 m128i_u16[8];
-  unsigned __int32 m128i_u32[4];
-  unsigned __int64 m128i_u64[2];
-};
-
-/* 24 */
-struct _SCOPETABLE_ENTRY
-{
-  int EnclosingLevel;
-  void *FilterFunc;
-  void *HandlerFunc;
-};
-
-/* 27 */
-typedef struct _EH3_EXCEPTION_REGISTRATION EH3_EXCEPTION_REGISTRATION;
-
-/* 28 */
-typedef struct _EH3_EXCEPTION_REGISTRATION *PEH3_EXCEPTION_REGISTRATION;
 
