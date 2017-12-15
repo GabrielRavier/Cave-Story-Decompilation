@@ -1,6 +1,6 @@
 There are too many people to credit here (as this is a community work), but there are a few persons that have significantly helped :
 
-- Clownacy and his uncomplete disassembly from which I copied a great part of the comments and the labels.
+- Clownacy for his uncomplete disassembly from which I copied a great part of the comments and the labels.
 - BLink for his NPC hacking tutorial, as well as his various hacks and his direct help.
 - Carrotlord for his hacking tutorial and the Doukustu Assembler
 - Noxid for his assembly compendium
