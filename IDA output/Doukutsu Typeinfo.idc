@@ -154,12 +154,18 @@ static ApplyStrucTInfos_0(void) {
 	id = GetStrucIdByName("CPPEH_RECORD");
 	SetType(GetMemberId(id, 0x0), "DWORD");
 	SetType(GetMemberId(id, 0x4), "EXCEPTION_POINTERS *");
-	SetType(GetMemberId(id, 0x8), "EXCEPTION_RECORD *");
-	SetType(GetMemberId(id, 0xC), "int (__stdcall *)(int code)");
-	SetType(GetMemberId(id, 0x10), "_msEH *");
-	SetType(GetMemberId(id, 0x14), "DWORD");
+	SetType(GetMemberId(id, 0x8), "struct _EH3_EXCEPTION_REGISTRATION");
 	id = GetStrucIdByName("_msEH");
 	id = GetStrucIdByName("struct_0");
+	id = GetStrucIdByName("_SCOPETABLE_ENTRY");
+	SetType(GetMemberId(id, 0x0), "int");
+	SetType(GetMemberId(id, 0x4), "void *");
+	SetType(GetMemberId(id, 0x8), "void *");
+	id = GetStrucIdByName("_EH3_EXCEPTION_REGISTRATION");
+	SetType(GetMemberId(id, 0x0), "struct _EH3_EXCEPTION_REGISTRATION *");
+	SetType(GetMemberId(id, 0x4), "PVOID");
+	SetType(GetMemberId(id, 0x8), "PSCOPETABLE_ENTRY");
+	SetType(GetMemberId(id, 0xC), "DWORD");
 	return id;
 }
 
@@ -195,6 +201,8 @@ static Structures_0(id) {
 	id = AddStrucEx(-1,"CPPEH_RECORD",0);
 	id = AddStrucEx(-1,"_msEH",0);
 	id = AddStrucEx(-1,"struct_0",0);
+	id = AddStrucEx(-1,"_SCOPETABLE_ENTRY",0);
+	id = AddStrucEx(-1,"_EH3_EXCEPTION_REGISTRATION",0);
 	
 	id = GetStrucIdByName("_SYSTEM_INFO::$41710344DA04EC56A327D4EA11DEF6D2::$AA04DEB0C6383F89F13D312A174572A9");
 	mid = AddStrucMember(id,"wProcessorArchitecture",	0,	0x10000400,	-1,	2);
@@ -337,13 +345,18 @@ static Structures_0(id) {
 	mid = AddStrucMember(id,"right",	0X8,	0x20000400,	-1,	4);
 	mid = AddStrucMember(id,"bottom",	0XC,	0x20000400,	-1,	4);
 	
+	id = GetStrucIdByName("_EH3_EXCEPTION_REGISTRATION");
+	mid = AddStrucMember(id,"Next",	0,	0x25500400,	0XFFFFFFFF,	4,	0XFFFFFFFF,	0,	0x000002);
+	mid = AddStrucMember(id,"ExceptionHandler",	0X4,	0x25500400,	0XFFFFFFFF,	4,	0XFFFFFFFF,	0,	0x000002);
+	mid = AddStrucMember(id,"ScopeTable",	0X8,	0x25500400,	0XFFFFFFFF,	4,	0XFFFFFFFF,	0,	0x000002);
+	mid = AddStrucMember(id,"TryLevel",	0XC,	0x20000400,	-1,	4);
+	SetStrucAlign(id,2);
+	
 	id = GetStrucIdByName("CPPEH_RECORD");
 	mid = AddStrucMember(id,"old_esp",	0,	0x20000400,	-1,	4);
 	mid = AddStrucMember(id,"exc_ptr",	0X4,	0x25500400,	0XFFFFFFFF,	4,	0XFFFFFFFF,	0,	0x000002);
-	mid = AddStrucMember(id,"prev_er",	0X8,	0x25500400,	0XFFFFFFFF,	4,	0XFFFFFFFF,	0,	0x000002);
-	mid = AddStrucMember(id,"handler",	0XC,	0x25500400,	0XFFFFFFFF,	4,	0XFFFFFFFF,	0,	0x000002);
-	mid = AddStrucMember(id,"msEH_ptr",	0X10,	0x25500400,	0XFFFFFFFF,	4,	0XFFFFFFFF,	0,	0x000002);
-	mid = AddStrucMember(id,"disabled",	0X14,	0x20000400,	-1,	4);
+	mid = AddStrucMember(id,"registration",	0X8,	0x60000400,	GetStrucIdByName("_EH3_EXCEPTION_REGISTRATION"),	16);
+	SetStrucAlign(id,2);
 	
 	id = GetStrucIdByName("_msEH");
 	mid = AddStrucMember(id,"_unk",	0,	0x21100400,	-1,	4);
@@ -352,6 +365,12 @@ static Structures_0(id) {
 	
 	id = GetStrucIdByName("struct_0");
 	mid = AddStrucMember(id,"anonymous_0",	0,	0x50000500,	0,	1144);
+	
+	id = GetStrucIdByName("_SCOPETABLE_ENTRY");
+	mid = AddStrucMember(id,"EnclosingLevel",	0,	0x20000400,	-1,	4);
+	mid = AddStrucMember(id,"FilterFunc",	0X4,	0x25500400,	0XFFFFFFFF,	4,	0XFFFFFFFF,	0,	0x000002);
+	mid = AddStrucMember(id,"HandlerFunc",	0X8,	0x25500400,	0XFFFFFFFF,	4,	0XFFFFFFFF,	0,	0x000002);
+	SetStrucAlign(id,2);
 	return id;
 }
 

@@ -9,6 +9,8 @@
 #define __int32 int
 #define __int64 long long
 
+struct _SCOPETABLE_ENTRY;
+
 /* 1 */
 #pragma pack(push, 8)
 struct struct_0
@@ -27,18 +29,25 @@ struct _msEH
 };
 #pragma pack(pop)
 
+/* 22 */
+typedef struct _SCOPETABLE_ENTRY *PSCOPETABLE_ENTRY;
+
+/* 23 */
+struct _EH3_EXCEPTION_REGISTRATION
+{
+  struct _EH3_EXCEPTION_REGISTRATION *Next;
+  PVOID ExceptionHandler;
+  PSCOPETABLE_ENTRY ScopeTable;
+  DWORD TryLevel;
+};
+
 /* 3 */
-#pragma pack(push, 8)
 struct CPPEH_RECORD
 {
   DWORD old_esp;
   EXCEPTION_POINTERS *exc_ptr;
-  EXCEPTION_RECORD *prev_er;
-  int (__stdcall *handler)(int code);
-  _msEH *msEH_ptr;
-  DWORD disabled;
+  struct _EH3_EXCEPTION_REGISTRATION registration;
 };
-#pragma pack(pop)
 
 /* 4 */
 #pragma pack(push, 8)
@@ -249,4 +258,65 @@ struct _SYSTEM_INFO::$41710344DA04EC56A327D4EA11DEF6D2::$AA04DEB0C6383F89F13D312
   WORD wReserved;
 };
 #pragma pack(pop)
+
+/* 21 */
+struct _SCOPETABLE_ENTRY
+{
+  int EnclosingLevel;
+  void *FilterFunc;
+  void *HandlerFunc;
+};
+
+/* 24 */
+typedef struct _EH3_EXCEPTION_REGISTRATION EH3_EXCEPTION_REGISTRATION;
+
+/* 25 */
+typedef struct _EH3_EXCEPTION_REGISTRATION *PEH3_EXCEPTION_REGISTRATION;
+
+/* 26 */
+union __declspec(align(8)) __m64
+{
+  unsigned __int64 m64_u64;
+  float m64_f32[2];
+  __int8 m64_i8[8];
+  __int16 m64_i16[4];
+  __int32 m64_i32[2];
+  __int64 m64_i64;
+  unsigned __int8 m64_u8[8];
+  unsigned __int16 m64_u16[4];
+  unsigned __int32 m64_u32[2];
+};
+
+/* 27 */
+union __declspec(align(16)) __m128
+{
+  float m128_f32[4];
+  unsigned __int64 m128_u64[2];
+  __int8 m128_i8[16];
+  __int16 m128_i16[8];
+  __int32 m128_i32[4];
+  __int64 m128_i64[2];
+  unsigned __int8 m128_u8[16];
+  unsigned __int16 m128_u16[8];
+  unsigned __int32 m128_u32[4];
+};
+
+/* 28 */
+struct __m128d
+{
+  double m128d_f64[2];
+};
+
+/* 29 */
+union __declspec(align(16)) __m128i
+{
+  __int8 m128i_i8[16];
+  __int16 m128i_i16[8];
+  __int32 m128i_i32[4];
+  __int64 m128i_i64[2];
+  unsigned __int8 m128i_u8[16];
+  unsigned __int16 m128i_u16[8];
+  unsigned __int32 m128i_u32[4];
+  unsigned __int64 m128i_u64[2];
+};
 

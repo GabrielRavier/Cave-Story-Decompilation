@@ -16,8 +16,8 @@
  0001:000002D0       TSC_ITplus
  0001:00000330       TSC_ITminus
  0001:000003C0       Mng_Inv_Curs
- 0001:000006F0       Rend_Inv_Win?
- 0001:00000D10       Inv_Menu_Code
+ 0001:000006F0       Draw_Inventory_Window
+ 0001:00000D10       Inventory_Game_Loop
  0001:00000F20       Chk_If_Has_Item
  0001:00000F60       Chk_If_Has_Weap
  0001:00000FA0       Rmv_Ammo_From_Weap
@@ -26,10 +26,16 @@
  0001:000010E0       Switch_to_Next_Weap
  0001:00001190       Switch_to_Prev_Weap
  0001:00001240       Unequ_Weap
- 0001:00001270       Bckgrd?
- 0001:00001370       Bckgrd_Modes?
- 0001:000013D0       Bckgrd_Code
- 0001:00001805       glb_402805
+ 0001:00001270       Load_Background_Sprite
+ 0001:00001370       Background_Modes?_Increase_Background_Scroll?
+ 0001:000013D0       Draw_Background
+ 0001:00001412       jmp_402809_case_0
+ 0001:00001472       jmp_402809_case_1
+ 0001:00001504       jmp_402809_case_2
+ 0001:0000158C       jmp_402809_case_5
+ 0001:00001606       jmp_402809_case_6_7
+ 0001:00001805       jmp_402809_default_return
+ 0001:00001809       jmp_40240B_table
  0001:00001830       Rend_Map_Bckgrd
  0001:000019B0       Chk_Starblck_break
  0001:00001B30       Solid_Tile_Complicated
@@ -43,6 +49,18 @@
  0001:00002560       Bullet_Tile_Collision_Floor_Slope_3
  0001:00002650       Bullet_Tile_Collision_Floor_Slope_4
  0001:00002740       Bul_Til_Coll_Algo
+ 0001:000028D7       jmp_4038D0_case_0_2_3_32_35
+ 0001:0000291E       jmp_4038D0_case_15_47
+ 0001:00002965       jmp_4038D0_case_16_48
+ 0001:000029AC       jmp_4038D0_case_17_49
+ 0001:000029F3       jmp_4038D0_case_18_50
+ 0001:00002A3A       jmp_4038D0_case_19_51
+ 0001:00002A81       jmp_4038D0_case_20_52
+ 0001:00002AC8       jmp_4038D0_case_21_53
+ 0001:00002B0C       jmp_4038D0_case_22_54
+ 0001:00002B4E       jmp_4038D0_default
+ 0001:00002B95       jmp_4038D0_table
+ 0001:00002BBD       jmp_4038D0_indirect_table
  0001:00002C00       Clear_All_Weapons_Object_Slots
  0001:00002C40       Count_Weapon_Shot_Occurences
  0001:00002CB0       Count_All_Slots_Using_Shot
@@ -51,38 +69,257 @@
  0001:00002D77       Return__
  0001:00002D80       Clear_All_Weapons_Obj_Slots
  0001:00002DC0       Render_Bullets
+ 0001:00002E1E       jmp_403E17_case_0
+ 0001:00002E59       jmp_403E17_case_2
+ 0001:00002E91       jmp_403E17_case_1
+ 0001:00002EC9       jmp_403E17_case_3
+ 0001:00002F69       jmp_403E17_table
  0001:00002F80       Create_Bullet
  0001:00003160       Snake_Lvl_1_Bullet
+ 0001:000031F7       jmp_4041F0_case_0
+ 0001:00003203       jmp_4041F0_case_1
+ 0001:0000320F       jmp_4041F0_case_2
+ 0001:0000321B       jmp_4041F0_case_3
+ 0001:000033D2       jmp_4041F0_table
  0001:000033F0       Bullet_02_03_Snake
+ 0001:0000347F       jmp_404478_case_0
+ 0001:0000348B       jmp_404478_case_1
+ 0001:00003497       jmp_404478_case_2
+ 0001:000034A3       jmp_404478_case_3
+ 0001:000034D6       jmp_4044CF_case_0_2
+ 0001:00003500       jmp_4044CF_case_1_3
+ 0001:00003547       jmp_404540_case_0
+ 0001:0000355B       jmp_404540_case_1
+ 0001:0000356F       jmp_404540_case_2
+ 0001:00003583       jmp_404540_case_3
+ 0001:000035AF       jmp_4045A8_case_0_2
+ 0001:000035E3       jmp_4045A8_case_1_3
+ 0001:00003769       jmp_404478_table
+ 0001:00003779       jmp_4044CF_table
+ 0001:00003789       jmp_404540_table
+ 0001:00003799       jmp_4045A8_table
  0001:000037B0       Bullet_04_05_06_Polar_Star
+ 0001:0000382D       jmp_404826_case_0
+ 0001:00003839       jmp_404826_case_1
+ 0001:00003845       jmp_404826_case_2
+ 0001:00003851       jmp_404826_case_3
+ 0001:0000388C       jmp_404885_case_0
+ 0001:00003898       jmp_404885_case_1
+ 0001:000038A4       jmp_404885_case_2
+ 0001:000038B0       jmp_404885_case_3
+ 0001:000038D6       jmp_4048CF_case_0
+ 0001:000038E2       jmp_4048CF_case_1
+ 0001:000038EE       jmp_4048CF_case_2
+ 0001:000038FA       jmp_4048CF_case_3
  0001:000039EE       jmp_Return2
+ 0001:00003AFA       jmp_404826_table
+ 0001:00003B0A       jmp_404885_table
+ 0001:00003B1A       jmp_4048CF_table
  0001:00003B30       Bullet_07_08_09_Fireball
+ 0001:00003C6E       jmp_404C67_case_0
+ 0001:00003C7D       jmp_404C67_case_1
  0001:00003CAB       dir_up_left
+ 0001:00003CDB       jmp_404C67_case_2
+ 0001:00003CE7       jmp_404C67_case_3
+ 0001:00004103       jmp_404C67_table
  0001:00004120       Bullet_0A_0B_0C_Machine_Gun
+ 0001:00004375       jmp_40536E_case_0
+ 0001:0000439D       jmp_40536E_case_1
+ 0001:000043C5       jmp_40536E_case_2
+ 0001:000043EB       jmp_40536E_case_3
+ 0001:00004583       jmp_40536E_table
  0001:000045A0       Bullet_0D_0E_0F_Missile_Launcher
+ 0001:00004771       jmp_40576A_case_0_2
+ 0001:0000477F       jmp_40576A_case_1_3
+ 0001:000047BC       jmp_4057B5_case_0_2
+ 0001:000047FA       jmp_4057B5_case_1_3
+ 0001:000048C7       jmp_4058C0_case_0
+ 0001:000048DD       jmp_4058C0_case_1
+ 0001:000048F3       jmp_4058C0_case_2
+ 0001:00004907       jmp_4058C0_case_3
+ 0001:00004946       jmp_405937_case_0_2
+ 0001:00004976       jmp_405937_case_1_3
+ 0001:00004A6D       jmp_405A66_case_0
+ 0001:00004A8F       jmp_405A66_case_1
+ 0001:00004AB0       jmp_405A66_case_2
+ 0001:00004AD1       jmp_405A66_case_3
+ 0001:00004D2C       jmp_40576A_table
+ 0001:00004D3C       jmp_4057B5_table
+ 0001:00004D4C       jmp_4058C0_table
+ 0001:00004D5C       jmp_405937_table
+ 0001:00004D6C       jmp_405A66_table
  0001:00004D80       Bullet_10_11_12_Missile_Explosion
  0001:00004F30       Bullet_13_Bubbler_Lvl1
+ 0001:00004FA1       jmp_405F9A_case_0
+ 0001:00004FAD       jmp_405F9A_case_2
+ 0001:00004FB9       jmp_405F9A_case_1
+ 0001:00004FC5       jmp_405F9A_case_3
+ 0001:00004FE9       jmp_405FE2_case_0
+ 0001:00004FFA       jmp_405FE2_case_2
+ 0001:0000500B       jmp_405FE2_case_1
+ 0001:0000501C       jmp_405FE2_case_3
+ 0001:0000516C       jmp_405F9A_table
+ 0001:0000517C       jmp_405FE2_table
  0001:00005190       Bullet_14_Bubbler_Lvl2
+ 0001:0000527B       jmp_406274_case_0
+ 0001:0000529F       jmp_406274_case_2
+ 0001:000052C3       jmp_406274_case_1
+ 0001:000052E7       jmp_406274_case_3
+ 0001:00005323       jmp_40631C_case_0
+ 0001:00005334       jmp_40631C_case_2
+ 0001:00005345       jmp_40631C_case_1
+ 0001:00005356       jmp_40631C_case_3
+ 0001:000054A6       jmp_406274_table
+ 0001:000054B6       jmp_40631C_table
  0001:000054D0       Bullet_15_Bubbler_Lvl3
+ 0001:000055D9       jmp_4065D2_case_0
+ 0001:00005610       jmp_4065D2_case_2
+ 0001:00005644       jmp_4065D2_case_1
+ 0001:00005678       jmp_4065D2_case_3
+ 0001:00005897       jmp_4065D2_table
  0001:000058B0       Bullet_16_Bubble_Spurs
+ 0001:00005937       jmp_406930_case_0
+ 0001:00005955       jmp_406930_case_1
+ 0001:00005973       jmp_406930_case_2
+ 0001:0000598F       jmp_406930_case_3
+ 0001:00005AD9       jmp_406AD2_case_0
+ 0001:00005B04       jmp_406AD2_case_1
+ 0001:00005B2F       jmp_406AD2_case_2
+ 0001:00005B5A       jmp_406AD2_case_3
+ 0001:00005B87       jmp_406930_table
+ 0001:00005B97       jmp_406AD2_table
  0001:00005BB0       Bullet_19_Blade_Lvl1
+ 0001:00005C6C       jmp_406D65_case_0
+ 0001:00005C78       jmp_406D65_case_1
+ 0001:00005C84       jmp_406D65_case_2
+ 0001:00005C90       jmp_406D65_case_3
+ 0001:00005E47       jmp_406D65_table
  0001:00005E60       Bullet_1A_BladeLevel2
+ 0001:00005F1C       jmp_406F15_case_0
+ 0001:00005F28       jmp_406F15_case_1
+ 0001:00005F34       jmp_406F15_case_2
+ 0001:00005F40       jmp_406F15_case_3
+ 0001:000060F7       jmp_406F15_table
  0001:00006110       Bullet_1B_BladeLevel3
+ 0001:0000626A       jmp_407263_case_0
+ 0001:00006276       jmp_407263_case_1
+ 0001:00006282       jmp_407263_case_2
+ 0001:0000628E       jmp_407263_case_3
+ 0001:000064E9       jmp_4074E2_case_0
+ 0001:00006514       jmp_4074E2_case_1
+ 0001:0000653F       jmp_4074E2_case_2
+ 0001:0000656A       jmp_4074E2_case_3
+ 0001:000065B8       jmp_407263_table
+ 0001:000065C8       jmp_4074E2_table
  0001:000065E0       Bullet_17_BladeSlash
  0001:000068A0       Bullet_18__Unused_
  0001:00006910       Bullet_1C_1D_1E_Sup_Mis_Launcher
+ 0001:00006AE1       jmp_407ADA_case_0_2
+ 0001:00006B03       jmp_407ADA_case_1_3
+ 0001:00006B54       jmp_407B4D_case_0_2
+ 0001:00006B92       jmp_407B4D_case_1_3
+ 0001:00006C5F       jmp_407C58_case_0
+ 0001:00006C75       jmp_407C58_case_1
+ 0001:00006C8B       jmp_407C58_case_2
+ 0001:00006C9F       jmp_407C58_case_3
+ 0001:00006CDE       jmp_407CD7_case_0_2
+ 0001:00006D0E       jmp_407CD7_case_1_3
+ 0001:00006E05       jmp_407DFE_case_0
+ 0001:00006E27       jmp_407DFE_case_1
+ 0001:00006E48       jmp_407DFE_case_2
+ 0001:00006E69       jmp_407DFE_case_3
+ 0001:00007021       jmp_407ADA_table
+ 0001:00007031       jmp_407B4D_table
+ 0001:00007041       jmp_407C58_table
+ 0001:00007051       jmp_407CD7_table
+ 0001:00007061       jmp_407DFE_table
  0001:00007080       Bullet_1F_20_21
  0001:00007230       Bullet_22_23_24_2B_Nemesis
+ 0001:000072C3       jmp_4082BC_case_0
+ 0001:000072CF       jmp_4082BC_case_1
+ 0001:000072DB       jmp_4082BC_case_2
+ 0001:000072E7       jmp_4082BC_case_3
+ 0001:0000737F       jmp_408378_case_0
+ 0001:000073BD       jmp_408378_case_1
+ 0001:000073F8       jmp_408378_case_2
+ 0001:00007433       jmp_408378_case_3
+ 0001:000075B9       jmp_4085B2_case_0
+ 0001:000075E4       jmp_4085B2_case_1
+ 0001:0000760F       jmp_4085B2_case_2
+ 0001:0000763A       jmp_4085B2_case_3
+ 0001:000076DD       jmp_4082BC_table
+ 0001:000076ED       jmp_408378_table
+ 0001:000076FD       jmp_4085B2_table
  0001:00007710       Bullet_25_26_27_ChargelessSpur_AllLevels
+ 0001:000077A9       jmp_4087A2_case_0
+ 0001:000077B5       jmp_4087A2_case_1
+ 0001:000077C1       jmp_4087A2_case_2
+ 0001:000077CD       jmp_4087A2_case_3
+ 0001:00007808       jmp_408801_case_0
+ 0001:00007814       jmp_408801_case_1
+ 0001:00007820       jmp_408801_case_2
+ 0001:0000782C       jmp_408801_case_3
+ 0001:00007852       jmp_40884B_case_0
+ 0001:0000785E       jmp_40884B_case_1
+ 0001:0000786A       jmp_40884B_case_2
+ 0001:00007876       jmp_40884B_case_3
+ 0001:00007AA7       jmp_4087A2_table
+ 0001:00007AB7       jmp_408801_table
+ 0001:00007AC7       jmp_40884B_table
  0001:00007AE0       Bullet_28_to_2A_NonMovingSpur_AllLevels
  0001:00007F40       Bullet_2C_Spur_Lvl_2
  0001:00007F90       Bullet_2D_SpurLevel3
  0001:00007FC0       Run_Bullet_Code
- 0001:000083C4       Call_nem_lvl_1
- 0001:000083DF       Call_nem_lvl_2
- 0001:000083FB       Call_nem_lvl_3
- 0001:00008621       glb_409621
- 0001:00008628       loc_409628
+ 0001:00008047       jmp_409040_case_0
+ 0001:00008060       jmp_409040_case_1
+ 0001:0000807C       jmp_409040_case_2
+ 0001:00008098       jmp_409040_case_3
+ 0001:000080B3       jmp_409040_case_4
+ 0001:000080CF       jmp_409040_case_5
+ 0001:000080EB       jmp_409040_case_6
+ 0001:00008106       jmp_409040_case_7
+ 0001:00008122       jmp_409040_case_8
+ 0001:0000813E       jmp_409040_case_9
+ 0001:00008159       jmp_409040_case_10
+ 0001:00008175       jmp_409040_case_11
+ 0001:00008191       jmp_409040_case_12
+ 0001:000081AC       jmp_409040_case_13
+ 0001:000081C8       jmp_409040_case_14
+ 0001:000081E4       jmp_409040_case_15
+ 0001:000081FF       jmp_409040_case_16
+ 0001:0000821B       jmp_409040_case_17
+ 0001:00008237       jmp_409040_case_18
+ 0001:00008250       jmp_409040_case_19
+ 0001:0000826A       jmp_409040_case_20
+ 0001:00008284       jmp_409040_case_21
+ 0001:0000829D       jmp_409040_case_22
+ 0001:000082B7       jmp_409040_case_23
+ 0001:000082D1       jmp_409040_case_24
+ 0001:000082EA       jmp_409040_case_25
+ 0001:00008304       jmp_409040_case_26
+ 0001:0000831E       jmp_409040_case_27
+ 0001:00008339       jmp_409040_case_28
+ 0001:00008355       jmp_409040_case_29
+ 0001:00008371       jmp_409040_case_30
+ 0001:0000838C       jmp_409040_case_31
+ 0001:000083A8       jmp_409040_case_32
+ 0001:000083C4       jmp_409040_case_33_Call_nem_lvl_1
+ 0001:000083DF       jmp_409040_case_34_Call_nem_lvl_2
+ 0001:000083FB       jmp_409040_case_35_Call_nem_lvl_3
+ 0001:00008417       jmp_409040_case_36
+ 0001:00008432       jmp_409040_case_37
+ 0001:0000844E       jmp_409040_case_38
+ 0001:0000846A       jmp_409040_case_39
+ 0001:00008482       jmp_409040_case_40
+ 0001:0000849B       jmp_409040_case_41
+ 0001:000084B4       jmp_409040_case_42
+ 0001:000084CC       jmp_409040_case_43
+ 0001:000084E3       jmp_409040_case_44
+ 0001:00008501       jmp_409040_table
+ 0001:00008621       jmp_40961A_case_0_to_5_10_12_to_20
+ 0001:00008628       jmp_40961A_default_jmp_For_Loop_Restart
+ 0001:00008630       jmp_40961A_table
+ 0001:00008638       jmp_40961A_indirect_table
  0001:00008650       Clear_All_Effects
  0001:00008670       No_Effect
  0001:00008680       Random_Fountain_Pulsing_Disc_Particles
@@ -92,6 +329,11 @@
  0001:00008C70       Fireball_Impact
  0001:00008E00       ZzZ___
  0001:00008F60       Booster_Smoke
+ 0001:000090AF       jmp_40A0A8_case_0
+ 0001:000090C3       jmp_40A0A8_case_1
+ 0001:000090D7       jmp_40A0A8_case_2
+ 0001:000090EB       jmp_40A0A8_case_3
+ 0001:00009101       jmp_40A0A8_table
  0001:00009120       Drowned_Quote
  0001:000091B0       Exclamation
  0001:00009280       Level_Up_Or_Down
@@ -112,51 +354,120 @@
  0001:0000A1D0       Debug_Save_Button
  0001:0000A290       Quit_Button
  0001:0000A320       Change_Screen_Offsets
- 0001:0000A340       Upd_Scr_With_Wind?
- 0001:0000A450       DDRAW_Setup?
- 0001:0000A6C0       DDRAW_Destroy?
+ 0001:0000A340       Draw_Window
+ 0001:0000A450       Init_Direct_Draw
+ 0001:0000A6C0       Kill_Direct_Draw
  0001:0000A7A0       Destroy_Bitmap_Obj?
- 0001:0000A800       Load_Image_From_Res
- 0001:0000AAC0       Load_Image_From_File
- 0001:0000AE10       Load_Image_From_Resource_Reloadable?
- 0001:0000AFD0       LoadImage_Must_Prep_RAM
- 0001:0000B1D0       Prep_RAM_For_Img?
- 0001:0000B320       Blit_Rect_From_Img_File_To_Region
- 0001:0000B3C0       Render_Graphics
- 0001:0000B5B0       Draw_Obj
- 0001:0000B7A0       Blit_For_Dmg_Num?
- 0001:0000B8B0       Set_BG_Color
- 0001:0000B9E0       FillRects_Memory
- 0001:0000BA80       FillRects_Memory?
- 0001:0000BB30       Upd_Scr_With_Wind_sub_sub
- 0001:0000BB60       Upd_Scr_With_Wind_sub
- 0001:0000BD50       Create_Font
- 0001:0000BE00       Output_Text
- 0001:0000BEB0       Draw_Text_To_Screen
- 0001:0000BF70       Delete_Font_Obj
- 0001:0000C010       Draw_From_Slot_0x25
- 0001:0000C150       Draws_Some_Text
- 0001:0000C240       Draws_Some_Text_
+ 0001:0000A800       Load_BMP_From_Resource_And_Create_Surface
+ 0001:0000AAC0       Load_BMP_From_File_And_Create_Surface
+ 0001:0000AE10       Load_BMP_From_Resource_Onto_Existing_Surface
+ 0001:0000AFD0       Load_BMP_From_File_Onto_Existing_Surface
+ 0001:0000B1D0       Create_Blank_Surface
+ 0001:0000B320       Capture_Screen_To_Surface
+ 0001:0000B3C0       Draw_Sprite_With_Transparency
+ 0001:0000B5B0       Draw_Sprite_No_Tranparency
+ 0001:0000B7A0       Draw_Sprite_Onto_Surface
+ 0001:0000B8B0       Make_Native_Color
+ 0001:0000B9E0       Draw_Color_Fill
+ 0001:0000BA80       Draw_Color_Fill_Onto_Surface
+ 0001:0000BB30       Security_Function?
+ 0001:0000BB60       Regenerate_Surfaces
+ 0001:0000BD50       Load_Font
+ 0001:0000BE00       Draw_String
+ 0001:0000BEB0       Draw_String_Onto_Surface
+ 0001:0000BF70       Unload_Font
+ 0001:0000BF90       Scroll_Credits_Text
+ 0001:0000C010       Draw_From_Slot_0x25_Credits_Text?
+ 0001:0000C150       Print_Text?
+ 0001:0000C240       Draws_Some_Text
+ 0001:0000C2D0       Slide_Credits_Picture
+ 0001:0000C350       Draw_Credits_Image
+ 0001:0000C3A0       Load_Credits_Image
+ 0001:0000C410       If_Not_49D614_0_Deallocate
+ 0001:0000C440       Initialise_Credits
+ 0001:0000C620       TSC_Interpreter?
+ 0001:0000C684       jmp_40D67D_case_58
+ 0001:0000C769       jmp_40D67D_case_12
+ 0001:0000C7AE       jmp_40D67D_case_10
+ 0001:0000C7EC       jmp_40D67D_case_14
+ 0001:0000C7FB       jmp_40D67D_case_0
+ 0001:0000C840       jmp_40D67D_case_90
+ 0001:0000C859       jmp_40D67D_case_73
+ 0001:0000C943       jmp_40D67D_case_69
+ 0001:0000CA56       jmp_40D67D_default
+ 0001:0000CA76       jmp_40D67D_table
+ 0001:0000CA9A       jmp_40D67D_indirect_table
+ 0001:0000CB40       TSC_SIL
+ 0001:0000CB60       TSC_CIL
+ 0001:0000CB70       TSC_XX1_Game_Loop_Island_Crash
+ 0001:0000CD70       Game_Loop_Exit_Menu
  0001:0000CE90       ___setargv
- 0001:0000D770       TSC_FAI_and_FAO
+ 0001:0000CEC0       TSC_FAO_Begin_Fade_Out
+ 0001:0000CF50       TSC_FAI_Begin_Fade_In
+ 0001:0000CFE0       Process_Fade
+ 0001:0000D021       jmp_40E01A_case_0
+ 0001:0000D07B       jmp_40E01A_case_2
+ 0001:0000D0D0       jmp_40E01A_case_1
+ 0001:0000D12A       jmp_40E01A_case_3
+ 0001:0000D17F       jmp_40E01A_case_4
+ 0001:0000D73C       jmp_40E01A_table
+ 0001:0000D770       Render_Fade_Out_In
+ 0001:0000D830       Is_Fade_Happening
+ 0001:0000D850       Clear_Event_Flags
+ 0001:0000D870       Clear_Skipflags?
+ 0001:0000D890       TSC_FLplus
+ 0001:0000D8E0       TSC_FLminues
  0001:0000D930       Check_Flag
- 0001:0000DA50       __initp_eh_hooks
+ 0001:0000D970       TSC_SKplus
+ 0001:0000D9C0       TSC_SKminus
+ 0001:0000DA50       TSC_FLA
  0001:0000DA70       Explosion?
- 0001:0000DE60       __crt_debugger_hook
- 0001:0000DE70       Camera_Code
+ 0001:0000DAC0       Update_Boss_Explosion
+ 0001:0000DD20       TSC_FLA_Handler
+ 0001:0000DDE0       Main_WhiteScreen_Handler
+ 0001:0000DE20       Draw_Boss_Explosion
+ 0001:0000DE60       Occasional_Flash_0
+ 0001:0000DE70       Update_Camera
+ 0001:0000E020       Get_Camera_Position
+ 0001:0000E040       Unused_Camera_Update_Function
+ 0001:0000E130       Set_Camera_Upon_Enter_Room
+ 0001:0000E220       TSC_FOM
+ 0001:0000E250       TSC_FON
+ 0001:0000E2D0       TSC_FOB
+ 0001:0000E310       TSC_QUA
+ 0001:0000E320       Set_Hard_Quake_Duration
+ 0001:0000E330       Stop_All_Quake_Effects
  0001:0000E350       RNG_Range
- 0001:0000E380       Render_Numbers
- 0001:0000E5F0       Upd_Win
- 0001:0000E9B0       Title_Screen_Code
+ 0001:0000E380       Draw_Numbers
+ 0001:0000E5F0       Game_Loop_Selector
+ 0001:0000E730       Game_Loop_Opening_Cutscene
+ 0001:0000E9B0       Game_Loop_Title_Screen
  0001:0000F304       Call_Render_Graphics_Mychar_Top_Selection
- 0001:0000F400       Main_Game_Loop
+ 0001:0000F400       Game_Loop_Main_Game
+ 0001:0000F5F6       Do_Credits_Stuff
+ 0001:0000F8B0       Get_Build_Data
  0001:0000F990       Get_Version_Number
- 0001:0000FD10       Check_for_file
- 0001:0000FD80       FileLength
- 0001:0000FEE0       CenterWindow
- 0001:0000FFE0       Get_Window_Rects
+ 0001:0000FAB0       Check_For_SndVol32_exe
+ 0001:0000FBC0       Delete_Debug_Unused
+ 0001:0000FC10       Print_Debug_Unused
+ 0001:0000FCA0       Param_Time_Check
+ 0001:0000FD0A       Return_0_
+ 0001:0000FD0C       Return______
+ 0001:0000FD10       Check_File_Exists
+ 0001:0000FD80       Get_File_Size
+ 0001:0000FDE0       Print_Load_BMP_Error
+ 0001:0000FEE0       Center_Game_Window
+ 0001:0000FFE0       Load_Window_Rects
+ 0001:000101F0       Save_Window_Rect_File
+ 0001:000102E0       Is_PBM_Protected
+ 0001:00010390       Load_Initial_Resources
+ 0001:00010EB0       Init_Direct_Input
+ 0001:00010EF0       Direct_Input_Something
+ 0001:00010FC0       Enum_Devices_Callback
+ 0001:000110F0       Read_Controller
+ 0001:00011250       Init_Gamepad?
  0001:000112E0       Update_Keys
- 0001:00011370       Display_FPS
+ 0001:00011370       Display_FPS_Counter
  0001:000113A0       Calculate_FPS
  0001:00011420       WinMain(x,x,x,x)
  0001:0001166A       Switch_412663_case_0
@@ -169,24 +480,38 @@
  0001:0001191A       Switch_412780_case_0_3_4
  0001:00011B92       JumpTable_Switch_412663
  0001:00011BAA       JumpTable_Switch_412780
- 0001:00011CA0       Handle_Inputs?
+ 0001:00011BC0       Windows_Focus_Lost
+ 0001:00011BF0       Windows_Focus_Gained
+ 0001:00011CA0       Window_Procedure
  0001:0001200E       jmp_Return_1_6
  0001:000121B6       jmp_Return_1_4
  0001:000122A6       jmp_Return_1_3
+ 0001:0001234F       Input_Table
  0001:00012570       MessageQueue
+ 0001:000125E0       Direct_Input_Handler?
+ 0001:00012770       Process_PXM_file
+ 0001:000128A0       Process_PXA_file
+ 0001:00012930       Kill_Level_Layout
  0001:00012950       __fptrap
- 0001:00012AF0       Render_Background_Layer?
- 0001:00012C60       Render_Foreground_Layer_And_Star_Block?
- 0001:00012E40       Render_Caret_pbm?
+ 0001:00012960       Get_Room_Size
+ 0001:000129A0       Get_Tile_ID
+ 0001:00012A00       Delete_Tile
+ 0001:00012A20       Decrement_Tile
+ 0001:00012AF0       Draw_Foreground_BG
+ 0001:00012C60       Draw_Foreground_FG
+ 0001:00012E40       Draw_Rushing_Water_Particles
+ 0001:000130F0       Draw_Room_Text_To_Surface
  0001:00013250       TSC_MNA
  0001:000132C5       MNA_Render_Graphics_On_Title_Screen?
+ 0001:00013330       Redraw_Room_Text_To_Surface
+ 0001:00013640       Game_Loop_Map
  0001:00013B20       memset_init_maps
+ 0001:00013B50       Create_Quote?
  0001:000140FA       Play_Quote_Walk_3
  0001:0001412E       Play_Quote_Walk_4
- 0001:00014250       Render_Quote_and_Gun
+ 0001:00014250       Draw_Quote_And_Gun
  0001:00014395       Render_Gun_Left
  0001:000146C0       Physics
- 0001:000146E5       Underwater_Physics
  0001:00015990       Quote_Air
  0001:00015AA0       GetPlayerXY
  0001:00015AC0       Move_Quote
@@ -207,19 +532,22 @@
  0001:000170F7       No_NPC_Tile
  0001:0001769C       jmp_417EC1
  0001:00017E2A       Play_Quote_Hit_Ground_4
+ 0001:00018030       Something_Objects?
  0001:000186F0       EXP_Add
  0001:0001882B       Play_Level_Up_AND_Create_Level_Up_Effect
- 0001:00018890       ResetSelectedWeapon
+ 0001:00018890       Reset_Selected_Weapon_Stats
  0001:000188C0       LevelDownFrom3
  0001:00018910       Take_Damage
  0001:00018951       Add_Invincibility
  0001:00018C60       TSC_LIplus
  0001:00018CB0       TSC_MLplus
- 0001:00018D10       Render_XP_Bar_And_Misc
- 0001:000190B0       Render_Weapon_Icons
- 0001:000191D0       Render_Health_Bar
+ 0001:00018D10       Draw_XP_Bar_And_Misc
+ 0001:000190B0       Draw_HUD_Weapon_Icons
+ 0001:000191D0       Draw_Health_Bar
  0001:00019350       Underwater_Timer
  0001:000197C0       Get_Hell_Time
+ 0001:0001B0B0       Unused_ORG_Thing
+ 0001:0001B1E0       Setup_ORG_Playback_Timer
  0001:0001B230       fptc
  0001:0001B880       ___setargv_0
  0001:0001BB10       Sound_Thingy
@@ -257,6 +585,10 @@
  0001:000248E0       Angle_Calculator
  0001:00024B40       Unknown_Library_1
  0001:00024B80       Unknown_Library_2
+ 0001:00024BC0       Clear_Value_View
+ 0001:00024BF0       Set_Value_View
+ 0001:00025360       Act_Value_View
+ 0001:00025430       Put_Value_View
  0001:00025530       NPC0_Nothing
  0001:000255B0       NPC1_Weapon_Energy
  0001:00025AF0       NPC2_Enemy_Behemoth
@@ -627,12 +959,18 @@
  0001:0006F576       Add_1_ebp_8
  0001:0006F5A9       jmp_470576
  0001:0006F5AB       Return_ebpminus4
+ 0001:00070160       Entity_Tile_Collision_Algorithms
+ 0001:00070B80       NPC_Death?
+ 0001:00070D50       Entity_Bullet_Collision
  0001:00071FF0       Boss0_NoSpecialBoss
+ 0001:00072080       Tile_Collision_Algorithm_For_Larger_Entities
  0001:00073400       Boss_4_Core
  0001:000743D0       Boss_7_Undead_Core
  0001:000762F0       Boss_9_Ballos_Ball
  0001:00078030       Boss_2_Balfrog
+ 0001:000798A0       Boss_5_Ironhead
  0001:0007A450       __crt_debugger_hook_2
+ 0001:0007A540       Boss_HP_Bar_Render?
  0001:0007A6F0       Boss_1_Omega
  0001:0007B820       Boss_8_Heavy_Press
  0001:0007C170       Boss_6_Dragon_Sisters
@@ -2440,6 +2778,7 @@
  0003:000091E8       Ptr_Songs
  0003:00009548       ROM_Ptr_NPC_Code
  0003:00009AEC       ROM_Ptr_Boss_Code
+ 0003:00009B20       Prevent_Crash_Report_Failure
  0003:00009B64       Offset__exit
  0003:00009F68       lpCriticalSection
  0003:0000A748       aPst
@@ -2522,8 +2861,11 @@
  0003:0000E514       Rect_Clear
  0003:0000E528       DDBLTFX_Clear
  0003:0000EB28       Mask_Color
- 0003:0000F190       OccasionalFlash
+ 0003:0000EB30       Fade_Status
+ 0003:0000F190       Occasional_Flash
  0003:0000F1C4       FlashColor
+ 0003:0000F1C8       Related_To_Camera
+ 0003:0000F1CC       Related_To_Camera_2
  0003:0000F1DC       SoftQuakeDuration
  0003:0000F1E0       HardQuakeDuration
  0003:0000F1E4       CursorPosition
@@ -2533,6 +2875,7 @@
  0003:0000F210       Key_Held
  0003:0000F214       Key_Pressed
  0003:0000F218       LastKeyHeld
+ 0003:0000F220       FullExePath_data
  0003:0000F328       FullExePath
  0003:0000F44C       AppInstance
  0003:0000F458       AppWinHandle
