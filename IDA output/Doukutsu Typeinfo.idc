@@ -22,12 +22,41 @@ static main(void)
 	HighVoids(0x7FFE1000);
 }
 
+static Enums_0(id) {
+
+	id = AddEnum(-1,"_MEDIA_TYPE",0x1100000);
+	AddConstEx(id,"F5_1Pt2_512",	0X1,	-1);
+	AddConstEx(id,"F3_1Pt44_512",	0X2,	-1);
+	AddConstEx(id,"F3_2Pt88_512",	0X3,	-1);
+	AddConstEx(id,"F3_20Pt8_512",	0X4,	-1);
+	AddConstEx(id,"F3_720_512",	0X5,	-1);
+	AddConstEx(id,"F5_360_512",	0X6,	-1);
+	AddConstEx(id,"F5_320_512",	0X7,	-1);
+	AddConstEx(id,"F5_320_1024",	0X8,	-1);
+	AddConstEx(id,"F5_180_512",	0X9,	-1);
+	AddConstEx(id,"F5_160_512",	0XA,	-1);
+	AddConstEx(id,"RemovableMedia",	0XB,	-1);
+	AddConstEx(id,"FixedMedia",	0XC,	-1);
+	AddConstEx(id,"F3_120M_512",	0XD,	-1);
+	AddConstEx(id,"F3_640_512",	0XE,	-1);
+	AddConstEx(id,"F5_640_512",	0XF,	-1);
+	AddConstEx(id,"F5_720_512",	0X10,	-1);
+	AddConstEx(id,"F3_1Pt2_512",	0X11,	-1);
+	AddConstEx(id,"F3_1Pt23_1024",	0X12,	-1);
+	AddConstEx(id,"F5_1Pt23_1024",	0X13,	-1);
+	AddConstEx(id,"F3_128Mb_512",	0X14,	-1);
+	AddConstEx(id,"F3_230Mb_512",	0X15,	-1);
+	AddConstEx(id,"F8_256_128",	0X16,	-1);
+	return id;
+}
+
 //------------------------------------------------------------------------
 // Information about enum types
 
 static Enums(void) {
         auto id;
         BeginTypeUpdating(UTP_ENUM);
+	id = Enums_0(id);
         EndTypeUpdating(UTP_ENUM);
 }
 
@@ -157,15 +186,15 @@ static ApplyStrucTInfos_0(void) {
 	SetType(GetMemberId(id, 0x8), "struct _EH3_EXCEPTION_REGISTRATION");
 	id = GetStrucIdByName("_msEH");
 	id = GetStrucIdByName("struct_0");
-	id = GetStrucIdByName("_SCOPETABLE_ENTRY");
-	SetType(GetMemberId(id, 0x0), "int");
-	SetType(GetMemberId(id, 0x4), "void *");
-	SetType(GetMemberId(id, 0x8), "void *");
 	id = GetStrucIdByName("_EH3_EXCEPTION_REGISTRATION");
 	SetType(GetMemberId(id, 0x0), "struct _EH3_EXCEPTION_REGISTRATION *");
 	SetType(GetMemberId(id, 0x4), "PVOID");
 	SetType(GetMemberId(id, 0x8), "PSCOPETABLE_ENTRY");
 	SetType(GetMemberId(id, 0xC), "DWORD");
+	id = GetStrucIdByName("_SCOPETABLE_ENTRY");
+	SetType(GetMemberId(id, 0x0), "int");
+	SetType(GetMemberId(id, 0x4), "void *");
+	SetType(GetMemberId(id, 0x8), "void *");
 	return id;
 }
 
@@ -201,8 +230,8 @@ static Structures_0(id) {
 	id = AddStrucEx(-1,"CPPEH_RECORD",0);
 	id = AddStrucEx(-1,"_msEH",0);
 	id = AddStrucEx(-1,"struct_0",0);
-	id = AddStrucEx(-1,"_SCOPETABLE_ENTRY",0);
 	id = AddStrucEx(-1,"_EH3_EXCEPTION_REGISTRATION",0);
+	id = AddStrucEx(-1,"_SCOPETABLE_ENTRY",0);
 	
 	id = GetStrucIdByName("_SYSTEM_INFO::$41710344DA04EC56A327D4EA11DEF6D2::$AA04DEB0C6383F89F13D312A174572A9");
 	mid = AddStrucMember(id,"wProcessorArchitecture",	0,	0x10000400,	-1,	2);

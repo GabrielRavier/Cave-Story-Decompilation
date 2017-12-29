@@ -14,10 +14,10 @@
 
 #define __thiscall __cdecl // Test compile in C mode
 
-void *Clr_Weaps();
-void *Clr_Inv();
-signed int __cdecl TSC_AMplus(int Weapon_To_Give, int Weapon_Ammo);
-signed int __cdecl TSC_AMminus(int a1);
+void *Clr_Weaps(void);
+void *Clr_Inv(void);
+int __cdecl TSC_AMplus(int Weapon_To_Give, int Weapon_Ammo); // idb
+int __cdecl TSC_AMminus(int Weapon_To_Lose); // idb
 signed int __cdecl TSC_TAM(int a1, int a2, int a3);
 signed int __cdecl TSC_ITplus(int a1);
 signed int __cdecl TSC_ITminus(int a1);
@@ -102,8 +102,8 @@ int __cdecl Draw_All_Effect_Obj(signed int a1, signed int a2);
 int __cdecl Create_Animated_Effect(int X_Position, int Y_Position, int Effect_ID, int Effect_Mode); // idb
 int __cdecl Load_Config_dat(char *str1); // idb
 void *__cdecl Set_Default_Config_dat(void *ptr);
-bool __stdcall Version_Button(HWND hDlg, UINT a2, WPARAM a3, LPARAM a4);
-bool __stdcall Mute_Button(HWND hDlg, UINT a2, WPARAM a3, LPARAM a4);
+bool __stdcall Version_Button(HWND Game_Window_Handle, UINT a2, WPARAM a3, LPARAM a4);
+bool __stdcall Mute_Button(HWND Game_Window_Handle, UINT a2, WPARAM a3, LPARAM a4);
 bool __stdcall Debug_Save_Button(HWND hDlg, UINT a2, WPARAM a3, LPARAM a4);
 bool __stdcall Quit_Button(HWND hDlg, UINT a2, WPARAM a3, LPARAM lpString);
 int __cdecl Change_Screen_Offsets(int New_Screen_Offset_Y, int New_Screen_Offset_X); // idb
@@ -119,7 +119,7 @@ signed int __cdecl Create_Blank_Surface(int a1, int a2, signed int a3, int a4);
 int __cdecl Capture_Screen_To_Surface(int DstRect, int X_Position);
 int __cdecl Draw_Sprite_With_Transparency(int Dst_Rects, int X_Position, int Y_Position, int Src_Rects, int GraphicsID); // idb
 int __cdecl Draw_Sprite_No_Tranparency(int Dst_Rects, int X_Position, int Y_Position, int Src_Rects, int); // idb
-int __cdecl Draw_Sprite_Onto_Surface(int a1, int a2, int a3, int a4, int a5);
+int __cdecl Draw_Sprite_Onto_Surface(LONG a1, LONG a2, int a3, int a4, int a5);
 int __cdecl Make_Native_Color(COLORREF color); // idb
 int __cdecl Draw_Color_Fill(int Ptr_Img_Rects, int Mask_Color); // idb
 int __cdecl Draw_Color_Fill_Onto_Surface(int a1, int a2, int a3);
@@ -228,7 +228,7 @@ int __cdecl Draw_Room_Text_To_Surface(char *); // idb
 int __cdecl TSC_MNA(int a1);
 void sub_414310();
 int Redraw_Room_Text_To_Surface();
-void __cdecl sub_4143C0(signed int a1);
+void __cdecl sub_4143C0(LONG a1);
 signed int Game_Loop_Map();
 bool sub_414B00();
 void *memset_init_maps();
@@ -312,29 +312,29 @@ int __thiscall sub_41BAD0(_BYTE *this, LPCSTR lpName);
 bool sub_41C180();
 int __cdecl Setup_ORG_Playback_Timer(UINT uDelay); // idb
 int __stdcall fptc(UINT uTimerID, UINT uMsg, DWORD dwUser, DWORD dw1, DWORD dw2);
-signed int sub_41C250();
+signed int Stop_Previous_Org_Song();
 int __thiscall sub_41C2B0(_WORD *this);
 int __thiscall sub_41C630(_DWORD *this, int a2);
 signed int sub_41C6C0();
-int __cdecl sub_41C6F0(LPCSTR lpName); // idb
-int __cdecl sub_41C730(int a1);
-int sub_41C770();
-int sub_41C790();
-signed int __cdecl sub_41C7C0(signed int a1);
+int __cdecl Load_Org_Music(LPCSTR lpName); // idb
+int __cdecl Set_Org_Music_Position(int a1);
+int Get_Org_Music_Position();
+int Start_Org_Playback();
+signed int __cdecl Set_Org_Volume(signed int a1);
 void sub_41C7F0();
-// int __setargv_0(void); weak
+// int Fade_Music(void); weak
 int sub_41C890();
 void sub_41C8F0();
 signed int __cdecl Sound_Thingy(int a1, int a2);
 bool Check_Profile_DAT(void);
-signed int __cdecl sub_41D040(int a1);
+signed int __cdecl Save_Profile(int a1);
 signed int __cdecl sub_41D260(int a1);
 int __cdecl sub_41D550(HWND hWnd); // idb
 void *sub_41D610();
 signed int __cdecl sub_41D630(int a1, int a2);
 int sub_41D740();
-int sub_41D840();
-signed int __cdecl sub_41DA00(_DWORD *a1);
+int Draw_Teleporter_Menu();
+signed int __cdecl Game_Loop_Stage_Select(_DWORD *a1);
 int __cdecl Snake(int Level); // idb
 int __cdecl PolarStar(int Level); // idb
 int __cdecl Fireball(int); // idb
@@ -347,33 +347,33 @@ int __cdecl Nemesis(int Bullet_Level);
 int sub_41F9E0();
 int __cdecl Spur(int a1);
 char sub_41FE70();
-signed int __cdecl sub_4200C0(int a1);
-int sub_4201A0();
+signed int __cdecl Init_Direct_Sound(int a1);
+int Kill_Direct_Sound_();
 int __cdecl Play_Sound_Effect(int SoundID, int Channel); // idb
 int __cdecl sub_420720(int a1, int a2);
 size_t __cdecl Sound_Loader(int Ptr_Sound, int Channels, int SoundID); // idb
-signed int __cdecl sub_420BE0(int a1, int Event, int a3, int a4);
+signed int __cdecl Load_Room(int a1, int Event, int a3, int a4);
 int __cdecl Tsc_CMU(int Music_To_Play); // idb
 int Tsc_RMU();
 int sub_420FA0();
 int sub_421040();
-int __cdecl sub_4213B0(signed int a1, signed int a2);
-bool sub_4214E0();
+int __cdecl Draw_Whimsical_Star(signed int a1, signed int a2);
+bool Initiate_TSC_Buffer_();
 void *sub_421570();
-_BYTE *__cdecl sub_4215C0(int a1, signed int a2);
-int __cdecl sub_421660(char *); // idb
-int __cdecl sub_421750(char *); // idb
+_BYTE *__cdecl Decode_TSC(int a1, signed int a2);
+int __cdecl Load_Special_TSC(char *); // idb
+int __cdecl Process_TSC_File(char *); // idb
 // int __cdecl _fputchar(int); idb
 int __cdecl TSC_Dec_to_Hex(int num); // idb
 signed int __cdecl Call_TSC_Event(int Event); // idb
 signed int __cdecl sub_421AF0(int a1);
 unsigned int sub_421C50();
 void *sub_421C80();
-void *__cdecl sub_421D10(int a1);
+void *__cdecl Print_NUM(int a1);
 int sub_421E90();
-int sub_421F10();
+int Draw_Text_Box();
 int Tsc_Parser(void); // idb
-int sub_425790();
+int Draw_Text_To_Text_Box_Surfaces();
 void sub_4257F0();
 int __cdecl SIN_function(unsigned __int8 a1);
 int __cdecl COS_function(char a1);
@@ -747,25 +747,25 @@ int __cdecl NPC357(int a1);
 int __cdecl NPC358(int a1);
 int __cdecl NPC359(int a1);
 signed int __cdecl NPC360_Thank_You(int a1);
-void *sub_46EB30();
-signed int __cdecl sub_46EB50(int a1);
-int __cdecl sub_46EE50(int a1);
+void *Kill_NPC_RAM();
+signed int __cdecl Process_PXE_File(int a1);
+int __cdecl Load_NPC_Table_Values_To_Object(int a1);
 int __cdecl NPC_Create(int NPC_ID, int X_Position, int Y_Position, int X_Velocity, int Y_Velocity, int, int, int); // idb
-int __cdecl sub_46F150(int X_Position, int Y_Position, int maximum, int a4);
+int __cdecl Create_Dust_Clouds(int X_Position, int Y_Position, int maximum, int a4);
 int __cdecl sub_46F200(int X_Position, int Y_Position, int maximum, int a4);
 int __cdecl Spawn_Exp(int X_Position, int Y_Position, signed int XP_Amount); // idb
 signed int __cdecl Spawn_Missiles(int a1, int a2, int a3);
 signed int __cdecl Spawn_HP(int a1, int a2, int a3);
 int __cdecl sub_46F760(void *); // idb
-void __cdecl sub_46F810(signed int a1, signed int a2);
-int sub_46FA00();
-int __cdecl sub_46FAB0(int a1, int a2, int a3);
-int __cdecl sub_46FD10(int a1, int a2, int a3);
+void __cdecl Draw_NPCs(signed int a1, signed int a2);
+int Update_NPCs();
+int __cdecl Spawn_NPC(int a1, int a2, int a3);
+int __cdecl Spawn_NPC_2(int a1, int a2, int a3);
 int __cdecl sub_46FF90(int a1, int a2, int a3);
 int __cdecl sub_470060(int a1, int a2, int a3, int a4);
 int __cdecl sub_470150(int a1);
 int __cdecl sub_470250(int a1);
-int __cdecl sub_4702D0(int a1, int a2);
+int __cdecl Kill_Objects(int a1, int a2);
 signed int __cdecl sub_470490(int a1);
 bool __cdecl sub_4704F0(int a1);
 int __cdecl sub_4705C0(int a1, int a2, int a3);
@@ -778,17 +778,17 @@ int __cdecl sub_470D80(int a1, int a2, int a3);
 int __cdecl sub_470E90(int a1, int a2, int a3);
 int __cdecl sub_470FA0(int a1, int a2, int a3);
 int __cdecl sub_4710B0(int a1, int a2, int a3);
-void Entity_Tile_Collision_Algorithms();
+void Do_NPC_Level_Collision();
 void *__cdecl NPC_Death_(void *Is_NPC_Alive, int a2);
 int Entity_Bullet_Collision();
-int __cdecl sub_472400(LPCSTR lpFileName); // idb
+int __cdecl Load_NPC_Table(LPCSTR lpFileName); // idb
 void sub_472710();
-int __cdecl sub_472740(int a1);
-void __cdecl sub_472770(signed int a1, signed int a2);
-int __cdecl sub_472940(int); // idb
+int __cdecl Set_Room_Boss_ID(int a1);
+void __cdecl Draw_Boss_(signed int a1, signed int a2);
+int __cdecl Set_Boss_Script_State(int); // idb
 int sub_472950();
 // int __cdecl Boss0_NoSpecialBoss(_DWORD); weak
-int sub_473000();
+int Update_Boss();
 int Tile_Collision_Algorithm_For_Larger_Entities();
 int __cdecl sub_4739B0(int a1);
 int __cdecl sub_473BD0(int a1);
@@ -813,7 +813,7 @@ char *Boss_5_Ironhead();
 // int _crt_debugger_hook_2(void); weak
 signed int __cdecl sub_47B460(int a1);
 signed int sub_47B500();
-LONG Boss_HP_Bar_Render_();
+LONG Draw_Boss_Health();
 int Boss_1_Omega();
 int sub_47C380();
 int sub_47C4E0();
@@ -823,11 +823,11 @@ int Boss_6_Dragon_Sisters();
 int __cdecl sub_47DAA0(int a1);
 int __cdecl sub_47DF10(int a1);
 void *Boss_3_Monster_X();
-int __cdecl sub_47F710(int a1);
-int __cdecl sub_480090(int a1);
-int __cdecl sub_4802A0(int a1);
-int __cdecl sub_480550(int a1);
-int __cdecl sub_4808C0(int a1);
+int __cdecl Spawn_Part_Of_Monster_X_3(int a1);
+int __cdecl Create_Fish_Missiles(int a1);
+int __cdecl Spawn_Part_Of_Monster_X(int a1);
+int __cdecl Create_Enemy_Projectiles(int a1);
+int __cdecl Spawn_Part_Of_Monster_X_2(int a1);
 // HRESULT __stdcall DirectDrawCreate(GUID *lpGUID, LPDIRECTDRAW *lplpDD, IUnknown *pUnkOuter); idb
 // HRESULT __stdcall DirectInputCreateA(HINSTANCE hinst, DWORD dwVersion, LPDIRECTINPUTA *ppDI, LPUNKNOWN punkOuter); idb
 // HRESULT __stdcall DirectSoundCreate(LPGUID, LPDIRECTSOUND *, LPUNKNOWN); idb
@@ -835,7 +835,7 @@ int __cdecl sub_4808C0(int a1);
 signed int report_failure_Return_1();
 // int __cdecl fclose(FILE *stream); idb
 // size_t __cdecl fread(void *ptr, size_t size, size_t count, FILE *stream); idb
-void __cdecl sub_480F55(FILE *stream, size_t sizea, size_t counta, FILE *file);
+void __cdecl fread_wrapper(void *ptr, size_t size, size_t count, FILE *file);
 // FILE *__cdecl fopen(const char *filename, const char *mode); idb
 // int sprintf(char *str, const char *format, ...); idb
 // int __cdecl strcmp(const char *str1, const char *str2); idb
@@ -851,14 +851,12 @@ void __cdecl sub_480F55(FILE *stream, size_t sizea, size_t counta, FILE *file);
 // int sscanf(const char *str, const char *format, ...); idb
 // int fprintf(FILE *stream, const char *format, ...); idb
 // size_t __cdecl fwrite(const void *ptr, size_t size, size_t count, FILE *stream); idb
-void __cdecl sub_481981(FILE *stream, size_t sizea, size_t counta, FILE *file);
+void __cdecl fwrite_wrapper(void *ptr, size_t size, size_t count, FILE *file);
 // int __cdecl fseek(FILE *stream, __int32 offset, int origin); idb
 // double __cdecl sin(double angle_rad); idb
 // double __cdecl cos(double angle_rad); idb
-// int __cdecl _amsg_exit(DWORD NumberOfBytesWritten); idb
-// int __cdecl fast_error_exit(DWORD NumberOfBytesWritten); idb
-// int Startup();
 signed int __security_error_handler_return_1();
+int __cdecl __security_error_handler(int, int); // idb
 // _DWORD __cdecl _SEH_prolog(_DWORD, _DWORD); weak
 // _DWORD __cdecl flsall(_DWORD); weak
 // int __usercall flsall_sub_482475@<eax>(int a1@<esi>);
@@ -867,21 +865,11 @@ int Return_flsall_1();
 // int __cdecl _lock_file(FILE *file); idb
 // _DWORD __cdecl _unlock_file(_DWORD); weak
 // _DWORD __cdecl _unlock_file2(_DWORD, _DWORD); weak
-// _DWORD __cdecl _heap_init(_DWORD); weak
 // _DWORD __cdecl _unlock(_DWORD); weak
 // int __usercall freefls@<eax>(int a1@<ebp>);
 // int freefls(void); weak
-// int _mtinit(void); weak
-// _DWORD __cdecl _cinit(_DWORD); weak
-// void __cdecl exit(int status); idb
-// void _cexit(void); idb
-// int _wincmdln(void); weak
-// int _setenvp(void); weak
-// int _setargv(void); weak
-// _DWORD __thiscall __crtGetEnvironmentStringsA(LPSTR MultiByte); weak
-// int _ioinit(void); weak
 void sub_486CC0();
-void sub_486D04(void); // idb
+void func(void); // idb
 // _DWORD __cdecl _unlock_fhandle();
 int _alloc_osfhnd_sub_48763C();
 int commit_call___unlock_fhandle();
@@ -931,9 +919,6 @@ int Return_0();
 // HMODULE __stdcall GetModuleHandleA(LPCSTR lpModuleName); idb
 // void __stdcall Sleep(DWORD dwMilliseconds); idb
 // DWORD GetTickCount(void); idb
-// void __stdcall GetStartupInfoA(LPSTARTUPINFOA lpStartupInfo); idb
-// LPSTR GetCommandLineA(void); idb
-// BOOL __stdcall GetVersionExA(LPOSVERSIONINFOA lpVersionInformation); idb
 // void __stdcall DragFinish(HDROP); idb
 // UINT __stdcall DragQueryFileA(HDROP, UINT, LPSTR, UINT); idb
 // HINSTANCE __stdcall ShellExecuteA(HWND hwnd, LPCSTR lpOperation, LPCSTR lpFile, LPCSTR lpParameters, LPCSTR lpDirectory, INT nShowCmd); idb
@@ -980,6 +965,7 @@ int Return_0();
 //-------------------------------------------------------------------------
 // Data declarations
 
+char byte_4107EC = 't'; // weak
 int dword_480D10[6] = { 24, 16, 1, 80, 44, 4721232 }; // weak
 _UNKNOWN loc_480F97; // weak
 _UNKNOWN loc_4819C3; // weak
@@ -1130,7 +1116,7 @@ void aOrg02[]; // idb
 UINT uPeriod = 13u; // idb
 int dword_4937A4 = 100; // weak
 char *off_4937A8[2] = { "Profile.dat", "Do041220" }; // weak
-void *off_4937AC = &aDo041220; // idb
+void *off_4937AC = &Profile_dat_Check; // idb
 char ROM_MapHeaders_Tileset_Name[32] = "0"; // weak
 char ROM_MapHeaders_Map_File_Name[32] = "0"; // weak
 int ROM_MapHeaders_BGType[] = { 4 }; // weak
@@ -1210,7 +1196,7 @@ int (*ROM_Ptr_Boss_Code[10])() =
   &Boss_8_Heavy_Press,
   &Boss_9_Ballos_Ball
 }; // weak
-int Prevent_Crash_Report_Failure = 3141592654; // weak
+int Crash_Report_Failure_Check = 3141592654; // weak
 _UNKNOWN unk_4994F0; // weak
 _UNKNOWN unk_499508; // weak
 int dword_499B3C[] = { 0 }; // weak
@@ -1226,8 +1212,8 @@ int SelectedWeaponID = 0; // weak
 int SelectedItemID = 0; // weak
 int MenuRectFlash = 0; // weak
 int dword_499C74 = 0; // weak
-int BackgroundSizeX = 0; // weak
-int BackgroundSizeY = 0; // weak
+int Background_Tile_Width = 0; // weak
+int Background_Tile_Height = 0; // weak
 int BackgroundMode = 0; // weak
 int dword_499C8C = 0; // weak
 int GlobalWaterDepth = 0; // weak
@@ -1272,65 +1258,55 @@ int dword_49CDDC[]; // weak
 int dword_49CDE0[]; // weak
 int dword_49CDE4[]; // weak
 int dword_49CDE8[]; // weak
-HGDIOBJ Handle_Font_Object[]; // idb
-int Fullscreen_Width; // weak
-int Fullscreen_Height; // weak
+HGDIOBJ Font_Handle[]; // idb
+int Fullscreen_Surface_Height; // weak
+int Window_Surface_Width; // weak
 LPDIRECTDRAW Direct_Draw_Obj; // idb
-LPDIRECTDRAW DD7_SurfaceA; // idb
-LPDIRECTDRAW DD7_SurfaceB; // idb
+LPDIRECTDRAW DD7_Final_Screen_Surface; // idb
+LPDIRECTDRAW DD7_Screen_Surface; // idb
 LPDIRECTDRAW Image_Res_Surface[]; // idb
-tagRECT Window_Rect; // idb
-int Last_Tick_Count; // weak
+tagRECT Final_Screen_Dist_Rects; // idb
+int Previous_Tick_Count; // weak
 int Current_Tick_Count; // weak
 int RECT_ScreenCopy; // weak
 int dword_49D444; // weak
 int dword_49D448; // weak
 int dword_49D44C; // weak
 void DDBLTFX_ScreenCopy; // idb
-tagRECT Blit_Rect_4B4; // idb
-tagRECT Blit_Rect_4C4; // idb
-tagRECT Blit_Rect_4D4; // idb
-tagRECT Blit_Rect_4E4; // idb
-int dword_49D4F4; // weak
-int dword_49D4F8; // weak
-int dword_49D4FC; // weak
-int dword_49D500; // weak
-int dword_49D504; // weak
-int dword_49D508; // weak
-int dword_49D50C; // weak
-int dword_49D510; // weak
-int Rect_Clear; // weak
-int dword_49D518; // weak
-int dword_49D51C; // weak
-int dword_49D520; // weak
-void DDBLTFX_Clear[]; // idb
-char asc_49D578[20]; // weak
-int dword_49D58C; // weak
-int dword_49D590; // weak
-int dword_49D594; // weak
-int dword_49D598; // weak
-void asc_49D5A0[]; // idb
-char asc_49D5F0[24]; // weak
+tagRECT Final_Dst_Rect_1; // idb
+tagRECT Final_Src_Rect_1; // idb
+tagRECT Final_Dst_Rect_2; // idb
+tagRECT Final_Src_Rect_2; // idb
+tagRECT Final_Dst_Rect_3; // idb
+tagRECT Final_Src_Rect_3; // idb
+tagRECT Final_Dest_Rect_4; // idb
+void Draw_Colour_Fill_DDBLTFX[]; // idb
+char Draw_Colour_Fill_DDBLTFX_dxFillColor[20]; // weak
+tagRECT Final_Dst_Rect_5; // idb
+void Draw_Colour_Fill_Onto_Surface_DDBLTFX[]; // idb
+char Draw_Colour_Fill_Onto_Surface_DDBLTFX_dxFillColor[24]; // weak
 int dword_49D608; // weak
-int dword_49D60C; // weak
-size_t size; // idb
-void *dword_49D614; // idb
+int Credits_Picture_X; // weak
+size_t TSC_Length; // idb
+void *TSC_Buffer; // idb
 int dword_49D618; // weak
 int dword_49D61C; // weak
 int dword_49D620; // weak
 int dword_49D624; // idb
-void dword_49D628; // idb
+void Text_Object_Array_; // idb
 int dword_49D62C[]; // weak
 int dword_49D630[]; // weak
 int dword_49D634[]; // weak
 char asc_49D638[1264]; // weak
 int Mask_Color; // idb
 void Fade_Status; // idb
-int dword_49DB34; // weak
-int dword_49DB38; // weak
-char byte_49DB3C[]; // weak
-char byte_49DC68[]; // weak
-char byte_49DC69[1311]; // weak
+int Fade_Complete; // weak
+int Fade_Counter; // weak
+char Fade_Buffer_Int[]; // weak
+char Fade_Buffer_Bool[]; // weak
+char Fade_Type; // weak
+void byte_49DD98; // idb
+void Event_Flags; // idb
 int dword_49E188; // weak
 int dword_49E18C; // weak
 int Occasional_Flash; // weak
@@ -1338,20 +1314,20 @@ int dword_49E194; // weak
 int dword_49E198; // weak
 int dword_49E19C; // weak
 int dword_49E1A0; // weak
-int dword_49E1A4; // weak
+int Draw_Sprite_Mask_6; // weak
 int dword_49E1A8; // weak
 int dword_49E1AC; // weak
 int dword_49E1B0; // weak
-int dword_49E1B4; // weak
+int Draw_Sprite_Mask_7; // weak
 int dword_49E1B8; // weak
 int dword_49E1BC; // weak
 int dword_49E1C0; // weak
 int FlashColor; // idb
-int Related_To_Camera; // weak
-int Related_To_Camera_2; // weak
-int dword_49E1D0; // weak
-int dword_49E1D4; // weak
-int dword_49E1D8; // weak
+int Camera_X_Position_2; // weak
+int Camera_Y_Position_2; // weak
+int Camera_X_Destination; // weak
+int Camera_Y_Destination; // weak
+int Camera_Move_Ticks; // weak
 int SoftQuakeDuration; // weak
 int HardQuakeDuration; // weak
 int CursorPosition; // weak
@@ -1368,30 +1344,30 @@ int dword_49E20C; // weak
 int Key_Held; // weak
 int Key_Pressed; // weak
 int LastKeyHeld; // weak
-char FullExePath_data[]; // idb
+char Data_Folder_Full_Path[]; // idb
 char FullExePath[]; // idb
-int dword_49E42C[]; // weak
+int Controller_Button_IDs[]; // weak
 HINSTANCE AppInstance; // idb
-int dword_49E450; // weak
-int dword_49E454; // weak
+int Window_Width; // weak
+int Window_Height; // weak
 HWND AppWinHandle; // idb
-int dword_49E45C; // weak
-int dword_49E460; // weak
-int ShowFPS; // weak
+int Gamepad_Enabled; // weak
+int Is_Fullscreen; // weak
+int FPS_Counter_Enabled; // weak
 int CanAcceptInput; // weak
 int Timer1000Time; // weak
 int Timer1000Elapsed; // weak
 int Timer1000Ticks; // weak
 HANDLE hMutex; // idb
 HANDLE hObject; // idb
-void *dword_49E480; // idb
+void *Level_Layout_Buffer; // idb
 void byte_49E484; // idb
-void word_49E586; // idb
-void word_49E588; // idb
+void Level_Width; // idb
+void Level_Height; // idb
 char byte_49E58C; // weak
 int dword_49E590; // weak
 int dword_49E594; // weak
-char Ptr_String[]; // idb
+char Room_Name[]; // idb
 void byte_49E5B8; // idb
 void Player_Flags; // idb
 int Tile_On_Which_Quote_Is; // weak
@@ -1449,7 +1425,7 @@ char byte_49E6F8; // weak
 void destination; // idb
 int Song_Current_Beat; // weak
 int dword_4A4B08[]; // weak
-int dword_4A4B48[]; // weak
+int Direct_Sound_Secondary_Buffer_Array_[]; // weak
 int dword_4A4B4C[]; // weak
 int dword_4A4D48[]; // weak
 int dword_4A4D4C; // weak
@@ -1465,8 +1441,8 @@ UINT TimerHandle; // idb
 int IsTimerActive; // weak
 int dword_4A4DB0[]; // weak
 int dword_4A4DD0[]; // weak
-int dword_4A4E10; // weak
-__int16 word_4A4E18; // weak
+int Music_Fade_Flag_; // weak
+__int16 Music_Object_; // weak
 char byte_4A4F00[]; // weak
 void dword_4A5500; // idb
 int dword_4A5504[]; // weak
@@ -1482,17 +1458,17 @@ int dword_4A5560; // weak
 int dword_4A5564; // weak
 int SoundBufferArray[]; // weak
 int dword_4A57C0[]; // weak
-LPDIRECTSOUND DirectSoundObj; // idb
-int dword_4A57EC; // weak
-int CurrentMapID; // weak
-int CurrentSongID; // weak
-int PreviousSongBeat; // weak
-int PreviousSongID; // weak
-void WhimsicalStar; // idb
-int WhimsicalStar_X_Position[]; // weak
-int WhimsicalStar_Y_Position[]; // weak
-int WhimsicalStar_X_Velocity[]; // weak
-int WhimsicalStar_Y_Velocity[]; // weak
+LPDIRECTSOUND Direct_Sound_Object; // idb
+int Direct_Sound_Primary_Buffer; // weak
+int Current_Map_ID; // weak
+int Current_Song_ID; // weak
+int Previous_Song_Beat; // weak
+int Previous_Song_ID; // weak
+void Whimsical_Star; // idb
+int Whimsical_Star_X_Position[]; // weak
+int Whimsical_Star_Y_Position[]; // weak
+int Whimsical_Star_X_Velocity[]; // weak
+int Whimsical_Star_Y_Velocity[]; // weak
 int dword_4A5850; // weak
 int dword_4A5854; // weak
 int dword_4A5858; // weak
@@ -1520,7 +1496,7 @@ int FaceID; // weak
 int dword_4A5B10; // weak
 int dword_4A5B14; // weak
 int dword_4A5B18; // idb
-int dword_4A5B1C; // weak
+int Draw_Sprite_Mask_2; // weak
 int dword_4A5B20; // weak
 int dword_4A5B24; // weak
 int dword_4A5B28; // weak
@@ -1823,7 +1799,7 @@ int dword_4BD034; // weak
 
 //----- (00401000) --------------------------------------------------------
 // Clear Weapons
-void *Clr_Weaps()
+void *Clr_Weaps(void)
 {
   WeaponIconXOffset = 32;
   return memset(&WeaponData_ID, 0, 0xA0u);
@@ -1831,16 +1807,16 @@ void *Clr_Weaps()
 
 //----- (00401030) --------------------------------------------------------
 // Clear Inventory
-void *Clr_Inv()
+void *Clr_Inv(void)
 {
   return memset(Quote_Inventory, 0, 0x80u);
 }
 
 //----- (00401050) --------------------------------------------------------
 // TSC Give Weapon [AM+]
-signed int __cdecl TSC_AMplus(int Weapon_To_Give, int Weapon_Ammo)
+int __cdecl TSC_AMplus(int Weapon_To_Give, int Weapon_Ammo)
 {
-  signed int result; // eax@7
+  int result; // eax@7
   signed int i; // [sp+0h] [bp-4h]@1
 
   for ( i = 0; i < 8 && *((_DWORD *)&WeaponData_ID + 5 * i) != Weapon_To_Give && *((_DWORD *)&WeaponData_ID + 5 * i); ++i )
@@ -1870,15 +1846,15 @@ signed int __cdecl TSC_AMplus(int Weapon_To_Give, int Weapon_Ammo)
 
 //----- (00401160) --------------------------------------------------------
 // TSC Lose Weapon [AM-]
-signed int __cdecl TSC_AMminus(int a1)
+int __cdecl TSC_AMminus(int Weapon_To_Lose)
 {
-  signed int result; // eax@6
+  int result; // eax@6
   char *v2; // edx@9
   char *v3; // eax@9
   signed int i; // [sp+0h] [bp-4h]@1
   int j; // [sp+0h] [bp-4h]@7
 
-  for ( i = 0; i < 8 && *((_DWORD *)&WeaponData_ID + 5 * i) != a1; ++i )
+  for ( i = 0; i < 8 && *((_DWORD *)&WeaponData_ID + 5 * i) != Weapon_To_Lose; ++i )
     ;
   if ( i == 32 )
   {
@@ -1983,9 +1959,9 @@ signed int __cdecl TSC_ITminus(int a1)
 int Mng_Inv_Curs()
 {
   int result; // eax@2
-  signed int v1; // [sp+4h] [bp-Ch]@8
-  int v2; // [sp+8h] [bp-8h]@1
-  int v3; // [sp+Ch] [bp-4h]@1
+  signed int v1; // [sp+0h] [bp-Ch]@8
+  int v2; // [sp+4h] [bp-8h]@1
+  int v3; // [sp+8h] [bp-4h]@1
 
   v2 = 0;
   v3 = 0;
@@ -2304,21 +2280,21 @@ signed int Inventory_Game_Loop()
 {
   int v1; // [sp+0h] [bp-128h]@15
   int v2; // [sp+4h] [bp-124h]@8
-  char v3[4]; // [sp+8h] [bp-120h]@1
+  char v3; // [sp+8h] [bp-120h]@1
   int v4; // [sp+110h] [bp-18h]@1
-  int Dst_Rects; // [sp+114h] [bp-14h]@1
+  int Src_Rects; // [sp+114h] [bp-14h]@1
   int v6; // [sp+118h] [bp-10h]@1
   int v7; // [sp+11Ch] [bp-Ch]@1
   int v8; // [sp+120h] [bp-8h]@1
   int i; // [sp+124h] [bp-4h]@1
 
-  v4 = Prevent_Crash_Report_Failure;
-  Dst_Rects = 0;
+  v4 = Crash_Report_Failure_Check;
+  Src_Rects = 0;
   v6 = 0;
   v7 = 320;
   v8 = 240;
-  _fputchar((int)v3);
-  sub_421660("ArmsItem.tsc");
+  _fputchar((int)&v3);
+  Load_Special_TSC("ArmsItem.tsc");
   InventoryLabelPos = 24;
   InventoryViewType = 0;
   SelectedItemID = 0;
@@ -2346,9 +2322,9 @@ signed int Inventory_Game_Loop()
       return 0;
     if ( v1 == 2 )
       return 2;
-    Draw_Sprite_No_Tranparency((int)&Dst_Rects, 0, 0, (int)&Dst_Rects, 10);
+    Draw_Sprite_No_Tranparency((int)&Src_Rects, 0, 0, (int)&Src_Rects, 10);
     Draw_Inventory_Window();
-    sub_421F10();
+    Draw_Text_Box();
     Display_FPS_Counter();
     if ( !InventoryViewType )
       break;
@@ -2365,14 +2341,14 @@ LABEL_27:
     goto LABEL_27;
   sub_421C50();
 LABEL_30:
-  sub_421750(v3);
+  Process_TSC_File(&v3);
   WeaponIconXOffset = 32;
   return 1;
 }
 // 493620: using guessed type int Key_For_Menu;
 // 493628: using guessed type int Key_For_Jump;
 // 49362C: using guessed type int Key_For_Shoot;
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 // 499BC0: using guessed type int InventoryViewType;
 // 499C68: using guessed type int SelectedWeaponID;
 // 499C6C: using guessed type int SelectedItemID;
@@ -2537,25 +2513,25 @@ signed int __cdecl Load_Background_Sprite(char *source, int a2)
   signed int result; // eax@2
   char str; // [sp+0h] [bp-148h]@1
   int v4; // [sp+108h] [bp-40h]@1
-  __int16 v5; // [sp+10Ch] [bp-3Ch]@3
+  int v5; // [sp+10Ch] [bp-3Ch]@3
   FILE *stream; // [sp+11Ch] [bp-2Ch]@1
-  char v7; // [sp+120h] [bp-28h]@5
+  int v7; // [sp+120h] [bp-28h]@5
   int v8; // [sp+124h] [bp-24h]@5
   int v9; // [sp+128h] [bp-20h]@5
 
-  v4 = Prevent_Crash_Report_Failure;
+  v4 = Crash_Report_Failure_Check;
   dword_499C94 = Make_Native_Color(0x100000u);
-  sprintf(&str, "%s\\%s.pbm", FullExePath_data, source);
+  sprintf(&str, "%s\\%s.pbm", Data_Folder_Full_Path, source);
   stream = fopen(&str, "rb");
   if ( stream )
   {
-    sub_480F55((FILE *)&v5, 0xEu, 1u, stream);
-    if ( v5 == 19778 )
+    fread_wrapper(&v5, 0xEu, 1u, stream);
+    if ( (unsigned __int16)v5 == 19778 )
     {
-      sub_480F55((FILE *)&v7, 0x28u, 1u, stream);
+      fread_wrapper(&v7, 0x28u, 1u, stream);
       fclose(stream);
-      BackgroundSizeX = v8;
-      BackgroundSizeY = v9;
+      Background_Tile_Width = v8;
+      Background_Tile_Height = v9;
       dword_499C74 = 1;
       if ( Load_BMP_From_File_Onto_Existing_Surface(source, 28) )
       {
@@ -2579,10 +2555,10 @@ signed int __cdecl Load_Background_Sprite(char *source, int a2)
   }
   return result;
 }
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 // 499C74: using guessed type int dword_499C74;
-// 499C78: using guessed type int BackgroundSizeX;
-// 499C7C: using guessed type int BackgroundSizeY;
+// 499C78: using guessed type int Background_Tile_Width;
+// 499C7C: using guessed type int Background_Tile_Height;
 // 499C88: using guessed type int BackgroundMode;
 // 499C90: using guessed type int GlobalWaterDepth;
 // 499C94: using guessed type int dword_499C94;
@@ -2628,47 +2604,49 @@ int __cdecl Draw_Background(signed int a1, signed int a2)
 
   Src_Rects = 0;
   v12 = 0;
-  v13 = BackgroundSizeX;
-  v14 = BackgroundSizeY;
+  v13 = Background_Tile_Width;
+  v14 = Background_Tile_Height;
   result = BackgroundMode;
   switch ( BackgroundMode )
   {
     case 0:
-      for ( Y_Position = 0; Y_Position < 240; Y_Position += BackgroundSizeY )
+      for ( Y_Position = 0; Y_Position < 240; Y_Position += Background_Tile_Height )
       {
-        for ( X_Position = 0; X_Position < 320; X_Position += BackgroundSizeX )
+        for ( X_Position = 0; X_Position < 320; X_Position += Background_Tile_Width )
           result = Draw_Sprite_No_Tranparency((int)&FullscreenRect, X_Position, Y_Position, (int)&Src_Rects, 28);
       }
       break;
     case 1:
-      result = a2 / 2 / 512 / BackgroundSizeY;
-      for ( Y_Positiona = -(a2 / 2 / 512 % BackgroundSizeY); Y_Positiona < 240; Y_Positiona += BackgroundSizeY )
+      result = a2 / 2 / 512 / Background_Tile_Height;
+      for ( Y_Positiona = -(a2 / 2 / 512 % Background_Tile_Height); Y_Positiona < 240; Y_Positiona += Background_Tile_Height )
       {
-        for ( X_Positiona = -(a1 / 2 / 512 % BackgroundSizeX); X_Positiona < 320; X_Positiona += BackgroundSizeX )
+        for ( X_Positiona = -(a1 / 2 / 512 % Background_Tile_Width); X_Positiona < 320; X_Positiona += Background_Tile_Width )
           Draw_Sprite_No_Tranparency((int)&FullscreenRect, X_Positiona, Y_Positiona, (int)&Src_Rects, 28);
-        result = BackgroundSizeY + Y_Positiona;
+        result = Background_Tile_Height + Y_Positiona;
       }
       break;
     case 2:
-      result = a2 / 512 / BackgroundSizeY;
-      for ( Y_Positionb = -(a2 / 512 % BackgroundSizeY); Y_Positionb < 240; Y_Positionb += BackgroundSizeY )
+      result = a2 / 512 / Background_Tile_Height;
+      for ( Y_Positionb = -(a2 / 512 % Background_Tile_Height); Y_Positionb < 240; Y_Positionb += Background_Tile_Height )
       {
-        result = a1 / 512 / BackgroundSizeX;
-        for ( X_Positionb = -(a1 / 512 % BackgroundSizeX); X_Positionb < 320; X_Positionb += BackgroundSizeX )
+        result = a1 / 512 / Background_Tile_Width;
+        for ( X_Positionb = -(a1 / 512 % Background_Tile_Width); X_Positionb < 320; X_Positionb += Background_Tile_Width )
         {
           Draw_Sprite_No_Tranparency((int)&FullscreenRect, X_Positionb, Y_Positionb, (int)&Src_Rects, 28);
-          result = BackgroundSizeX + X_Positionb;
+          result = Background_Tile_Width + X_Positionb;
         }
       }
       break;
     case 5:
-      for ( Y_Positionc = -BackgroundSizeY; Y_Positionc < 240; Y_Positionc += BackgroundSizeY )
+      for ( Y_Positionc = -Background_Tile_Height; Y_Positionc < 240; Y_Positionc += Background_Tile_Height )
       {
-        result = dword_499C8C / 512 / BackgroundSizeX;
-        for ( X_Positionc = -(dword_499C8C / 512 % BackgroundSizeX); X_Positionc < 320; X_Positionc += BackgroundSizeX )
+        result = dword_499C8C / 512 / Background_Tile_Width;
+        for ( X_Positionc = -(dword_499C8C / 512 % Background_Tile_Width);
+              X_Positionc < 320;
+              X_Positionc += Background_Tile_Width )
         {
           Draw_Sprite_No_Tranparency((int)&FullscreenRect, X_Positionc, Y_Positionc, (int)&Src_Rects, 28);
-          result = BackgroundSizeX + X_Positionc;
+          result = Background_Tile_Width + X_Positionc;
         }
       }
       break;
@@ -2714,8 +2692,8 @@ int __cdecl Draw_Background(signed int a1, signed int a2)
   return result;
 }
 // 48F91C: using guessed type int FullscreenRect;
-// 499C78: using guessed type int BackgroundSizeX;
-// 499C7C: using guessed type int BackgroundSizeY;
+// 499C78: using guessed type int Background_Tile_Width;
+// 499C7C: using guessed type int Background_Tile_Height;
 // 499C88: using guessed type int BackgroundMode;
 // 499C8C: using guessed type int dword_499C8C;
 
@@ -2969,7 +2947,7 @@ signed int __cdecl Bullet_Tile_Collision_Roof_Slope_1(int a1, int a2, int Bullet
 {
   __int64 v3; // rax@3
   __int64 v4; // rax@6
-  signed int v6; // [sp+4h] [bp-4h]@1
+  signed int v6; // [sp+0h] [bp-4h]@1
 
   v6 = 0;
   if ( *(_DWORD *)(BulletID + 16) < (16 * a1 + 8) << 9 && *(_DWORD *)(BulletID + 16) > (16 * a1 - 8) << 9 )
@@ -2998,7 +2976,7 @@ signed int __cdecl Bullet_Tile_Collision_Roof_Slope_2(int a1, int a2, int Bullet
 {
   __int64 v3; // rax@3
   __int64 v4; // rax@6
-  signed int v6; // [sp+4h] [bp-4h]@1
+  signed int v6; // [sp+0h] [bp-4h]@1
 
   v6 = 0;
   if ( *(_DWORD *)(BulletID + 16) < (16 * a1 + 8) << 9 && *(_DWORD *)(BulletID + 16) > (16 * a1 - 8) << 9 )
@@ -3027,7 +3005,7 @@ signed int __cdecl Bullet_Tile_Collision_Roof_Slope_3(int a1, int a2, int Bullet
 {
   __int64 v3; // rax@3
   __int64 v4; // rax@6
-  signed int v6; // [sp+4h] [bp-4h]@1
+  signed int v6; // [sp+0h] [bp-4h]@1
 
   v6 = 0;
   if ( *(_DWORD *)(BulletID + 16) < (16 * a1 + 8) << 9 && *(_DWORD *)(BulletID + 16) > (16 * a1 - 8) << 9 )
@@ -3056,7 +3034,7 @@ signed int __cdecl Bullet_Tile_Collision_Roof_Slope_4(int a1, int a2, int Bullet
 {
   __int64 v3; // rax@3
   __int64 v4; // rax@6
-  signed int v6; // [sp+4h] [bp-4h]@1
+  signed int v6; // [sp+0h] [bp-4h]@1
 
   v6 = 0;
   if ( *(_DWORD *)(BulletID + 16) < (16 * a1 + 8) << 9 && *(_DWORD *)(BulletID + 16) > (16 * a1 - 8) << 9 )
@@ -3085,7 +3063,7 @@ signed int __cdecl Bullet_Tile_Collision_Floor_Slope_1(int a1, int a2, int Bulle
 {
   __int64 v3; // rax@3
   __int64 v4; // rax@6
-  signed int v6; // [sp+4h] [bp-4h]@1
+  signed int v6; // [sp+0h] [bp-4h]@1
 
   v6 = 0;
   if ( *(_DWORD *)(BulletID + 16) < (16 * a1 + 8) << 9 && *(_DWORD *)(BulletID + 16) - 512 > (16 * a1 - 8) << 9 )
@@ -3114,7 +3092,7 @@ signed int __cdecl Bullet_Tile_Collision_Floor_Slope_2(int a1, int a2, int Bulle
 {
   __int64 v3; // rax@3
   __int64 v4; // rax@6
-  signed int v6; // [sp+4h] [bp-4h]@1
+  signed int v6; // [sp+0h] [bp-4h]@1
 
   v6 = 0;
   if ( *(_DWORD *)(BulletID + 16) < (16 * a1 + 8) << 9 && *(_DWORD *)(BulletID + 16) > (16 * a1 - 8) << 9 )
@@ -3143,7 +3121,7 @@ signed int __cdecl Bullet_Tile_Collision_Floor_Slope_3(int a1, int a2, int Bulle
 {
   __int64 v3; // rax@3
   __int64 v4; // rax@6
-  signed int v6; // [sp+4h] [bp-4h]@1
+  signed int v6; // [sp+0h] [bp-4h]@1
 
   v6 = 0;
   if ( *(_DWORD *)(BulletID + 16) < (16 * a1 + 8) << 9 && *(_DWORD *)(BulletID + 16) > (16 * a1 - 8) << 9 )
@@ -3172,7 +3150,7 @@ signed int __cdecl Bullet_Tile_Collision_Floor_Slope_4(int a1, int a2, int Bulle
 {
   __int64 v3; // rax@3
   __int64 v4; // rax@6
-  signed int v6; // [sp+4h] [bp-4h]@1
+  signed int v6; // [sp+0h] [bp-4h]@1
 
   v6 = 0;
   if ( *(_DWORD *)(BulletID + 16) < (16 * a1 + 8) << 9 && *(_DWORD *)(BulletID + 16) > (16 * a1 - 8) << 9 )
@@ -3222,22 +3200,22 @@ void Bul_Til_Coll_Algo()
   signed int v19; // eax@19
   int v20; // esi@21
   int v21; // eax@21
-  int v22; // [sp+8h] [bp-34h]@5
-  int v23; // [sp+Ch] [bp-30h]@5
-  int v24; // [sp+10h] [bp-2Ch]@5
-  int v25; // [sp+14h] [bp-28h]@5
-  int v26; // [sp+18h] [bp-24h]@5
-  int v27; // [sp+1Ch] [bp-20h]@5
-  int v28; // [sp+20h] [bp-1Ch]@5
-  int v29; // [sp+24h] [bp-18h]@5
-  int j; // [sp+28h] [bp-14h]@6
-  char v31; // [sp+2Ch] [bp-10h]@5
-  char v32; // [sp+2Dh] [bp-Fh]@5
-  char v33; // [sp+2Eh] [bp-Eh]@5
-  char v34; // [sp+2Fh] [bp-Dh]@5
-  int i; // [sp+30h] [bp-Ch]@1
-  int v36; // [sp+34h] [bp-8h]@5
-  int v37; // [sp+38h] [bp-4h]@5
+  int v22; // [sp+4h] [bp-34h]@5
+  int v23; // [sp+8h] [bp-30h]@5
+  int v24; // [sp+Ch] [bp-2Ch]@5
+  int v25; // [sp+10h] [bp-28h]@5
+  int v26; // [sp+14h] [bp-24h]@5
+  int v27; // [sp+18h] [bp-20h]@5
+  int v28; // [sp+1Ch] [bp-1Ch]@5
+  int v29; // [sp+20h] [bp-18h]@5
+  int Loop_Counter; // [sp+24h] [bp-14h]@6
+  char v31[2]; // [sp+28h] [bp-10h]@5
+  char v32; // [sp+29h] [bp-Fh]@5
+  char v33; // [sp+2Ah] [bp-Eh]@5
+  char v34; // [sp+2Bh] [bp-Dh]@5
+  int i; // [sp+2Ch] [bp-Ch]@1
+  int v36; // [sp+30h] [bp-8h]@5
+  int v37; // [sp+34h] [bp-4h]@5
 
   for ( i = 0; i < 64; ++i )
   {
@@ -3255,18 +3233,18 @@ void Bul_Til_Coll_Algo()
       v27 = 0;
       v28 = 1;
       v29 = 1;
-      v31 = Get_Tile_ID(v36, v37);
+      v31[0] = Get_Tile_ID(v36, v37);
       v32 = Get_Tile_ID(v36 + 1, v37);
       v33 = Get_Tile_ID(v36, v37 + 1);
       v34 = Get_Tile_ID(v36 + 1, v37 + 1);
       WeaponObj_Collision[32 * i] = 0;
       if ( !(WeaponObj_Flags[32 * i] & 4) )
       {
-        for ( j = 0; j < 4; ++j )
+        for ( Loop_Counter = 0; Loop_Counter < 4; ++Loop_Counter )
         {
           if ( WeaponObj_In_Use[32 * i] & 0x80 )
           {
-            switch ( *(&v31 + j) )
+            switch ( v31[Loop_Counter] )
             {
               case 0x41:
               case 0x43:
@@ -3274,15 +3252,18 @@ void Bul_Til_Coll_Algo()
               case 0x61:
               case 0x64:
                 v2 = i << 7;
-                v3 = Chk_Starblck_break(*(&v22 + j) + v36, *(&v26 + j) + v37, (int)&WeaponObj_Collision[32 * i]);
+                v3 = Chk_Starblck_break(
+                       *(&v22 + Loop_Counter) + v36,
+                       *(&v26 + Loop_Counter) + v37,
+                       (int)&WeaponObj_Collision[32 * i]);
                 WeaponObj_Collision[32 * i] = *(int *)((char *)WeaponObj_Collision + v2) | v3;
                 break;
               case 0x50:
               case 0x70:
                 v4 = i << 7;
                 v5 = Bullet_Tile_Collision_Roof_Slope_1(
-                       *(&v22 + j) + v36,
-                       *(&v26 + j) + v37,
+                       *(&v22 + Loop_Counter) + v36,
+                       *(&v26 + Loop_Counter) + v37,
                        (int)&WeaponObj_Collision[32 * i]);
                 WeaponObj_Collision[32 * i] = *(int *)((char *)WeaponObj_Collision + v4) | v5;
                 break;
@@ -3290,8 +3271,8 @@ void Bul_Til_Coll_Algo()
               case 0x71:
                 v6 = i << 7;
                 v7 = Bullet_Tile_Collision_Roof_Slope_2(
-                       *(&v22 + j) + v36,
-                       *(&v26 + j) + v37,
+                       *(&v22 + Loop_Counter) + v36,
+                       *(&v26 + Loop_Counter) + v37,
                        (int)&WeaponObj_Collision[32 * i]);
                 WeaponObj_Collision[32 * i] = *(int *)((char *)WeaponObj_Collision + v6) | v7;
                 break;
@@ -3299,8 +3280,8 @@ void Bul_Til_Coll_Algo()
               case 0x72:
                 v8 = i << 7;
                 v9 = Bullet_Tile_Collision_Roof_Slope_3(
-                       *(&v22 + j) + v36,
-                       *(&v26 + j) + v37,
+                       *(&v22 + Loop_Counter) + v36,
+                       *(&v26 + Loop_Counter) + v37,
                        (int)&WeaponObj_Collision[32 * i]);
                 WeaponObj_Collision[32 * i] = *(int *)((char *)WeaponObj_Collision + v8) | v9;
                 break;
@@ -3308,8 +3289,8 @@ void Bul_Til_Coll_Algo()
               case 0x73:
                 v10 = i << 7;
                 v11 = Bullet_Tile_Collision_Roof_Slope_4(
-                        *(&v22 + j) + v36,
-                        *(&v26 + j) + v37,
+                        *(&v22 + Loop_Counter) + v36,
+                        *(&v26 + Loop_Counter) + v37,
                         (int)&WeaponObj_Collision[32 * i]);
                 WeaponObj_Collision[32 * i] = *(int *)((char *)WeaponObj_Collision + v10) | v11;
                 break;
@@ -3317,8 +3298,8 @@ void Bul_Til_Coll_Algo()
               case 0x74:
                 v12 = i << 7;
                 v13 = Bullet_Tile_Collision_Floor_Slope_1(
-                        *(&v22 + j) + v36,
-                        *(&v26 + j) + v37,
+                        *(&v22 + Loop_Counter) + v36,
+                        *(&v26 + Loop_Counter) + v37,
                         (int)&WeaponObj_Collision[32 * i]);
                 WeaponObj_Collision[32 * i] = *(int *)((char *)WeaponObj_Collision + v12) | v13;
                 break;
@@ -3326,8 +3307,8 @@ void Bul_Til_Coll_Algo()
               case 0x75:
                 v14 = i << 7;
                 v15 = Bullet_Tile_Collision_Floor_Slope_2(
-                        *(&v22 + j) + v36,
-                        *(&v26 + j) + v37,
+                        *(&v22 + Loop_Counter) + v36,
+                        *(&v26 + Loop_Counter) + v37,
                         (int)&WeaponObj_Collision[32 * i]);
                 WeaponObj_Collision[32 * i] = *(int *)((char *)WeaponObj_Collision + v14) | v15;
                 break;
@@ -3335,8 +3316,8 @@ void Bul_Til_Coll_Algo()
               case 0x76:
                 v16 = i << 7;
                 v17 = Bullet_Tile_Collision_Floor_Slope_3(
-                        *(&v22 + j) + v36,
-                        *(&v26 + j) + v37,
+                        *(&v22 + Loop_Counter) + v36,
+                        *(&v26 + Loop_Counter) + v37,
                         (int)&WeaponObj_Collision[32 * i]);
                 WeaponObj_Collision[32 * i] = *(int *)((char *)WeaponObj_Collision + v16) | v17;
                 break;
@@ -3344,8 +3325,8 @@ void Bul_Til_Coll_Algo()
               case 0x77:
                 v18 = i << 7;
                 v19 = Bullet_Tile_Collision_Floor_Slope_4(
-                        *(&v22 + j) + v36,
-                        *(&v26 + j) + v37,
+                        *(&v22 + Loop_Counter) + v36,
+                        *(&v26 + Loop_Counter) + v37,
                         (int)&WeaponObj_Collision[32 * i]);
                 WeaponObj_Collision[32 * i] = *(int *)((char *)WeaponObj_Collision + v18) | v19;
                 break;
@@ -3355,7 +3336,7 @@ void Bul_Til_Coll_Algo()
           }
         }
         v20 = i << 7;
-        v21 = Solid_Tile_Complicated(v36, v37, &v31, (int)&WeaponObj_Collision[32 * i]);
+        v21 = Solid_Tile_Complicated(v36, v37, v31, (int)&WeaponObj_Collision[32 * i]);
         WeaponObj_Collision[32 * i] = *(int *)((char *)WeaponObj_Collision + v20) | v21;
       }
     }
@@ -3366,6 +3347,7 @@ void Bul_Til_Coll_Algo()
 // 499CA4: using guessed type int WeaponObj_In_Use[];
 // 499CA8: using guessed type int WeaponObj_X_Position[];
 // 499CAC: using guessed type int WeaponObj_Y_Position[];
+// 403740: using guessed type char var_10[2];
 
 //----- (00403C00) --------------------------------------------------------
 int Clear_All_Weapons_Object_Slots()
@@ -3441,31 +3423,31 @@ int Clear_All_Weapons_Obj_Slots()
 int __cdecl Render_Bullets(signed int a1, signed int a2)
 {
   int result; // eax@10
-  signed int i; // [sp+4h] [bp-Ch]@1
+  signed int For_Loop_Counter; // [sp+4h] [bp-Ch]@1
   signed int v4; // [sp+8h] [bp-8h]@0
   signed int v5; // [sp+Ch] [bp-4h]@0
 
-  for ( i = 0; i < 64; ++i )
+  for ( For_Loop_Counter = 0; For_Loop_Counter < 64; ++For_Loop_Counter )
   {
-    if ( WeaponObj_In_Use[32 * i] & 0x80 )
+    if ( WeaponObj_In_Use[32 * For_Loop_Counter] & 0x80 )
     {
-      switch ( WeaponObj_Direction[128 * i] )
+      switch ( WeaponObj_Direction[128 * For_Loop_Counter] )
       {
         case 0:
-          v4 = WeaponObj_X_Position[32 * i] - dword_499D08[32 * i];
-          v5 = WeaponObj_Y_Position[32 * i] - dword_499D0C[32 * i];
+          v4 = WeaponObj_X_Position[32 * For_Loop_Counter] - dword_499D08[32 * For_Loop_Counter];
+          v5 = WeaponObj_Y_Position[32 * For_Loop_Counter] - dword_499D0C[32 * For_Loop_Counter];
           break;
         case 2:
-          v4 = WeaponObj_X_Position[32 * i] - dword_499D10[32 * i];
-          v5 = WeaponObj_Y_Position[32 * i] - dword_499D0C[32 * i];
+          v4 = WeaponObj_X_Position[32 * For_Loop_Counter] - dword_499D10[32 * For_Loop_Counter];
+          v5 = WeaponObj_Y_Position[32 * For_Loop_Counter] - dword_499D0C[32 * For_Loop_Counter];
           break;
         case 1:
-          v4 = WeaponObj_X_Position[32 * i] - dword_499D0C[32 * i];
-          v5 = WeaponObj_Y_Position[32 * i] - dword_499D08[32 * i];
+          v4 = WeaponObj_X_Position[32 * For_Loop_Counter] - dword_499D0C[32 * For_Loop_Counter];
+          v5 = WeaponObj_Y_Position[32 * For_Loop_Counter] - dword_499D08[32 * For_Loop_Counter];
           break;
         case 3:
-          v4 = WeaponObj_X_Position[32 * i] - dword_499D0C[32 * i];
-          v5 = WeaponObj_Y_Position[32 * i] - dword_499D10[32 * i];
+          v4 = WeaponObj_X_Position[32 * For_Loop_Counter] - dword_499D0C[32 * For_Loop_Counter];
+          v5 = WeaponObj_Y_Position[32 * For_Loop_Counter] - dword_499D10[32 * For_Loop_Counter];
           break;
         default:
           break;
@@ -3474,10 +3456,10 @@ int __cdecl Render_Bullets(signed int a1, signed int a2)
         (int)&FullscreenRect,
         v4 / 512 - a1 / 512,
         v5 / 512 - a2 / 512,
-        (int)(&WeaponObj_Rects + 8 * i),
+        (int)(&WeaponObj_Rects + 8 * For_Loop_Counter),
         17);
     }
-    result = i + 1;
+    result = For_Loop_Counter + 1;
   }
   return result;
 }
@@ -4003,63 +3985,63 @@ int __cdecl Bullet_07_08_09_Fireball(int Weapon_Obj, int a2)
   int v8; // edx@53
   int *v9; // ecx@54
   int v10; // edx@54
-  int v11; // [sp+4h] [bp-E8h]@43
-  int v12; // [sp+8h] [bp-E4h]@43
-  int v13; // [sp+Ch] [bp-E0h]@43
-  int v14; // [sp+10h] [bp-DCh]@43
-  int v15; // [sp+14h] [bp-D8h]@43
-  int v16; // [sp+18h] [bp-D4h]@43
-  int v17; // [sp+1Ch] [bp-D0h]@43
-  int v18; // [sp+20h] [bp-CCh]@43
-  int v19; // [sp+24h] [bp-C8h]@43
-  int v20; // [sp+28h] [bp-C4h]@43
-  int v21; // [sp+2Ch] [bp-C0h]@43
-  int v22; // [sp+30h] [bp-BCh]@43
-  int v23; // [sp+34h] [bp-B8h]@43
-  int v24; // [sp+38h] [bp-B4h]@43
-  int v25; // [sp+3Ch] [bp-B0h]@43
-  int v26; // [sp+40h] [bp-ACh]@43
-  int v27; // [sp+44h] [bp-A8h]@43
-  int v28; // [sp+48h] [bp-A4h]@43
-  int v29; // [sp+4Ch] [bp-A0h]@43
-  int v30; // [sp+50h] [bp-9Ch]@43
-  int v31; // [sp+54h] [bp-98h]@43
-  int v32; // [sp+58h] [bp-94h]@43
-  int v33; // [sp+5Ch] [bp-90h]@43
-  int v34; // [sp+60h] [bp-8Ch]@43
-  int v35; // [sp+64h] [bp-88h]@43
-  int v36; // [sp+68h] [bp-84h]@43
-  int v37; // [sp+6Ch] [bp-80h]@43
-  int v38; // [sp+70h] [bp-7Ch]@43
-  int v39; // [sp+74h] [bp-78h]@43
-  int v40; // [sp+78h] [bp-74h]@43
-  int v41; // [sp+7Ch] [bp-70h]@43
-  int v42; // [sp+80h] [bp-6Ch]@43
-  int v43; // [sp+88h] [bp-64h]@43
-  int v44; // [sp+8Ch] [bp-60h]@43
-  int v45; // [sp+90h] [bp-5Ch]@43
-  int v46; // [sp+94h] [bp-58h]@43
-  int v47; // [sp+98h] [bp-54h]@43
-  int v48; // [sp+9Ch] [bp-50h]@43
-  int v49; // [sp+A0h] [bp-4Ch]@43
-  int v50; // [sp+A4h] [bp-48h]@43
-  int v51; // [sp+A8h] [bp-44h]@43
-  int v52; // [sp+ACh] [bp-40h]@43
-  int v53; // [sp+B0h] [bp-3Ch]@43
-  int v54; // [sp+B4h] [bp-38h]@43
+  int Frame_E_3; // [sp+4h] [bp-E8h]@43
+  int Frame_E_4; // [sp+8h] [bp-E4h]@43
+  int Frame_F_1; // [sp+Ch] [bp-E0h]@43
+  int Frame_F_2; // [sp+10h] [bp-DCh]@43
+  int Frame_F_3; // [sp+14h] [bp-D8h]@43
+  int Frame_F_4; // [sp+18h] [bp-D4h]@43
+  int Frame_G_1; // [sp+1Ch] [bp-D0h]@43
+  int Frame_G_2; // [sp+20h] [bp-CCh]@43
+  int Frame_G_3; // [sp+24h] [bp-C8h]@43
+  int Frame_G_4; // [sp+28h] [bp-C4h]@43
+  int Frame_H_1; // [sp+2Ch] [bp-C0h]@43
+  int Frame_H_2; // [sp+30h] [bp-BCh]@43
+  int Frame_H_3; // [sp+34h] [bp-B8h]@43
+  int Frame_H_4; // [sp+38h] [bp-B4h]@43
+  int Frame_I_1; // [sp+3Ch] [bp-B0h]@43
+  int Frame_I_2; // [sp+40h] [bp-ACh]@43
+  int Frame_A_1; // [sp+44h] [bp-A8h]@43
+  int Frame_A_2; // [sp+48h] [bp-A4h]@43
+  int Frame_A_3; // [sp+4Ch] [bp-A0h]@43
+  int Frame_A_4; // [sp+50h] [bp-9Ch]@43
+  int Frame_B_1; // [sp+54h] [bp-98h]@43
+  int Frame_B_2; // [sp+58h] [bp-94h]@43
+  int Frame_B_3; // [sp+5Ch] [bp-90h]@43
+  int Frame_B_4; // [sp+60h] [bp-8Ch]@43
+  int Frame_C_1; // [sp+64h] [bp-88h]@43
+  int Frame_C_2; // [sp+68h] [bp-84h]@43
+  int Frame_C_3; // [sp+6Ch] [bp-80h]@43
+  int Frame_C_4; // [sp+70h] [bp-7Ch]@43
+  int Frame_D_1; // [sp+74h] [bp-78h]@43
+  int Frame_D_2; // [sp+78h] [bp-74h]@43
+  int Frame_E_1; // [sp+7Ch] [bp-70h]@43
+  int Frame_E_2; // [sp+80h] [bp-6Ch]@43
+  int Frame_L_3; // [sp+88h] [bp-64h]@43
+  int Frame_L_4; // [sp+8Ch] [bp-60h]@43
+  int Frame_M_1; // [sp+90h] [bp-5Ch]@43
+  int Frame_M_2; // [sp+94h] [bp-58h]@43
+  int Frame_M_3; // [sp+98h] [bp-54h]@43
+  int Frame_M_4; // [sp+9Ch] [bp-50h]@43
+  int Frame_N_1; // [sp+A0h] [bp-4Ch]@43
+  int Frame_N_2; // [sp+A4h] [bp-48h]@43
+  int Frame_N_3; // [sp+A8h] [bp-44h]@43
+  int Frame_N_4; // [sp+ACh] [bp-40h]@43
+  int Frame_O_1; // [sp+B0h] [bp-3Ch]@43
+  int Frame_O_2; // [sp+B4h] [bp-38h]@43
   int v55; // [sp+B8h] [bp-34h]@3
-  int v56; // [sp+BCh] [bp-30h]@43
-  int v57; // [sp+C0h] [bp-2Ch]@43
-  int v58; // [sp+C4h] [bp-28h]@43
-  int v59; // [sp+C8h] [bp-24h]@43
-  int v60; // [sp+CCh] [bp-20h]@43
-  int v61; // [sp+D0h] [bp-1Ch]@43
-  int v62; // [sp+D4h] [bp-18h]@43
-  int v63; // [sp+D8h] [bp-14h]@43
-  int v64; // [sp+DCh] [bp-10h]@43
-  int v65; // [sp+E0h] [bp-Ch]@43
-  int v66; // [sp+E4h] [bp-8h]@43
-  int v67; // [sp+E8h] [bp-4h]@43
+  int Frame_I_3; // [sp+BCh] [bp-30h]@43
+  int Frame_I_4; // [sp+C0h] [bp-2Ch]@43
+  int Frame_J_1; // [sp+C4h] [bp-28h]@43
+  int Frame_J_2; // [sp+C8h] [bp-24h]@43
+  int Frame_J_3; // [sp+CCh] [bp-20h]@43
+  int Frame_J_4; // [sp+D0h] [bp-1Ch]@43
+  int Frame_K_1; // [sp+D4h] [bp-18h]@43
+  int Frame_K_2; // [sp+D8h] [bp-14h]@43
+  int Frame_K_3; // [sp+DCh] [bp-10h]@43
+  int Frame_K_4; // [sp+E0h] [bp-Ch]@43
+  int Frame_L_1; // [sp+E4h] [bp-8h]@43
+  int Frame_L_2; // [sp+E8h] [bp-4h]@43
 
   if ( ++*(_DWORD *)(Weapon_Obj + 76) <= *(_DWORD *)(Weapon_Obj + 84) )
   {
@@ -4137,62 +4119,62 @@ int __cdecl Bullet_07_08_09_Fireball(int Weapon_Obj, int a2)
             break;
         }
       }
-      v27 = 128;
-      v28 = 0;
-      v29 = 144;
-      v30 = 16;
-      v31 = 144;
-      v32 = 0;
-      v33 = 160;
-      v34 = 16;
-      v35 = 160;
-      v36 = 0;
-      v37 = 176;
-      v38 = 16;
-      v39 = 176;
-      v40 = 0;
-      v41 = 192;
-      v42 = 16;
-      v11 = 128;
-      v12 = 16;
-      v13 = 144;
-      v14 = 32;
-      v15 = 144;
-      v16 = 16;
-      v17 = 160;
-      v18 = 32;
-      v19 = 160;
-      v20 = 16;
-      v21 = 176;
-      v22 = 32;
-      v23 = 176;
-      v24 = 16;
-      v25 = 192;
-      v26 = 32;
-      v56 = 192;
-      v57 = 16;
-      v58 = 208;
-      v59 = 32;
-      v60 = 208;
-      v61 = 16;
-      v62 = 224;
-      v63 = 32;
-      v64 = 224;
-      v65 = 16;
-      v66 = 240;
-      v67 = 32;
-      v43 = 224;
-      v44 = 16;
-      v45 = 240;
-      v46 = 32;
-      v47 = 208;
-      v48 = 16;
-      v49 = 224;
-      v50 = 32;
-      v51 = 192;
-      v52 = 16;
-      v53 = 208;
-      v54 = 32;
+      Frame_A_1 = 128;
+      Frame_A_2 = 0;
+      Frame_A_3 = 144;
+      Frame_A_4 = 16;
+      Frame_B_1 = 144;
+      Frame_B_2 = 0;
+      Frame_B_3 = 160;
+      Frame_B_4 = 16;
+      Frame_C_1 = 160;
+      Frame_C_2 = 0;
+      Frame_C_3 = 176;
+      Frame_C_4 = 16;
+      Frame_D_1 = 176;
+      Frame_D_2 = 0;
+      Frame_E_1 = 192;
+      Frame_E_2 = 16;
+      Frame_E_3 = 128;
+      Frame_E_4 = 16;
+      Frame_F_1 = 144;
+      Frame_F_2 = 32;
+      Frame_F_3 = 144;
+      Frame_F_4 = 16;
+      Frame_G_1 = 160;
+      Frame_G_2 = 32;
+      Frame_G_3 = 160;
+      Frame_G_4 = 16;
+      Frame_H_1 = 176;
+      Frame_H_2 = 32;
+      Frame_H_3 = 176;
+      Frame_H_4 = 16;
+      Frame_I_1 = 192;
+      Frame_I_2 = 32;
+      Frame_I_3 = 192;
+      Frame_I_4 = 16;
+      Frame_J_1 = 208;
+      Frame_J_2 = 32;
+      Frame_J_3 = 208;
+      Frame_J_4 = 16;
+      Frame_K_1 = 224;
+      Frame_K_2 = 32;
+      Frame_K_3 = 224;
+      Frame_K_4 = 16;
+      Frame_L_1 = 240;
+      Frame_L_2 = 32;
+      Frame_L_3 = 224;
+      Frame_L_4 = 16;
+      Frame_M_1 = 240;
+      Frame_M_2 = 32;
+      Frame_M_3 = 208;
+      Frame_M_4 = 16;
+      Frame_N_1 = 224;
+      Frame_N_2 = 32;
+      Frame_N_3 = 192;
+      Frame_N_4 = 16;
+      Frame_O_1 = 208;
+      Frame_O_2 = 32;
       ++*(_DWORD *)(Weapon_Obj + 52);
       if ( a2 == 1 )
       {
@@ -4200,7 +4182,7 @@ int __cdecl Bullet_07_08_09_Fireball(int Weapon_Obj, int a2)
           *(_DWORD *)(Weapon_Obj + 52) = 0;
         if ( *(_BYTE *)(Weapon_Obj + 56) )
         {
-          v5 = &v11 + 4 * *(_DWORD *)(Weapon_Obj + 52);
+          v5 = &Frame_E_3 + 4 * *(_DWORD *)(Weapon_Obj + 52);
           v6 = Weapon_Obj + 60;
           *(_DWORD *)v6 = *v5;
           *(_DWORD *)(v6 + 4) = v5[1];
@@ -4210,7 +4192,7 @@ int __cdecl Bullet_07_08_09_Fireball(int Weapon_Obj, int a2)
         }
         else
         {
-          v3 = &v27 + 4 * *(_DWORD *)(Weapon_Obj + 52);
+          v3 = &Frame_A_1 + 4 * *(_DWORD *)(Weapon_Obj + 52);
           v4 = Weapon_Obj + 60;
           *(_DWORD *)v4 = *v3;
           *(_DWORD *)(v4 + 4) = v3[1];
@@ -4225,7 +4207,7 @@ int __cdecl Bullet_07_08_09_Fireball(int Weapon_Obj, int a2)
           *(_DWORD *)(Weapon_Obj + 52) = 0;
         if ( *(_BYTE *)(Weapon_Obj + 56) )
         {
-          v9 = &v43 + 4 * *(_DWORD *)(Weapon_Obj + 52);
+          v9 = &Frame_L_3 + 4 * *(_DWORD *)(Weapon_Obj + 52);
           v10 = Weapon_Obj + 60;
           *(_DWORD *)v10 = *v9;
           *(_DWORD *)(v10 + 4) = v9[1];
@@ -4234,7 +4216,7 @@ int __cdecl Bullet_07_08_09_Fireball(int Weapon_Obj, int a2)
         }
         else
         {
-          v7 = &v56 + 4 * *(_DWORD *)(Weapon_Obj + 52);
+          v7 = &Frame_I_3 + 4 * *(_DWORD *)(Weapon_Obj + 52);
           v8 = Weapon_Obj + 60;
           *(_DWORD *)v8 = *v7;
           *(_DWORD *)(v8 + 4) = v7[1];
@@ -7191,71 +7173,71 @@ int __cdecl Random_Fountain_Pulsing_Disc_Particles(BOOL mode)
   int *v1; // edx@7
   int result; // eax@7
   int *v3; // edx@8
-  int v4; // [sp+0h] [bp-80h]@1
-  int v5; // [sp+4h] [bp-7Ch]@1
-  int v6; // [sp+8h] [bp-78h]@1
-  int v7; // [sp+Ch] [bp-74h]@1
-  int v8; // [sp+10h] [bp-70h]@1
-  int v9; // [sp+14h] [bp-6Ch]@1
-  int v10; // [sp+18h] [bp-68h]@1
-  int v11; // [sp+1Ch] [bp-64h]@1
-  int v12; // [sp+20h] [bp-60h]@1
-  int v13; // [sp+24h] [bp-5Ch]@1
-  int v14; // [sp+28h] [bp-58h]@1
-  int v15; // [sp+2Ch] [bp-54h]@1
-  int v16; // [sp+30h] [bp-50h]@1
-  int v17; // [sp+34h] [bp-4Ch]@1
-  int v18; // [sp+38h] [bp-48h]@1
-  int v19; // [sp+3Ch] [bp-44h]@1
-  int v20; // [sp+40h] [bp-40h]@1
-  int v21; // [sp+44h] [bp-3Ch]@1
-  int v22; // [sp+48h] [bp-38h]@1
-  int v23; // [sp+4Ch] [bp-34h]@1
-  int v24; // [sp+50h] [bp-30h]@1
-  int v25; // [sp+54h] [bp-2Ch]@1
-  int v26; // [sp+58h] [bp-28h]@1
-  int v27; // [sp+5Ch] [bp-24h]@1
-  int v28; // [sp+60h] [bp-20h]@1
-  int v29; // [sp+64h] [bp-1Ch]@1
-  int v30; // [sp+68h] [bp-18h]@1
-  int v31; // [sp+6Ch] [bp-14h]@1
-  int v32; // [sp+70h] [bp-10h]@1
-  int v33; // [sp+74h] [bp-Ch]@1
-  int v34; // [sp+78h] [bp-8h]@1
-  int v35; // [sp+7Ch] [bp-4h]@1
+  int Red_Disk_4; // [sp+0h] [bp-80h]@1
+  int Red_Disk_4_2; // [sp+4h] [bp-7Ch]@1
+  int Red_Disk_4_3; // [sp+8h] [bp-78h]@1
+  int Red_Disk_4_4; // [sp+Ch] [bp-74h]@1
+  int Red_Disk_3; // [sp+10h] [bp-70h]@1
+  int Red_Disk_3_2; // [sp+14h] [bp-6Ch]@1
+  int Red_Disk_3_3; // [sp+18h] [bp-68h]@1
+  int Red_Disk_3_4; // [sp+1Ch] [bp-64h]@1
+  int Red_Disk_2; // [sp+20h] [bp-60h]@1
+  int Red_Disk_2_2; // [sp+24h] [bp-5Ch]@1
+  int Red_Disk_2_3; // [sp+28h] [bp-58h]@1
+  int Red_Disk_2_4; // [sp+2Ch] [bp-54h]@1
+  int Red_Disk_1; // [sp+30h] [bp-50h]@1
+  int Red_Disk_1_2; // [sp+34h] [bp-4Ch]@1
+  int Red_Disk_1_3; // [sp+38h] [bp-48h]@1
+  int Red_Disk_1_4; // [sp+3Ch] [bp-44h]@1
+  int Blue_Disk_4; // [sp+40h] [bp-40h]@1
+  int Blue_Disk_4_2; // [sp+44h] [bp-3Ch]@1
+  int Blue_Disk_4_3; // [sp+48h] [bp-38h]@1
+  int Blue_Disk_4_4; // [sp+4Ch] [bp-34h]@1
+  int Blue_Disk_3; // [sp+50h] [bp-30h]@1
+  int Blue_Disk_3_2; // [sp+54h] [bp-2Ch]@1
+  int Blue_Disk_3_3; // [sp+58h] [bp-28h]@1
+  int Blue_Disk_3_4; // [sp+5Ch] [bp-24h]@1
+  int Blue_Disk_2; // [sp+60h] [bp-20h]@1
+  int Blue_Disk_2_2; // [sp+64h] [bp-1Ch]@1
+  int Blue_Disk_2_3; // [sp+68h] [bp-18h]@1
+  int Blue_Disk_2_4; // [sp+6Ch] [bp-14h]@1
+  int Blue_Disk_1; // [sp+70h] [bp-10h]@1
+  int Blue_Disk_1_2; // [sp+74h] [bp-Ch]@1
+  int Blue_Disk_1_3; // [sp+78h] [bp-8h]@1
+  int Blue_Disk_1_4; // [sp+7Ch] [bp-4h]@1
 
-  v20 = 0;
-  v21 = 64;
-  v22 = 8;
-  v23 = 72;
-  v24 = 8;
-  v25 = 64;
-  v26 = 16;
-  v27 = 72;
-  v28 = 16;
-  v29 = 64;
-  v30 = 24;
-  v31 = 72;
-  v32 = 24;
-  v33 = 64;
-  v34 = 32;
-  v35 = 72;
-  v4 = 64;
-  v5 = 24;
-  v6 = 72;
-  v7 = 32;
-  v8 = 72;
-  v9 = 24;
-  v10 = 80;
-  v11 = 32;
-  v12 = 80;
-  v13 = 24;
-  v14 = 88;
-  v15 = 32;
-  v16 = 88;
-  v17 = 24;
-  v18 = 96;
-  v19 = 32;
+  Blue_Disk_4 = 0;
+  Blue_Disk_4_2 = 64;
+  Blue_Disk_4_3 = 8;
+  Blue_Disk_4_4 = 72;
+  Blue_Disk_3 = 8;
+  Blue_Disk_3_2 = 64;
+  Blue_Disk_3_3 = 16;
+  Blue_Disk_3_4 = 72;
+  Blue_Disk_2 = 16;
+  Blue_Disk_2_2 = 64;
+  Blue_Disk_2_3 = 24;
+  Blue_Disk_2_4 = 72;
+  Blue_Disk_1 = 24;
+  Blue_Disk_1_2 = 64;
+  Blue_Disk_1_3 = 32;
+  Blue_Disk_1_4 = 72;
+  Red_Disk_4 = 64;
+  Red_Disk_4_2 = 24;
+  Red_Disk_4_3 = 72;
+  Red_Disk_4_4 = 32;
+  Red_Disk_3 = 72;
+  Red_Disk_3_2 = 24;
+  Red_Disk_3_3 = 80;
+  Red_Disk_3_4 = 32;
+  Red_Disk_2 = 80;
+  Red_Disk_2_2 = 24;
+  Red_Disk_2_3 = 88;
+  Red_Disk_2_4 = 32;
+  Red_Disk_1 = 88;
+  Red_Disk_1_2 = 24;
+  Red_Disk_1_3 = 96;
+  Red_Disk_1_4 = 32;
   if ( !*(_DWORD *)(mode + 28) )
   {
     *(_DWORD *)(mode + 28) = 1;
@@ -7273,7 +7255,7 @@ int __cdecl Random_Fountain_Pulsing_Disc_Particles(BOOL mode)
   }
   if ( *(_DWORD *)(mode + 8) )
   {
-    v3 = &v4 + 4 * *(_DWORD *)(mode + 36);
+    v3 = &Red_Disk_4 + 4 * *(_DWORD *)(mode + 36);
     result = mode + 52;
     *(_DWORD *)result = *v3;
     *(_DWORD *)(result + 4) = v3[1];
@@ -7282,7 +7264,7 @@ int __cdecl Random_Fountain_Pulsing_Disc_Particles(BOOL mode)
   }
   else
   {
-    v1 = &v20 + 4 * *(_DWORD *)(mode + 36);
+    v1 = &Blue_Disk_4 + 4 * *(_DWORD *)(mode + 36);
     result = mode + 52;
     *(_DWORD *)result = *v1;
     *(_DWORD *)(result + 4) = v1[1];
@@ -8307,13 +8289,13 @@ signed int __cdecl Push_Jump_Key_Effect(BOOL mode)
 int Update_All_Effects()
 {
   int result; // eax@5
-  signed int i; // [sp+4h] [bp-4h]@1
+  signed int Slot_ID; // [sp+4h] [bp-4h]@1
 
-  for ( i = 0; i < 64; ++i )
+  for ( Slot_ID = 0; Slot_ID < 64; ++Slot_ID )
   {
-    if ( *((_DWORD *)&EffectObj_InUse + 17 * i) & 0x80 )
-      ((void (__cdecl *)(_DWORD))*(&ROM_PEffects + EffectObj_ID[17 * i]))((char *)&EffectObj_InUse + 68 * i);
-    result = i + 1;
+    if ( *((_DWORD *)&EffectObj_InUse + 17 * Slot_ID) & 0x80 )
+      ((void (__cdecl *)(_DWORD))*(&ROM_PEffects + EffectObj_ID[17 * Slot_ID]))((char *)&EffectObj_InUse + 68 * Slot_ID);
+    result = Slot_ID + 1;
   }
   return result;
 }
@@ -8328,23 +8310,23 @@ int __cdecl Draw_All_Effect_Obj(signed int a1, signed int a2)
   __int64 v3; // rax@4
   int v4; // ST08_4@4
   __int64 v5; // rax@4
-  signed int i; // [sp+0h] [bp-4h]@1
+  signed int Loop_Counter; // [sp+0h] [bp-4h]@1
 
-  for ( i = 0; i < 64; ++i )
+  for ( Loop_Counter = 0; Loop_Counter < 64; ++Loop_Counter )
   {
-    if ( *((_DWORD *)&EffectObj_InUse + 17 * i) & 0x80 )
+    if ( *((_DWORD *)&EffectObj_InUse + 17 * Loop_Counter) & 0x80 )
     {
-      v3 = EffectObj_Y_Position[17 * i] - EffectObj_Y_Offset[17 * i];
+      v3 = EffectObj_Y_Position[17 * Loop_Counter] - EffectObj_Y_Offset[17 * Loop_Counter];
       v4 = (((WORD2(v3) & 0x1FF) + (signed int)v3) >> 9) - a2 / 512;
-      v5 = EffectObj_X_Position[17 * i] - EffectObj_X_Offset[17 * i];
+      v5 = EffectObj_X_Position[17 * Loop_Counter] - EffectObj_X_Offset[17 * Loop_Counter];
       Draw_Sprite_With_Transparency(
         (int)&FullscreenRect,
         (((WORD2(v5) & 0x1FF) + (signed int)v5) >> 9) - a1 / 512,
         v4,
-        (int)&EffectObj_Rect + 68 * i,
+        (int)&EffectObj_Rect + 68 * Loop_Counter,
         19);
     }
-    result = i + 1;
+    result = Loop_Counter + 1;
   }
   return result;
 }
@@ -8396,13 +8378,13 @@ int __cdecl Load_Config_dat(char *str1)
   int v5; // [sp+110h] [bp-8h]@3
   FILE *stream; // [sp+114h] [bp-4h]@1
 
-  v4 = Prevent_Crash_Report_Failure;
+  v4 = Crash_Report_Failure_Check;
   memset(str1, 0, 0x94u);
   sprintf(&str, "%s\\%s", FullExePath, off_48F90C[0]);
   stream = fopen(&str, "rb");
   if ( stream )
   {
-    sub_480F55((FILE *)str1, 0x94u, 1u, stream);
+    fread_wrapper(str1, 0x94u, 1u, stream);
     v5 = v2;
     fclose(stream);
     if ( v5 == 1 && !strcmp(str1, str2) )
@@ -8422,7 +8404,7 @@ int __cdecl Load_Config_dat(char *str1)
   return result;
 }
 // 48F90C: using guessed type char *off_48F90C[2];
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 
 //----- (0040AE30) --------------------------------------------------------
 // Sets Config.dat to default values (Called if check above fails)
@@ -8446,10 +8428,10 @@ void *__cdecl Set_Default_Config_dat(void *ptr)
 
 //----- (0040AEC0) --------------------------------------------------------
 // Runs when you hit "Version" menu button
-bool __stdcall Version_Button(HWND hDlg, UINT a2, WPARAM a3, LPARAM a4)
+bool __stdcall Version_Button(HWND Game_Window_Handle, UINT a2, WPARAM a3, LPARAM a4)
 {
   bool result; // eax@4
-  char str; // [sp+8h] [bp-88h]@4
+  const CHAR String; // [sp+8h] [bp-88h]@4
   int v6; // [sp+70h] [bp-20h]@1
   int v7; // [sp+74h] [bp-1Ch]@4
   int v8; // [sp+78h] [bp-18h]@4
@@ -8459,43 +8441,43 @@ bool __stdcall Version_Button(HWND hDlg, UINT a2, WPARAM a3, LPARAM a4)
   int v12; // [sp+88h] [bp-8h]@4
   int v13; // [sp+8Ch] [bp-4h]@4
 
-  v6 = Prevent_Crash_Report_Failure;
+  v6 = Crash_Report_Failure_Check;
   if ( a2 == 272 )
   {
     Get_Build_Data((int)&v12, &v7, (int)&v8);
     Get_Version_Number((int)&v11, (int)&v9, (int)&v13, (int)&v10);
-    sprintf(&str, off_48F910, v11, v9, v13, v10, v12, v7, v8);
-    SetDlgItemTextA(hDlg, 1011, &str);
-    Center_Game_Window(hDlg);
+    sprintf((char *)&String, off_48F910, v11, v9, v13, v10, v12, v7, v8);
+    SetDlgItemTextA(Game_Window_Handle, 1011, &String);
+    Center_Game_Window(Game_Window_Handle);
     result = 1;
   }
   else
   {
     if ( a2 == 273 && (unsigned __int16)a3 == 1 )
-      EndDialog(hDlg, 1);
+      EndDialog(Game_Window_Handle, 1);
     result = 0;
   }
   return result;
 }
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 
 //----- (0040AFC0) --------------------------------------------------------
 // Runs when you hit "Mute" menu button
-bool __stdcall Mute_Button(HWND hDlg, UINT a2, WPARAM a3, LPARAM a4)
+bool __stdcall Mute_Button(HWND Game_Window_Handle, UINT a2, WPARAM a3, LPARAM a4)
 {
   bool result; // eax@4
 
   if ( a2 == 272 )
   {
-    Center_Game_Window(hDlg);
-    CheckDlgButton(hDlg, 1010, dword_4A4D48[0] != 0);
-    CheckDlgButton(hDlg, 1018, dword_4A4D4C != 0);
-    CheckDlgButton(hDlg, 1019, dword_4A4D50 != 0);
-    CheckDlgButton(hDlg, 1020, dword_4A4D54 != 0);
-    CheckDlgButton(hDlg, 1021, dword_4A4D58 != 0);
-    CheckDlgButton(hDlg, 1022, dword_4A4D5C != 0);
-    CheckDlgButton(hDlg, 1023, dword_4A4D60 != 0);
-    CheckDlgButton(hDlg, 1024, dword_4A4D64 != 0);
+    Center_Game_Window(Game_Window_Handle);
+    CheckDlgButton(Game_Window_Handle, 1010, dword_4A4D48[0] != 0);
+    CheckDlgButton(Game_Window_Handle, 1018, dword_4A4D4C != 0);
+    CheckDlgButton(Game_Window_Handle, 1019, dword_4A4D50 != 0);
+    CheckDlgButton(Game_Window_Handle, 1020, dword_4A4D54 != 0);
+    CheckDlgButton(Game_Window_Handle, 1021, dword_4A4D58 != 0);
+    CheckDlgButton(Game_Window_Handle, 1022, dword_4A4D5C != 0);
+    CheckDlgButton(Game_Window_Handle, 1023, dword_4A4D60 != 0);
+    CheckDlgButton(Game_Window_Handle, 1024, dword_4A4D64 != 0);
     result = 1;
   }
   else
@@ -8504,19 +8486,19 @@ bool __stdcall Mute_Button(HWND hDlg, UINT a2, WPARAM a3, LPARAM a4)
     {
       if ( (unsigned __int16)a3 == 1 )
       {
-        dword_4A4D48[0] = IsDlgButtonChecked(hDlg, 1010);
-        dword_4A4D4C = IsDlgButtonChecked(hDlg, 1018);
-        dword_4A4D50 = IsDlgButtonChecked(hDlg, 1019);
-        dword_4A4D54 = IsDlgButtonChecked(hDlg, 1020);
-        dword_4A4D58 = IsDlgButtonChecked(hDlg, 1021);
-        dword_4A4D5C = IsDlgButtonChecked(hDlg, 1022);
-        dword_4A4D60 = IsDlgButtonChecked(hDlg, 1023);
-        dword_4A4D64 = IsDlgButtonChecked(hDlg, 1024);
-        EndDialog(hDlg, 1);
+        dword_4A4D48[0] = IsDlgButtonChecked(Game_Window_Handle, 1010);
+        dword_4A4D4C = IsDlgButtonChecked(Game_Window_Handle, 1018);
+        dword_4A4D50 = IsDlgButtonChecked(Game_Window_Handle, 1019);
+        dword_4A4D54 = IsDlgButtonChecked(Game_Window_Handle, 1020);
+        dword_4A4D58 = IsDlgButtonChecked(Game_Window_Handle, 1021);
+        dword_4A4D5C = IsDlgButtonChecked(Game_Window_Handle, 1022);
+        dword_4A4D60 = IsDlgButtonChecked(Game_Window_Handle, 1023);
+        dword_4A4D64 = IsDlgButtonChecked(Game_Window_Handle, 1024);
+        EndDialog(Game_Window_Handle, 1);
       }
       else if ( (unsigned __int16)a3 == 2 )
       {
-        EndDialog(hDlg, 0);
+        EndDialog(Game_Window_Handle, 0);
       }
     }
     result = 0;
@@ -8540,7 +8522,7 @@ bool __stdcall Debug_Save_Button(HWND hDlg, UINT a2, WPARAM a3, LPARAM a4)
   CHAR String; // [sp+8h] [bp-70h]@8
   int v6; // [sp+74h] [bp-4h]@1
 
-  v6 = Prevent_Crash_Report_Failure;
+  v6 = Crash_Report_Failure_Check;
   if ( a2 == 272 )
   {
     SetDlgItemTextA(hDlg, 1008, "000.dat");
@@ -8554,7 +8536,7 @@ bool __stdcall Debug_Save_Button(HWND hDlg, UINT a2, WPARAM a3, LPARAM a4)
       if ( (unsigned __int16)a3 == 1 )
       {
         GetDlgItemTextA(hDlg, 1008, &String, 100);
-        sub_41D040((int)&String);
+        Save_Profile((int)&String);
         EndDialog(hDlg, 1);
       }
       else if ( (unsigned __int16)a3 == 2 )
@@ -8566,7 +8548,7 @@ bool __stdcall Debug_Save_Button(HWND hDlg, UINT a2, WPARAM a3, LPARAM a4)
   }
   return result;
 }
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 
 //----- (0040B290) --------------------------------------------------------
 // Runs when you hit "Quit" menu button
@@ -8620,23 +8602,23 @@ int __cdecl Draw_Window(HWND hWnd)
     if ( !MessageQueue() )
       return 0;
     Current_Tick_Count = GetTickCount();
-    if ( Current_Tick_Count >= (unsigned int)(Last_Tick_Count + 20) )
+    if ( Current_Tick_Count >= (unsigned int)(Previous_Tick_Count + 20) )
       break;
     Sleep(1u);
   }
-  if ( Current_Tick_Count < (unsigned int)(Last_Tick_Count + 100) )
-    Last_Tick_Count += 20;
+  if ( Current_Tick_Count < (unsigned int)(Previous_Tick_Count + 100) )
+    Previous_Tick_Count += 20;
   else
-    Last_Tick_Count = Current_Tick_Count;
-  GetWindowRect(hWnd, &Window_Rect);
-  Window_Rect.left += Screen_Offset_Y;
-  Window_Rect.top += Screen_Offset_X;
-  Window_Rect.right = Fullscreen_Width + Window_Rect.left;
-  Window_Rect.bottom = Fullscreen_Height + Window_Rect.top;
-  (*((void (__stdcall **)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD))DD7_SurfaceA->lpVtbl + 5))(
-    DD7_SurfaceA,
-    &Window_Rect,
-    DD7_SurfaceB,
+    Previous_Tick_Count = Current_Tick_Count;
+  GetWindowRect(hWnd, &Final_Screen_Dist_Rects);
+  Final_Screen_Dist_Rects.left += Screen_Offset_Y;
+  Final_Screen_Dist_Rects.top += Screen_Offset_X;
+  Final_Screen_Dist_Rects.right = Fullscreen_Surface_Height + Final_Screen_Dist_Rects.left;
+  Final_Screen_Dist_Rects.bottom = Window_Surface_Width + Final_Screen_Dist_Rects.top;
+  (*((void (__stdcall **)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD))DD7_Final_Screen_Surface->lpVtbl + 5))(
+    DD7_Final_Screen_Surface,
+    &Final_Screen_Dist_Rects,
+    DD7_Screen_Surface,
     &Fullscreen_Rect,
     0x1000000,
     0);
@@ -8644,15 +8626,15 @@ int __cdecl Draw_Window(HWND hWnd)
   {
     Draws_Some_Text();
     Redraw_Room_Text_To_Surface();
-    sub_425790();
+    Draw_Text_To_Text_Box_Surfaces();
   }
   return 1;
 }
 // 49CDA8: using guessed type int Screen_Offset_X;
 // 49CDAC: using guessed type int Screen_Offset_Y;
-// 49D374: using guessed type int Fullscreen_Width;
-// 49D378: using guessed type int Fullscreen_Height;
-// 49D438: using guessed type int Last_Tick_Count;
+// 49D374: using guessed type int Fullscreen_Surface_Height;
+// 49D378: using guessed type int Window_Surface_Width;
+// 49D438: using guessed type int Previous_Tick_Count;
 // 49D43C: using guessed type int Current_Tick_Count;
 
 //----- (0040B450) --------------------------------------------------------
@@ -8703,8 +8685,8 @@ signed int __cdecl Init_Direct_Draw(int a1, int a2, int a3)
     Fullscreen_Rect.top = 0;
     Fullscreen_Rect.right = 320 * GraphicScale;
     Fullscreen_Rect.bottom = 240 * GraphicScale;
-    Fullscreen_Width = 320 * GraphicScale;
-    Fullscreen_Height = 240 * GraphicScale;
+    Fullscreen_Surface_Height = 320 * GraphicScale;
+    Window_Surface_Width = 240 * GraphicScale;
     memset(&ptr, 0, 0x6Cu);
     ptr = 108;
     v5 = 1;
@@ -8713,7 +8695,7 @@ signed int __cdecl Init_Direct_Draw(int a1, int a2, int a3)
     if ( (*((int (__cdecl **)(_DWORD, _DWORD, _DWORD, _DWORD))Direct_Draw_Obj->lpVtbl + 6))(
            Direct_Draw_Obj,
            &ptr,
-           &DD7_SurfaceA,
+           &DD7_Final_Screen_Surface,
            0) )
     {
       result = 0;
@@ -8729,7 +8711,7 @@ signed int __cdecl Init_Direct_Draw(int a1, int a2, int a3)
       if ( (*((int (__cdecl **)(_DWORD, _DWORD, _DWORD, _DWORD))Direct_Draw_Obj->lpVtbl + 6))(
              Direct_Draw_Obj,
              &ptr,
-             &DD7_SurfaceB,
+             &DD7_Screen_Surface,
              0) )
       {
         result = 0;
@@ -8742,7 +8724,9 @@ signed int __cdecl Init_Direct_Draw(int a1, int a2, int a3)
           &dword_49CDC4,
           0);
         (*(void (__cdecl **)(int, _DWORD, int))(*(_DWORD *)dword_49CDC4 + 32))(dword_49CDC4, 0, a1);
-        (*((void (__cdecl **)(_DWORD, _DWORD))DD7_SurfaceA->lpVtbl + 28))(DD7_SurfaceA, dword_49CDC4);
+        (*((void (__cdecl **)(_DWORD, _DWORD))DD7_Final_Screen_Surface->lpVtbl + 28))(
+          DD7_Final_Screen_Surface,
+          dword_49CDC4);
         result = 1;
       }
     }
@@ -8752,8 +8736,8 @@ signed int __cdecl Init_Direct_Draw(int a1, int a2, int a3)
 // 48F914: using guessed type int GraphicScale;
 // 49CDC0: using guessed type int dword_49CDC0;
 // 49CDC4: using guessed type int dword_49CDC4;
-// 49D374: using guessed type int Fullscreen_Width;
-// 49D378: using guessed type int Fullscreen_Height;
+// 49D374: using guessed type int Fullscreen_Surface_Height;
+// 49D378: using guessed type int Window_Surface_Width;
 
 //----- (0040B6C0) --------------------------------------------------------
 // Kills Direct Draw (Called on program exit)
@@ -8769,11 +8753,11 @@ void *__cdecl Kill_Direct_Draw(int a1)
       Image_Res_Surface[i] = 0;
     }
   }
-  if ( DD7_SurfaceA )
+  if ( DD7_Final_Screen_Surface )
   {
-    (*((void (__cdecl **)(_DWORD))DD7_SurfaceA->lpVtbl + 2))(DD7_SurfaceA);
-    DD7_SurfaceA = 0;
-    DD7_SurfaceB = 0;
+    (*((void (__cdecl **)(_DWORD))DD7_Final_Screen_Surface->lpVtbl + 2))(DD7_Final_Screen_Surface);
+    DD7_Final_Screen_Surface = 0;
+    DD7_Screen_Surface = 0;
   }
   if ( dword_49CDC0 )
     (*((void (__cdecl **)(_DWORD, _DWORD, _DWORD))Direct_Draw_Obj->lpVtbl + 20))(Direct_Draw_Obj, a1, 8);
@@ -8919,7 +8903,7 @@ int __cdecl Load_BMP_From_File_And_Create_Surface(char *source, int destination)
   int v8; // [sp+114h] [bp-BCh]@9
   int v9; // [sp+118h] [bp-B8h]@9
   HDC v10; // [sp+11Ch] [bp-B4h]@9
-  char v11; // [sp+120h] [bp-B0h]@9
+  int v11; // [sp+120h] [bp-B0h]@9
   int v12; // [sp+124h] [bp-ACh]@9
   int v13; // [sp+128h] [bp-A8h]@9
   int ptr; // [sp+138h] [bp-98h]@9
@@ -8937,8 +8921,8 @@ int __cdecl Load_BMP_From_File_And_Create_Surface(char *source, int destination)
   int v26; // [sp+1C8h] [bp-8h]@9
   int v27; // [sp+1CCh] [bp-4h]@9
 
-  v5 = Prevent_Crash_Report_Failure;
-  sprintf(&str, "%s\\%s.pbm", FullExePath_data, source);
+  v5 = Crash_Report_Failure_Check;
+  sprintf(&str, "%s\\%s.pbm", Data_Folder_Full_Path, source);
   if ( Is_PBM_Protected(&str) )
   {
     if ( destination <= 40 )
@@ -9023,7 +9007,7 @@ int __cdecl Load_BMP_From_File_And_Create_Surface(char *source, int destination)
   return result;
 }
 // 48F914: using guessed type int GraphicScale;
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 // 49CDC4: using guessed type int dword_49CDC4;
 // 49CDDC: using guessed type int dword_49CDDC[];
 // 49CDE0: using guessed type int dword_49CDE0[];
@@ -9031,7 +9015,7 @@ int __cdecl Load_BMP_From_File_And_Create_Surface(char *source, int destination)
 // 49CDE8: using guessed type int dword_49CDE8[];
 
 //----- (0040BE10) --------------------------------------------------------
-int __cdecl Load_BMP_From_Resource_Onto_Existing_Surface(char *source, int a2)
+int __cdecl Load_BMP_From_Resource_Onto_Existing_Surface(char *a1, int a2)
 {
   int result; // eax@2
   HINSTANCE v3; // eax@3
@@ -9054,7 +9038,7 @@ int __cdecl Load_BMP_From_Resource_Onto_Existing_Surface(char *source, int a2)
   if ( a2 < 40 )
   {
     v3 = GetModuleHandleA(0);
-    v14 = LoadImageA(v3, source, 0, 0, 0, 0x2000u);
+    v14 = LoadImageA(v3, a1, 0, 0, 0, 0x2000u);
     if ( v14 )
     {
       GetObjectA(v14, 24, &v7);
@@ -9076,7 +9060,7 @@ int __cdecl Load_BMP_From_Resource_Onto_Existing_Surface(char *source, int a2)
       (*((void (__cdecl **)(_DWORD, _DWORD, _DWORD))Image_Res_Surface[a2]->lpVtbl + 29))(Image_Res_Surface[a2], 8, &v12);
       (*((void (__cdecl **)(_DWORD, _DWORD))Image_Res_Surface[a2]->lpVtbl + 28))(Image_Res_Surface[a2], dword_49CDC4);
       dword_49CDE4[9 * a2] = 2;
-      strcpy((char *)ptr + 36 * a2, source);
+      strcpy((char *)ptr + 36 * a2, a1);
       result = 1;
     }
     else
@@ -9106,7 +9090,7 @@ int __cdecl Load_BMP_From_File_Onto_Existing_Surface(char *source, int destinati
   int v8; // [sp+118h] [bp-40h]@7
   int v9; // [sp+11Ch] [bp-3Ch]@7
   HDC v10; // [sp+120h] [bp-38h]@7
-  char v11; // [sp+124h] [bp-34h]@7
+  int v11; // [sp+124h] [bp-34h]@7
   int v12; // [sp+128h] [bp-30h]@7
   int v13; // [sp+12Ch] [bp-2Ch]@7
   HGDIOBJ v14; // [sp+13Ch] [bp-1Ch]@7
@@ -9117,8 +9101,8 @@ int __cdecl Load_BMP_From_File_Onto_Existing_Surface(char *source, int destinati
   int v19; // [sp+150h] [bp-8h]@7
   int v20; // [sp+154h] [bp-4h]@7
 
-  v5 = Prevent_Crash_Report_Failure;
-  sprintf(&str, "%s\\%s.pbm", FullExePath_data, source);
+  v5 = Crash_Report_Failure_Check;
+  sprintf(&str, "%s\\%s.pbm", Data_Folder_Full_Path, source);
   if ( Is_PBM_Protected(&str) )
   {
     if ( destination <= 40 )
@@ -9172,7 +9156,7 @@ int __cdecl Load_BMP_From_File_Onto_Existing_Surface(char *source, int destinati
   return result;
 }
 // 48F914: using guessed type int GraphicScale;
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 // 49CDE4: using guessed type int dword_49CDE4[];
 
 //----- (0040C1D0) --------------------------------------------------------
@@ -9247,7 +9231,7 @@ int __cdecl Capture_Screen_To_Surface(int DstRect, int X_Position)
   return (*((int (__stdcall **)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD))Image_Res_Surface[DstRect]->lpVtbl + 5))(
            Image_Res_Surface[DstRect],
            &RECT_ScreenCopy,
-           DD7_SurfaceB,
+           DD7_Screen_Surface,
            &RECT_ScreenCopy,
            0x1000000,
            &DDBLTFX_ScreenCopy);
@@ -9261,40 +9245,43 @@ int __cdecl Capture_Screen_To_Surface(int DstRect, int X_Position)
 //----- (0040C3C0) --------------------------------------------------------
 int __cdecl Draw_Sprite_With_Transparency(int Dst_Rects, int X_Position, int Y_Position, int Src_Rects, int GraphicsID)
 {
-  Blit_Rect_4C4.left = *(_DWORD *)Src_Rects;
-  Blit_Rect_4C4.top = *(_DWORD *)(Src_Rects + 4);
-  Blit_Rect_4C4.right = *(_DWORD *)(Src_Rects + 8);
-  Blit_Rect_4C4.bottom = *(_DWORD *)(Src_Rects + 12);
+  Final_Src_Rect_1.left = *(_DWORD *)Src_Rects;
+  Final_Src_Rect_1.top = *(_DWORD *)(Src_Rects + 4);
+  Final_Src_Rect_1.right = *(_DWORD *)(Src_Rects + 8);
+  Final_Src_Rect_1.bottom = *(_DWORD *)(Src_Rects + 12);
   if ( *(_DWORD *)(Src_Rects + 8) + X_Position - *(_DWORD *)Src_Rects > *(_DWORD *)(Dst_Rects + 8) )
-    Blit_Rect_4C4.right -= *(_DWORD *)(Src_Rects + 8) + X_Position - *(_DWORD *)Src_Rects - *(_DWORD *)(Dst_Rects + 8);
+    Final_Src_Rect_1.right -= *(_DWORD *)(Src_Rects + 8)
+                            + X_Position
+                            - *(_DWORD *)Src_Rects
+                            - *(_DWORD *)(Dst_Rects + 8);
   if ( X_Position < *(_DWORD *)Dst_Rects )
   {
-    Blit_Rect_4C4.left += *(_DWORD *)Dst_Rects - X_Position;
+    Final_Src_Rect_1.left += *(_DWORD *)Dst_Rects - X_Position;
     X_Position = *(_DWORD *)Dst_Rects;
   }
   if ( *(_DWORD *)(Src_Rects + 12) + Y_Position - *(_DWORD *)(Src_Rects + 4) > *(_DWORD *)(Dst_Rects + 12) )
-    Blit_Rect_4C4.bottom -= *(_DWORD *)(Src_Rects + 12)
-                          + Y_Position
-                          - *(_DWORD *)(Src_Rects + 4)
-                          - *(_DWORD *)(Dst_Rects + 12);
+    Final_Src_Rect_1.bottom -= *(_DWORD *)(Src_Rects + 12)
+                             + Y_Position
+                             - *(_DWORD *)(Src_Rects + 4)
+                             - *(_DWORD *)(Dst_Rects + 12);
   if ( Y_Position < *(_DWORD *)(Dst_Rects + 4) )
   {
-    Blit_Rect_4C4.top += *(_DWORD *)(Dst_Rects + 4) - Y_Position;
+    Final_Src_Rect_1.top += *(_DWORD *)(Dst_Rects + 4) - Y_Position;
     Y_Position = *(_DWORD *)(Dst_Rects + 4);
   }
-  Blit_Rect_4B4.left = GraphicScale * X_Position;
-  Blit_Rect_4B4.top = GraphicScale * Y_Position;
-  Blit_Rect_4B4.right = GraphicScale * (Blit_Rect_4C4.right + X_Position - Blit_Rect_4C4.left);
-  Blit_Rect_4B4.bottom = GraphicScale * (Blit_Rect_4C4.bottom + Y_Position - Blit_Rect_4C4.top);
-  Blit_Rect_4C4.left *= GraphicScale;
-  Blit_Rect_4C4.top *= GraphicScale;
-  Blit_Rect_4C4.right *= GraphicScale;
-  Blit_Rect_4C4.bottom *= GraphicScale;
-  return (*((int (__stdcall **)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD))DD7_SurfaceB->lpVtbl + 5))(
-           DD7_SurfaceB,
-           &Blit_Rect_4B4,
+  Final_Dst_Rect_1.left = GraphicScale * X_Position;
+  Final_Dst_Rect_1.top = GraphicScale * Y_Position;
+  Final_Dst_Rect_1.right = GraphicScale * (Final_Src_Rect_1.right + X_Position - Final_Src_Rect_1.left);
+  Final_Dst_Rect_1.bottom = GraphicScale * (Final_Src_Rect_1.bottom + Y_Position - Final_Src_Rect_1.top);
+  Final_Src_Rect_1.left *= GraphicScale;
+  Final_Src_Rect_1.top *= GraphicScale;
+  Final_Src_Rect_1.right *= GraphicScale;
+  Final_Src_Rect_1.bottom *= GraphicScale;
+  return (*((int (__stdcall **)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD))DD7_Screen_Surface->lpVtbl + 5))(
+           DD7_Screen_Surface,
+           &Final_Dst_Rect_1,
            Image_Res_Surface[GraphicsID],
-           &Blit_Rect_4C4,
+           &Final_Src_Rect_1,
            16809984,
            0);
 }
@@ -9304,77 +9291,72 @@ int __cdecl Draw_Sprite_With_Transparency(int Dst_Rects, int X_Position, int Y_P
 // Render_Graphics for backgrounds
 int __cdecl Draw_Sprite_No_Tranparency(int Dst_Rects, int X_Position, int Y_Position, int Src_Rects, int a5)
 {
-  Blit_Rect_4E4.left = *(_DWORD *)Src_Rects;
-  Blit_Rect_4E4.top = *(_DWORD *)(Src_Rects + 4);
-  Blit_Rect_4E4.right = *(_DWORD *)(Src_Rects + 8);
-  Blit_Rect_4E4.bottom = *(_DWORD *)(Src_Rects + 12);
+  Final_Src_Rect_2.left = *(_DWORD *)Src_Rects;
+  Final_Src_Rect_2.top = *(_DWORD *)(Src_Rects + 4);
+  Final_Src_Rect_2.right = *(_DWORD *)(Src_Rects + 8);
+  Final_Src_Rect_2.bottom = *(_DWORD *)(Src_Rects + 12);
   if ( *(_DWORD *)(Src_Rects + 8) + X_Position - *(_DWORD *)Src_Rects > *(_DWORD *)(Dst_Rects + 8) )
-    Blit_Rect_4E4.right -= *(_DWORD *)(Src_Rects + 8) + X_Position - *(_DWORD *)Src_Rects - *(_DWORD *)(Dst_Rects + 8);
+    Final_Src_Rect_2.right -= *(_DWORD *)(Src_Rects + 8)
+                            + X_Position
+                            - *(_DWORD *)Src_Rects
+                            - *(_DWORD *)(Dst_Rects + 8);
   if ( X_Position < *(_DWORD *)Dst_Rects )
   {
-    Blit_Rect_4E4.left += *(_DWORD *)Dst_Rects - X_Position;
+    Final_Src_Rect_2.left += *(_DWORD *)Dst_Rects - X_Position;
     X_Position = *(_DWORD *)Dst_Rects;
   }
   if ( *(_DWORD *)(Src_Rects + 12) + Y_Position - *(_DWORD *)(Src_Rects + 4) > *(_DWORD *)(Dst_Rects + 12) )
-    Blit_Rect_4E4.bottom -= *(_DWORD *)(Src_Rects + 12)
-                          + Y_Position
-                          - *(_DWORD *)(Src_Rects + 4)
-                          - *(_DWORD *)(Dst_Rects + 12);
+    Final_Src_Rect_2.bottom -= *(_DWORD *)(Src_Rects + 12)
+                             + Y_Position
+                             - *(_DWORD *)(Src_Rects + 4)
+                             - *(_DWORD *)(Dst_Rects + 12);
   if ( Y_Position < *(_DWORD *)(Dst_Rects + 4) )
   {
-    Blit_Rect_4E4.top += *(_DWORD *)(Dst_Rects + 4) - Y_Position;
+    Final_Src_Rect_2.top += *(_DWORD *)(Dst_Rects + 4) - Y_Position;
     Y_Position = *(_DWORD *)(Dst_Rects + 4);
   }
-  Blit_Rect_4D4.left = GraphicScale * X_Position;
-  Blit_Rect_4D4.top = GraphicScale * Y_Position;
-  Blit_Rect_4D4.right = GraphicScale * (Blit_Rect_4E4.right + X_Position - Blit_Rect_4E4.left);
-  Blit_Rect_4D4.bottom = GraphicScale * (Blit_Rect_4E4.bottom + Y_Position - Blit_Rect_4E4.top);
-  Blit_Rect_4E4.left *= GraphicScale;
-  Blit_Rect_4E4.top *= GraphicScale;
-  Blit_Rect_4E4.right *= GraphicScale;
-  Blit_Rect_4E4.bottom *= GraphicScale;
-  return (*((int (__stdcall **)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD))DD7_SurfaceB->lpVtbl + 5))(
-           DD7_SurfaceB,
-           &Blit_Rect_4D4,
+  Final_Dst_Rect_2.left = GraphicScale * X_Position;
+  Final_Dst_Rect_2.top = GraphicScale * Y_Position;
+  Final_Dst_Rect_2.right = GraphicScale * (Final_Src_Rect_2.right + X_Position - Final_Src_Rect_2.left);
+  Final_Dst_Rect_2.bottom = GraphicScale * (Final_Src_Rect_2.bottom + Y_Position - Final_Src_Rect_2.top);
+  Final_Src_Rect_2.left *= GraphicScale;
+  Final_Src_Rect_2.top *= GraphicScale;
+  Final_Src_Rect_2.right *= GraphicScale;
+  Final_Src_Rect_2.bottom *= GraphicScale;
+  return (*((int (__stdcall **)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD))DD7_Screen_Surface->lpVtbl + 5))(
+           DD7_Screen_Surface,
+           &Final_Dst_Rect_2,
            Image_Res_Surface[a5],
-           &Blit_Rect_4E4,
+           &Final_Src_Rect_2,
            0x1000000,
            0);
 }
 // 48F914: using guessed type int GraphicScale;
 
 //----- (0040C7A0) --------------------------------------------------------
-int __cdecl Draw_Sprite_Onto_Surface(int a1, int a2, int a3, int a4, int a5)
+int __cdecl Draw_Sprite_Onto_Surface(LONG a1, LONG a2, int a3, int a4, int a5)
 {
-  dword_49D504 = GraphicScale * *(_DWORD *)a3;
-  dword_49D508 = GraphicScale * *(_DWORD *)(a3 + 4);
-  dword_49D50C = GraphicScale * *(_DWORD *)(a3 + 8);
-  dword_49D510 = GraphicScale * *(_DWORD *)(a3 + 12);
-  dword_49D4F4 = a1;
-  dword_49D4F8 = a2;
-  dword_49D4FC = *(_DWORD *)(a3 + 8) + a1 - *(_DWORD *)a3;
-  dword_49D500 = *(_DWORD *)(a3 + 12) + a2 - *(_DWORD *)(a3 + 4);
-  dword_49D4F4 = GraphicScale * a1;
-  dword_49D4F8 = GraphicScale * a2;
-  dword_49D4FC *= GraphicScale;
-  dword_49D500 *= GraphicScale;
+  Final_Src_Rect_3.left = GraphicScale * *(_DWORD *)a3;
+  Final_Src_Rect_3.top = GraphicScale * *(_DWORD *)(a3 + 4);
+  Final_Src_Rect_3.right = GraphicScale * *(_DWORD *)(a3 + 8);
+  Final_Src_Rect_3.bottom = GraphicScale * *(_DWORD *)(a3 + 12);
+  Final_Dst_Rect_3.left = a1;
+  Final_Dst_Rect_3.top = a2;
+  Final_Dst_Rect_3.right = *(_DWORD *)(a3 + 8) + a1 - *(_DWORD *)a3;
+  Final_Dst_Rect_3.bottom = *(_DWORD *)(a3 + 12) + a2 - *(_DWORD *)(a3 + 4);
+  Final_Dst_Rect_3.left = GraphicScale * a1;
+  Final_Dst_Rect_3.top = GraphicScale * a2;
+  Final_Dst_Rect_3.right *= GraphicScale;
+  Final_Dst_Rect_3.bottom *= GraphicScale;
   return (*((int (__stdcall **)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD))Image_Res_Surface[a4]->lpVtbl + 5))(
            Image_Res_Surface[a4],
-           &dword_49D4F4,
+           &Final_Dst_Rect_3,
            Image_Res_Surface[a5],
-           &dword_49D504,
+           &Final_Src_Rect_3,
            16809984,
            0);
 }
 // 48F914: using guessed type int GraphicScale;
-// 49D4F4: using guessed type int dword_49D4F4;
-// 49D4F8: using guessed type int dword_49D4F8;
-// 49D4FC: using guessed type int dword_49D4FC;
-// 49D500: using guessed type int dword_49D500;
-// 49D504: using guessed type int dword_49D504;
-// 49D508: using guessed type int dword_49D508;
-// 49D50C: using guessed type int dword_49D50C;
-// 49D510: using guessed type int dword_49D510;
 
 //----- (0040C8B0) --------------------------------------------------------
 int __cdecl Make_Native_Color(COLORREF color)
@@ -9387,7 +9369,7 @@ int __cdecl Make_Native_Color(COLORREF color)
   HDC v6; // [sp+74h] [bp-8h]@1
   int v7; // [sp+78h] [bp-4h]@5
 
-  if ( (*((int (__cdecl **)(_DWORD, _DWORD))DD7_SurfaceB->lpVtbl + 17))(DD7_SurfaceB, &v6) )
+  if ( (*((int (__cdecl **)(_DWORD, _DWORD))DD7_Screen_Surface->lpVtbl + 17))(DD7_Screen_Surface, &v6) )
   {
     result = -1;
   }
@@ -9395,11 +9377,11 @@ int __cdecl Make_Native_Color(COLORREF color)
   {
     v2 = GetPixel(v6, 0, 0);
     SetPixel(v6, 0, 0, color);
-    (*((void (__cdecl **)(_DWORD, _DWORD))DD7_SurfaceB->lpVtbl + 26))(DD7_SurfaceB, v6);
+    (*((void (__cdecl **)(_DWORD, _DWORD))DD7_Screen_Surface->lpVtbl + 26))(DD7_Screen_Surface, v6);
     memset(&ptr, 0, 0x6Cu);
     ptr = 108;
-    if ( (*((int (__cdecl **)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD))DD7_SurfaceB->lpVtbl + 25))(
-           DD7_SurfaceB,
+    if ( (*((int (__cdecl **)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD))DD7_Screen_Surface->lpVtbl + 25))(
+           DD7_Screen_Surface,
            0,
            &ptr,
            1,
@@ -9412,15 +9394,15 @@ int __cdecl Make_Native_Color(COLORREF color)
       v7 = *v4;
       if ( v5 < 0x20 )
         v7 &= (1 << v5) - 1;
-      (*((void (__cdecl **)(_DWORD, _DWORD))DD7_SurfaceB->lpVtbl + 32))(DD7_SurfaceB, 0);
-      if ( (*((int (__cdecl **)(_DWORD, _DWORD))DD7_SurfaceB->lpVtbl + 17))(DD7_SurfaceB, &v6) )
+      (*((void (__cdecl **)(_DWORD, _DWORD))DD7_Screen_Surface->lpVtbl + 32))(DD7_Screen_Surface, 0);
+      if ( (*((int (__cdecl **)(_DWORD, _DWORD))DD7_Screen_Surface->lpVtbl + 17))(DD7_Screen_Surface, &v6) )
       {
         result = -1;
       }
       else
       {
         SetPixel(v6, 0, 0, v2);
-        (*((void (__cdecl **)(_DWORD, _DWORD))DD7_SurfaceB->lpVtbl + 26))(DD7_SurfaceB, v6);
+        (*((void (__cdecl **)(_DWORD, _DWORD))DD7_Screen_Surface->lpVtbl + 26))(DD7_Screen_Surface, v6);
         result = v7;
       }
     }
@@ -9431,59 +9413,50 @@ int __cdecl Make_Native_Color(COLORREF color)
 //----- (0040C9E0) --------------------------------------------------------
 int __cdecl Draw_Color_Fill(int Ptr_Img_Rects, int Mask_Color)
 {
-  memset(DDBLTFX_Clear, 0, 0x64u);
-  *(_DWORD *)DDBLTFX_Clear = 100;
-  *(_DWORD *)asc_49D578 = Mask_Color;
-  Rect_Clear = GraphicScale * *(_DWORD *)Ptr_Img_Rects;
-  dword_49D518 = GraphicScale * *(_DWORD *)(Ptr_Img_Rects + 4);
-  dword_49D51C = GraphicScale * *(_DWORD *)(Ptr_Img_Rects + 8);
-  dword_49D520 = GraphicScale * *(_DWORD *)(Ptr_Img_Rects + 12);
-  return (*((int (__stdcall **)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD))DD7_SurfaceB->lpVtbl + 5))(
-           DD7_SurfaceB,
-           &Rect_Clear,
+  memset(Draw_Colour_Fill_DDBLTFX, 0, 0x64u);
+  *(_DWORD *)Draw_Colour_Fill_DDBLTFX = 100;
+  *(_DWORD *)Draw_Colour_Fill_DDBLTFX_dxFillColor = Mask_Color;
+  Final_Dest_Rect_4.left = GraphicScale * *(_DWORD *)Ptr_Img_Rects;
+  Final_Dest_Rect_4.top = GraphicScale * *(_DWORD *)(Ptr_Img_Rects + 4);
+  Final_Dest_Rect_4.right = GraphicScale * *(_DWORD *)(Ptr_Img_Rects + 8);
+  Final_Dest_Rect_4.bottom = GraphicScale * *(_DWORD *)(Ptr_Img_Rects + 12);
+  return (*((int (__stdcall **)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD))DD7_Screen_Surface->lpVtbl + 5))(
+           DD7_Screen_Surface,
+           &Final_Dest_Rect_4,
            0,
            0,
            16778240,
-           DDBLTFX_Clear);
+           Draw_Colour_Fill_DDBLTFX);
 }
 // 48F914: using guessed type int GraphicScale;
-// 49D514: using guessed type int Rect_Clear;
-// 49D518: using guessed type int dword_49D518;
-// 49D51C: using guessed type int dword_49D51C;
-// 49D520: using guessed type int dword_49D520;
 
 //----- (0040CA80) --------------------------------------------------------
 int __cdecl Draw_Color_Fill_Onto_Surface(int a1, int a2, int a3)
 {
-  memset(asc_49D5A0, 0, 0x64u);
-  *(_DWORD *)asc_49D5A0 = 100;
-  *(_DWORD *)asc_49D5F0 = a2;
-  dword_49D58C = GraphicScale * *(_DWORD *)a1;
-  dword_49D590 = GraphicScale * *(_DWORD *)(a1 + 4);
-  dword_49D594 = GraphicScale * *(_DWORD *)(a1 + 8);
-  dword_49D598 = GraphicScale * *(_DWORD *)(a1 + 12);
+  memset(Draw_Colour_Fill_Onto_Surface_DDBLTFX, 0, 0x64u);
+  *(_DWORD *)Draw_Colour_Fill_Onto_Surface_DDBLTFX = 100;
+  *(_DWORD *)Draw_Colour_Fill_Onto_Surface_DDBLTFX_dxFillColor = a2;
+  Final_Dst_Rect_5.left = GraphicScale * *(_DWORD *)a1;
+  Final_Dst_Rect_5.top = GraphicScale * *(_DWORD *)(a1 + 4);
+  Final_Dst_Rect_5.right = GraphicScale * *(_DWORD *)(a1 + 8);
+  Final_Dst_Rect_5.bottom = GraphicScale * *(_DWORD *)(a1 + 12);
   dword_49CDE4[9 * a3] = 1;
   return (*((int (__stdcall **)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD))Image_Res_Surface[a3]->lpVtbl + 5))(
            Image_Res_Surface[a3],
-           &dword_49D58C,
+           &Final_Dst_Rect_5,
            0,
            0,
            16778240,
-           asc_49D5A0);
+           Draw_Colour_Fill_Onto_Surface_DDBLTFX);
 }
 // 48F914: using guessed type int GraphicScale;
 // 49CDE4: using guessed type int dword_49CDE4[];
-// 49D58C: using guessed type int dword_49D58C;
-// 49D590: using guessed type int dword_49D590;
-// 49D594: using guessed type int dword_49D594;
-// 49D598: using guessed type int dword_49D598;
 
 //----- (0040CB30) --------------------------------------------------------
 signed int Security_Function_()
 {
   return 1;
 }
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
 
 //----- (0040CB60) --------------------------------------------------------
 int Regenerate_Surfaces()
@@ -9498,20 +9471,20 @@ int Regenerate_Surfaces()
   int v7; // [sp+18h] [bp-4h]@1
 
   v7 = 0;
-  if ( DD7_SurfaceA )
+  if ( DD7_Final_Screen_Surface )
   {
-    if ( DD7_SurfaceB )
+    if ( DD7_Screen_Surface )
     {
-      if ( (*((int (__cdecl **)(_DWORD))DD7_SurfaceA->lpVtbl + 24))(DD7_SurfaceA) == -2005532222 )
+      if ( (*((int (__cdecl **)(_DWORD))DD7_Final_Screen_Surface->lpVtbl + 24))(DD7_Final_Screen_Surface) == -2005532222 )
       {
         ++v7;
-        (*((void (__cdecl **)(_DWORD))DD7_SurfaceA->lpVtbl + 27))(DD7_SurfaceA);
+        (*((void (__cdecl **)(_DWORD))DD7_Final_Screen_Surface->lpVtbl + 27))(DD7_Final_Screen_Surface);
         Security_Function_();
       }
-      if ( (*((int (__cdecl **)(_DWORD))DD7_SurfaceB->lpVtbl + 24))(DD7_SurfaceB) == -2005532222 )
+      if ( (*((int (__cdecl **)(_DWORD))DD7_Screen_Surface->lpVtbl + 24))(DD7_Screen_Surface) == -2005532222 )
       {
         ++v7;
-        (*((void (__cdecl **)(_DWORD))DD7_SurfaceB->lpVtbl + 27))(DD7_SurfaceB);
+        (*((void (__cdecl **)(_DWORD))DD7_Screen_Surface->lpVtbl + 27))(DD7_Screen_Surface);
         Security_Function_();
       }
       for ( destination = 0; destination < 40; ++destination )
@@ -9586,11 +9559,11 @@ HFONT __cdecl Load_Font(LPCSTR a1)
     }
     result = CreateFontA(v2, v3, 0, 0, 400, 0, 0, 0, 1u, 4u, 0, 0, 1u, a1);
   }
-  Handle_Font_Object[0] = result;
+  Font_Handle[0] = result;
   if ( !result )
   {
     result = CreateFontA(v2, v3, 0, 0, 400, 0, 0, 0, 1u, 4u, 0, 0, 1u, 0);
-    Handle_Font_Object[0] = result;
+    Font_Handle[0] = result;
   }
   return result;
 }
@@ -9607,7 +9580,7 @@ int __cdecl Draw_String_Onto_Surface(int X_Position, int Y_Position, char *Ptr_S
   (*((void (__cdecl **)(_DWORD, _DWORD))Image_Res_Surface[DDraw_Thingy]->lpVtbl + 17))(
     Image_Res_Surface[DDraw_Thingy],
     &v7);
-  v8 = SelectObject(v7, Handle_Font_Object[0]);
+  v8 = SelectObject(v7, Font_Handle[0]);
   SetBkMode(v7, 1);
   SetTextColor(v7, color);
   v5 = strlen(Ptr_String);
@@ -9627,10 +9600,10 @@ int Scroll_Credits_Text()
 
   for ( i = 0; i < 16; ++i )
   {
-    if ( *((_DWORD *)&dword_49D628 + 20 * i) & 0x80 && dword_49D620 )
+    if ( *((_DWORD *)&Text_Object_Array_ + 20 * i) & 0x80 && dword_49D620 )
       dword_49D630[20 * i] -= 256;
     if ( dword_49D630[20 * i] <= -8192 )
-      *((_DWORD *)&dword_49D628 + 20 * i) = 0;
+      *((_DWORD *)&Text_Object_Array_ + 20 * i) = 0;
     result = i + 1;
   }
   return result;
@@ -9643,38 +9616,38 @@ int Scroll_Credits_Text()
 int Draw_From_Slot_0x25_Credits_Text_()
 {
   int result; // eax@5
-  signed int i; // [sp+0h] [bp-14h]@1
+  signed int Loop_Counter; // [sp+0h] [bp-14h]@1
   int Src_Rects; // [sp+4h] [bp-10h]@4
   int v3; // [sp+8h] [bp-Ch]@4
   int v4; // [sp+Ch] [bp-8h]@4
   int v5; // [sp+10h] [bp-4h]@4
 
-  for ( i = 0; i < 16; ++i )
+  for ( Loop_Counter = 0; Loop_Counter < 16; ++Loop_Counter )
   {
-    if ( *((_DWORD *)&dword_49D628 + 20 * i) & 0x80 )
+    if ( *((_DWORD *)&Text_Object_Array_ + 20 * Loop_Counter) & 0x80 )
     {
       Src_Rects = 0;
       v4 = 320;
-      v3 = 16 * i;
-      v5 = 16 * i + 16;
+      v3 = 16 * Loop_Counter;
+      v5 = 16 * Loop_Counter + 16;
       Draw_Sprite_With_Transparency(
         (int)&unk_48F92C,
-        dword_49D62C[20 * i] / 512,
-        dword_49D630[20 * i] / 512,
+        dword_49D62C[20 * Loop_Counter] / 512,
+        dword_49D630[20 * Loop_Counter] / 512,
         (int)&Src_Rects,
         35);
-      Src_Rects = 24 * (dword_49D634[20 * i] % 13);
+      Src_Rects = 24 * (dword_49D634[20 * Loop_Counter] % 13);
       v4 = Src_Rects + 24;
-      v3 = 24 * (dword_49D634[20 * i] / 13);
+      v3 = 24 * (dword_49D634[20 * Loop_Counter] / 13);
       v5 = v3 + 24;
       Draw_Sprite_With_Transparency(
         (int)&unk_48F92C,
-        dword_49D62C[20 * i] / 512 - 24,
-        dword_49D630[20 * i] / 512 - 8,
+        dword_49D62C[20 * Loop_Counter] / 512 - 24,
+        dword_49D630[20 * Loop_Counter] / 512 - 8,
         (int)&Src_Rects,
         37);
     }
-    result = i + 1;
+    result = Loop_Counter + 1;
   }
   return result;
 }
@@ -9684,30 +9657,30 @@ int Draw_From_Slot_0x25_Credits_Text_()
 
 //----- (0040D150) --------------------------------------------------------
 // Draws some text
-int __cdecl Print_Text_(int a1, int a2, char *Ptr_String, int a4)
+int __cdecl Print_Text_(int a1, int a2, char *source, int a4)
 {
   int result; // eax@4
-  signed int i; // [sp+0h] [bp-14h]@1
+  signed int Loop_Counter; // [sp+0h] [bp-14h]@1
   int v6; // [sp+4h] [bp-10h]@6
   int Y_Position; // [sp+8h] [bp-Ch]@6
   int v8; // [sp+Ch] [bp-8h]@6
   int v9; // [sp+10h] [bp-4h]@6
 
-  for ( i = 0; i < 16 && *((_DWORD *)&dword_49D628 + 20 * i) & 0x80; ++i )
-    result = i + 1;
-  if ( i != 16 )
+  for ( Loop_Counter = 0; Loop_Counter < 16 && *((_DWORD *)&Text_Object_Array_ + 20 * Loop_Counter) & 0x80; ++Loop_Counter )
+    result = Loop_Counter + 1;
+  if ( Loop_Counter != 16 )
   {
-    *((_DWORD *)&dword_49D628 + 20 * i) = 128;
-    dword_49D62C[20 * i] = a1;
-    dword_49D630[20 * i] = a2;
-    dword_49D634[20 * i] = a4;
-    strcpy(&asc_49D638[80 * i], Ptr_String);
+    *((_DWORD *)&Text_Object_Array_ + 20 * Loop_Counter) = 128;
+    dword_49D62C[20 * Loop_Counter] = a1;
+    dword_49D630[20 * Loop_Counter] = a2;
+    dword_49D634[20 * Loop_Counter] = a4;
+    strcpy(&asc_49D638[80 * Loop_Counter], source);
     v6 = 0;
     v8 = 320;
-    Y_Position = 16 * i;
-    v9 = 16 * i + 16;
+    Y_Position = 16 * Loop_Counter;
+    v9 = 16 * Loop_Counter + 16;
     Draw_Color_Fill_Onto_Surface((int)&v6, 0, 35);
-    result = Draw_String_Onto_Surface(0, Y_Position, Ptr_String, 0xFEFFFFu, 35);
+    result = Draw_String_Onto_Surface(0, Y_Position, source, 0xFEFFFFu, 35);
   }
   return result;
 }
@@ -9720,24 +9693,24 @@ int __cdecl Print_Text_(int a1, int a2, char *Ptr_String, int a4)
 int Draws_Some_Text()
 {
   int result; // eax@5
-  signed int i; // [sp+0h] [bp-14h]@1
+  signed int Loop_Counter; // [sp+0h] [bp-14h]@1
   int v2; // [sp+4h] [bp-10h]@4
   int Y_Position; // [sp+8h] [bp-Ch]@4
   int v4; // [sp+Ch] [bp-8h]@4
   int v5; // [sp+10h] [bp-4h]@4
 
-  for ( i = 0; i < 16; ++i )
+  for ( Loop_Counter = 0; Loop_Counter < 16; ++Loop_Counter )
   {
-    if ( *((_DWORD *)&dword_49D628 + 20 * i) & 0x80 )
+    if ( *((_DWORD *)&Text_Object_Array_ + 20 * Loop_Counter) & 0x80 )
     {
       v2 = 0;
       v4 = 320;
-      Y_Position = 16 * i;
-      v5 = 16 * i + 16;
+      Y_Position = 16 * Loop_Counter;
+      v5 = 16 * Loop_Counter + 16;
       Draw_Color_Fill_Onto_Surface((int)&v2, 0, 35);
-      Draw_String_Onto_Surface(0, Y_Position, &asc_49D638[80 * i], 0xFEFFFFu, 35);
+      Draw_String_Onto_Surface(0, Y_Position, &asc_49D638[80 * Loop_Counter], 0xFEFFFFu, 35);
     }
-    result = i + 1;
+    result = Loop_Counter + 1;
   }
   return result;
 }
@@ -9753,25 +9726,25 @@ int Slide_Credits_Picture()
   {
     if ( dword_49D608 == 1 )
     {
-      dword_49D60C += 20480;
-      if ( dword_49D60C > 0 )
-        dword_49D60C = 0;
+      Credits_Picture_X += 20480;
+      if ( Credits_Picture_X > 0 )
+        Credits_Picture_X = 0;
     }
     else if ( dword_49D608 == 2 )
     {
-      dword_49D60C -= 20480;
-      if ( dword_49D60C < -81920 )
-        dword_49D60C = -81920;
+      Credits_Picture_X -= 20480;
+      if ( Credits_Picture_X < -81920 )
+        Credits_Picture_X = -81920;
     }
   }
   else
   {
-    dword_49D60C = -81920;
+    Credits_Picture_X = -81920;
   }
   return result;
 }
 // 49D608: using guessed type int dword_49D608;
-// 49D60C: using guessed type int dword_49D60C;
+// 49D60C: using guessed type int Credits_Picture_X;
 
 //----- (0040D350) --------------------------------------------------------
 // Draws credits image (from Bitmap Slot 0x24)
@@ -9786,38 +9759,38 @@ int Draw_Credits_Image()
   v2 = 0;
   v3 = 160;
   v4 = 240;
-  return Draw_Sprite_With_Transparency((int)&unk_48F92C, dword_49D60C / 512, 0, (int)&Src_Rects, 36);
+  return Draw_Sprite_With_Transparency((int)&unk_48F92C, Credits_Picture_X / 512, 0, (int)&Src_Rects, 36);
 }
-// 49D60C: using guessed type int dword_49D60C;
+// 49D60C: using guessed type int Credits_Picture_X;
 
 //----- (0040D3A0) --------------------------------------------------------
 // Slot 24 : Used for Credit Pixel arts
 int __cdecl Load_Credits_Image(int a1)
 {
   char str; // [sp+0h] [bp-14h]@1
-  int v3; // [sp+10h] [bp-4h]@1
+  int Prevent_failure; // [sp+10h] [bp-4h]@1
 
-  v3 = Prevent_Crash_Report_Failure;
+  Prevent_failure = Crash_Report_Failure_Check;
   sprintf(&str, "CREDIT%02d", a1);
   return Load_BMP_From_Resource_Onto_Existing_Surface(&str, 36);
 }
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 
 //----- (0040D3E0) --------------------------------------------------------
 void *sub_40D3E0()
 {
-  memset(&dword_49D610, 0, 0x18u);
-  return memset(&dword_49D628, 0, 0x500u);
+  memset(&TSC_Length, 0, 0x18u);
+  return memset(&Text_Object_Array_, 0, 0x500u);
 }
 
 //----- (0040D410) --------------------------------------------------------
 // Deallocates 49D614 if it's not equal to 0
 void If_Not_49D614_0_Deallocate()
 {
-  if ( dword_49D614 )
+  if ( TSC_Buffer )
   {
-    free(dword_49D614);
-    dword_49D614 = 0;
+    free(TSC_Buffer);
+    TSC_Buffer = 0;
   }
 }
 
@@ -9827,40 +9800,40 @@ signed int Initialise_Credits()
 {
   signed int result; // eax@4
   char str; // [sp+0h] [bp-110h]@3
-  int v2; // [sp+108h] [bp-8h]@1
+  int anti_failure; // [sp+108h] [bp-8h]@1
   FILE *v3; // [sp+10Ch] [bp-4h]@7
 
-  v2 = Prevent_Crash_Report_Failure;
-  if ( dword_49D614 )
+  anti_failure = Crash_Report_Failure_Check;
+  if ( TSC_Buffer )
   {
-    free(dword_49D614);
-    dword_49D614 = 0;
+    free(TSC_Buffer);
+    TSC_Buffer = 0;
   }
-  sprintf(&str, "%s\\%s", FullExePath_data, off_48F918);
-  size = Get_File_Size(&str);
-  if ( size == -1 )
+  sprintf(&str, "%s\\%s", Data_Folder_Full_Path, off_48F918);
+  TSC_Length = Get_File_Size(&str);
+  if ( TSC_Length == -1 )
   {
     result = 0;
   }
   else
   {
-    dword_49D614 = malloc(size);
-    if ( dword_49D614 )
+    TSC_Buffer = malloc(TSC_Length);
+    if ( TSC_Buffer )
     {
       v3 = fopen(&str, "rb");
       if ( v3 )
       {
-        sub_480F55((FILE *)dword_49D614, 1u, size, v3);
-        sub_4215C0((int)dword_49D614, size);
+        fread_wrapper(TSC_Buffer, 1u, TSC_Length, v3);
+        Decode_TSC((int)TSC_Buffer, TSC_Length);
         dword_49D618 = 0;
         dword_49D61C = 0;
         dword_49D620 = 1;
-        dword_49D60C = -81920;
+        Credits_Picture_X = -81920;
         dword_49D608 = 0;
         FullscreenRect = 160;
         if ( Load_BMP_From_File_Onto_Existing_Surface("casts", 37) )
         {
-          memset(&dword_49D628, 0, 0x500u);
+          memset(&Text_Object_Array_, 0, 0x500u);
           result = 1;
         }
         else
@@ -9870,7 +9843,7 @@ signed int Initialise_Credits()
       }
       else
       {
-        free(dword_49D614);
+        free(TSC_Buffer);
         result = 0;
       }
     }
@@ -9883,9 +9856,9 @@ signed int Initialise_Credits()
 }
 // 48F918: using guessed type char *off_48F918;
 // 48F91C: using guessed type int FullscreenRect;
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 // 49D608: using guessed type int dword_49D608;
-// 49D60C: using guessed type int dword_49D60C;
+// 49D60C: using guessed type int Credits_Picture_X;
 // 49D618: using guessed type int dword_49D618;
 // 49D61C: using guessed type int dword_49D61C;
 // 49D620: using guessed type int dword_49D620;
@@ -9896,7 +9869,7 @@ int sub_40D5C0()
   int result; // eax@1
 
   result = dword_49D618;
-  if ( dword_49D618 < (signed int)size )
+  if ( dword_49D618 < (signed int)TSC_Length )
   {
     if ( dword_49D620 == 1 )
     {
@@ -9919,49 +9892,49 @@ int TSC_Interpreter_()
   int result; // eax@2
   size_t num; // ST18_4@10
   size_t v2; // ST18_4@10
-  int v3; // ST1C_4@14
+  signed int v3; // ST1C_4@14
   int v4; // ST1C_4@19
-  signed int v5; // ST1C_4@26
+  int v5; // ST1C_4@26
   int v6; // [sp+4h] [bp-38h]@16
   int v7; // [sp+4h] [bp-38h]@26
-  int Music_To_Play; // [sp+Ch] [bp-30h]@4
+  signed int Music_To_Play; // [sp+Ch] [bp-30h]@4
   char destination[40]; // [sp+10h] [bp-2Ch]@10
   int v10; // [sp+38h] [bp-4h]@1
 
-  v10 = Prevent_Crash_Report_Failure;
+  v10 = Crash_Report_Failure_Check;
   while ( 2 )
   {
     result = 1;
-    if ( dword_49D618 < (signed int)size )
+    if ( dword_49D618 < (signed int)TSC_Length )
     {
-      result = *((_BYTE *)dword_49D614 + dword_49D618);
+      result = *((_BYTE *)TSC_Buffer + dword_49D618);
       switch ( result )
       {
         case 91:
           Music_To_Play = ++dword_49D618;
-          while ( *((_BYTE *)dword_49D614 + Music_To_Play) != 93 )
+          while ( *((_BYTE *)TSC_Buffer + Music_To_Play) != 93 )
           {
-            if ( sub_410E90(*((_BYTE *)dword_49D614 + Music_To_Play)) )
+            if ( sub_410E90(*((_BYTE *)TSC_Buffer + Music_To_Play)) )
               Music_To_Play += 2;
             else
               ++Music_To_Play;
           }
           num = Music_To_Play - dword_49D618;
-          memcpy(destination, (char *)dword_49D614 + dword_49D618, Music_To_Play - dword_49D618);
+          memcpy(destination, (char *)TSC_Buffer + dword_49D618, Music_To_Play - dword_49D618);
           destination[num] = 0;
           dword_49D618 = Music_To_Play + 1;
-          v2 = sub_40DB00((int)dword_49D614 + Music_To_Play + 1);
+          v2 = sub_40DB00((int)TSC_Buffer + Music_To_Play + 1);
           result = Print_Text_(dword_49D624, 126976, destination, v2);
           dword_49D618 += 4;
           return result;
         case 45:
-          result = sub_40DB00((int)dword_49D614 + ++dword_49D618);
+          result = sub_40DB00((int)TSC_Buffer + ++dword_49D618);
           dword_49D61C = result;
           dword_49D618 += 4;
           dword_49D620 = 2;
           return result;
         case 43:
-          result = sub_40DB00((int)dword_49D614 + ++dword_49D618) << 9;
+          result = sub_40DB00((int)TSC_Buffer + ++dword_49D618) << 9;
           dword_49D624 = result;
           dword_49D618 += 4;
           return result;
@@ -9969,39 +9942,39 @@ int TSC_Interpreter_()
           dword_49D620 = 0;
           return result;
         case 33:
-          v3 = sub_40DB00((int)dword_49D614 + ++dword_49D618);
+          v3 = sub_40DB00((int)TSC_Buffer + ++dword_49D618);
           dword_49D618 += 4;
           return Tsc_CMU(v3);
         case 126:
           ++dword_49D618;
-          return __setargv_0();
+          return Fade_Music();
         case 106:
-          v6 = sub_40DB00((int)dword_49D614 + ++dword_49D618);
+          v6 = sub_40DB00((int)TSC_Buffer + ++dword_49D618);
           dword_49D618 += 4;
           do
           {
 LABEL_17:
             result = dword_49D618;
-            if ( dword_49D618 >= (signed int)size )
+            if ( dword_49D618 >= (signed int)TSC_Length )
               break;
-            if ( *((_BYTE *)dword_49D614 + dword_49D618) != 108 )
+            if ( *((_BYTE *)TSC_Buffer + dword_49D618) != 108 )
             {
-              if ( sub_410E90(*((_BYTE *)dword_49D614 + dword_49D618)) )
+              if ( sub_410E90(*((_BYTE *)TSC_Buffer + dword_49D618)) )
                 dword_49D618 += 2;
               else
                 ++dword_49D618;
               goto LABEL_17;
             }
-            v4 = sub_40DB00((int)dword_49D614 + ++dword_49D618);
+            v4 = sub_40DB00((int)TSC_Buffer + ++dword_49D618);
             dword_49D618 += 4;
             result = v6;
           }
           while ( v6 != v4 );
           return result;
         case 102:
-          v5 = sub_40DB00((int)dword_49D614 + ++dword_49D618);
+          v5 = sub_40DB00((int)TSC_Buffer + ++dword_49D618);
           dword_49D618 += 5;
-          v7 = sub_40DB00((int)dword_49D614 + dword_49D618);
+          v7 = sub_40DB00((int)TSC_Buffer + dword_49D618);
           dword_49D618 += 4;
           result = Check_Flag(v5);
           if ( !result )
@@ -10011,18 +9984,18 @@ LABEL_17:
           ++dword_49D618;
           continue;
       }
-      while ( dword_49D618 < (signed int)size )
+      while ( dword_49D618 < (signed int)TSC_Length )
       {
-        if ( *((_BYTE *)dword_49D614 + dword_49D618) == 108 )
+        if ( *((_BYTE *)TSC_Buffer + dword_49D618) == 108 )
         {
-          result = sub_40DB00((int)dword_49D614 + ++dword_49D618);
+          result = sub_40DB00((int)TSC_Buffer + ++dword_49D618);
           dword_49D618 += 4;
           if ( v7 == result )
             return result;
         }
         else
         {
-          result = sub_410E90(*((_BYTE *)dword_49D614 + dword_49D618));
+          result = sub_410E90(*((_BYTE *)TSC_Buffer + dword_49D618));
           if ( result )
             dword_49D618 += 2;
           else
@@ -10033,8 +10006,8 @@ LABEL_17:
     return result;
   }
 }
-// 41C880: using guessed type int __setargv_0(void);
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 41C880: using guessed type int Fade_Music(void);
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 // 49D618: using guessed type int dword_49D618;
 // 49D61C: using guessed type int dword_49D61C;
 // 49D620: using guessed type int dword_49D620;
@@ -10223,10 +10196,10 @@ int sub_40DE60()
 //----- (0040DEA0) --------------------------------------------------------
 void sub_40DEA0()
 {
-  dword_49DB34 = 0;
+  Fade_Complete = 0;
   *(_DWORD *)&Fade_Status = 0;
 }
-// 49DB34: using guessed type int dword_49DB34;
+// 49DB34: using guessed type int Fade_Complete;
 
 //----- (0040DEC0) --------------------------------------------------------
 char __cdecl TSC_FAO_Begin_Fade_Out(char a1)
@@ -10236,23 +10209,24 @@ char __cdecl TSC_FAO_Begin_Fade_Out(char a1)
   signed int i; // [sp+4h] [bp-4h]@1
 
   *(_DWORD *)&Fade_Status = 2;
-  dword_49DB38 = 0;
+  Fade_Counter = 0;
   result = a1;
-  byte_49DC69[299] = a1;
-  dword_49DB34 = 0;
+  Fade_Type = a1;
+  Fade_Complete = 0;
   for ( i = 0; i < 15; ++i )
   {
     for ( j = 0; j < 20; ++j )
     {
-      *(&byte_49DB3C[20 * i] + j) = 0;
+      *(&Fade_Buffer_Int[20 * i] + j) = 0;
       result = j;
-      *(&byte_49DC68[20 * i] + j) = 0;
+      *(&Fade_Buffer_Bool[20 * i] + j) = 0;
     }
   }
   return result;
 }
-// 49DB34: using guessed type int dword_49DB34;
-// 49DB38: using guessed type int dword_49DB38;
+// 49DB34: using guessed type int Fade_Complete;
+// 49DB38: using guessed type int Fade_Counter;
+// 49DD94: using guessed type char Fade_Type;
 
 //----- (0040DF50) --------------------------------------------------------
 char __cdecl TSC_FAI_Begin_Fade_In(char a1)
@@ -10262,23 +10236,24 @@ char __cdecl TSC_FAI_Begin_Fade_In(char a1)
   signed int i; // [sp+4h] [bp-4h]@1
 
   *(_DWORD *)&Fade_Status = 1;
-  dword_49DB38 = 0;
+  Fade_Counter = 0;
   result = a1;
-  byte_49DC69[299] = a1;
-  dword_49DB34 = 1;
+  Fade_Type = a1;
+  Fade_Complete = 1;
   for ( i = 0; i < 15; ++i )
   {
     for ( j = 0; j < 20; ++j )
     {
-      *(&byte_49DB3C[20 * i] + j) = 15;
+      *(&Fade_Buffer_Int[20 * i] + j) = 15;
       result = j;
-      *(&byte_49DC68[20 * i] + j) = 0;
+      *(&Fade_Buffer_Bool[20 * i] + j) = 0;
     }
   }
   return result;
 }
-// 49DB34: using guessed type int dword_49DB34;
-// 49DB38: using guessed type int dword_49DB38;
+// 49DB34: using guessed type int Fade_Complete;
+// 49DB38: using guessed type int Fade_Counter;
+// 49DD94: using guessed type char Fade_Type;
 
 //----- (0040DFE0) --------------------------------------------------------
 int Process_Fade()
@@ -10324,16 +10299,16 @@ int Process_Fade()
   result = *(_DWORD *)&Fade_Status;
   if ( *(_DWORD *)&Fade_Status == 1 )
   {
-    dword_49DB34 = 0;
-    switch ( byte_49DC69[299] )
+    Fade_Complete = 0;
+    switch ( Fade_Type )
     {
       case 0:
         for ( i = 0; i < 15; ++i )
         {
           for ( j = 0; j < 20; ++j )
           {
-            if ( 19 - dword_49DB38 == j )
-              *(&byte_49DC68[20 * i] + j) = 1;
+            if ( 19 - Fade_Counter == j )
+              *(&Fade_Buffer_Bool[20 * i] + j) = 1;
           }
           result = i + 1;
         }
@@ -10343,8 +10318,8 @@ int Process_Fade()
         {
           for ( l = 0; l < 20; ++l )
           {
-            if ( dword_49DB38 == l )
-              *(&byte_49DC68[20 * k] + l) = 1;
+            if ( Fade_Counter == l )
+              *(&Fade_Buffer_Bool[20 * k] + l) = 1;
             result = l + 1;
           }
         }
@@ -10354,9 +10329,9 @@ int Process_Fade()
         {
           for ( n = 0; n < 20; ++n )
           {
-            result = 14 - dword_49DB38;
-            if ( 14 - dword_49DB38 == m )
-              *(&byte_49DC68[20 * m] + n) = 1;
+            result = 14 - Fade_Counter;
+            if ( 14 - Fade_Counter == m )
+              *(&Fade_Buffer_Bool[20 * m] + n) = 1;
           }
         }
         break;
@@ -10365,8 +10340,8 @@ int Process_Fade()
         {
           for ( jj = 0; jj < 20; ++jj )
           {
-            if ( dword_49DB38 == ii )
-              *(&byte_49DC68[20 * ii] + jj) = 1;
+            if ( Fade_Counter == ii )
+              *(&Fade_Buffer_Bool[20 * ii] + jj) = 1;
           }
           result = ii + 1;
         }
@@ -10376,8 +10351,8 @@ int Process_Fade()
         {
           for ( ll = 0; ll < 10; ++ll )
           {
-            if ( 19 - dword_49DB38 == kk + ll )
-              *(&byte_49DC68[20 * kk] + ll) = 1;
+            if ( 19 - Fade_Counter == kk + ll )
+              *(&Fade_Buffer_Bool[20 * kk] + ll) = 1;
             result = ll + 1;
           }
         }
@@ -10385,8 +10360,8 @@ int Process_Fade()
         {
           for ( nn = 10; nn < 20; ++nn )
           {
-            if ( 19 - dword_49DB38 == mm + 19 - nn )
-              *(&byte_49DC68[20 * mm] + nn) = 1;
+            if ( 19 - Fade_Counter == mm + 19 - nn )
+              *(&Fade_Buffer_Bool[20 * mm] + nn) = 1;
             result = nn + 1;
           }
         }
@@ -10394,8 +10369,8 @@ int Process_Fade()
         {
           for ( i2 = 0; i2 < 10; ++i2 )
           {
-            if ( 19 - dword_49DB38 == i2 + 14 - i1 )
-              *(&byte_49DC68[20 * i1] + i2) = 1;
+            if ( 19 - Fade_Counter == i2 + 14 - i1 )
+              *(&Fade_Buffer_Bool[20 * i1] + i2) = 1;
             result = i2 + 1;
           }
         }
@@ -10403,8 +10378,8 @@ int Process_Fade()
         {
           for ( i4 = 10; i4 < 20; ++i4 )
           {
-            if ( 19 - dword_49DB38 == 14 - i3 + 19 - i4 )
-              *(&byte_49DC68[20 * i3] + i4) = 1;
+            if ( 19 - Fade_Counter == 14 - i3 + 19 - i4 )
+              *(&Fade_Buffer_Bool[20 * i3] + i4) = 1;
             result = i4 + 1;
           }
         }
@@ -10416,25 +10391,25 @@ int Process_Fade()
     {
       for ( i6 = 0; i6 < 20; ++i6 )
       {
-        if ( *(&byte_49DB3C[20 * i5] + i6) > 0 && *(&byte_49DC68[20 * i5] + i6) )
-          --*(&byte_49DB3C[20 * i5] + i6);
+        if ( *(&Fade_Buffer_Int[20 * i5] + i6) > 0 && *(&Fade_Buffer_Bool[20 * i5] + i6) )
+          --*(&Fade_Buffer_Int[20 * i5] + i6);
       }
       result = i5 + 1;
     }
-    if ( ++dword_49DB38 > 36 )
+    if ( ++Fade_Counter > 36 )
       *(_DWORD *)&Fade_Status = 0;
   }
   else if ( *(_DWORD *)&Fade_Status == 2 )
   {
-    switch ( byte_49DC69[299] )
+    switch ( Fade_Type )
     {
       case 0:
         for ( i7 = 0; i7 < 15; ++i7 )
         {
           for ( i8 = 0; i8 < 20; ++i8 )
           {
-            if ( 19 - dword_49DB38 == i8 )
-              *(&byte_49DC68[20 * i7] + i8) = 1;
+            if ( 19 - Fade_Counter == i8 )
+              *(&Fade_Buffer_Bool[20 * i7] + i8) = 1;
           }
         }
         break;
@@ -10443,8 +10418,8 @@ int Process_Fade()
         {
           for ( i10 = 0; i10 < 20; ++i10 )
           {
-            if ( dword_49DB38 == i10 )
-              *(&byte_49DC68[20 * i9] + i10) = 1;
+            if ( Fade_Counter == i10 )
+              *(&Fade_Buffer_Bool[20 * i9] + i10) = 1;
           }
         }
         break;
@@ -10453,8 +10428,8 @@ int Process_Fade()
         {
           for ( i12 = 0; i12 < 20; ++i12 )
           {
-            if ( 14 - dword_49DB38 == i11 )
-              *(&byte_49DC68[20 * i11] + i12) = 1;
+            if ( 14 - Fade_Counter == i11 )
+              *(&Fade_Buffer_Bool[20 * i11] + i12) = 1;
           }
         }
         break;
@@ -10463,8 +10438,8 @@ int Process_Fade()
         {
           for ( i14 = 0; i14 < 20; ++i14 )
           {
-            if ( dword_49DB38 == i13 )
-              *(&byte_49DC68[20 * i13] + i14) = 1;
+            if ( Fade_Counter == i13 )
+              *(&Fade_Buffer_Bool[20 * i13] + i14) = 1;
           }
         }
         break;
@@ -10473,32 +10448,32 @@ int Process_Fade()
         {
           for ( i16 = 0; i16 < 10; ++i16 )
           {
-            if ( dword_49DB38 == i15 + i16 )
-              *(&byte_49DC68[20 * i15] + i16) = 1;
+            if ( Fade_Counter == i15 + i16 )
+              *(&Fade_Buffer_Bool[20 * i15] + i16) = 1;
           }
         }
         for ( i17 = 0; i17 < 7; ++i17 )
         {
           for ( i18 = 10; i18 < 20; ++i18 )
           {
-            if ( dword_49DB38 == i17 + 19 - i18 )
-              *(&byte_49DC68[20 * i17] + i18) = 1;
+            if ( Fade_Counter == i17 + 19 - i18 )
+              *(&Fade_Buffer_Bool[20 * i17] + i18) = 1;
           }
         }
         for ( i19 = 7; i19 < 15; ++i19 )
         {
           for ( i20 = 0; i20 < 10; ++i20 )
           {
-            if ( dword_49DB38 == i20 + 14 - i19 )
-              *(&byte_49DC68[20 * i19] + i20) = 1;
+            if ( Fade_Counter == i20 + 14 - i19 )
+              *(&Fade_Buffer_Bool[20 * i19] + i20) = 1;
           }
         }
         for ( i21 = 7; i21 < 15; ++i21 )
         {
           for ( i22 = 10; i22 < 20; ++i22 )
           {
-            if ( dword_49DB38 == 14 - i21 + 19 - i22 )
-              *(&byte_49DC68[20 * i21] + i22) = 1;
+            if ( Fade_Counter == 14 - i21 + 19 - i22 )
+              *(&Fade_Buffer_Bool[20 * i21] + i22) = 1;
           }
         }
         break;
@@ -10509,21 +10484,22 @@ int Process_Fade()
     {
       for ( i24 = 0; i24 < 20; ++i24 )
       {
-        if ( *(&byte_49DB3C[20 * i23] + i24) < 15 && *(&byte_49DC68[20 * i23] + i24) )
-          ++*(&byte_49DB3C[20 * i23] + i24);
+        if ( *(&Fade_Buffer_Int[20 * i23] + i24) < 15 && *(&Fade_Buffer_Bool[20 * i23] + i24) )
+          ++*(&Fade_Buffer_Int[20 * i23] + i24);
       }
     }
-    result = dword_49DB38++ + 1;
-    if ( dword_49DB38 > 36 )
+    result = Fade_Counter++ + 1;
+    if ( Fade_Counter > 36 )
     {
-      dword_49DB34 = 1;
+      Fade_Complete = 1;
       *(_DWORD *)&Fade_Status = 0;
     }
   }
   return result;
 }
-// 49DB34: using guessed type int dword_49DB34;
-// 49DB38: using guessed type int dword_49DB38;
+// 49DB34: using guessed type int Fade_Complete;
+// 49DB38: using guessed type int Fade_Counter;
+// 49DD94: using guessed type char Fade_Type;
 
 //----- (0040E770) --------------------------------------------------------
 // Render Fade out / Fade in
@@ -10539,7 +10515,7 @@ int Render_Fade_Out_In()
 
   v4 = 0;
   v6 = 16;
-  if ( dword_49DB34 )
+  if ( Fade_Complete )
   {
     result = Draw_Color_Fill((int)&FullscreenRect, Mask_Color);
   }
@@ -10549,7 +10525,7 @@ int Render_Fade_Out_In()
     {
       for ( j = 0; j < 20; ++j )
       {
-        Src_Rects = 16 * *(&byte_49DB3C[20 * i] + j);
+        Src_Rects = 16 * *(&Fade_Buffer_Int[20 * i] + j);
         v5 = Src_Rects + 16;
         result = Draw_Sprite_With_Transparency((int)&FullscreenRect, 16 * j, 16 * i, (int)&Src_Rects, 6);
       }
@@ -10558,7 +10534,7 @@ int Render_Fade_Out_In()
   return result;
 }
 // 48F91C: using guessed type int FullscreenRect;
-// 49DB34: using guessed type int dword_49DB34;
+// 49DB34: using guessed type int Fade_Complete;
 
 //----- (0040E830) --------------------------------------------------------
 // If fade is happening, returns 1
@@ -10570,13 +10546,13 @@ bool Is_Fade_Happening()
 //----- (0040E850) --------------------------------------------------------
 void *Clear_Event_Flags()
 {
-  return memset(&byte_49DC69[311], 0, 0x3E8u);
+  return memset(&Event_Flags, 0, 0x3E8u);
 }
 
 //----- (0040E870) --------------------------------------------------------
 void *Clear_Skipflags_()
 {
-  return memset(&byte_49DC69[303], 0, 8u);
+  return memset(&byte_49DD98, 0, 8u);
 }
 
 //----- (0040E890) --------------------------------------------------------
@@ -10585,7 +10561,7 @@ int __cdecl TSC_FLplus(signed int Flag_To_Set)
   int result; // eax@1
 
   result = Flag_To_Set / 8;
-  byte_49DC69[Flag_To_Set / 8 + 311] |= 1 << Flag_To_Set % 8;
+  *((_BYTE *)&Event_Flags + Flag_To_Set / 8) |= 1 << Flag_To_Set % 8;
   return result;
 }
 
@@ -10595,14 +10571,14 @@ int __cdecl TSC_FLminues(signed int Flag_To_Unset)
   int result; // eax@1
 
   result = Flag_To_Unset / 8;
-  byte_49DC69[Flag_To_Unset / 8 + 311] &= ~(1 << Flag_To_Unset % 8);
+  *((_BYTE *)&Event_Flags + Flag_To_Unset / 8) &= ~(1 << Flag_To_Unset % 8);
   return result;
 }
 
 //----- (0040E930) --------------------------------------------------------
 bool __cdecl Check_Flag(signed int Flag_hashtag)
 {
-  return ((1 << Flag_hashtag % 8) & (unsigned __int8)byte_49DC69[Flag_hashtag / 8 + 311]) != 0;
+  return ((1 << Flag_hashtag % 8) & *((_BYTE *)&Event_Flags + Flag_hashtag / 8)) != 0;
 }
 
 //----- (0040E970) --------------------------------------------------------
@@ -10611,7 +10587,7 @@ int __cdecl TSC_SKplus(signed int Flag_To_Set)
   int result; // eax@1
 
   result = Flag_To_Set / 8;
-  byte_49DC69[Flag_To_Set / 8 + 303] |= 1 << Flag_To_Set % 8;
+  *((_BYTE *)&byte_49DD98 + Flag_To_Set / 8) |= 1 << Flag_To_Set % 8;
   return result;
 }
 
@@ -10621,14 +10597,14 @@ int __cdecl TSC_SKminus(signed int Flag_To_Unset)
   int result; // eax@1
 
   result = Flag_To_Unset / 8;
-  byte_49DC69[Flag_To_Unset / 8 + 303] &= ~(1 << Flag_To_Unset % 8);
+  *((_BYTE *)&byte_49DD98 + Flag_To_Unset / 8) &= ~(1 << Flag_To_Unset % 8);
   return result;
 }
 
 //----- (0040EA10) --------------------------------------------------------
 bool __cdecl sub_40EA10(signed int a1)
 {
-  return ((1 << a1 % 8) & (unsigned __int8)byte_49DC69[a1 / 8 + 303]) != 0;
+  return ((1 << a1 % 8) & *((_BYTE *)&byte_49DD98 + a1 / 8)) != 0;
 }
 
 //----- (0040EA70) --------------------------------------------------------
@@ -10679,14 +10655,14 @@ int __cdecl Update_Boss_Explosion(int a1, int a2)
       v8 = (dword_49E198 + dword_49E1A0 - a2) / 512;
       if ( v8 > 240 )
         v8 = 240;
-      dword_49E1A4 = 0;
+      Draw_Sprite_Mask_6 = 0;
       dword_49E1AC = 0;
       dword_49E1A8 = 0;
       dword_49E1B0 = 0;
       dword_49E1B8 = v4;
       result = v8;
       dword_49E1C0 = v8;
-      dword_49E1B4 = 0;
+      Draw_Sprite_Mask_7 = 0;
       dword_49E1BC = 320;
     }
   }
@@ -10706,11 +10682,11 @@ int __cdecl Update_Boss_Explosion(int a1, int a2)
       v5 = 320;
     if ( v7 > 240 )
       v7 = 240;
-    dword_49E1A4 = v6;
+    Draw_Sprite_Mask_6 = v6;
     dword_49E1AC = v5;
     dword_49E1A8 = 0;
     dword_49E1B0 = 240;
-    dword_49E1B4 = 0;
+    Draw_Sprite_Mask_7 = 0;
     dword_49E1BC = 320;
     dword_49E1B8 = v3;
     result = v7;
@@ -10730,11 +10706,11 @@ int __cdecl Update_Boss_Explosion(int a1, int a2)
 // 49E198: using guessed type int dword_49E198;
 // 49E19C: using guessed type int dword_49E19C;
 // 49E1A0: using guessed type int dword_49E1A0;
-// 49E1A4: using guessed type int dword_49E1A4;
+// 49E1A4: using guessed type int Draw_Sprite_Mask_6;
 // 49E1A8: using guessed type int dword_49E1A8;
 // 49E1AC: using guessed type int dword_49E1AC;
 // 49E1B0: using guessed type int dword_49E1B0;
-// 49E1B4: using guessed type int dword_49E1B4;
+// 49E1B4: using guessed type int Draw_Sprite_Mask_7;
 // 49E1B8: using guessed type int dword_49E1B8;
 // 49E1BC: using guessed type int dword_49E1BC;
 // 49E1C0: using guessed type int dword_49E1C0;
@@ -10745,7 +10721,7 @@ int TSC_FLA_Handler()
   int result; // eax@1
 
   ++dword_49E194;
-  dword_49E1A4 = 0;
+  Draw_Sprite_Mask_6 = 0;
   dword_49E1AC = 0;
   dword_49E1A8 = 0;
   dword_49E1B0 = 0;
@@ -10754,12 +10730,12 @@ int TSC_FLA_Handler()
   {
     dword_49E1B8 = 0;
     dword_49E1C0 = 240;
-    dword_49E1B4 = 0;
+    Draw_Sprite_Mask_7 = 0;
     dword_49E1BC = 320;
   }
   else
   {
-    dword_49E1B4 = 0;
+    Draw_Sprite_Mask_7 = 0;
     dword_49E1BC = 0;
     dword_49E1B8 = 0;
     dword_49E1C0 = 0;
@@ -10770,11 +10746,11 @@ int TSC_FLA_Handler()
 }
 // 49E190: using guessed type int Occasional_Flash;
 // 49E194: using guessed type int dword_49E194;
-// 49E1A4: using guessed type int dword_49E1A4;
+// 49E1A4: using guessed type int Draw_Sprite_Mask_6;
 // 49E1A8: using guessed type int dword_49E1A8;
 // 49E1AC: using guessed type int dword_49E1AC;
 // 49E1B0: using guessed type int dword_49E1B0;
-// 49E1B4: using guessed type int dword_49E1B4;
+// 49E1B4: using guessed type int Draw_Sprite_Mask_7;
 // 49E1B8: using guessed type int dword_49E1B8;
 // 49E1BC: using guessed type int dword_49E1BC;
 // 49E1C0: using guessed type int dword_49E1C0;
@@ -10808,55 +10784,55 @@ int Draw_Boss_Explosion()
 
   if ( Occasional_Flash )
   {
-    Draw_Color_Fill((int)&dword_49E1A4, FlashColor);
-    result = Draw_Color_Fill((int)&dword_49E1B4, FlashColor);
+    Draw_Color_Fill((int)&Draw_Sprite_Mask_6, FlashColor);
+    result = Draw_Color_Fill((int)&Draw_Sprite_Mask_7, FlashColor);
   }
   return result;
 }
 // 49E190: using guessed type int Occasional_Flash;
-// 49E1A4: using guessed type int dword_49E1A4;
-// 49E1B4: using guessed type int dword_49E1B4;
+// 49E1A4: using guessed type int Draw_Sprite_Mask_6;
+// 49E1B4: using guessed type int Draw_Sprite_Mask_7;
 
 //----- (0040EE70) --------------------------------------------------------
 // The camera code. Handles quakes.
 int Update_Camera()
 {
   int result; // eax@7
-  __int16 v1; // [sp+0h] [bp-8h]@1
-  __int16 v2; // [sp+4h] [bp-4h]@1
+  int v1; // [sp+0h] [bp-8h]@1
+  int v2; // [sp+4h] [bp-4h]@1
 
   Get_Room_Size(0, &v1, &v2);
-  Related_To_Camera += (*(_DWORD *)dword_49E1D0 - 81920 - Related_To_Camera) / dword_49E1D8;
-  Related_To_Camera_2 += (*(_DWORD *)dword_49E1D4 - 61440 - Related_To_Camera_2) / dword_49E1D8;
-  if ( Related_To_Camera / 512 < 0 )
-    Related_To_Camera = 0;
-  if ( Related_To_Camera_2 / 512 < 0 )
-    Related_To_Camera_2 = 0;
-  if ( Related_To_Camera > (16 * (v1 - 1) - 320) << 9 )
-    Related_To_Camera = (16 * (v1 - 1) - 320) << 9;
-  result = (16 * (v2 - 1) - 240) << 9;
-  if ( Related_To_Camera_2 > result )
-    Related_To_Camera_2 = (16 * (v2 - 1) - 240) << 9;
+  Camera_X_Position_2 += (*(_DWORD *)Camera_X_Destination - 81920 - Camera_X_Position_2) / Camera_Move_Ticks;
+  Camera_Y_Position_2 += (*(_DWORD *)Camera_Y_Destination - 61440 - Camera_Y_Position_2) / Camera_Move_Ticks;
+  if ( Camera_X_Position_2 / 512 < 0 )
+    Camera_X_Position_2 = 0;
+  if ( Camera_Y_Position_2 / 512 < 0 )
+    Camera_Y_Position_2 = 0;
+  if ( Camera_X_Position_2 > (16 * ((signed __int16)v1 - 1) - 320) << 9 )
+    Camera_X_Position_2 = (16 * ((signed __int16)v1 - 1) - 320) << 9;
+  result = (16 * ((signed __int16)v2 - 1) - 240) << 9;
+  if ( Camera_Y_Position_2 > result )
+    Camera_Y_Position_2 = (16 * ((signed __int16)v2 - 1) - 240) << 9;
   if ( HardQuakeDuration )
   {
-    Related_To_Camera += RNG_Range(-5, 5) << 9;
-    result = Related_To_Camera_2 + (RNG_Range(-3, 3) << 9);
-    Related_To_Camera_2 = result;
+    Camera_X_Position_2 += RNG_Range(-5, 5) << 9;
+    result = Camera_Y_Position_2 + (RNG_Range(-3, 3) << 9);
+    Camera_Y_Position_2 = result;
     --HardQuakeDuration;
   }
   else if ( SoftQuakeDuration )
   {
-    Related_To_Camera += RNG_Range(-1, 1) << 9;
-    Related_To_Camera_2 += RNG_Range(-1, 1) << 9;
+    Camera_X_Position_2 += RNG_Range(-1, 1) << 9;
+    Camera_Y_Position_2 += RNG_Range(-1, 1) << 9;
     result = SoftQuakeDuration-- - 1;
   }
   return result;
 }
-// 49E1C8: using guessed type int Related_To_Camera;
-// 49E1CC: using guessed type int Related_To_Camera_2;
-// 49E1D0: using guessed type int dword_49E1D0;
-// 49E1D4: using guessed type int dword_49E1D4;
-// 49E1D8: using guessed type int dword_49E1D8;
+// 49E1C8: using guessed type int Camera_X_Position_2;
+// 49E1CC: using guessed type int Camera_Y_Position_2;
+// 49E1D0: using guessed type int Camera_X_Destination;
+// 49E1D4: using guessed type int Camera_Y_Destination;
+// 49E1D8: using guessed type int Camera_Move_Ticks;
 // 49E1DC: using guessed type int SoftQuakeDuration;
 // 49E1E0: using guessed type int HardQuakeDuration;
 
@@ -10865,13 +10841,13 @@ int __cdecl Get_Camera_Position(_DWORD *a1, _DWORD *a2)
 {
   int result; // eax@1
 
-  *a1 = Related_To_Camera;
-  result = Related_To_Camera_2;
-  *a2 = Related_To_Camera_2;
+  *a1 = Camera_X_Position_2;
+  result = Camera_Y_Position_2;
+  *a2 = Camera_Y_Position_2;
   return result;
 }
-// 49E1C8: using guessed type int Related_To_Camera;
-// 49E1CC: using guessed type int Related_To_Camera_2;
+// 49E1C8: using guessed type int Camera_X_Position_2;
+// 49E1CC: using guessed type int Camera_Y_Position_2;
 
 //----- (0040F130) --------------------------------------------------------
 int Set_Camera_Upon_Enter_Room()
@@ -10879,29 +10855,29 @@ int Set_Camera_Upon_Enter_Room()
   int result; // eax@5
   int Ptr_Store_Y; // [sp+0h] [bp-10h]@1
   int Ptr_Store_X; // [sp+4h] [bp-Ch]@1
-  __int16 v3; // [sp+8h] [bp-8h]@1
-  __int16 v4; // [sp+Ch] [bp-4h]@1
+  int v3; // [sp+8h] [bp-8h]@1
+  int v4; // [sp+Ch] [bp-4h]@1
 
   GetPlayerXY(&Ptr_Store_X, &Ptr_Store_Y);
   Get_Room_Size(0, &v3, &v4);
-  Related_To_Camera = Ptr_Store_X - 81920;
-  Related_To_Camera_2 = Ptr_Store_Y - 61440;
+  Camera_X_Position_2 = Ptr_Store_X - 81920;
+  Camera_Y_Position_2 = Ptr_Store_Y - 61440;
   if ( (Ptr_Store_X - 81920) / 512 < 0 )
-    Related_To_Camera = 0;
-  if ( Related_To_Camera_2 / 512 < 0 )
-    Related_To_Camera_2 = 0;
-  result = (16 * (v3 - 1) - 320) << 9;
-  if ( Related_To_Camera > result )
-    Related_To_Camera = (16 * (v3 - 1) - 320) << 9;
-  if ( Related_To_Camera_2 > (16 * (v4 - 1) - 240) << 9 )
+    Camera_X_Position_2 = 0;
+  if ( Camera_Y_Position_2 / 512 < 0 )
+    Camera_Y_Position_2 = 0;
+  result = (16 * ((signed __int16)v3 - 1) - 320) << 9;
+  if ( Camera_X_Position_2 > result )
+    Camera_X_Position_2 = (16 * ((signed __int16)v3 - 1) - 320) << 9;
+  if ( Camera_Y_Position_2 > (16 * ((signed __int16)v4 - 1) - 240) << 9 )
   {
-    result = (16 * (v4 - 1) - 240) << 9;
-    Related_To_Camera_2 = (16 * (v4 - 1) - 240) << 9;
+    result = (16 * ((signed __int16)v4 - 1) - 240) << 9;
+    Camera_Y_Position_2 = (16 * ((signed __int16)v4 - 1) - 240) << 9;
   }
   return result;
 }
-// 49E1C8: using guessed type int Related_To_Camera;
-// 49E1CC: using guessed type int Related_To_Camera_2;
+// 49E1C8: using guessed type int Camera_X_Position_2;
+// 49E1CC: using guessed type int Camera_Y_Position_2;
 
 //----- (0040F220) --------------------------------------------------------
 // Sets camera move ticks
@@ -10909,15 +10885,15 @@ int __cdecl TSC_FOM(int Ticks)
 {
   int result; // eax@1
 
-  dword_49E1D0 = (int)&Camera_X_Position;
-  dword_49E1D4 = (int)&Camera_Y_Position;
+  Camera_X_Destination = (int)&Camera_X_Position;
+  Camera_Y_Destination = (int)&Camera_Y_Position;
   result = Ticks;
-  dword_49E1D8 = Ticks;
+  Camera_Move_Ticks = Ticks;
   return result;
 }
-// 49E1D0: using guessed type int dword_49E1D0;
-// 49E1D4: using guessed type int dword_49E1D4;
-// 49E1D8: using guessed type int dword_49E1D8;
+// 49E1D0: using guessed type int Camera_X_Destination;
+// 49E1D4: using guessed type int Camera_Y_Destination;
+// 49E1D8: using guessed type int Camera_Move_Ticks;
 // 49E65C: using guessed type int Camera_X_Position;
 // 49E660: using guessed type int Camera_Y_Position;
 
@@ -10925,22 +10901,22 @@ int __cdecl TSC_FOM(int Ticks)
 int *__cdecl TSC_FON(int a1, int a2)
 {
   int *result; // eax@4
-  signed int i; // [sp+0h] [bp-4h]@1
+  signed int Loop_Counter; // [sp+0h] [bp-4h]@1
 
-  for ( i = 0; i < 512 && NPC_Event_Number[43 * i] != a1; ++i )
-    result = (int *)(i + 1);
-  if ( i != 512 )
+  for ( Loop_Counter = 0; Loop_Counter < 512 && NPC_Event_Number[43 * Loop_Counter] != a1; ++Loop_Counter )
+    result = (int *)(Loop_Counter + 1);
+  if ( Loop_Counter != 512 )
   {
-    result = &NPC_X_Position[43 * i];
-    dword_49E1D0 = (int)&NPC_X_Position[43 * i];
-    dword_49E1D4 = (int)&NPC_Y_Position[43 * i];
-    dword_49E1D8 = a2;
+    result = &NPC_X_Position[43 * Loop_Counter];
+    Camera_X_Destination = (int)&NPC_X_Position[43 * Loop_Counter];
+    Camera_Y_Destination = (int)&NPC_Y_Position[43 * Loop_Counter];
+    Camera_Move_Ticks = a2;
   }
   return result;
 }
-// 49E1D0: using guessed type int dword_49E1D0;
-// 49E1D4: using guessed type int dword_49E1D4;
-// 49E1D8: using guessed type int dword_49E1D8;
+// 49E1D0: using guessed type int Camera_X_Destination;
+// 49E1D4: using guessed type int Camera_Y_Destination;
+// 49E1D8: using guessed type int Camera_Move_Ticks;
 // 4A6228: using guessed type int NPC_X_Position[];
 // 4A622C: using guessed type int NPC_Y_Position[];
 // 4A6250: using guessed type int NPC_Event_Number[];
@@ -10952,14 +10928,14 @@ int *__cdecl TSC_FOB(int a1, int a2)
   int *result; // eax@1
 
   result = &dword_4BBA60 + 43 * a1;
-  dword_49E1D0 = (int)(&dword_4BBA60 + 43 * a1);
-  dword_49E1D4 = (int)(&dword_4BBA64 + 43 * a1);
-  dword_49E1D8 = a2;
+  Camera_X_Destination = (int)(&dword_4BBA60 + 43 * a1);
+  Camera_Y_Destination = (int)(&dword_4BBA64 + 43 * a1);
+  Camera_Move_Ticks = a2;
   return result;
 }
-// 49E1D0: using guessed type int dword_49E1D0;
-// 49E1D4: using guessed type int dword_49E1D4;
-// 49E1D8: using guessed type int dword_49E1D8;
+// 49E1D0: using guessed type int Camera_X_Destination;
+// 49E1D4: using guessed type int Camera_Y_Destination;
+// 49E1D8: using guessed type int Camera_Move_Ticks;
 
 //----- (0040F310) --------------------------------------------------------
 // QUA : Set Soft QUAke Duration
@@ -11009,8 +10985,8 @@ int __cdecl Draw_Numbers(int X_Position, int Y_Position, int Numbers_To_Display,
   int v7; // [sp+8h] [bp-C8h]@1
   int v8; // [sp+Ch] [bp-C4h]@1
   int v9; // [sp+10h] [bp-C0h]@3
-  int v10; // [sp+14h] [bp-BCh]@3
-  int Src_Rects; // [sp+18h] [bp-B8h]@1
+  int For_Loop_Counter; // [sp+14h] [bp-BCh]@3
+  int Rects; // [sp+18h] [bp-B8h]@1
   int v12; // [sp+1Ch] [bp-B4h]@1
   int v13; // [sp+20h] [bp-B0h]@1
   int v14; // [sp+24h] [bp-ACh]@1
@@ -11060,7 +11036,7 @@ int __cdecl Draw_Numbers(int X_Position, int Y_Position, int Numbers_To_Display,
   v6 = 0;
   v7 = 320;
   v8 = 240;
-  Src_Rects = 0;
+  Rects = 0;
   v12 = 56;
   v13 = 8;
   v14 = 64;
@@ -11106,28 +11082,28 @@ int __cdecl Draw_Numbers(int X_Position, int Y_Position, int Numbers_To_Display,
   v55 = 1;
   if ( Numbers_To_Display > 9999 )
     Numbers_To_Display = 9999;
-  v10 = 0;
+  For_Loop_Counter = 0;
   v9 = 0;
-  while ( v10 < 4 )
+  while ( For_Loop_Counter < 4 )
   {
     v51 = 0;
     while ( 1 )
     {
-      result = v10;
-      if ( Numbers_To_Display < *(&v52 + v10) )
+      result = For_Loop_Counter;
+      if ( Numbers_To_Display < *(&v52 + For_Loop_Counter) )
         break;
-      Numbers_To_Display -= *(&v52 + v10);
+      Numbers_To_Display -= *(&v52 + For_Loop_Counter);
       ++v51;
       ++v9;
     }
-    if ( Number_Of_Digits && v10 == 2 || v9 || v10 == 3 )
+    if ( Number_Of_Digits && For_Loop_Counter == 2 || v9 || For_Loop_Counter == 3 )
       result = Draw_Sprite_With_Transparency(
                  (int)&Dst_Rects,
-                 X_Position + 8 * v10,
+                 X_Position + 8 * For_Loop_Counter,
                  Y_Position,
-                 (int)(&Src_Rects + 4 * v51),
+                 (int)(&Rects + 4 * v51),
                  26);
-    ++v10;
+    ++For_Loop_Counter;
   }
   return result;
 }
@@ -11137,18 +11113,18 @@ int __cdecl Draw_Numbers(int X_Position, int Y_Position, int Numbers_To_Display,
 int __cdecl Game_Loop_Selector(HWND hWnd)
 {
   int result; // eax@2
-  char str; // [sp+0h] [bp-110h]@3
+  const CHAR FileName; // [sp+0h] [bp-110h]@3
   int v3; // [sp+108h] [bp-8h]@1
   int v4; // [sp+10Ch] [bp-4h]@5
 
-  v3 = Prevent_Crash_Report_Failure;
+  v3 = Crash_Report_Failure_Check;
   if ( Load_Initial_Resources() )
   {
     Play_Sound_Effect(7, -1);
-    sprintf(&str, "%s\\npc.tbl", FullExePath_data);
-    if ( sub_472400(&str) )
+    sprintf((char *)&FileName, "%s\\npc.tbl", Data_Folder_Full_Path);
+    if ( Load_NPC_Table(&FileName) )
     {
-      sub_4214E0();
+      Initiate_TSC_Buffer_();
       Clear_Skipflags_();
       sub_413750();
       sub_40D3E0();
@@ -11167,7 +11143,7 @@ int __cdecl Game_Loop_Selector(HWND hWnd)
       sub_421570();
       sub_472710();
       If_Not_49D614_0_Deallocate();
-      if ( !dword_49E460 )
+      if ( !Is_Fullscreen )
         Save_Window_Rect_File(hWnd, (int)"window.rect");
       result = 1;
     }
@@ -11184,8 +11160,8 @@ int __cdecl Game_Loop_Selector(HWND hWnd)
   }
   return result;
 }
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
-// 49E460: using guessed type int dword_49E460;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
+// 49E460: using guessed type int Is_Fullscreen;
 
 //----- (0040F730) --------------------------------------------------------
 signed int Game_Loop_Opening_Cutscene()
@@ -11196,14 +11172,14 @@ signed int Game_Loop_Opening_Cutscene()
   unsigned int v4; // [sp+Ch] [bp-8h]@1
   int v5; // [sp+10h] [bp-4h]@10
 
-  sub_46EB30();
+  Kill_NPC_RAM();
   Clear_All_Effects();
   sub_420FA0();
   sub_40DE60();
   TSC_FLA();
   _crt_debugger_hook_2();
   Tsc_CMU(0);
-  sub_420BE0(72, 100, 3, 3);
+  Load_Room(72, 100, 3, 3);
   TSC_FOM(16);
   __setargv();
   FullscreenRect = 0;
@@ -11224,14 +11200,14 @@ signed int Game_Loop_Opening_Cutscene()
     }
     if ( Key_For_Jump & Key_Held )
       break;
-    sub_46FA00();
-    sub_473000();
+    Update_NPCs();
+    Update_Boss();
     Background_Modes__Increase_Background_Scroll_();
     _crt_debugger_hook_1();
     Tile_Code();
     Something_Objects_();
     sub_419450();
-    Entity_Tile_Collision_Algorithms();
+    Do_NPC_Level_Collision();
     Tile_Collision_Algorithm_For_Larger_Entities();
     sub_472950();
     Update_All_Effects();
@@ -11241,8 +11217,8 @@ signed int Game_Loop_Opening_Cutscene()
     Get_Camera_Position(&v5, &v3);
     Draw_Background(v5, v3);
     Draw_Foreground_BG(v5, v3);
-    sub_472770(v5, v3);
-    sub_46F810(v5, v3);
+    Draw_Boss_(v5, v3);
+    Draw_NPCs(v5, v3);
     Draw_Rushing_Water_Particles(v5, v3);
     Draw_Foreground_FG(v5, v3);
     Rend_Map_Bckgrd(v5, v3);
@@ -11254,7 +11230,7 @@ signed int Game_Loop_Opening_Cutscene()
     if ( v1 == 2 )
       return 1;
     TSC_MNA(0);
-    sub_421F10();
+    Draw_Text_Box();
     Display_FPS_Counter();
     if ( !Draw_Window(AppWinHandle) )
       return 0;
@@ -11288,248 +11264,248 @@ signed int Game_Loop_Title_Screen()
   int *v4; // edx@42
   int *v5; // edx@43
   int v6; // [sp+4h] [bp-1ECh]@29
-  int v7; // [sp+8h] [bp-1E8h]@1
-  int v8; // [sp+Ch] [bp-1E4h]@1
-  int v9; // [sp+10h] [bp-1E0h]@1
-  int v10; // [sp+14h] [bp-1DCh]@1
-  int v11; // [sp+18h] [bp-1D8h]@1
-  int v12; // [sp+1Ch] [bp-1D4h]@1
-  int v13; // [sp+20h] [bp-1D0h]@1
-  int v14; // [sp+24h] [bp-1CCh]@1
-  int v15; // [sp+28h] [bp-1C8h]@1
-  int v16; // [sp+2Ch] [bp-1C4h]@1
-  int v17; // [sp+30h] [bp-1C0h]@1
-  int v18; // [sp+34h] [bp-1BCh]@1
-  int v19; // [sp+38h] [bp-1B8h]@1
-  int v20; // [sp+3Ch] [bp-1B4h]@1
-  int v21; // [sp+40h] [bp-1B0h]@1
-  int v22; // [sp+44h] [bp-1ACh]@1
-  int v23; // [sp+48h] [bp-1A8h]@1
-  int v24; // [sp+4Ch] [bp-1A4h]@1
-  int v25; // [sp+50h] [bp-1A0h]@1
-  int v26; // [sp+54h] [bp-19Ch]@1
-  int v27; // [sp+58h] [bp-198h]@1
-  int v28; // [sp+5Ch] [bp-194h]@1
-  int v29; // [sp+60h] [bp-190h]@1
-  int v30; // [sp+64h] [bp-18Ch]@1
-  int v31; // [sp+68h] [bp-188h]@1
-  int v32; // [sp+6Ch] [bp-184h]@1
-  int v33; // [sp+70h] [bp-180h]@1
-  int v34; // [sp+74h] [bp-17Ch]@1
-  int v35; // [sp+78h] [bp-178h]@1
-  int v36; // [sp+7Ch] [bp-174h]@1
-  int v37; // [sp+80h] [bp-170h]@1
-  int v38; // [sp+84h] [bp-16Ch]@1
+  int Quote_Frame_A_1; // [sp+8h] [bp-1E8h]@1
+  int Quote_Frame_A_2; // [sp+Ch] [bp-1E4h]@1
+  int Quote_Frame_A_3; // [sp+10h] [bp-1E0h]@1
+  int Quote_Frame_A_4; // [sp+14h] [bp-1DCh]@1
+  int Quote_Frame_B_1; // [sp+18h] [bp-1D8h]@1
+  int Quote_Frame_B_2; // [sp+1Ch] [bp-1D4h]@1
+  int Quote_Frame_B_3; // [sp+20h] [bp-1D0h]@1
+  int Quote_Frame_B_4; // [sp+24h] [bp-1CCh]@1
+  int Quote_Frame_C_1; // [sp+28h] [bp-1C8h]@1
+  int Quote_Frame_C_2; // [sp+2Ch] [bp-1C4h]@1
+  int Quote_Frame_C_3; // [sp+30h] [bp-1C0h]@1
+  int Quote_Frame_C_4; // [sp+34h] [bp-1BCh]@1
+  int Quote_Frame_D_1; // [sp+38h] [bp-1B8h]@1
+  int Quote_Frame_D_2; // [sp+3Ch] [bp-1B4h]@1
+  int Quote_Frame_D_3; // [sp+40h] [bp-1B0h]@1
+  int Quote_Frame_D_4; // [sp+44h] [bp-1ACh]@1
+  int Sue_Frame_A_1; // [sp+48h] [bp-1A8h]@1
+  int Sue_Frame_A_2; // [sp+4Ch] [bp-1A4h]@1
+  int Sue_Frame_A_3; // [sp+50h] [bp-1A0h]@1
+  int Sue_Frame_A_4; // [sp+54h] [bp-19Ch]@1
+  int Sue_Frame_B_1; // [sp+58h] [bp-198h]@1
+  int Sue_Frame_B_2; // [sp+5Ch] [bp-194h]@1
+  int Sue_Frame_B_3; // [sp+60h] [bp-190h]@1
+  int Sue_Frame_B_4; // [sp+64h] [bp-18Ch]@1
+  int Sue_Frame_C_1; // [sp+68h] [bp-188h]@1
+  int Sue_Frame_C_2; // [sp+6Ch] [bp-184h]@1
+  int Sue_Frame_C_3; // [sp+70h] [bp-180h]@1
+  int Sue_Frame_C_4; // [sp+74h] [bp-17Ch]@1
+  int Sue_Frame_D_1; // [sp+78h] [bp-178h]@1
+  int Sue_Frame_D_2; // [sp+7Ch] [bp-174h]@1
+  int Sue_Frame_D_3; // [sp+80h] [bp-170h]@1
+  int Sue_Frame_D_4; // [sp+84h] [bp-16Ch]@1
   int v39; // [sp+8Ch] [bp-164h]@1
-  int v40; // [sp+90h] [bp-160h]@1
-  int v41; // [sp+94h] [bp-15Ch]@1
-  int v42; // [sp+98h] [bp-158h]@1
-  int v43; // [sp+9Ch] [bp-154h]@1
-  int v44; // [sp+A0h] [bp-150h]@1
-  int v45; // [sp+A4h] [bp-14Ch]@1
-  int v46; // [sp+A8h] [bp-148h]@1
-  int v47; // [sp+ACh] [bp-144h]@1
-  int v48; // [sp+B0h] [bp-140h]@1
-  int v49; // [sp+B4h] [bp-13Ch]@1
-  int v50; // [sp+B8h] [bp-138h]@1
-  int v51; // [sp+BCh] [bp-134h]@1
-  int v52; // [sp+C0h] [bp-130h]@1
-  int v53; // [sp+C4h] [bp-12Ch]@1
-  int v54; // [sp+C8h] [bp-128h]@1
-  int v55; // [sp+CCh] [bp-124h]@1
-  int v56; // [sp+D4h] [bp-11Ch]@1
+  int Toroko_Frame_A_1; // [sp+90h] [bp-160h]@1
+  int Toroko_Frame_A_2; // [sp+94h] [bp-15Ch]@1
+  int Toroko_Frame_A_3; // [sp+98h] [bp-158h]@1
+  int Toroko_Frame_A_4; // [sp+9Ch] [bp-154h]@1
+  int Toroko_Frame_B_1; // [sp+A0h] [bp-150h]@1
+  int Toroko_Frame_B_2; // [sp+A4h] [bp-14Ch]@1
+  int Toroko_Frame_B_3; // [sp+A8h] [bp-148h]@1
+  int Toroko_Frame_B_4; // [sp+ACh] [bp-144h]@1
+  int Toroko_Frame_C_1; // [sp+B0h] [bp-140h]@1
+  int Toroko_Frame_C_2; // [sp+B4h] [bp-13Ch]@1
+  int Toroko_Frame_C_3; // [sp+B8h] [bp-138h]@1
+  int Toroko_Frame_C_4; // [sp+BCh] [bp-134h]@1
+  int Toroko_Frame_D_1; // [sp+C0h] [bp-130h]@1
+  int Toroko_Frame_D_2; // [sp+C4h] [bp-12Ch]@1
+  int Toroko_Frame_D_3; // [sp+C8h] [bp-128h]@1
+  int Toroko_Frame_D_4; // [sp+CCh] [bp-124h]@1
+  int Title_Screen_Mode; // [sp+D4h] [bp-11Ch]@1
   unsigned int v57; // [sp+D8h] [bp-118h]@22
-  int v58; // [sp+DCh] [bp-114h]@1
-  int v59; // [sp+E0h] [bp-110h]@1
-  int v60; // [sp+E4h] [bp-10Ch]@1
-  int v61; // [sp+E8h] [bp-108h]@1
-  int v62; // [sp+ECh] [bp-104h]@39
+  int Studio_Pixel_Text_Frame_1; // [sp+DCh] [bp-114h]@1
+  int Studio_Pixel_Text_Frame_2; // [sp+E0h] [bp-110h]@1
+  int Studio_Pixel_Text_Frame_3; // [sp+E4h] [bp-10Ch]@1
+  int Studio_Pixel_Text_Frame_4; // [sp+E8h] [bp-108h]@1
+  int Src_Rects; // [sp+ECh] [bp-104h]@39
   int v63; // [sp+F0h] [bp-100h]@39
   int v64; // [sp+F4h] [bp-FCh]@39
   int v65; // [sp+F8h] [bp-F8h]@39
   int Y_Position; // [sp+FCh] [bp-F4h]@45
-  int v67; // [sp+100h] [bp-F0h]@1
-  int v68; // [sp+104h] [bp-ECh]@1
-  int v69; // [sp+108h] [bp-E8h]@1
-  int v70; // [sp+10Ch] [bp-E4h]@1
-  int v71; // [sp+110h] [bp-E0h]@1
-  int v72; // [sp+114h] [bp-DCh]@1
-  int v73; // [sp+118h] [bp-D8h]@1
-  int v74; // [sp+11Ch] [bp-D4h]@1
-  int v75; // [sp+120h] [bp-D0h]@1
-  int v76; // [sp+124h] [bp-CCh]@1
-  int v77; // [sp+128h] [bp-C8h]@1
-  int v78; // [sp+12Ch] [bp-C4h]@1
-  int v79; // [sp+130h] [bp-C0h]@1
-  int v80; // [sp+134h] [bp-BCh]@1
-  int v81; // [sp+138h] [bp-B8h]@1
-  int v82; // [sp+13Ch] [bp-B4h]@1
-  int v83; // [sp+140h] [bp-B0h]@1
-  int v84; // [sp+144h] [bp-ACh]@1
-  int v85; // [sp+148h] [bp-A8h]@1
-  int v86; // [sp+14Ch] [bp-A4h]@1
+  int Unknown_Frame_1; // [sp+100h] [bp-F0h]@1
+  int Unknown_Frame_2; // [sp+104h] [bp-ECh]@1
+  int Unknown_Frame_3; // [sp+108h] [bp-E8h]@1
+  int Unknown_Frame_4; // [sp+10Ch] [bp-E4h]@1
+  int Curly_Frame_A_1; // [sp+110h] [bp-E0h]@1
+  int Curly_Frame_A_2; // [sp+114h] [bp-DCh]@1
+  int Curly_Frame_A_3; // [sp+118h] [bp-D8h]@1
+  int Curly_Frame_A_4; // [sp+11Ch] [bp-D4h]@1
+  int Curly_Frame_B_1; // [sp+120h] [bp-D0h]@1
+  int Curly_Frame_B_2; // [sp+124h] [bp-CCh]@1
+  int Curly_Frame_B_3; // [sp+128h] [bp-C8h]@1
+  int Curly_Frame_B_4; // [sp+12Ch] [bp-C4h]@1
+  int Curly_Frame_C_1; // [sp+130h] [bp-C0h]@1
+  int Curly_Frame_C_2; // [sp+134h] [bp-BCh]@1
+  int Curly_Frame_C_3; // [sp+138h] [bp-B8h]@1
+  int Curly_Frame_C_4; // [sp+13Ch] [bp-B4h]@1
+  int Curly_Frame_D_1; // [sp+140h] [bp-B0h]@1
+  int Curly_Frame_D_2; // [sp+144h] [bp-ACh]@1
+  int Curly_Frame_D_3; // [sp+148h] [bp-A8h]@1
+  int Curly_Frame_D_4; // [sp+14Ch] [bp-A4h]@1
   int v87; // [sp+154h] [bp-9Ch]@1
-  int v88; // [sp+158h] [bp-98h]@1
-  int v89; // [sp+15Ch] [bp-94h]@1
-  int v90; // [sp+160h] [bp-90h]@1
-  int v91; // [sp+164h] [bp-8Ch]@1
-  int v92; // [sp+168h] [bp-88h]@1
-  int v93; // [sp+16Ch] [bp-84h]@1
-  int v94; // [sp+170h] [bp-80h]@1
-  int v95; // [sp+174h] [bp-7Ch]@1
-  int v96; // [sp+178h] [bp-78h]@1
-  int v97; // [sp+17Ch] [bp-74h]@1
-  int v98; // [sp+180h] [bp-70h]@1
-  int v99; // [sp+184h] [bp-6Ch]@1
-  int v100; // [sp+188h] [bp-68h]@1
-  int v101; // [sp+18Ch] [bp-64h]@1
-  int v102; // [sp+190h] [bp-60h]@1
-  int v103; // [sp+194h] [bp-5Ch]@1
-  int v104; // [sp+198h] [bp-58h]@1
-  int v105; // [sp+19Ch] [bp-54h]@1
-  int v106; // [sp+1A0h] [bp-50h]@1
-  int v107; // [sp+1A4h] [bp-4Ch]@1
+  int Version_Dots_Frame_1; // [sp+158h] [bp-98h]@1
+  int Version_Dots_Frame_2; // [sp+15Ch] [bp-94h]@1
+  int Version_Dots_Frame_3; // [sp+160h] [bp-90h]@1
+  int Version_Dots_Frame_4; // [sp+164h] [bp-8Ch]@1
+  int King_Frame_A_1; // [sp+168h] [bp-88h]@1
+  int King_Frame_A_2; // [sp+16Ch] [bp-84h]@1
+  int King_Frame_A_3; // [sp+170h] [bp-80h]@1
+  int King_Frame_A_4; // [sp+174h] [bp-7Ch]@1
+  int King_Frame_B_1; // [sp+178h] [bp-78h]@1
+  int King_Frame_B_2; // [sp+17Ch] [bp-74h]@1
+  int King_Frame_B_3; // [sp+180h] [bp-70h]@1
+  int King_Frame_B_4; // [sp+184h] [bp-6Ch]@1
+  int King_Frame_C_1; // [sp+188h] [bp-68h]@1
+  int King_Frame_C_2; // [sp+18Ch] [bp-64h]@1
+  int King_Frame_C_3; // [sp+190h] [bp-60h]@1
+  int King_Frame_C_4; // [sp+194h] [bp-5Ch]@1
+  int King_Frame_D_1; // [sp+198h] [bp-58h]@1
+  int King_Frame_D_2; // [sp+19Ch] [bp-54h]@1
+  int King_Frame_D_3; // [sp+1A0h] [bp-50h]@1
+  int King_Frame_D_4; // [sp+1A4h] [bp-4Ch]@1
   int v108; // [sp+1A8h] [bp-48h]@1
   int v109; // [sp+1ACh] [bp-44h]@1
   int Mask_Color; // [sp+1B0h] [bp-40h]@1
   int GraphicsID; // [sp+1B4h] [bp-3Ch]@39
-  int Src_Rects; // [sp+1B8h] [bp-38h]@1
-  int v113; // [sp+1BCh] [bp-34h]@1
-  int v114; // [sp+1C0h] [bp-30h]@1
-  int v115; // [sp+1C4h] [bp-2Ch]@1
+  int Version_Text_Frame_1; // [sp+1B8h] [bp-38h]@1
+  int Version_Text_Frame_2; // [sp+1BCh] [bp-34h]@1
+  int Version_Text_Frame_3; // [sp+1C0h] [bp-30h]@1
+  int Version_Text_Frame_4; // [sp+1C4h] [bp-2Ch]@1
   int Numbers_To_Display; // [sp+1C8h] [bp-28h]@1
   int v117; // [sp+1CCh] [bp-24h]@1
-  int v118; // [sp+1D0h] [bp-20h]@1
-  int v119; // [sp+1D4h] [bp-1Ch]@1
-  int v120; // [sp+1D8h] [bp-18h]@1
-  int v121; // [sp+1DCh] [bp-14h]@1
-  int v122; // [sp+1E0h] [bp-10h]@1
-  int v123; // [sp+1E4h] [bp-Ch]@1
-  int v124; // [sp+1E8h] [bp-8h]@1
-  int v125; // [sp+1ECh] [bp-4h]@1
+  int Title_Screen_Frame_1; // [sp+1D0h] [bp-20h]@1
+  int Title_Screen_Frame_2; // [sp+1D4h] [bp-1Ch]@1
+  int Title_Screen_Frame_3; // [sp+1D8h] [bp-18h]@1
+  int Title_Screen_Frame_4; // [sp+1DCh] [bp-14h]@1
+  int Continue_Button_Frame_1; // [sp+1E0h] [bp-10h]@1
+  int Continue_Button_Frame_2; // [sp+1E4h] [bp-Ch]@1
+  int Continue_Button_Frame_3; // [sp+1E8h] [bp-8h]@1
+  int Continue_Button_Frame_4; // [sp+1ECh] [bp-4h]@1
 
-  v118 = 0;
-  v119 = 0;
-  v120 = 144;
-  v121 = 40;
-  v58 = 0;
-  v59 = 0;
-  v60 = 160;
-  v61 = 16;
-  v67 = 144;
-  v68 = 0;
-  v69 = 192;
-  v70 = 16;
-  v122 = 144;
-  v123 = 16;
-  v124 = 192;
-  v125 = 32;
-  Src_Rects = 152;
-  v113 = 80;
-  v114 = 208;
-  v115 = 88;
-  v88 = 152;
-  v89 = 88;
-  v90 = 208;
-  v91 = 96;
-  v7 = 0;
-  v8 = 16;
-  v9 = 16;
-  v10 = 32;
-  v11 = 16;
-  v12 = 16;
-  v13 = 32;
-  v14 = 32;
-  v15 = 0;
-  v16 = 16;
-  v17 = 16;
-  v18 = 32;
-  v19 = 32;
-  v20 = 16;
-  v21 = 48;
-  v22 = 32;
-  v71 = 0;
-  v72 = 112;
-  v73 = 16;
-  v74 = 128;
-  v75 = 16;
-  v76 = 112;
-  v77 = 32;
-  v78 = 128;
-  v79 = 0;
-  v80 = 112;
-  v81 = 16;
-  v82 = 128;
-  v83 = 32;
-  v84 = 112;
-  v85 = 48;
-  v86 = 128;
-  v40 = 64;
-  v41 = 80;
-  v42 = 80;
-  v43 = 96;
-  v44 = 80;
-  v45 = 80;
-  v46 = 96;
-  v47 = 96;
-  v48 = 64;
-  v49 = 80;
-  v50 = 80;
-  v51 = 96;
-  v52 = 96;
-  v53 = 80;
-  v54 = 112;
-  v55 = 96;
-  v92 = 224;
-  v93 = 48;
-  v94 = 240;
-  v95 = 64;
-  v96 = 288;
-  v97 = 48;
-  v98 = 304;
-  v99 = 64;
-  v100 = 224;
-  v101 = 48;
-  v102 = 240;
-  v103 = 64;
-  v104 = 304;
-  v105 = 48;
-  v106 = 320;
-  v107 = 64;
-  v23 = 0;
-  v24 = 16;
-  v25 = 16;
-  v26 = 32;
-  v27 = 32;
-  v28 = 16;
-  v29 = 48;
-  v30 = 32;
-  v31 = 0;
-  v32 = 16;
-  v33 = 16;
-  v34 = 32;
-  v35 = 48;
-  v36 = 16;
-  v37 = 64;
-  v38 = 32;
+  Title_Screen_Frame_1 = 0;
+  Title_Screen_Frame_2 = 0;
+  Title_Screen_Frame_3 = 144;
+  Title_Screen_Frame_4 = 40;
+  Studio_Pixel_Text_Frame_1 = 0;
+  Studio_Pixel_Text_Frame_2 = 0;
+  Studio_Pixel_Text_Frame_3 = 160;
+  Studio_Pixel_Text_Frame_4 = 16;
+  Unknown_Frame_1 = 144;
+  Unknown_Frame_2 = 0;
+  Unknown_Frame_3 = 192;
+  Unknown_Frame_4 = 16;
+  Continue_Button_Frame_1 = 144;
+  Continue_Button_Frame_2 = 16;
+  Continue_Button_Frame_3 = 192;
+  Continue_Button_Frame_4 = 32;
+  Version_Text_Frame_1 = 152;
+  Version_Text_Frame_2 = 80;
+  Version_Text_Frame_3 = 208;
+  Version_Text_Frame_4 = 88;
+  Version_Dots_Frame_1 = 152;
+  Version_Dots_Frame_2 = 88;
+  Version_Dots_Frame_3 = 208;
+  Version_Dots_Frame_4 = 96;
+  Quote_Frame_A_1 = 0;
+  Quote_Frame_A_2 = 16;
+  Quote_Frame_A_3 = 16;
+  Quote_Frame_A_4 = 32;
+  Quote_Frame_B_1 = 16;
+  Quote_Frame_B_2 = 16;
+  Quote_Frame_B_3 = 32;
+  Quote_Frame_B_4 = 32;
+  Quote_Frame_C_1 = 0;
+  Quote_Frame_C_2 = 16;
+  Quote_Frame_C_3 = 16;
+  Quote_Frame_C_4 = 32;
+  Quote_Frame_D_1 = 32;
+  Quote_Frame_D_2 = 16;
+  Quote_Frame_D_3 = 48;
+  Quote_Frame_D_4 = 32;
+  Curly_Frame_A_1 = 0;
+  Curly_Frame_A_2 = 112;
+  Curly_Frame_A_3 = 16;
+  Curly_Frame_A_4 = 128;
+  Curly_Frame_B_1 = 16;
+  Curly_Frame_B_2 = 112;
+  Curly_Frame_B_3 = 32;
+  Curly_Frame_B_4 = 128;
+  Curly_Frame_C_1 = 0;
+  Curly_Frame_C_2 = 112;
+  Curly_Frame_C_3 = 16;
+  Curly_Frame_C_4 = 128;
+  Curly_Frame_D_1 = 32;
+  Curly_Frame_D_2 = 112;
+  Curly_Frame_D_3 = 48;
+  Curly_Frame_D_4 = 128;
+  Toroko_Frame_A_1 = 64;
+  Toroko_Frame_A_2 = 80;
+  Toroko_Frame_A_3 = 80;
+  Toroko_Frame_A_4 = 96;
+  Toroko_Frame_B_1 = 80;
+  Toroko_Frame_B_2 = 80;
+  Toroko_Frame_B_3 = 96;
+  Toroko_Frame_B_4 = 96;
+  Toroko_Frame_C_1 = 64;
+  Toroko_Frame_C_2 = 80;
+  Toroko_Frame_C_3 = 80;
+  Toroko_Frame_C_4 = 96;
+  Toroko_Frame_D_1 = 96;
+  Toroko_Frame_D_2 = 80;
+  Toroko_Frame_D_3 = 112;
+  Toroko_Frame_D_4 = 96;
+  King_Frame_A_1 = 224;
+  King_Frame_A_2 = 48;
+  King_Frame_A_3 = 240;
+  King_Frame_A_4 = 64;
+  King_Frame_B_1 = 288;
+  King_Frame_B_2 = 48;
+  King_Frame_B_3 = 304;
+  King_Frame_B_4 = 64;
+  King_Frame_C_1 = 224;
+  King_Frame_C_2 = 48;
+  King_Frame_C_3 = 240;
+  King_Frame_C_4 = 64;
+  King_Frame_D_1 = 304;
+  King_Frame_D_2 = 48;
+  King_Frame_D_3 = 320;
+  King_Frame_D_4 = 64;
+  Sue_Frame_A_1 = 0;
+  Sue_Frame_A_2 = 16;
+  Sue_Frame_A_3 = 16;
+  Sue_Frame_A_4 = 32;
+  Sue_Frame_B_1 = 32;
+  Sue_Frame_B_2 = 16;
+  Sue_Frame_B_3 = 48;
+  Sue_Frame_B_4 = 32;
+  Sue_Frame_C_1 = 0;
+  Sue_Frame_C_2 = 16;
+  Sue_Frame_C_3 = 16;
+  Sue_Frame_C_4 = 32;
+  Sue_Frame_D_1 = 48;
+  Sue_Frame_D_2 = 16;
+  Sue_Frame_D_3 = 64;
+  Sue_Frame_D_4 = 32;
   Clear_All_Effects();
   sub_420FA0();
   TSC_SSS_SPS__2();
   v87 = 0;
-  v56 = 0;
+  Title_Screen_Mode = 0;
   Mask_Color = Make_Native_Color(0x202020u);
   Get_Version_Number((int)&Numbers_To_Display, (int)&v108, (int)&v117, (int)&v109);
   CursorPosition = Check_Profile_DAT() != 0;
   v39 = Get_Hell_Time();
   if ( v39 && v39 < 18000 )
-    v56 = 1;
+    Title_Screen_Mode = 1;
   if ( v39 && v39 < 15000 )
-    v56 = 2;
+    Title_Screen_Mode = 2;
   if ( v39 && v39 < 12000 )
-    v56 = 3;
+    Title_Screen_Mode = 3;
   if ( v39 && v39 < 9000 )
-    v56 = 4;
-  switch ( v56 )
+    Title_Screen_Mode = 4;
+  switch ( Title_Screen_Mode )
   {
     case 1:
       Tsc_CMU(36);
@@ -11578,53 +11554,53 @@ signed int Game_Loop_Title_Screen()
     if ( ++v87 >= 40 )
       v87 = 0;
     Draw_Color_Fill((int)&FullscreenRect, Mask_Color);
-    Draw_Sprite_With_Transparency((int)&FullscreenRect, 100, 216, (int)&Src_Rects, 26);
-    Draw_Sprite_With_Transparency((int)&FullscreenRect, 156, 216, (int)&v88, 26);
+    Draw_Sprite_With_Transparency((int)&FullscreenRect, 100, 216, (int)&Version_Text_Frame_1, 26);
+    Draw_Sprite_With_Transparency((int)&FullscreenRect, 156, 216, (int)&Version_Dots_Frame_1, 26);
     Draw_Numbers(140, 216, Numbers_To_Display, 0);
     Draw_Numbers(156, 216, v108, 0);
     Draw_Numbers(172, 216, v117, 0);
     Draw_Numbers(188, 216, v109, 0);
-    Draw_Sprite_With_Transparency((int)&FullscreenRect, 88, 40, (int)&v118, 0);
-    Draw_Sprite_With_Transparency((int)&FullscreenRect, 136, 128, (int)&v67, 0);
-    Draw_Sprite_With_Transparency((int)&FullscreenRect, 136, 148, (int)&v122, 0);
-    Draw_Sprite_With_Transparency((int)&FullscreenRect, 80, 192, (int)&v58, 1);
-    switch ( v56 )
+    Draw_Sprite_With_Transparency((int)&FullscreenRect, 88, 40, (int)&Title_Screen_Frame_1, 0);
+    Draw_Sprite_With_Transparency((int)&FullscreenRect, 136, 128, (int)&Unknown_Frame_1, 0);
+    Draw_Sprite_With_Transparency((int)&FullscreenRect, 136, 148, (int)&Continue_Button_Frame_1, 0);
+    Draw_Sprite_With_Transparency((int)&FullscreenRect, 80, 192, (int)&Studio_Pixel_Text_Frame_1, 1);
+    switch ( Title_Screen_Mode )
     {
       case 0:
-        v1 = &v7 + 4 * (v87 / 10 % 4);
-        v62 = *v1;
+        v1 = &Quote_Frame_A_1 + 4 * (v87 / 10 % 4);
+        Src_Rects = *v1;
         v63 = v1[1];
         v64 = v1[2];
         v65 = v1[3];
         GraphicsID = 16;
         break;
       case 1:
-        v2 = &v71 + 4 * (v87 / 10 % 4);
-        v62 = *v2;
+        v2 = &Curly_Frame_A_1 + 4 * (v87 / 10 % 4);
+        Src_Rects = *v2;
         v63 = v2[1];
         v64 = v2[2];
         v65 = v2[3];
         GraphicsID = 23;
         break;
       case 2:
-        v3 = &v40 + 4 * (v87 / 10 % 4);
-        v62 = *v3;
+        v3 = &Toroko_Frame_A_1 + 4 * (v87 / 10 % 4);
+        Src_Rects = *v3;
         v63 = v3[1];
         v64 = v3[2];
         v65 = v3[3];
         GraphicsID = 23;
         break;
       case 3:
-        v4 = &v92 + 4 * (v87 / 10 % 4);
-        v62 = *v4;
+        v4 = &King_Frame_A_1 + 4 * (v87 / 10 % 4);
+        Src_Rects = *v4;
         v63 = v4[1];
         v64 = v4[2];
         v65 = v4[3];
         GraphicsID = 23;
         break;
       case 4:
-        v5 = &v23 + 4 * (v87 / 10 % 4);
-        v62 = *v5;
+        v5 = &Sue_Frame_A_1 + 4 * (v87 / 10 % 4);
+        Src_Rects = *v5;
         v63 = v5[1];
         v64 = v5[2];
         v65 = v5[3];
@@ -11637,7 +11613,7 @@ signed int Game_Loop_Title_Screen()
       Y_Position = 147;
     else
       Y_Position = 127;
-    Draw_Sprite_With_Transparency((int)&FullscreenRect, 116, Y_Position, (int)&v62, GraphicsID);
+    Draw_Sprite_With_Transparency((int)&FullscreenRect, 116, Y_Position, (int)&Src_Rects, GraphicsID);
     Draw_All_Effect_Obj(0, 0);
     if ( v39 )
       sub_41A430(16, 8);
@@ -11673,22 +11649,21 @@ signed int Game_Loop_Title_Screen()
 signed int __cdecl Game_Loop_Main_Game(HWND hWnd)
 {
   signed int result; // eax@4
-  int v2; // [sp+0h] [bp-20h]@46
-  signed int v3; // [sp+4h] [bp-1Ch]@35
-  signed int v4; // [sp+8h] [bp-18h]@28
-  int v5; // [sp+Ch] [bp-14h]@9
+  signed int v2; // [sp+4h] [bp-1Ch]@35
+  signed int v3; // [sp+8h] [bp-18h]@28
+  int v4; // [sp+Ch] [bp-14h]@9
   signed int Camera_Y_Pos; // [sp+10h] [bp-10h]@21
-  unsigned int v7; // [sp+14h] [bp-Ch]@1
+  unsigned int v6; // [sp+14h] [bp-Ch]@1
   int Mask_Color; // [sp+18h] [bp-8h]@1
   signed int Camera_X_Pos; // [sp+1Ch] [bp-4h]@21
 
   Mask_Color = Make_Native_Color(0x200000u);
-  v7 = 1;
+  v6 = 1;
   GameTime = 0;
   FullscreenRect = 0;
   Game_State = 3;
   Create_Quote_();
-  sub_46EB30();
+  Kill_NPC_RAM();
   Clear_All_Weapons_Object_Slots();
   Clear_All_Effects();
   sub_420FA0();
@@ -11702,152 +11677,123 @@ signed int __cdecl Game_Loop_Main_Game(HWND hWnd)
   _crt_debugger_hook_2();
   if ( CursorPosition )
   {
-    if ( sub_41D260(0) || sub_41D550(hWnd) )
-    {
-      while ( 1 )
-      {
-LABEL_8:
-        Update_Keys();
-        if ( Key_Pressed & 0x8000 )
-        {
-          v5 = Game_Loop_Exit_Menu(AppWinHandle);
-          if ( !v5 )
-            return 0;
-          if ( v5 == 2 )
-            return 1;
-        }
-        if ( v7 % 2 && Game_State & 1 )
-        {
-          if ( Game_State & 2 )
-            sub_4168C0(1);
-          else
-            sub_4168C0(0);
-          sub_421040();
-          sub_46FA00();
-          sub_473000();
-          Act_Value_View();
-          Background_Modes__Increase_Background_Scroll_();
-          _crt_debugger_hook_1();
-          Tile_Code();
-          Something_Objects_();
-          sub_419450();
-          Entity_Tile_Collision_Algorithms();
-          Tile_Collision_Algorithm_For_Larger_Entities();
-          Bul_Til_Coll_Algo();
-          Entity_Bullet_Collision();
-          sub_472950();
-          if ( Game_State & 2 )
-            sub_41FE70();
-          Run_Bullet_Code();
-          Update_All_Effects();
-          Update_Camera();
-          Main_WhiteScreen_Handler(Camera_X_Pos, Camera_Y_Pos);
-          if ( Game_State & 2 )
-            sub_414BF0(1);
-          else
-            sub_414BF0(0);
-        }
-        if ( Game_State & 8 )
-        {
-          sub_40D5C0();
-          Slide_Credits_Picture();
-          Scroll_Credits_Text();
-        }
-        Process_Fade();
-        Draw_Color_Fill((int)&unk_48F92C, Mask_Color);
-        Get_Camera_Position(&Camera_X_Pos, &Camera_Y_Pos);
-        Draw_Background(Camera_X_Pos, Camera_Y_Pos);
-        Draw_Foreground_BG(Camera_X_Pos, Camera_Y_Pos);
-        sub_472770(Camera_X_Pos, Camera_Y_Pos);
-        sub_46F810(Camera_X_Pos, Camera_Y_Pos);
-        Render_Bullets(Camera_X_Pos, Camera_Y_Pos);
-        Draw_Quote_And_Gun(Camera_X_Pos, Camera_Y_Pos);
-        sub_4213B0(Camera_X_Pos, Camera_Y_Pos);
-        Draw_Rushing_Water_Particles(Camera_X_Pos, Camera_Y_Pos);
-        Draw_Foreground_FG(Camera_X_Pos, Camera_Y_Pos);
-        Rend_Map_Bckgrd(Camera_X_Pos, Camera_Y_Pos);
-        Draw_Boss_Explosion();
-        Draw_All_Effect_Obj(Camera_X_Pos, Camera_Y_Pos);
-        Put_Value_View(Camera_X_Pos, Camera_Y_Pos);
-        Boss_HP_Bar_Render_();
-        Render_Fade_Out_In();
-        if ( !(Game_State & 4) )
-        {
-          if ( Key_For_Menu & Key_Pressed )
-          {
-            Capture_Screen_To_Surface(10, (int)&FullscreenRect);
-            v4 = Inventory_Game_Loop();
-            if ( !v4 )
-              return 0;
-            if ( v4 == 2 )
-              return 1;
-            *(_BYTE *)&Player_Flags &= 0xFEu;
-          }
-          else if ( EquippedItems & 2 && Key_For_Minimap & Key_Pressed )
-          {
-            Capture_Screen_To_Surface(10, (int)&FullscreenRect);
-            v3 = Game_Loop_Map();
-            if ( !v3 )
-              return 0;
-            if ( v3 == 2 )
-              return 1;
-          }
-        }
-        if ( Game_State & 2 )
-        {
-          if ( Key_For_Next_Weapon & Key_Pressed )
-          {
-            Switch_to_Next_Weap();
-          }
-          else if ( Key_For_Prev_Weapon & Key_Pressed )
-          {
-            Switch_to_Prev_Weap();
-          }
-        }
-        if ( v7 % 2 )
-        {
-          v2 = Tsc_Parser();
-          if ( !v2 )
-            return 0;
-          if ( v2 == 2 )
-            return 1;
-        }
-        TSC_MNA(0);
-        sub_41A430(16, 8);
-        if ( Game_State & 2 )
-        {
-          Draw_Health_Bar(1);
-          Draw_XP_Bar_And_Misc(1);
-          Underwater_Timer(120, 104);
-          Draw_HUD_Weapon_Icons();
-        }
-        if ( Game_State & 8 )
-        {
-          Draw_Credits_Image();
-          Draw_From_Slot_0x25_Credits_Text_();
-        }
-        sub_421F10();
-        Display_FPS_Counter();
-        if ( !Draw_Window(AppWinHandle) )
-          break;
-        ++GameTime;
-      }
-      result = 0;
-    }
+    if ( !sub_41D260(0) && !sub_41D550(hWnd) )
+      return 0;
+  }
+  else if ( !sub_41D550(hWnd) )
+  {
+    return 0;
+  }
+  Update_Keys();
+  if ( Key_Pressed & 0x8000 )
+  {
+    v4 = Game_Loop_Exit_Menu(AppWinHandle);
+    if ( !v4 )
+      return 0;
+    if ( v4 == 2 )
+      return 1;
+  }
+  if ( v6 % 2 && Game_State & 1 )
+  {
+    if ( Game_State & 2 )
+      sub_4168C0(1);
     else
+      sub_4168C0(0);
+    sub_421040();
+    Update_NPCs();
+    Update_Boss();
+    Act_Value_View();
+    Background_Modes__Increase_Background_Scroll_();
+    _crt_debugger_hook_1();
+    Tile_Code();
+    Something_Objects_();
+    sub_419450();
+    Do_NPC_Level_Collision();
+    Tile_Collision_Algorithm_For_Larger_Entities();
+    Bul_Til_Coll_Algo();
+    Entity_Bullet_Collision();
+    sub_472950();
+    if ( Game_State & 2 )
+      sub_41FE70();
+    Run_Bullet_Code();
+    Update_All_Effects();
+    Update_Camera();
+    Main_WhiteScreen_Handler(Camera_X_Pos, Camera_Y_Pos);
+    if ( Game_State & 2 )
+      sub_414BF0(1);
+    else
+      sub_414BF0(0);
+  }
+  if ( Game_State & 8 )
+  {
+    sub_40D5C0();
+    Slide_Credits_Picture();
+    Scroll_Credits_Text();
+  }
+  Process_Fade();
+  Draw_Color_Fill((int)&unk_48F92C, Mask_Color);
+  Get_Camera_Position(&Camera_X_Pos, &Camera_Y_Pos);
+  Draw_Background(Camera_X_Pos, Camera_Y_Pos);
+  Draw_Foreground_BG(Camera_X_Pos, Camera_Y_Pos);
+  Draw_Boss_(Camera_X_Pos, Camera_Y_Pos);
+  Draw_NPCs(Camera_X_Pos, Camera_Y_Pos);
+  Render_Bullets(Camera_X_Pos, Camera_Y_Pos);
+  Draw_Quote_And_Gun(Camera_X_Pos, Camera_Y_Pos);
+  Draw_Whimsical_Star(Camera_X_Pos, Camera_Y_Pos);
+  Draw_Rushing_Water_Particles(Camera_X_Pos, Camera_Y_Pos);
+  Draw_Foreground_FG(Camera_X_Pos, Camera_Y_Pos);
+  Rend_Map_Bckgrd(Camera_X_Pos, Camera_Y_Pos);
+  Draw_Boss_Explosion();
+  Draw_All_Effect_Obj(Camera_X_Pos, Camera_Y_Pos);
+  Put_Value_View(Camera_X_Pos, Camera_Y_Pos);
+  Draw_Boss_Health();
+  Render_Fade_Out_In();
+  if ( Game_State & 4 )
+    goto LABEL_40;
+  if ( !(Key_For_Menu & Key_Pressed) )
+  {
+    if ( EquippedItems & 2 && Key_For_Minimap & Key_Pressed )
     {
-      result = 0;
+      Capture_Screen_To_Surface(10, (int)&FullscreenRect);
+      v2 = Game_Loop_Map();
+      if ( !v2 )
+        return 0;
+      if ( v2 == 2 )
+        return 1;
     }
+LABEL_40:
+    if ( Game_State & 2 )
+    {
+      if ( Key_For_Next_Weapon & Key_Pressed )
+      {
+        Switch_to_Next_Weap();
+      }
+      else if ( Key_For_Prev_Weapon & Key_Pressed )
+      {
+        Switch_to_Prev_Weap();
+      }
+    }
+    JUMPOUT(*(_DWORD *)&byte_4107EC);
+  }
+  Capture_Screen_To_Surface(10, (int)&FullscreenRect);
+  v3 = Inventory_Game_Loop();
+  if ( v3 )
+  {
+    if ( v3 != 2 )
+    {
+      *(_BYTE *)&Player_Flags &= 0xFEu;
+      goto LABEL_40;
+    }
+    result = 1;
   }
   else
   {
-    if ( sub_41D550(hWnd) )
-      goto LABEL_8;
     result = 0;
   }
   return result;
 }
 // 40EA50: using guessed type int TSC_FLA(void);
+// 4107EC: using guessed type char;
 // 416E20: using guessed type int _crt_debugger_hook_1(void);
 // 47B450: using guessed type int _crt_debugger_hook_2(void);
 // 48F91C: using guessed type int FullscreenRect;
@@ -11865,7 +11811,7 @@ LABEL_8:
 int __cdecl Get_Build_Data(int a1, _DWORD *a2, int a3)
 {
   int result; // eax@1
-  char ptr1; // [sp+0h] [bp-4Ch]@1
+  int ptr1; // [sp+0h] [bp-4Ch]@1
   int v5; // [sp+10h] [bp-3Ch]@1
   void *ptr2; // [sp+14h] [bp-38h]@1
   const char *v7; // [sp+18h] [bp-34h]@1
@@ -11882,7 +11828,7 @@ int __cdecl Get_Build_Data(int a1, _DWORD *a2, int a3)
   const char *v18; // [sp+44h] [bp-8h]@1
   int i; // [sp+48h] [bp-4h]@1
 
-  v5 = Prevent_Crash_Report_Failure;
+  v5 = Crash_Report_Failure_Check;
   ptr2 = "XXX";
   v7 = "Jan";
   v8 = "Feb";
@@ -11907,31 +11853,31 @@ int __cdecl Get_Build_Data(int a1, _DWORD *a2, int a3)
   *a2 = i;
   return result;
 }
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 
 //----- (00410990) --------------------------------------------------------
 int __cdecl Get_Version_Number(int a1, int a2, int a3, int a4)
 {
-  CHAR Filename; // [sp+0h] [bp-128h]@1
+  CHAR tstrFilename; // [sp+0h] [bp-128h]@1
   int v6; // [sp+10Ch] [bp-1Ch]@1
   unsigned int puLen; // [sp+110h] [bp-18h]@4
   LPVOID lpBuffer; // [sp+114h] [bp-14h]@4
   int v9; // [sp+118h] [bp-10h]@1
   DWORD dwHandle; // [sp+11Ch] [bp-Ch]@1
   size_t size; // [sp+120h] [bp-8h]@1
-  LPVOID lpData; // [sp+124h] [bp-4h]@1
+  void *ptr; // [sp+124h] [bp-4h]@1
 
-  v6 = Prevent_Crash_Report_Failure;
-  lpData = 0;
+  v6 = Crash_Report_Failure_Check;
+  ptr = 0;
   v9 = 0;
-  GetModuleFileNameA(0, &Filename, 0x104u);
-  size = GetFileVersionInfoSizeA(&Filename, &dwHandle);
+  GetModuleFileNameA(0, &tstrFilename, 0x104u);
+  size = GetFileVersionInfoSizeA(&tstrFilename, &dwHandle);
   if ( size )
   {
-    lpData = malloc(size);
-    if ( lpData )
+    ptr = malloc(size);
+    if ( ptr )
     {
-      if ( GetFileVersionInfoA(&Filename, 0, size, lpData) && VerQueryValueA(lpData, L"\\", &lpBuffer, &puLen) )
+      if ( GetFileVersionInfoA(&tstrFilename, 0, size, ptr) && VerQueryValueA(ptr, L"\\", &lpBuffer, &puLen) )
       {
         *(_DWORD *)a1 = (unsigned __int16)(*((_DWORD *)lpBuffer + 2) >> 16);
         *(_DWORD *)a2 = (unsigned __int16)*((_DWORD *)lpBuffer + 2);
@@ -11941,36 +11887,36 @@ int __cdecl Get_Version_Number(int a1, int a2, int a3, int a4)
       }
     }
   }
-  if ( lpData )
-    free(lpData);
+  if ( ptr )
+    free(ptr);
   return v9;
 }
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 
 //----- (00410AB0) --------------------------------------------------------
 bool __cdecl Check_For_SndVol32_exe(HWND hwnd)
 {
-  CHAR Buffer[264]; // [sp+0h] [bp-330h]@1
-  char str; // [sp+108h] [bp-228h]@1
+  CHAR str[264]; // [sp+0h] [bp-330h]@1
+  const CHAR File; // [sp+108h] [bp-228h]@1
   HINSTANCE v4; // [sp+214h] [bp-11Ch]@4
   size_t i; // [sp+218h] [bp-118h]@1
   HINSTANCE v6; // [sp+21Ch] [bp-114h]@4
-  CHAR File; // [sp+220h] [bp-110h]@4
+  CHAR v7; // [sp+220h] [bp-110h]@4
   int v8; // [sp+32Ch] [bp-4h]@1
 
-  v8 = Prevent_Crash_Report_Failure;
-  GetSystemDirectoryA(Buffer, 0x104u);
-  sprintf(&str, "%s\\Sndvol32.exe", Buffer);
-  for ( i = strlen(Buffer); Buffer[i] != 92; --i )
+  v8 = Crash_Report_Failure_Check;
+  GetSystemDirectoryA(str, 0x104u);
+  sprintf((char *)&File, "%s\\Sndvol32.exe", str);
+  for ( i = strlen(str); str[i] != 92; --i )
     ;
-  Buffer[i] = 0;
-  sprintf(&File, "%s\\Sndvol32.exe", Buffer);
-  v4 = ShellExecuteA(hwnd, "open", &str, 0, 0, 5);
-  v6 = ShellExecuteA(hwnd, "open", &File, 0, 0, 5);
+  str[i] = 0;
+  sprintf(&v7, "%s\\Sndvol32.exe", str);
+  v4 = ShellExecuteA(hwnd, "open", &File, 0, 0, 5);
+  v6 = ShellExecuteA(hwnd, "open", &v7, 0, 0, 5);
   return (signed int)v4 > 32 || (signed int)v6 > 32;
 }
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
-// 410AB0: using guessed type CHAR Buffer[264];
+// 498B20: using guessed type int Crash_Report_Failure_Check;
+// 410AB0: using guessed type CHAR str[264];
 
 //----- (00410D10) --------------------------------------------------------
 signed int __cdecl Check_File_Exists(int a1)
@@ -11980,7 +11926,7 @@ signed int __cdecl Check_File_Exists(int a1)
   int v3; // [sp+108h] [bp-8h]@1
   FILE *stream; // [sp+10Ch] [bp-4h]@1
 
-  v3 = Prevent_Crash_Report_Failure;
+  v3 = Crash_Report_Failure_Check;
   sprintf(&str, "%s\\%s", FullExePath, a1);
   stream = fopen(&str, "rb");
   if ( stream )
@@ -11994,24 +11940,24 @@ signed int __cdecl Check_File_Exists(int a1)
   }
   return result;
 }
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 
 //----- (00410D80) --------------------------------------------------------
 DWORD __cdecl Get_File_Size(char *FileName)
 {
   DWORD result; // eax@2
   DWORD v2; // ST1C_4@3
-  HANDLE hFile; // [sp+4h] [bp-4h]@1
+  HANDLE hObject; // [sp+4h] [bp-4h]@1
 
-  hFile = CreateFileA(FileName, 0, 1u, 0, 3u, 0x80u, 0);
-  if ( hFile == (HANDLE)-1 )
+  hObject = CreateFileA(FileName, 0, 1u, 0, 3u, 0x80u, 0);
+  if ( hObject == (HANDLE)-1 )
   {
     result = -1;
   }
   else
   {
-    v2 = GetFileSize(hFile, 0);
-    CloseHandle(hFile);
+    v2 = GetFileSize(hObject, 0);
+    CloseHandle(hObject);
     result = v2;
   }
   return result;
@@ -12021,15 +11967,15 @@ DWORD __cdecl Get_File_Size(char *FileName)
 int __cdecl Print_Load_BMP_Error(int Error_String?, int Error_Number?)
 {
   int result; // eax@4
-  char str; // [sp+0h] [bp-110h]@1
-  int v4; // [sp+108h] [bp-8h]@1
+  char FileName; // [sp+0h] [bp-110h]@1
+  int Prevent_failure; // [sp+108h] [bp-8h]@1
   FILE *stream; // [sp+10Ch] [bp-4h]@3
 
-  v4 = Prevent_Crash_Report_Failure;
-  sprintf(&str, "%s\\%s", FullExePath, "error.log");
-  if ( (signed int)Get_File_Size(&str) > 102400 )
-    DeleteFileA(&str);
-  stream = fopen(&str, "a+t");
+  Prevent_failure = Crash_Report_Failure_Check;
+  sprintf(&FileName, "%s\\%s", FullExePath, "error.log");
+  if ( (signed int)Get_File_Size(&FileName) > 102400 )
+    DeleteFileA(&FileName);
+  stream = fopen(&FileName, "a+t");
   if ( stream )
   {
     fprintf(stream, "%s,%d\n", Error_String?, Error_Number?);
@@ -12042,7 +11988,7 @@ int __cdecl Print_Load_BMP_Error(int Error_String?, int Error_Number?)
   }
   return result;
 }
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 
 //----- (00410E90) --------------------------------------------------------
 bool __cdecl sub_410E90(unsigned __int8 a1)
@@ -12060,7 +12006,7 @@ bool __cdecl sub_410E90(unsigned __int8 a1)
 bool __cdecl Center_Game_Window(HWND Game_Window_Handle)
 {
   struct tagRECT Rect; // [sp+0h] [bp-3Ch]@1
-  HWND v3; // [sp+10h] [bp-2Ch]@1
+  HWND hWnd; // [sp+10h] [bp-2Ch]@1
   struct tagRECT v4; // [sp+14h] [bp-28h]@2
   int X; // [sp+24h] [bp-18h]@4
   int Y; // [sp+28h] [bp-14h]@4
@@ -12071,9 +12017,9 @@ bool __cdecl Center_Game_Window(HWND Game_Window_Handle)
 
   SystemParametersInfoA(0x30u, 0, &pvParam, 0);
   GetWindowRect(Game_Window_Handle, &Rect);
-  v3 = GetParent(Game_Window_Handle);
-  if ( v3 )
-    GetWindowRect(v3, &v4);
+  hWnd = GetParent(Game_Window_Handle);
+  if ( hWnd )
+    GetWindowRect(hWnd, &v4);
   else
     SystemParametersInfoA(0x30u, 0, &v4, 0);
   X = v4.left + (v4.right - v4.left - (Rect.right - Rect.left)) / 2;
@@ -12109,14 +12055,14 @@ int __cdecl Load_Window_Rects(HWND Window_Handle, int a2, int a3)
   int v18; // [sp+140h] [bp-8h]@14
   int v19; // [sp+144h] [bp-4h]@16
 
-  v5 = Prevent_Crash_Report_Failure;
+  v5 = Crash_Report_Failure_Check;
   v15 = 1;
   sprintf(&str, "%s\\%s", FullExePath, a2);
   stream = fopen(&str, "rb");
   if ( stream )
   {
-    sub_480F55((FILE *)&X, 0x10u, 1u, stream);
-    sub_480F55((FILE *)&v15, 4u, 1u, stream);
+    fread_wrapper(&X, 0x10u, 1u, stream);
+    fread_wrapper(&v15, 4u, 1u, stream);
     fclose(stream);
     SystemParametersInfoA(0x30u, 0, &pvParam, 0);
     v8 = GetSystemMetrics(61);
@@ -12167,7 +12113,7 @@ int __cdecl Load_Window_Rects(HWND Window_Handle, int a2, int a3)
   }
   return 1;
 }
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 
 //----- (004111F0) --------------------------------------------------------
 int __cdecl Save_Window_Rect_File(HWND hWnd, int a2)
@@ -12179,7 +12125,7 @@ int __cdecl Save_Window_Rect_File(HWND hWnd, int a2)
   FILE *stream; // [sp+13Ch] [bp-14h]@7
   struct tagRECT Rect; // [sp+140h] [bp-10h]@4
 
-  v4 = Prevent_Crash_Report_Failure;
+  v4 = Crash_Report_Failure_Check;
   if ( !GetWindowPlacement(hWnd, &wndpl) )
     return 0;
   if ( wndpl.showCmd == 1 )
@@ -12192,8 +12138,8 @@ int __cdecl Save_Window_Rect_File(HWND hWnd, int a2)
   stream = fopen(&str, "wb");
   if ( stream )
   {
-    sub_481981((FILE *)&wndpl.rcNormalPosition, 0x10u, 1u, stream);
-    sub_481981((FILE *)&wndpl.showCmd, 4u, 1u, stream);
+    fwrite_wrapper(&wndpl.rcNormalPosition, 0x10u, 1u, stream);
+    fwrite_wrapper(&wndpl.showCmd, 4u, 1u, stream);
     fclose(stream);
     result = 1;
   }
@@ -12203,24 +12149,24 @@ int __cdecl Save_Window_Rect_File(HWND hWnd, int a2)
   }
   return result;
 }
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 
 //----- (004112E0) --------------------------------------------------------
 bool __cdecl Is_PBM_Protected(char *filename)
 {
   bool result; // eax@2
-  char ptr1; // [sp+0h] [bp-1Ch]@3
-  int v3; // [sp+10h] [bp-Ch]@1
+  int ptr1; // [sp+0h] [bp-1Ch]@3
+  int Prevent_Crash; // [sp+10h] [bp-Ch]@1
   size_t num; // [sp+14h] [bp-8h]@1
   FILE *stream; // [sp+18h] [bp-4h]@1
 
-  v3 = Prevent_Crash_Report_Failure;
+  Prevent_Crash = Crash_Report_Failure_Check;
   num = strlen(ROM_PImageTag);
   stream = fopen(filename, "rb");
   if ( stream )
   {
     fseek(stream, -num, 2);
-    sub_480F55((FILE *)&ptr1, 1u, num, stream);
+    fread_wrapper(&ptr1, 1u, num, stream);
     fclose(stream);
     result = memcmp(&ptr1, ROM_PImageTag, num) == 0;
   }
@@ -12230,7 +12176,7 @@ bool __cdecl Is_PBM_Protected(char *filename)
   }
   return result;
 }
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 
 //----- (00411390) --------------------------------------------------------
 // Loads initial resources (Called at Startup)
@@ -12238,11 +12184,11 @@ signed int Load_Initial_Resources()
 {
   signed int result; // eax@28
   char str; // [sp+0h] [bp-50h]@29
-  int v2; // [sp+44h] [bp-Ch]@1
+  int Prevent_Crash; // [sp+44h] [bp-Ch]@1
   int v3; // [sp+48h] [bp-8h]@1
   size_t v4; // [sp+4Ch] [bp-4h]@29
 
-  v2 = Prevent_Crash_Report_Failure;
+  Prevent_Crash = Crash_Report_Failure_Check;
   Load_BMP_From_Resource_And_Create_Surface("PIXEL", 1);
   v3 = 0;
   if ( !Load_BMP_From_File_And_Create_Surface("MyChar", 16) )
@@ -12380,7 +12326,7 @@ signed int Load_Initial_Resources()
   }
   return result;
 }
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 
 //----- (00411E60) --------------------------------------------------------
 signed int __cdecl sub_411E60(int a1)
@@ -12461,11 +12407,11 @@ signed int __cdecl Direct_Input_Something(int a1)
 signed int __stdcall Enum_Devices_Callback(int a1, int a2)
 {
   signed int result; // eax@4
-  char str; // [sp+0h] [bp-108h]@9
+  const CHAR OutputString; // [sp+0h] [bp-108h]@9
   int v4; // [sp+100h] [bp-8h]@1
   int v5; // [sp+104h] [bp-4h]@5
 
-  v4 = Prevent_Crash_Report_Failure;
+  v4 = Crash_Report_Failure_Check;
   if ( !(dword_49E20C & 1) )
   {
     dword_49E20C |= 1u;
@@ -12492,13 +12438,13 @@ signed int __stdcall Enum_Devices_Callback(int a1, int a2)
       }
       *(_DWORD *)(dword_49E208 + 4) = dword_49E200;
       sprintf(
-        &str,
+        (char *)&OutputString,
         "DeviceGUID = %x\n",
         *(_DWORD *)(a1 + 4),
         *(_DWORD *)(a1 + 8),
         *(_DWORD *)(a1 + 12),
         *(_DWORD *)(a1 + 16));
-      OutputDebugStringA(&str);
+      OutputDebugStringA(&OutputString);
       result = 0;
     }
     else
@@ -12509,7 +12455,7 @@ signed int __stdcall Enum_Devices_Callback(int a1, int a2)
   }
   return result;
 }
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 // 49E1F4: using guessed type int dword_49E1F4;
 // 49E200: using guessed type int dword_49E200;
 // 49E204: using guessed type int dword_49E204;
@@ -12523,10 +12469,10 @@ signed int __cdecl Read_Controller(int a1)
   int v3; // [sp+4h] [bp-58h]@5
   int v4; // [sp+8h] [bp-54h]@19
   char v5[32]; // [sp+34h] [bp-28h]@11
-  int v6; // [sp+54h] [bp-8h]@1
+  int Prevent_Crash; // [sp+54h] [bp-8h]@1
   int v7; // [sp+58h] [bp-4h]@5
 
-  v6 = Prevent_Crash_Report_Failure;
+  Prevent_Crash = Crash_Report_Failure_Check;
   if ( !dword_49E1F4 )
     return 0;
   if ( (*(int (__cdecl **)(int))(*(_DWORD *)dword_49E1F4 + 100))(dword_49E1F4) )
@@ -12569,7 +12515,7 @@ signed int __cdecl Read_Controller(int a1)
   }
   return 1;
 }
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 // 49E1F4: using guessed type int dword_49E1F4;
 // 49E1F8: using guessed type int dword_49E1F8;
 // 49E1FC: using guessed type int dword_49E1FC;
@@ -12580,10 +12526,10 @@ signed int Init_Gamepad_()
 {
   int v1; // [sp+0h] [bp-58h]@5
   int v2; // [sp+4h] [bp-54h]@9
-  int v3; // [sp+50h] [bp-8h]@1
+  int Prevent_Crash; // [sp+50h] [bp-8h]@1
   int v4; // [sp+54h] [bp-4h]@5
 
-  v3 = Prevent_Crash_Report_Failure;
+  Prevent_Crash = Crash_Report_Failure_Check;
   if ( !dword_49E1F4 )
     return 0;
   if ( (*(int (__cdecl **)(int))(*(_DWORD *)dword_49E1F4 + 100))(dword_49E1F4) )
@@ -12599,7 +12545,7 @@ signed int Init_Gamepad_()
   dword_49E1FC = v2;
   return 1;
 }
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 // 49E1F4: using guessed type int dword_49E1F4;
 // 49E1F8: using guessed type int dword_49E1F8;
 // 49E1FC: using guessed type int dword_49E1FC;
@@ -12621,27 +12567,27 @@ int Update_Keys()
 //----- (00412320) --------------------------------------------------------
 bool __cdecl sub_412320(HWND hWnd)
 {
-  char str; // [sp+0h] [bp-108h]@1
+  const CHAR String; // [sp+0h] [bp-108h]@1
   int v3; // [sp+104h] [bp-4h]@1
 
-  v3 = Prevent_Crash_Report_Failure;
-  sprintf(&str, "%s", ROM_PClassName);
-  return SetWindowTextA(hWnd, &str);
+  v3 = Crash_Report_Failure_Check;
+  sprintf((char *)&String, "%s", ROM_PClassName);
+  return SetWindowTextA(hWnd, &String);
 }
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 
 //----- (00412370) --------------------------------------------------------
 void Display_FPS_Counter()
 {
   int Numbers_To_Display; // ST10_4@2
 
-  if ( ShowFPS )
+  if ( FPS_Counter_Enabled )
   {
     Numbers_To_Display = Calculate_FPS();
     Draw_Numbers(280, 8, Numbers_To_Display, 0);
   }
 }
-// 49E464: using guessed type int ShowFPS;
+// 49E464: using guessed type int FPS_Counter_Enabled;
 
 //----- (004123A0) --------------------------------------------------------
 int Calculate_FPS()
@@ -12681,47 +12627,39 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
   int v10; // eax@39
   int v11; // ST1C_4@47
   int v12; // eax@47
-  int Ptr_Img_Rects; // [sp+1Ch] [bp-124h]@57
-  int v14; // [sp+20h] [bp-120h]@57
-  int v15; // [sp+24h] [bp-11Ch]@57
-  int v16; // [sp+28h] [bp-118h]@57
-  int Src_Rects; // [sp+2Ch] [bp-114h]@57
-  int v18; // [sp+30h] [bp-110h]@57
-  int v19; // [sp+34h] [bp-10Ch]@57
-  int v20; // [sp+38h] [bp-108h]@57
-  int v21; // [sp+3Ch] [bp-104h]@57
-  int v22; // [sp+40h] [bp-100h]@53
-  HMENU v23; // [sp+44h] [bp-FCh]@41
-  char str1; // [sp+48h] [bp-F8h]@3
-  CHAR v25; // [sp+68h] [bp-D8h]@62
-  int v26; // [sp+A8h] [bp-98h]@17
-  int v27; // [sp+ACh] [bp-94h]@5
-  int v28; // [sp+B0h] [bp-90h]@10
-  int v29; // [sp+B4h] [bp-8Ch]@33
-  int v30; // [sp+B8h] [bp-88h]@59
-  int v31[10]; // [sp+BCh] [bp-84h]@25
-  int v32; // [sp+E4h] [bp-5Ch]@1
-  int ptr; // [sp+E8h] [bp-58h]@33
-  LRESULT (__stdcall *v34)(HWND, UINT, WPARAM, LPARAM); // [sp+F0h] [bp-50h]@33
-  HINSTANCE v35; // [sp+FCh] [bp-44h]@33
-  HICON v36; // [sp+100h] [bp-40h]@33
-  HCURSOR v37; // [sp+104h] [bp-3Ch]@33
-  HGDIOBJ v38; // [sp+108h] [bp-38h]@33
-  const char *v39; // [sp+10Ch] [bp-34h]@34
-  LPCSTR v40; // [sp+110h] [bp-30h]@33
-  HICON v41; // [sp+114h] [bp-2Ch]@33
-  int X; // [sp+118h] [bp-28h]@39
-  int nHeight; // [sp+11Ch] [bp-24h]@39
-  int nWidth; // [sp+120h] [bp-20h]@39
-  int i; // [sp+124h] [bp-1Ch]@22
-  HWND hWnd; // [sp+128h] [bp-18h]@39
-  int Y; // [sp+12Ch] [bp-14h]@39
-  int v48; // [sp+130h] [bp-10h]@33
-  int v49; // [sp+134h] [bp-Ch]@33
-  int v50; // [sp+138h] [bp-8h]@33
-  int v51; // [sp+13Ch] [bp-4h]@33
+  int Ptr_Img_Rects; // [sp+18h] [bp-124h]@57
+  int v14; // [sp+1Ch] [bp-120h]@57
+  int v15; // [sp+20h] [bp-11Ch]@57
+  int v16; // [sp+24h] [bp-118h]@57
+  int Src_Rects; // [sp+28h] [bp-114h]@57
+  int v18; // [sp+2Ch] [bp-110h]@57
+  int v19; // [sp+30h] [bp-10Ch]@57
+  int v20; // [sp+34h] [bp-108h]@57
+  int v21; // [sp+38h] [bp-104h]@57
+  int v22; // [sp+3Ch] [bp-100h]@53
+  HMENU v23; // [sp+40h] [bp-FCh]@41
+  char str1; // [sp+44h] [bp-F8h]@3
+  const CHAR pszFaceName; // [sp+64h] [bp-D8h]@62
+  int v26; // [sp+A4h] [bp-98h]@17
+  int v27; // [sp+A8h] [bp-94h]@5
+  int v28; // [sp+ACh] [bp-90h]@10
+  int v29; // [sp+B0h] [bp-8Ch]@33
+  int v30; // [sp+B4h] [bp-88h]@59
+  int v31[10]; // [sp+B8h] [bp-84h]@25
+  int Prevent_Crash; // [sp+E0h] [bp-5Ch]@1
+  WNDCLASSEXA ptr; // [sp+E4h] [bp-58h]@33
+  int X; // [sp+114h] [bp-28h]@39
+  int nHeight; // [sp+118h] [bp-24h]@39
+  int nWidth; // [sp+11Ch] [bp-20h]@39
+  int i; // [sp+120h] [bp-1Ch]@22
+  HWND hWnd; // [sp+124h] [bp-18h]@39
+  int Y; // [sp+128h] [bp-14h]@39
+  int v40; // [sp+12Ch] [bp-10h]@33
+  int v41; // [sp+130h] [bp-Ch]@33
+  int v42; // [sp+134h] [bp-8h]@33
+  int v43; // [sp+138h] [bp-4h]@33
 
-  v32 = Prevent_Crash_Report_Failure;
+  Prevent_Crash = Crash_Report_Failure_Check;
   hObject = OpenMutexA(0x1F0001u, 0, lpName);
   if ( hObject )
   {
@@ -12734,8 +12672,8 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
     AppInstance = hInstance;
     GetModuleFileNameA(0, FullExePath, 0x104u);
     PathRemoveFileSpecA(FullExePath);
-    strcpy(FullExePath_data, FullExePath);
-    strcat(FullExePath_data, "\\data");
+    strcpy(Data_Folder_Full_Path, FullExePath);
+    strcat(Data_Folder_Full_Path, "\\data");
     if ( !Load_Config_dat(&str1) )
       Set_Default_Config_dat(&str1);
     if ( v27 )
@@ -12791,61 +12729,61 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
       switch ( v31[i] )
       {
         case 1:
-          dword_49E42C[i] = Key_For_Jump_Duplicate;
+          Controller_Button_IDs[i] = Key_For_Jump_Duplicate;
           break;
         case 2:
-          dword_49E42C[i] = Key_For_Shoot_Duplicate;
+          Controller_Button_IDs[i] = Key_For_Shoot_Duplicate;
           break;
         case 3:
-          dword_49E42C[i] = Key_For_Next_Weapon;
+          Controller_Button_IDs[i] = Key_For_Next_Weapon;
           break;
         case 6:
-          dword_49E42C[i] = Key_For_Prev_Weapon;
+          Controller_Button_IDs[i] = Key_For_Prev_Weapon;
           break;
         case 4:
-          dword_49E42C[i] = Key_For_Menu;
+          Controller_Button_IDs[i] = Key_For_Menu;
           break;
         case 5:
-          dword_49E42C[i] = Key_For_Minimap;
+          Controller_Button_IDs[i] = Key_For_Minimap;
           break;
         default:
           continue;
       }
     }
-    v48 = 0;
-    v49 = 0;
-    v50 = 320;
-    v51 = 240;
+    v40 = 0;
+    v41 = 0;
+    v42 = 320;
+    v43 = 240;
     memset(&ptr, 0, 0x30u);
-    ptr = 48;
-    v34 = Window_Procedure;
-    v35 = hInstance;
-    v38 = GetStockObject(3);
-    v40 = ROM_PClassName;
-    v37 = LoadCursorA(hInstance, "CURSOR_NORMAL");
-    v36 = LoadIconA(hInstance, L"0");
-    v41 = LoadIconA(hInstance, "ICON_MINI");
+    ptr.cbSize = 48;
+    ptr.lpfnWndProc = Window_Procedure;
+    ptr.hInstance = hInstance;
+    ptr.hbrBackground = (HBRUSH)GetStockObject(3);
+    ptr.lpszClassName = ROM_PClassName;
+    ptr.hCursor = LoadCursorA(hInstance, "CURSOR_NORMAL");
+    ptr.hIcon = LoadIconA(hInstance, L"0");
+    ptr.hIconSm = LoadIconA(hInstance, "ICON_MINI");
     switch ( v29 )
     {
       case 1:
       case 2:
-        v39 = "MENU_MAIN";
-        if ( RegisterClassExA((WNDCLASSEXA *)&ptr) )
+        ptr.lpszMenuName = "MENU_MAIN";
+        if ( RegisterClassExA(&ptr) )
         {
           if ( v29 == 1 )
           {
-            dword_49E450 = 320;
-            dword_49E454 = 240;
+            Window_Width = 320;
+            Window_Height = 240;
           }
           else
           {
-            dword_49E450 = 640;
-            dword_49E454 = 480;
+            Window_Width = 640;
+            Window_Height = 480;
           }
-          nWidth = dword_49E450 + 2 * GetSystemMetrics(7) + 2;
+          nWidth = Window_Width + 2 * GetSystemMetrics(7) + 2;
           v5 = GetSystemMetrics(8);
           v6 = GetSystemMetrics(4) + 2 * v5;
-          nHeight = GetSystemMetrics(15) + dword_49E454 + v6 + 2;
+          nHeight = GetSystemMetrics(15) + Window_Height + v6 + 2;
           X = (GetSystemMetrics(0) - nWidth) / 2;
           Y = (GetSystemMetrics(1) - nHeight) / 2;
           v7 = GetSystemMetrics(8);
@@ -12888,10 +12826,10 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
       case 0:
       case 3:
       case 4:
-        if ( RegisterClassExA((WNDCLASSEXA *)&ptr) )
+        if ( RegisterClassExA(&ptr) )
         {
-          dword_49E450 = 640;
-          dword_49E454 = 480;
+          Window_Width = 640;
+          Window_Height = 480;
           Change_Screen_Offsets(0, 0);
           v11 = GetSystemMetrics(1);
           v12 = GetSystemMetrics(0);
@@ -12915,7 +12853,7 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
               v22 = 16;
             }
             Init_Direct_Draw((int)hWnd, 2, v22);
-            dword_49E460 = 1;
+            Is_Fullscreen = 1;
             ShowCursor(0);
             goto Switch_412780_default;
           }
@@ -12943,17 +12881,17 @@ Switch_412780_default:
         Draw_Sprite_With_Transparency((int)&Ptr_Img_Rects, 128, 116, (int)&Src_Rects, 15);
         if ( Draw_Window(AppWinHandle) )
         {
-          sub_4200C0((int)hWnd);
+          Init_Direct_Sound((int)hWnd);
           if ( v30 && Init_Direct_Input(hInstance, (int)hWnd) )
           {
             Init_Gamepad_();
-            dword_49E45C = 1;
+            Gamepad_Enabled = 1;
           }
-          Load_Font(&v25);
+          Load_Font(&pszFaceName);
           sub_4257F0();
           Game_Loop_Selector(hWnd);
           Unload_Font();
-          sub_4201A0();
+          Kill_Direct_Sound_();
           Kill_Direct_Draw((int)hWnd);
           ReleaseMutex(hMutex);
           result = 1;
@@ -12981,12 +12919,12 @@ Switch_412780_default:
 // 493634: using guessed type int Key_For_Up;
 // 493638: using guessed type int Key_For_Right;
 // 49363C: using guessed type int Key_For_Down;
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
-// 49E42C: using guessed type int dword_49E42C[];
-// 49E450: using guessed type int dword_49E450;
-// 49E454: using guessed type int dword_49E454;
-// 49E45C: using guessed type int dword_49E45C;
-// 49E460: using guessed type int dword_49E460;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
+// 49E42C: using guessed type int Controller_Button_IDs[];
+// 49E450: using guessed type int Window_Width;
+// 49E454: using guessed type int Window_Height;
+// 49E45C: using guessed type int Gamepad_Enabled;
+// 49E460: using guessed type int Is_Fullscreen;
 // 412420: using guessed type int var_84[10];
 
 //----- (00412BC0) --------------------------------------------------------
@@ -13009,7 +12947,7 @@ int Windows_Focus_Gained()
   {
     CanAcceptInput = 1;
     sub_41C7F0();
-    sub_41C790();
+    Start_Org_Playback();
     TSC_SSS_SPS__3();
   }
   return Play_Sound_Effect(7, -1);
@@ -13023,7 +12961,7 @@ signed int __cdecl sub_412C30(int a1, HDROP a2)
   int v4; // [sp+108h] [bp-8h]@1
   HDROP v5; // [sp+10Ch] [bp-4h]@1
 
-  v4 = Prevent_Crash_Report_Failure;
+  v4 = Crash_Report_Failure_Check;
   v5 = a2;
   if ( DragQueryFileA(a2, 0xFFFFFFFF, 0, 0) )
   {
@@ -13033,7 +12971,7 @@ signed int __cdecl sub_412C30(int a1, HDROP a2)
   DragFinish(v5);
   return 1;
 }
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 
 //----- (00412CA0) --------------------------------------------------------
 LRESULT __stdcall Window_Procedure(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
@@ -13222,7 +13160,7 @@ LRESULT __stdcall Window_Procedure(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lP
         Key_Held |= 0x100000u;
         break;
       case 0x74u:
-        dword_49E45C = 0;
+        Gamepad_Enabled = 0;
         break;
       default:
         return 1;
@@ -13243,8 +13181,8 @@ LRESULT __stdcall Window_Procedure(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lP
       DeleteMenu(v8, 0x9C47u, 0);
     DrawMenuBar(hWnd);
     if ( Check_File_Exists((int)"fps") )
-      ShowFPS = 1;
-    if ( !dword_49E460 )
+      FPS_Counter_Enabled = 1;
+    if ( !Is_Fullscreen )
       Load_Window_Rects(hWnd, (int)"window.rect", 0);
     sub_412320(hWnd);
   }
@@ -13270,27 +13208,27 @@ LRESULT __stdcall Window_Procedure(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lP
 }
 // 49E20C: using guessed type int dword_49E20C;
 // 49E210: using guessed type int Key_Held;
-// 49E45C: using guessed type int dword_49E45C;
-// 49E460: using guessed type int dword_49E460;
-// 49E464: using guessed type int ShowFPS;
+// 49E45C: using guessed type int Gamepad_Enabled;
+// 49E460: using guessed type int Is_Fullscreen;
+// 49E464: using guessed type int FPS_Counter_Enabled;
 
 //----- (00413570) --------------------------------------------------------
 signed int MessageQueue(void)
 {
-  struct tagMSG Msg; // [sp+0h] [bp-1Ch]@1
+  MSG Msg; // [sp+0h] [bp-1Ch]@1
 
-  while ( PeekMessageA(&Msg, 0, 0, 0, 0) || !CanAcceptInput )
+  while ( PeekMessageA((LPMSG)&Msg, 0, 0, 0, 0) || !CanAcceptInput )
   {
-    if ( !GetMessageA(&Msg, 0, 0, 0) )
+    if ( !GetMessageA((LPMSG)&Msg, 0, 0, 0) )
       return 0;
-    TranslateMessage((MSG *)&Msg);
-    DispatchMessageA((MSG *)&Msg);
+    TranslateMessage(&Msg);
+    DispatchMessageA(&Msg);
   }
-  if ( dword_49E45C )
+  if ( Gamepad_Enabled )
     Direct_Input_Handler_();
   return 1;
 }
-// 49E45C: using guessed type int dword_49E45C;
+// 49E45C: using guessed type int Gamepad_Enabled;
 // 49E468: using guessed type int CanAcceptInput;
 
 //----- (004135E0) --------------------------------------------------------
@@ -13341,34 +13279,33 @@ signed int Direct_Input_Handler_()
     }
     for ( i = 0; i < 8; ++i )
     {
-      result = Key_Held & ~dword_49E42C[i];
-      Key_Held &= ~dword_49E42C[i];
+      result = Key_Held & ~Controller_Button_IDs[i];
+      Key_Held &= ~Controller_Button_IDs[i];
     }
     for ( i = 0; i < 8; ++i )
     {
       if ( v5[i] )
       {
         result = i;
-        Key_Held |= dword_49E42C[i];
+        Key_Held |= Controller_Button_IDs[i];
       }
     }
   }
   return result;
 }
-// 49362C: using guessed type int Key_For_Shoot;
 // 493630: using guessed type int Key_For_Left;
 // 493634: using guessed type int Key_For_Up;
 // 493638: using guessed type int Key_For_Right;
 // 49363C: using guessed type int Key_For_Down;
 // 49E20C: using guessed type int dword_49E20C;
 // 49E210: using guessed type int Key_Held;
-// 49E42C: using guessed type int dword_49E42C[];
+// 49E42C: using guessed type int Controller_Button_IDs[];
 // 4135E0: using guessed type int var_88[33];
 
 //----- (00413750) --------------------------------------------------------
 signed int sub_413750()
 {
-  dword_49E480 = malloc(0x4B000u);
+  Level_Layout_Buffer = malloc(0x4B000u);
   return 1;
 }
 
@@ -13380,22 +13317,26 @@ signed int __cdecl Process_PXM_file(int a1)
   int v3; // [sp+108h] [bp-10h]@1
   char v4; // [sp+10Fh] [bp-9h]@5
   FILE *stream; // [sp+110h] [bp-8h]@1
-  char ptr1; // [sp+114h] [bp-4h]@3
+  int ptr1; // [sp+114h] [bp-4h]@3
 
-  v3 = Prevent_Crash_Report_Failure;
-  sprintf(&str, "%s\\%s", FullExePath_data, a1);
+  v3 = Crash_Report_Failure_Check;
+  sprintf(&str, "%s\\%s", Data_Folder_Full_Path, a1);
   stream = fopen(&str, "rb");
   if ( stream )
   {
-    sub_480F55((FILE *)&ptr1, 1u, 3u, stream);
+    fread_wrapper(&ptr1, 1u, 3u, stream);
     if ( !memcmp(&ptr1, ptr2, 3u) )
     {
-      sub_480F55((FILE *)&v4, 1u, 1u, stream);
-      sub_480F55((FILE *)&word_49E586, 2u, 1u, stream);
-      sub_480F55((FILE *)&word_49E588, 2u, 1u, stream);
-      if ( dword_49E480 )
+      fread_wrapper(&v4, 1u, 1u, stream);
+      fread_wrapper(&Level_Width, 2u, 1u, stream);
+      fread_wrapper(&Level_Height, 2u, 1u, stream);
+      if ( Level_Layout_Buffer )
       {
-        sub_480F55((FILE *)dword_49E480, 1u, *(signed __int16 *)&word_49E588 * *(signed __int16 *)&word_49E586, stream);
+        fread_wrapper(
+          Level_Layout_Buffer,
+          1u,
+          *(signed __int16 *)&Level_Height * *(signed __int16 *)&Level_Width,
+          stream);
         fclose(stream);
         result = 1;
       }
@@ -13417,7 +13358,7 @@ signed int __cdecl Process_PXM_file(int a1)
   }
   return result;
 }
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 
 //----- (004138A0) --------------------------------------------------------
 signed int __cdecl Process_PXA_file(int a1)
@@ -13427,12 +13368,12 @@ signed int __cdecl Process_PXA_file(int a1)
   int v3; // [sp+108h] [bp-8h]@1
   FILE *stream; // [sp+10Ch] [bp-4h]@1
 
-  v3 = Prevent_Crash_Report_Failure;
-  sprintf(&str, "%s\\%s", FullExePath_data, a1);
+  v3 = Crash_Report_Failure_Check;
+  sprintf(&str, "%s\\%s", Data_Folder_Full_Path, a1);
   stream = fopen(&str, "rb");
   if ( stream )
   {
-    sub_480F55((FILE *)&byte_49E484, 1u, 0x100u, stream);
+    fread_wrapper(&byte_49E484, 1u, 0x100u, stream);
     fclose(stream);
     result = 1;
   }
@@ -13442,12 +13383,12 @@ signed int __cdecl Process_PXA_file(int a1)
   }
   return result;
 }
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 
 //----- (00413930) --------------------------------------------------------
 void Kill_Level_Layout()
 {
-  free(dword_49E480);
+  free(Level_Layout_Buffer);
 }
 
 //----- (00413960) --------------------------------------------------------
@@ -13458,15 +13399,15 @@ __int16 __cdecl Get_Room_Size(_DWORD *a1, _WORD *a2, _WORD *a3)
   if ( a1 )
   {
     result = (signed __int16)a1;
-    *a1 = dword_49E480;
+    *a1 = Level_Layout_Buffer;
   }
   if ( a2 )
   {
-    result = *(_WORD *)&word_49E586;
-    *a2 = *(_WORD *)&word_49E586;
+    result = *(_WORD *)&Level_Width;
+    *a2 = *(_WORD *)&Level_Width;
   }
   if ( a3 )
-    *a3 = *(_WORD *)&word_49E588;
+    *a3 = *(_WORD *)&Level_Height;
   return result;
 }
 
@@ -13475,8 +13416,8 @@ char __cdecl Get_Tile_ID(signed int a1, signed int a2)
 {
   char result; // al@5
 
-  if ( a1 >= 0 && a2 >= 0 && a1 < *(signed __int16 *)&word_49E586 && a2 < *(signed __int16 *)&word_49E588 )
-    result = *((_BYTE *)&byte_49E484 + *((_BYTE *)dword_49E480 + a1 + a2 * *(signed __int16 *)&word_49E586));
+  if ( a1 >= 0 && a2 >= 0 && a1 < *(signed __int16 *)&Level_Width && a2 < *(signed __int16 *)&Level_Height )
+    result = *((_BYTE *)&byte_49E484 + *((_BYTE *)Level_Layout_Buffer + a1 + a2 * *(signed __int16 *)&Level_Width));
   else
     result = 0;
   return result;
@@ -13487,8 +13428,8 @@ char *__cdecl Delete_Tile(int a1, int a2)
 {
   char *result; // eax@1
 
-  result = (char *)dword_49E480 + a1;
-  *((_BYTE *)dword_49E480 + a1 + a2 * *(signed __int16 *)&word_49E586) = 0;
+  result = (char *)Level_Layout_Buffer + a1;
+  *((_BYTE *)Level_Layout_Buffer + a1 + a2 * *(signed __int16 *)&Level_Width) = 0;
   return result;
 }
 
@@ -13497,8 +13438,11 @@ int __cdecl Decrement_Tile(int a1, int a2)
 {
   int result; // eax@1
 
-  result = a2 * *(signed __int16 *)&word_49E586;
-  *((_BYTE *)dword_49E480 + a1 + result) = *((_BYTE *)dword_49E480 + a1 + a2 * *(signed __int16 *)&word_49E586) - 1;
+  result = a2 * *(signed __int16 *)&Level_Width;
+  *((_BYTE *)Level_Layout_Buffer + a1 + result) = *((_BYTE *)Level_Layout_Buffer
+                                                  + a1
+                                                  + a2 * *(signed __int16 *)&Level_Width)
+                                                - 1;
   return result;
 }
 
@@ -13508,13 +13452,13 @@ signed int __cdecl sub_413A60(int a1, int a2, unsigned __int8 a3)
   signed int result; // eax@2
   signed int i; // [sp+0h] [bp-4h]@3
 
-  if ( *((_BYTE *)dword_49E480 + a1 + a2 * *(signed __int16 *)&word_49E586) == a3 )
+  if ( *((_BYTE *)Level_Layout_Buffer + a1 + a2 * *(signed __int16 *)&Level_Width) == a3 )
   {
     result = 0;
   }
   else
   {
-    *((_BYTE *)dword_49E480 + a1 + a2 * *(signed __int16 *)&word_49E586) = a3;
+    *((_BYTE *)Level_Layout_Buffer + a1 + a2 * *(signed __int16 *)&Level_Width) = a3;
     for ( i = 0; i < 3; ++i )
       NPC_Create(4, a1 << 13, a2 << 13, 0, 0, 0, 0, 0);
     result = 1;
@@ -13542,12 +13486,12 @@ int __cdecl Draw_Foreground_BG(signed int a1, signed int a2)
     result = (a1 / 512 + 8) / 16;
     for ( j = (a1 / 512 + 8) / 16; j < v10 + (a1 / 512 + 8) / 16; ++j )
     {
-      v4 = j + i * *(signed __int16 *)&word_49E586;
+      v4 = j + i * *(signed __int16 *)&Level_Width;
       result = (unsigned __int8)Get_Tile_ID(j, i);
       if ( (signed int)(unsigned __int8)result < 32 )
       {
-        Src_Rects = 16 * (*((_BYTE *)dword_49E480 + v4) % 16);
-        v7 = 16 * ((signed int)*((_BYTE *)dword_49E480 + v4) >> 4);
+        Src_Rects = 16 * (*((_BYTE *)Level_Layout_Buffer + v4) % 16);
+        v7 = 16 * ((signed int)*((_BYTE *)Level_Layout_Buffer + v4) >> 4);
         v8 = Src_Rects + 16;
         v9 = v7 + 16;
         result = Draw_Sprite_With_Transparency(
@@ -13596,13 +13540,13 @@ int __cdecl Draw_Foreground_FG(signed int a1, signed int a2)
     result = v10;
     for ( j = v10; j < v17 + v10; ++j )
     {
-      v9 = j + i * *(signed __int16 *)&word_49E586;
+      v9 = j + i * *(signed __int16 *)&Level_Width;
       result = (unsigned __int8)Get_Tile_ID(j, i);
       v4 = (unsigned __int8)result;
       if ( (signed int)(unsigned __int8)result >= 64 && (signed int)(unsigned __int8)result < 128 )
       {
-        Src_Rects = 16 * (*((_BYTE *)dword_49E480 + v9) % 16);
-        v14 = 16 * ((signed int)*((_BYTE *)dword_49E480 + v9) >> 4);
+        Src_Rects = 16 * (*((_BYTE *)Level_Layout_Buffer + v9) % 16);
+        v14 = 16 * ((signed int)*((_BYTE *)Level_Layout_Buffer + v9) >> 4);
         v15 = Src_Rects + 16;
         v16 = v14 + 16;
         result = Draw_Sprite_With_Transparency(
@@ -13706,7 +13650,7 @@ int __cdecl Draw_Rushing_Water_Particles(signed int a1, signed int a2)
 // 49E58C: using guessed type char byte_49E58C;
 
 //----- (004140F0) --------------------------------------------------------
-int __cdecl Draw_Room_Text_To_Surface(char *source)
+int __cdecl Draw_Room_Text_To_Surface(char *str1)
 {
   char v2; // [sp+0h] [bp-20h]@1
   char v3; // [sp+1h] [bp-1Fh]@1
@@ -13732,10 +13676,10 @@ int __cdecl Draw_Room_Text_To_Surface(char *source)
   char v23; // [sp+15h] [bp-Bh]@1
   char v24; // [sp+16h] [bp-Ah]@1
   char v25; // [sp+17h] [bp-9h]@1
-  int v26; // [sp+18h] [bp-8h]@1
+  int Prevent_Crash; // [sp+18h] [bp-8h]@1
   int i; // [sp+1Ch] [bp-4h]@2
 
-  v26 = Prevent_Crash_Report_Failure;
+  Prevent_Crash = Crash_Report_Failure_Check;
   v2 = 31;
   v3 = 31;
   v4 = 82;
@@ -13762,19 +13706,19 @@ int __cdecl Draw_Room_Text_To_Surface(char *source)
   v25 = -1;
   dword_49E590 = 0;
   dword_49E594 = 0;
-  if ( !strcmp(source, L"u") )
+  if ( !strcmp(str1, L"u") )
   {
     for ( i = 0; i < 24; ++i )
       ++*(&v2 + i);
-    source = &v2;
+    str1 = &v2;
   }
-  strcpy(Ptr_String, source);
-  i = strlen(Ptr_String);
+  strcpy(Room_Name, str1);
+  i = strlen(Room_Name);
   Draw_Color_Fill_Onto_Surface((int)&unk_493650, 0, 13);
-  Draw_String_Onto_Surface((160 - 6 * i) / 2 + 6, 1, Ptr_String, 0x220011u, 13);
-  return Draw_String_Onto_Surface((160 - 6 * i) / 2 + 6, 0, Ptr_String, 0xFEFFFFu, 13);
+  Draw_String_Onto_Surface((160 - 6 * i) / 2 + 6, 1, Room_Name, 0x220011u, 13);
+  return Draw_String_Onto_Surface((160 - 6 * i) / 2 + 6, 0, Room_Name, 0xFEFFFFu, 13);
 }
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 // 49E590: using guessed type int dword_49E590;
 // 49E594: using guessed type int dword_49E594;
 
@@ -13831,14 +13775,14 @@ int Redraw_Room_Text_To_Surface()
 {
   size_t v0; // ST14_4@1
 
-  v0 = strlen(Ptr_String);
+  v0 = strlen(Room_Name);
   Draw_Color_Fill_Onto_Surface((int)&unk_493650, 0, 13);
-  Draw_String_Onto_Surface((signed int)(160 - 6 * v0) / 2 + 6, 1, Ptr_String, 0x220011u, 13);
-  return Draw_String_Onto_Surface((signed int)(160 - 6 * v0) / 2 + 6, 0, Ptr_String, 0xFEFFFFu, 13);
+  Draw_String_Onto_Surface((signed int)(160 - 6 * v0) / 2 + 6, 1, Room_Name, 0x220011u, 13);
+  return Draw_String_Onto_Surface((signed int)(160 - 6 * v0) / 2 + 6, 0, Room_Name, 0xFEFFFFu, 13);
 }
 
 //----- (004143C0) --------------------------------------------------------
-void __cdecl sub_4143C0(signed int a1)
+void __cdecl sub_4143C0(LONG a1)
 {
   int v1; // [sp+0h] [bp-48h]@1
   int v2; // [sp+4h] [bp-44h]@1
@@ -13856,7 +13800,7 @@ void __cdecl sub_4143C0(signed int a1)
   int v14; // [sp+34h] [bp-14h]@1
   int v15; // [sp+38h] [bp-10h]@1
   int v16; // [sp+3Ch] [bp-Ch]@1
-  int i; // [sp+40h] [bp-8h]@1
+  LONG i; // [sp+40h] [bp-8h]@1
   char v18; // [sp+47h] [bp-1h]@3
 
   v1 = 240;
@@ -13875,7 +13819,7 @@ void __cdecl sub_4143C0(signed int a1)
   v14 = 24;
   v15 = 244;
   v16 = 25;
-  for ( i = 0; i < *(signed __int16 *)&word_49E586; ++i )
+  for ( i = 0; i < *(signed __int16 *)&Level_Width; ++i )
   {
     v18 = Get_Tile_ID(i, a1);
     if ( v18 )
@@ -13951,7 +13895,7 @@ signed int Game_Loop_Map()
   int v13; // [sp+30h] [bp-20h]@1
   char v14; // [sp+37h] [bp-19h]@12
   int i; // [sp+38h] [bp-18h]@1
-  int v16; // [sp+3Ch] [bp-14h]@12
+  LONG v16; // [sp+3Ch] [bp-14h]@12
   int v17; // [sp+40h] [bp-10h]@1
   int v18; // [sp+44h] [bp-Ch]@1
   int v19; // [sp+48h] [bp-8h]@1
@@ -13975,10 +13919,10 @@ signed int Game_Loop_Map()
         return 2;
     }
     Draw_Sprite_No_Tranparency((int)&FullscreenRect, 0, 0, (int)&FullscreenRect, 10);
-    Ptr_Img_Rects = 160 - i * *(signed __int16 *)&word_49E586 / 8 / 2;
-    v6 = i * *(signed __int16 *)&word_49E586 / 8 / 2 + 160;
-    v5 = 120 - i * *(signed __int16 *)&word_49E588 / 8 / 2;
-    v7 = i * *(signed __int16 *)&word_49E588 / 8 / 2 + 120;
+    Ptr_Img_Rects = 160 - i * *(signed __int16 *)&Level_Width / 8 / 2;
+    v6 = i * *(signed __int16 *)&Level_Width / 8 / 2 + 160;
+    v5 = 120 - i * *(signed __int16 *)&Level_Height / 8 / 2;
+    v7 = i * *(signed __int16 *)&Level_Height / 8 / 2 + 120;
     TSC_MNA(1);
     Draw_Color_Fill((int)&Ptr_Img_Rects, 0);
     Display_FPS_Counter();
@@ -13986,11 +13930,11 @@ signed int Game_Loop_Map()
       return 0;
   }
   Src_Rects = 0;
-  v11 = *(signed __int16 *)&word_49E586;
+  v11 = *(signed __int16 *)&Level_Width;
   v10 = 0;
-  v12 = *(signed __int16 *)&word_49E588;
-  v6 = --Ptr_Img_Rects + *(signed __int16 *)&word_49E586 + 2;
-  v7 = --v5 + *(signed __int16 *)&word_49E588 + 2;
+  v12 = *(signed __int16 *)&Level_Height;
+  v6 = --Ptr_Img_Rects + *(signed __int16 *)&Level_Width + 2;
+  v7 = --v5 + *(signed __int16 *)&Level_Height + 2;
   Draw_Color_Fill_Onto_Surface((int)&Src_Rects, 0, 9);
   v16 = 0;
   v14 = 0;
@@ -14009,9 +13953,9 @@ signed int Game_Loop_Map()
     }
     Draw_Sprite_No_Tranparency((int)&FullscreenRect, 0, 0, (int)&FullscreenRect, 10);
     Draw_Color_Fill((int)&Ptr_Img_Rects, 0);
-    if ( v16 < *(signed __int16 *)&word_49E588 )
+    if ( v16 < *(signed __int16 *)&Level_Height )
       sub_4143C0(v16++);
-    if ( v16 < *(signed __int16 *)&word_49E588 )
+    if ( v16 < *(signed __int16 *)&Level_Height )
       sub_4143C0(v16++);
     Draw_Sprite_With_Transparency((int)&FullscreenRect, Ptr_Img_Rects + 1, v5 + 1, (int)&Src_Rects, 9);
     TSC_MNA(1);
@@ -14033,10 +13977,10 @@ signed int Game_Loop_Map()
         return 2;
     }
     Draw_Sprite_No_Tranparency((int)&FullscreenRect, 0, 0, (int)&FullscreenRect, 10);
-    Ptr_Img_Rects = 160 - i * *(signed __int16 *)&word_49E586 / 8 / 2;
-    v6 = i * *(signed __int16 *)&word_49E586 / 8 / 2 + 160;
-    v5 = 120 - i * *(signed __int16 *)&word_49E588 / 8 / 2;
-    v7 = i * *(signed __int16 *)&word_49E588 / 8 / 2 + 120;
+    Ptr_Img_Rects = 160 - i * *(signed __int16 *)&Level_Width / 8 / 2;
+    v6 = i * *(signed __int16 *)&Level_Width / 8 / 2 + 160;
+    v5 = 120 - i * *(signed __int16 *)&Level_Height / 8 / 2;
+    v7 = i * *(signed __int16 *)&Level_Height / 8 / 2 + 120;
     TSC_MNA(1);
     Draw_Color_Fill((int)&Ptr_Img_Rects, 0);
     Display_FPS_Counter();
@@ -14054,9 +13998,9 @@ signed int Game_Loop_Map()
 //----- (00414B00) --------------------------------------------------------
 bool sub_414B00()
 {
-  return *((_BYTE *)&byte_49E5B8 + CurrentMapID) != 0;
+  return *((_BYTE *)&byte_49E5B8 + Current_Map_ID) != 0;
 }
-// 4A57F0: using guessed type int CurrentMapID;
+// 4A57F0: using guessed type int Current_Map_ID;
 
 //----- (00414B20) --------------------------------------------------------
 // Pushes reserved space onto the ram. used for maps, so the higher you set push 128, the more possible maps
@@ -14426,7 +14370,7 @@ int __cdecl sub_415220(int a1)
 int __cdecl Draw_Quote_And_Gun(signed int a1, signed int a2)
 {
   int result; // eax@1
-  int v3; // [sp+0h] [bp-34h]@22
+  int Src_Rects; // [sp+0h] [bp-34h]@22
   int v4; // [sp+4h] [bp-30h]@22
   int v5; // [sp+8h] [bp-2Ch]@22
   int v6; // [sp+Ch] [bp-28h]@22
@@ -14435,7 +14379,7 @@ int __cdecl Draw_Quote_And_Gun(signed int a1, signed int a2)
   int v9; // [sp+18h] [bp-1Ch]@22
   int v10; // [sp+1Ch] [bp-18h]@22
   int v11; // [sp+20h] [bp-14h]@7
-  int Src_Rects; // [sp+24h] [bp-10h]@20
+  int Rects; // [sp+24h] [bp-10h]@20
   int v13; // [sp+28h] [bp-Ch]@20
   int v14; // [sp+2Ch] [bp-8h]@20
   int v15; // [sp+30h] [bp-4h]@20
@@ -14492,7 +14436,7 @@ int __cdecl Draw_Quote_And_Gun(signed int a1, signed int a2)
     result = ((signed int)(unsigned __int8)Invincibility_Timer >> 1) % 2;
     if ( !result )
     {
-      Src_Rects = dword_49E69C;
+      Rects = dword_49E69C;
       v13 = dword_49E6A0;
       v14 = dword_49E6A4;
       v15 = dword_49E6A8;
@@ -14505,9 +14449,9 @@ int __cdecl Draw_Quote_And_Gun(signed int a1, signed int a2)
         (int)&FullscreenRect,
         (Quote_X_Position - QuoteSizebox_Left) / 512 - a1 / 512,
         (Quote_Y_Position - QuoteSizebox_Up) / 512 - a2 / 512,
-        (int)&Src_Rects,
+        (int)&Rects,
         16);
-      v3 = 56;
+      Src_Rects = 56;
       v4 = 96;
       v5 = 80;
       v6 = 120;
@@ -14523,7 +14467,7 @@ int __cdecl Draw_Quote_And_Gun(signed int a1, signed int a2)
                    (int)&FullscreenRect,
                    Quote_X_Position / 512 - 12 - a1 / 512,
                    Quote_Y_Position / 512 - 12 - a2 / 512,
-                   (int)(&v3 + 4 * (((signed int)(unsigned __int8)byte_49E6CB >> 1) % 2)),
+                   (int)(&Src_Rects + 4 * (((signed int)(unsigned __int8)byte_49E6CB >> 1) % 2)),
                    19);
       }
       else if ( InFishBattle == 1 )
@@ -14532,7 +14476,7 @@ int __cdecl Draw_Quote_And_Gun(signed int a1, signed int a2)
                    (int)&FullscreenRect,
                    Quote_X_Position / 512 - 12 - a1 / 512,
                    Quote_Y_Position / 512 - 12 - a2 / 512,
-                   (int)(&v3 + 4 * (((signed int)(unsigned __int8)byte_49E6CB >> 1) % 2)),
+                   (int)(&Src_Rects + 4 * (((signed int)(unsigned __int8)byte_49E6CB >> 1) % 2)),
                    19);
       }
     }
@@ -14571,13 +14515,13 @@ int __cdecl Physics(int a1)
   int v6; // ST10_4@201
   int v7; // eax@201
   signed int v8; // [sp+0h] [bp-2Ch]@189
-  signed int v9; // [sp+4h] [bp-28h]@3
-  signed int v10; // [sp+8h] [bp-24h]@3
-  signed int v11; // [sp+Ch] [bp-20h]@3
-  signed int v12; // [sp+10h] [bp-1Ch]@3
-  signed int v13; // [sp+14h] [bp-18h]@3
-  signed int v14; // [sp+18h] [bp-14h]@3
-  signed int v15; // [sp+1Ch] [bp-10h]@3
+  signed int Jump_Speed; // [sp+4h] [bp-28h]@3
+  signed int Walk_Speed; // [sp+8h] [bp-24h]@3
+  signed int Friction; // [sp+Ch] [bp-20h]@3
+  signed int Gravity; // [sp+10h] [bp-1Ch]@3
+  signed int Air_Control; // [sp+14h] [bp-18h]@3
+  signed int Quote_Max_Speed; // [sp+18h] [bp-14h]@3
+  signed int Gravity_When_Pressing_Jump; // [sp+1Ch] [bp-10h]@3
   signed int j; // [sp+24h] [bp-8h]@193
   signed int i; // [sp+24h] [bp-8h]@199
 
@@ -14586,23 +14530,23 @@ int __cdecl Physics(int a1)
   {
     if ( Tile_On_Which_Quote_Is & 0x100 )
     {
-      v14 = 406;
-      v12 = 40;
-      v15 = 16;
-      v9 = 640;
-      v10 = 42;
-      v13 = 16;
-      v11 = 25;
+      Quote_Max_Speed = 406;
+      Gravity = 40;
+      Gravity_When_Pressing_Jump = 16;
+      Jump_Speed = 640;
+      Walk_Speed = 42;
+      Air_Control = 16;
+      Friction = 25;
     }
     else
     {
-      v14 = 812;
-      v12 = 80;
-      v15 = 32;
-      v9 = 1280;
-      v10 = 85;
-      v13 = 32;
-      v11 = 51;
+      Quote_Max_Speed = 812;
+      Gravity = 80;
+      Gravity_When_Pressing_Jump = 32;
+      Jump_Speed = 1280;
+      Walk_Speed = 85;
+      Air_Control = 32;
+      Friction = 51;
     }
     byte_49E6E5 = 0;
     if ( !a1 )
@@ -14628,10 +14572,10 @@ int __cdecl Physics(int a1)
         {
           if ( Key_Held != Key_For_Down )
           {
-            if ( Key_For_Left & Key_Held && Quote_X_Velocity > -v14 )
-              Quote_X_Velocity -= v10;
-            if ( Key_For_Right & Key_Held && Quote_X_Velocity < v14 )
-              Quote_X_Velocity += v10;
+            if ( Key_For_Left & Key_Held && Quote_X_Velocity > -Quote_Max_Speed )
+              Quote_X_Velocity -= Walk_Speed;
+            if ( Key_For_Right & Key_Held && Quote_X_Velocity < Quote_Max_Speed )
+              Quote_X_Velocity += Walk_Speed;
             if ( Key_For_Left & Key_Held )
               *(_DWORD *)&Quote_Direction_Faced = 0;
             if ( Key_For_Right & Key_Held )
@@ -14648,15 +14592,15 @@ int __cdecl Physics(int a1)
       {
         if ( Quote_X_Velocity < 0 )
         {
-          if ( Quote_X_Velocity <= -v11 )
-            Quote_X_Velocity += v11;
+          if ( Quote_X_Velocity <= -Friction )
+            Quote_X_Velocity += Friction;
           else
             Quote_X_Velocity = 0;
         }
         if ( Quote_X_Velocity > 0 )
         {
-          if ( Quote_X_Velocity >= v11 )
-            Quote_X_Velocity -= v11;
+          if ( Quote_X_Velocity >= Friction )
+            Quote_X_Velocity -= Friction;
           else
             Quote_X_Velocity = 0;
         }
@@ -14708,10 +14652,10 @@ int __cdecl Physics(int a1)
             }
           }
         }
-        if ( Key_For_Left & Key_Held && Quote_X_Velocity > -v14 )
-          Quote_X_Velocity -= v13;
-        if ( Key_For_Right & Key_Held && Quote_X_Velocity < v14 )
-          Quote_X_Velocity += v13;
+        if ( Key_For_Left & Key_Held && Quote_X_Velocity > -Quote_Max_Speed )
+          Quote_X_Velocity -= Air_Control;
+        if ( Key_For_Right & Key_Held && Quote_X_Velocity < Quote_Max_Speed )
+          Quote_X_Velocity += Air_Control;
         if ( Key_For_Left & Key_Held )
           *(_DWORD *)&Quote_Direction_Faced = 0;
         if ( Key_For_Right & Key_Held )
@@ -14739,7 +14683,7 @@ int __cdecl Physics(int a1)
         && (Tile_On_Which_Quote_Is & 8 || Tile_On_Which_Quote_Is & 0x10 || Tile_On_Which_Quote_Is & 0x20)
         && !(Tile_On_Which_Quote_Is & 0x2000) )
       {
-        Quote_Y_Velocity = -v9;
+        Quote_Y_Velocity = -Jump_Speed;
         Play_Sound_Effect(15, 1);
       }
     }
@@ -14791,7 +14735,7 @@ int __cdecl Physics(int a1)
     }
     else if ( Tile_On_Which_Quote_Is & 0x2000 )
     {
-      Quote_Y_Velocity += v12;
+      Quote_Y_Velocity += Gravity;
     }
     else if ( EquippedItems & 1 && byte_49E6E6 && Quote_Y_Velocity > -1024 )
     {
@@ -14806,11 +14750,11 @@ int __cdecl Physics(int a1)
     }
     else if ( Quote_Y_Velocity < 0 && a1 && Key_For_Jump_Duplicate & Key_Held )
     {
-      Quote_Y_Velocity += v15;
+      Quote_Y_Velocity += Gravity_When_Pressing_Jump;
     }
     else
     {
-      Quote_Y_Velocity += v12;
+      Quote_Y_Velocity += Gravity;
     }
     if ( !a1 || !(Key_For_Jump_Duplicate & Key_Pressed) )
     {
@@ -14918,7 +14862,7 @@ int __cdecl Physics(int a1)
     result = Camera_X_Velocity + Quote_X_Position;
     Camera_X_Position = Camera_X_Velocity + Quote_X_Position;
     Camera_Y_Position = Camera_Y_Velocity + Quote_Y_Position;
-    if ( Quote_X_Velocity > v11 || (result = -v11, Quote_X_Velocity < -v11) )
+    if ( Quote_X_Velocity > Friction || (result = -Friction, Quote_X_Velocity < -Friction) )
       Quote_X_Position += Quote_X_Velocity;
     Quote_Y_Position += Quote_Y_Velocity;
   }
@@ -15435,7 +15379,7 @@ int sub_417160()
 //----- (004171D0) --------------------------------------------------------
 signed int __cdecl sub_4171D0(int a1, int a2)
 {
-  signed int v3; // [sp+4h] [bp-4h]@1
+  signed int v3; // [sp+0h] [bp-4h]@1
 
   v3 = 0;
   if ( Quote_X_Position < (16 * a1 + 8) << 9
@@ -15459,7 +15403,7 @@ signed int __cdecl sub_4171D0(int a1, int a2)
 //----- (004172E0) --------------------------------------------------------
 signed int __cdecl sub_4172E0(int a1, int a2)
 {
-  signed int v3; // [sp+4h] [bp-4h]@1
+  signed int v3; // [sp+0h] [bp-4h]@1
 
   v3 = 0;
   if ( Quote_X_Position < (16 * a1 + 8) << 9
@@ -15483,7 +15427,7 @@ signed int __cdecl sub_4172E0(int a1, int a2)
 //----- (004173F0) --------------------------------------------------------
 signed int __cdecl sub_4173F0(int a1, int a2)
 {
-  signed int v3; // [sp+4h] [bp-4h]@1
+  signed int v3; // [sp+0h] [bp-4h]@1
 
   v3 = 0;
   if ( Quote_X_Position < (16 * a1 + 8) << 9
@@ -15507,7 +15451,7 @@ signed int __cdecl sub_4173F0(int a1, int a2)
 //----- (00417500) --------------------------------------------------------
 signed int __cdecl sub_417500(int a1, int a2)
 {
-  signed int v3; // [sp+4h] [bp-4h]@1
+  signed int v3; // [sp+0h] [bp-4h]@1
 
   v3 = 0;
   if ( Quote_X_Position < (16 * a1 + 8) << 9
@@ -15531,7 +15475,7 @@ signed int __cdecl sub_417500(int a1, int a2)
 //----- (00417610) --------------------------------------------------------
 signed int __cdecl sub_417610(int a1, int a2)
 {
-  signed int v3; // [sp+4h] [bp-4h]@1
+  signed int v3; // [sp+0h] [bp-4h]@1
 
   v3 = 0x10000;
   if ( Quote_X_Position < (16 * a1 + 8) << 9
@@ -15555,7 +15499,7 @@ signed int __cdecl sub_417610(int a1, int a2)
 //----- (00417720) --------------------------------------------------------
 signed int __cdecl sub_417720(int a1, int a2)
 {
-  signed int v3; // [sp+4h] [bp-4h]@1
+  signed int v3; // [sp+0h] [bp-4h]@1
 
   v3 = 0x20000;
   if ( Quote_X_Position < (16 * a1 + 8) << 9
@@ -15579,7 +15523,7 @@ signed int __cdecl sub_417720(int a1, int a2)
 //----- (00417830) --------------------------------------------------------
 signed int __cdecl sub_417830(int a1, int a2)
 {
-  signed int v3; // [sp+4h] [bp-4h]@1
+  signed int v3; // [sp+0h] [bp-4h]@1
 
   v3 = 0x40000;
   if ( Quote_X_Position < (16 * a1 + 8) << 9
@@ -15603,7 +15547,7 @@ signed int __cdecl sub_417830(int a1, int a2)
 //----- (00417940) --------------------------------------------------------
 signed int __cdecl sub_417940(int a1, int a2)
 {
-  signed int v3; // [sp+4h] [bp-4h]@1
+  signed int v3; // [sp+0h] [bp-4h]@1
 
   v3 = 0x80000;
   if ( Quote_X_Position < (16 * a1 + 8) << 9
@@ -16417,7 +16361,7 @@ int __cdecl Take_Damage(int Damage)
     {
       Play_Sound_Effect(17, 1);
       *(_BYTE *)&Player_Flags = 0;
-      sub_46F150(Quote_X_Position, Quote_Y_Position, 5120, 64);
+      Create_Dust_Clouds(Quote_X_Position, Quote_Y_Position, 5120, 64);
       result = Call_TSC_Event(40);
     }
   }
@@ -16759,20 +16703,20 @@ int __cdecl Draw_Health_Bar(int a1)
 int __cdecl Underwater_Timer(int X_Position, int Y_Position)
 {
   int result; // eax@1
-  int Src_Rects; // [sp+0h] [bp-20h]@1
+  int Rects; // [sp+0h] [bp-20h]@1
   int v4; // [sp+4h] [bp-1Ch]@1
   int v5; // [sp+8h] [bp-18h]@1
   int v6; // [sp+Ch] [bp-14h]@1
-  int v7; // [sp+10h] [bp-10h]@1
+  int Src_Rects; // [sp+10h] [bp-10h]@1
   int v8; // [sp+14h] [bp-Ch]@1
   int v9; // [sp+18h] [bp-8h]@1
   int v10; // [sp+1Ch] [bp-4h]@1
 
-  Src_Rects = 112;
+  Rects = 112;
   v4 = 72;
   v5 = 144;
   v6 = 80;
-  v7 = 112;
+  Src_Rects = 112;
   v8 = 80;
   v9 = 144;
   v10 = 88;
@@ -16782,9 +16726,9 @@ int __cdecl Underwater_Timer(int X_Position, int Y_Position)
     if ( dword_49E6E0 % 6 < 4 )
       Draw_Numbers(X_Position + 32, Y_Position, Air / 10, 0);
     if ( Air % 30 <= 10 )
-      result = Draw_Sprite_With_Transparency((int)&FullscreenRect, X_Position, Y_Position, (int)&v7, 26);
-    else
       result = Draw_Sprite_With_Transparency((int)&FullscreenRect, X_Position, Y_Position, (int)&Src_Rects, 26);
+    else
+      result = Draw_Sprite_With_Transparency((int)&FullscreenRect, X_Position, Y_Position, (int)&Rects, 26);
   }
   return result;
 }
@@ -16867,13 +16811,13 @@ signed int sub_41A5D0()
   int i; // [sp+128h] [bp-8h]@6
   int *v8; // [sp+12Ch] [bp-4h]@4
 
-  v5 = Prevent_Crash_Report_Failure;
+  v5 = Crash_Report_Failure_Check;
   if ( EquippedItems & 0x100 )
   {
     sprintf(&str, "%s\\290.rec", FullExePath);
     stream = fopen(&str, "rb");
     if ( stream
-      && (sub_480F55((FILE *)v3, 0x14u, 1u, stream),
+      && (fread_wrapper(v3, 0x14u, 1u, stream),
           fclose(stream),
           v8 = v3,
           LOBYTE(v3[0]) -= v4[0],
@@ -16900,7 +16844,7 @@ signed int sub_41A5D0()
       stream = fopen(&str, "wb");
       if ( stream )
       {
-        sub_481981((FILE *)v3, 0x14u, 1u, stream);
+        fwrite_wrapper(v3, 0x14u, 1u, stream);
         fclose(stream);
         result = 1;
       }
@@ -16916,7 +16860,7 @@ signed int sub_41A5D0()
   }
   return result;
 }
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 // 49E650: using guessed type int EquippedItems;
 // 49E6F4: using guessed type int NikumaruTime;
 // 41A5D0: using guessed type int var_24[4];
@@ -16937,12 +16881,12 @@ int Get_Hell_Time()
   int i; // [sp+128h] [bp-8h]@3
   int *v9; // [sp+12Ch] [bp-4h]@5
 
-  v6 = Prevent_Crash_Report_Failure;
+  v6 = Crash_Report_Failure_Check;
   sprintf(&str, "%s\\290.rec", FullExePath);
   stream = fopen(&str, "rb");
   if ( stream )
   {
-    sub_480F55((FILE *)&v2, 0x14u, 1u, stream);
+    fread_wrapper(&v2, 0x14u, 1u, stream);
     fclose(stream);
     for ( i = 0; i < 4; ++i )
     {
@@ -16969,7 +16913,7 @@ int Get_Hell_Time()
   }
   return result;
 }
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 // 49E6F4: using guessed type int NikumaruTime;
 // 41A7C0: using guessed type char var_14[4];
 
@@ -16997,8 +16941,8 @@ signed int __cdecl sub_41A8F0(int a1, char a2, char a3)
   unsigned int v21; // [sp+58h] [bp-8h]@7
   unsigned int v22; // [sp+5Ch] [bp-4h]@12
 
-  v15 = Prevent_Crash_Report_Failure;
-  if ( DirectSoundObj )
+  v15 = Crash_Report_Failure_Check;
+  if ( Direct_Sound_Object )
   {
     for ( i = 0; i < 8; ++i )
     {
@@ -17014,10 +16958,10 @@ signed int __cdecl sub_41A8F0(int a1, char a2, char a3)
         v13 = size;
         v14 = &unk_493738;
         v12 = 32994;
-        if ( (*((int (__cdecl **)(_DWORD, _DWORD, _DWORD, _DWORD))DirectSoundObj->lpVtbl + 3))(
-               DirectSoundObj,
+        if ( (*((int (__cdecl **)(_DWORD, _DWORD, _DWORD, _DWORD))Direct_Sound_Object->lpVtbl + 3))(
+               Direct_Sound_Object,
                &ptr,
-               &dword_4A4B48[16 * a2] + 2 * i + j,
+               &Direct_Sound_Secondary_Buffer_Array_[16 * a2] + 2 * i + j,
                0) )
         {
           return 0;
@@ -17036,8 +16980,8 @@ signed int __cdecl sub_41A8F0(int a1, char a2, char a3)
           ++v19;
         }
         v8 = 0;
-        v5 = (*(int (__cdecl **)(_DWORD, _DWORD, size_t, void **, size_t *, void **, size_t *, _DWORD))(*(_DWORD *)*(&dword_4A4B48[16 * a2] + 2 * i + j) + 44))(
-               *(&dword_4A4B48[16 * a2] + 2 * i + j),
+        v5 = (*(int (__cdecl **)(_DWORD, _DWORD, size_t, void **, size_t *, void **, size_t *, _DWORD))(*(_DWORD *)*(&Direct_Sound_Secondary_Buffer_Array_[16 * a2] + 2 * i + j) + 44))(
+               *(&Direct_Sound_Secondary_Buffer_Array_[16 * a2] + 2 * i + j),
                0,
                size,
                &destination,
@@ -17050,15 +16994,18 @@ signed int __cdecl sub_41A8F0(int a1, char a2, char a3)
         memcpy(destination, source, num);
         if ( v8 )
           memcpy(v4, (char *)source + num, v8);
-        (*(void (__cdecl **)(_DWORD, void *, size_t, void *, size_t))(*(_DWORD *)*(&dword_4A4B48[16 * a2] + 2 * i + j)
+        (*(void (__cdecl **)(_DWORD, void *, size_t, void *, size_t))(*(_DWORD *)*(&Direct_Sound_Secondary_Buffer_Array_[16 * a2]
+                                                                                 + 2 * i
+                                                                                 + j)
                                                                     + 76))(
-          *(&dword_4A4B48[16 * a2] + 2 * i + j),
+          *(&Direct_Sound_Secondary_Buffer_Array_[16 * a2] + 2 * i + j),
           destination,
           num,
           v4,
           v8);
-        (*(void (__cdecl **)(_DWORD, _DWORD))(*(_DWORD *)*(&dword_4A4B48[16 * a2] + 2 * i + j) + 52))(
-          *(&dword_4A4B48[16 * a2] + 2 * i + j),
+        (*(void (__cdecl **)(_DWORD, _DWORD))(*(_DWORD *)*(&Direct_Sound_Secondary_Buffer_Array_[16 * a2] + 2 * i + j)
+                                            + 52))(
+          *(&Direct_Sound_Secondary_Buffer_Array_[16 * a2] + 2 * i + j),
           0);
         free(source);
       }
@@ -17074,8 +17021,8 @@ signed int __cdecl sub_41A8F0(int a1, char a2, char a3)
 // D: found interdependent unknown calls
 // 493708: using guessed type __int16 word_493708[];
 // 49370C: using guessed type __int16 word_49370C[];
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
-// 4A4B48: using guessed type int dword_4A4B48[];
+// 498B20: using guessed type int Crash_Report_Failure_Check;
+// 4A4B48: using guessed type int Direct_Sound_Secondary_Buffer_Array_[];
 
 //----- (0041ABA0) --------------------------------------------------------
 int __cdecl sub_41ABA0(unsigned __int8 a1, char a2, int a3)
@@ -17085,15 +17032,15 @@ int __cdecl sub_41ABA0(unsigned __int8 a1, char a2, int a3)
   signed int j; // [sp+0h] [bp-8h]@4
   signed int i; // [sp+4h] [bp-4h]@2
 
-  if ( DirectSoundObj )
+  if ( Direct_Sound_Object )
   {
     for ( i = 0; i < 8; ++i )
     {
       for ( j = 0; j < 2; ++j )
       {
         v4 = word_49370A[3 * i] * word_49374C[a1] * (signed int)word_493708[3 * i];
-        (*(void (__cdecl **)(_DWORD, int))(*(_DWORD *)*(&dword_4A4B48[16 * a2] + 2 * i + j) + 68))(
-          *(&dword_4A4B48[16 * a2] + 2 * i + j),
+        (*(void (__cdecl **)(_DWORD, int))(*(_DWORD *)*(&Direct_Sound_Secondary_Buffer_Array_[16 * a2] + 2 * i + j) + 68))(
+          *(&Direct_Sound_Secondary_Buffer_Array_[16 * a2] + 2 * i + j),
           (((BYTE4(v4) & 7) + (signed int)v4) >> 3) + a3 - 1000);
       }
       result = i + 1;
@@ -17104,69 +17051,73 @@ int __cdecl sub_41ABA0(unsigned __int8 a1, char a2, int a3)
 // 493708: using guessed type __int16 word_493708[];
 // 49370A: using guessed type __int16 word_49370A[];
 // 49374C: using guessed type __int16 word_49374C[];
-// 4A4B48: using guessed type int dword_4A4B48[];
+// 4A4B48: using guessed type int Direct_Sound_Secondary_Buffer_Array_[];
 
 //----- (0041AC70) --------------------------------------------------------
 int __cdecl sub_41AC70(int a1, unsigned __int8 a2, char a3)
 {
   int result; // eax@2
 
-  if ( DirectSoundObj )
+  if ( Direct_Sound_Object )
   {
     result = a3;
     if ( *((_BYTE *)&byte_493780 + a3) != 255 )
-      result = (*(int (__stdcall **)(_DWORD, int))(*(_DWORD *)*(&dword_4A4B48[16 * a3]
+      result = (*(int (__stdcall **)(_DWORD, int))(*(_DWORD *)*(&Direct_Sound_Secondary_Buffer_Array_[16 * a3]
                                                               + 2 * (*((_BYTE *)&byte_493780 + a3) / 12)
                                                               + *((_BYTE *)&byte_4A4D98 + a3))
                                                  + 64))(
-                 *(&dword_4A4B48[16 * a3] + 2 * (*((_BYTE *)&byte_493780 + a3) / 12) + *((_BYTE *)&byte_4A4D98 + a3)),
+                 *(&Direct_Sound_Secondary_Buffer_Array_[16 * a3]
+                 + 2 * (*((_BYTE *)&byte_493780 + a3) / 12)
+                 + *((_BYTE *)&byte_4A4D98 + a3)),
                  10 * (word_493764[a2] - 256));
   }
   return result;
 }
 // 493764: using guessed type __int16 word_493764[];
-// 4A4B48: using guessed type int dword_4A4B48[];
+// 4A4B48: using guessed type int Direct_Sound_Secondary_Buffer_Array_[];
 
 //----- (0041AD20) --------------------------------------------------------
 int __cdecl sub_41AD20(int a1, int a2, char a3)
 {
   int result; // eax@2
 
-  if ( DirectSoundObj )
+  if ( Direct_Sound_Object )
   {
     result = a3;
     if ( *((_BYTE *)&byte_493780 + a3) != 255 )
-      result = (*(int (__stdcall **)(_DWORD, int))(*(_DWORD *)*(&dword_4A4B48[16 * a3]
+      result = (*(int (__stdcall **)(_DWORD, int))(*(_DWORD *)*(&Direct_Sound_Secondary_Buffer_Array_[16 * a3]
                                                               + 2 * (*((_BYTE *)&byte_493780 + a3) / 12)
                                                               + *((_BYTE *)&byte_4A4D98 + a3))
                                                  + 60))(
-                 *(&dword_4A4B48[16 * a3] + 2 * (*((_BYTE *)&byte_493780 + a3) / 12) + *((_BYTE *)&byte_4A4D98 + a3)),
+                 *(&Direct_Sound_Secondary_Buffer_Array_[16 * a3]
+                 + 2 * (*((_BYTE *)&byte_493780 + a3) / 12)
+                 + *((_BYTE *)&byte_4A4D98 + a3)),
                  8 * a2 - 2040);
   }
   return result;
 }
-// 4A4B48: using guessed type int dword_4A4B48[];
+// 4A4B48: using guessed type int Direct_Sound_Secondary_Buffer_Array_[];
 
 //----- (0041ADC0) --------------------------------------------------------
 int __cdecl sub_41ADC0(unsigned __int8 a1, int a2, char a3, int a4)
 {
   int result; // eax@2
 
-  if ( DirectSoundObj )
+  if ( Direct_Sound_Object )
   {
     result = a3;
-    if ( *(&dword_4A4B48[16 * a3] + 2 * (a1 / 12) + *((_BYTE *)&byte_4A4D98 + a3)) )
+    if ( *(&Direct_Sound_Secondary_Buffer_Array_[16 * a3] + 2 * (a1 / 12) + *((_BYTE *)&byte_4A4D98 + a3)) )
     {
       if ( a2 == -1 )
       {
         if ( *((_BYTE *)&byte_493780 + a3) == 255 )
         {
           sub_41ABA0(a1 % 12, a3, a4);
-          (*(void (__cdecl **)(_DWORD, _DWORD, _DWORD, signed int))(*(_DWORD *)*(&dword_4A4B48[16 * a3]
+          (*(void (__cdecl **)(_DWORD, _DWORD, _DWORD, signed int))(*(_DWORD *)*(&Direct_Sound_Secondary_Buffer_Array_[16 * a3]
                                                                                + 2 * (a1 / 12)
                                                                                + *((_BYTE *)&byte_4A4D98 + a3))
                                                                   + 48))(
-            *(&dword_4A4B48[16 * a3] + 2 * (a1 / 12) + *((_BYTE *)&byte_4A4D98 + a3)),
+            *(&Direct_Sound_Secondary_Buffer_Array_[16 * a3] + 2 * (a1 / 12) + *((_BYTE *)&byte_4A4D98 + a3)),
             0,
             0,
             1);
@@ -17176,22 +17127,24 @@ int __cdecl sub_41ADC0(unsigned __int8 a1, int a2, char a3, int a4)
         }
         else if ( *((_BYTE *)&byte_4A4D88 + a3) != 1 || *((_BYTE *)&byte_493780 + a3) != a1 )
         {
-          (*(void (__cdecl **)(_DWORD, _DWORD, _DWORD, _DWORD))(*(_DWORD *)*(&dword_4A4B48[16 * a3]
+          (*(void (__cdecl **)(_DWORD, _DWORD, _DWORD, _DWORD))(*(_DWORD *)*(&Direct_Sound_Secondary_Buffer_Array_[16 * a3]
                                                                            + 2 * (*((_BYTE *)&byte_493780 + a3) / 12)
                                                                            + *((_BYTE *)&byte_4A4D98 + a3))
                                                               + 48))(
-            *(&dword_4A4B48[16 * a3] + 2 * (*((_BYTE *)&byte_493780 + a3) / 12) + *((_BYTE *)&byte_4A4D98 + a3)),
+            *(&Direct_Sound_Secondary_Buffer_Array_[16 * a3]
+            + 2 * (*((_BYTE *)&byte_493780 + a3) / 12)
+            + *((_BYTE *)&byte_4A4D98 + a3)),
             0,
             0,
             0);
           if ( (signed int)++*((_BYTE *)&byte_4A4D98 + a3) > 1 )
             *((_BYTE *)&byte_4A4D98 + a3) = 0;
           sub_41ABA0(a1 % 12, a3, a4);
-          result = (*(int (__cdecl **)(_DWORD, _DWORD, _DWORD, signed int))(*(_DWORD *)*(&dword_4A4B48[16 * a3]
+          result = (*(int (__cdecl **)(_DWORD, _DWORD, _DWORD, signed int))(*(_DWORD *)*(&Direct_Sound_Secondary_Buffer_Array_[16 * a3]
                                                                                        + 2 * (a1 / 12)
                                                                                        + *((_BYTE *)&byte_4A4D98 + a3))
                                                                           + 48))(
-                     *(&dword_4A4B48[16 * a3] + 2 * (a1 / 12) + *((_BYTE *)&byte_4A4D98 + a3)),
+                     *(&Direct_Sound_Secondary_Buffer_Array_[16 * a3] + 2 * (a1 / 12) + *((_BYTE *)&byte_4A4D98 + a3)),
                      0,
                      0,
                      1);
@@ -17199,21 +17152,23 @@ int __cdecl sub_41ADC0(unsigned __int8 a1, int a2, char a3, int a4)
         }
         else
         {
-          (*(void (__cdecl **)(_DWORD, _DWORD, _DWORD, _DWORD))(*(_DWORD *)*(&dword_4A4B48[16 * a3]
+          (*(void (__cdecl **)(_DWORD, _DWORD, _DWORD, _DWORD))(*(_DWORD *)*(&Direct_Sound_Secondary_Buffer_Array_[16 * a3]
                                                                            + 2 * (*((_BYTE *)&byte_493780 + a3) / 12)
                                                                            + *((_BYTE *)&byte_4A4D98 + a3))
                                                               + 48))(
-            *(&dword_4A4B48[16 * a3] + 2 * (*((_BYTE *)&byte_493780 + a3) / 12) + *((_BYTE *)&byte_4A4D98 + a3)),
+            *(&Direct_Sound_Secondary_Buffer_Array_[16 * a3]
+            + 2 * (*((_BYTE *)&byte_493780 + a3) / 12)
+            + *((_BYTE *)&byte_4A4D98 + a3)),
             0,
             0,
             0);
           if ( (signed int)++*((_BYTE *)&byte_4A4D98 + a3) > 1 )
             *((_BYTE *)&byte_4A4D98 + a3) = 0;
-          result = (*(int (__cdecl **)(_DWORD, _DWORD, _DWORD, signed int))(*(_DWORD *)*(&dword_4A4B48[16 * a3]
+          result = (*(int (__cdecl **)(_DWORD, _DWORD, _DWORD, signed int))(*(_DWORD *)*(&Direct_Sound_Secondary_Buffer_Array_[16 * a3]
                                                                                        + 2 * (a1 / 12)
                                                                                        + *((_BYTE *)&byte_4A4D98 + a3))
                                                                           + 48))(
-                     *(&dword_4A4B48[16 * a3] + 2 * (a1 / 12) + *((_BYTE *)&byte_4A4D98 + a3)),
+                     *(&Direct_Sound_Secondary_Buffer_Array_[16 * a3] + 2 * (a1 / 12) + *((_BYTE *)&byte_4A4D98 + a3)),
                      0,
                      0,
                      1);
@@ -17223,13 +17178,15 @@ int __cdecl sub_41ADC0(unsigned __int8 a1, int a2, char a3, int a4)
       {
         if ( a2 == 2 && *((_BYTE *)&byte_493780 + a3) != 255 )
         {
-          result = (*(int (__cdecl **)(_DWORD, _DWORD, _DWORD, _DWORD))(*(_DWORD *)*(&dword_4A4B48[16 * a3]
+          result = (*(int (__cdecl **)(_DWORD, _DWORD, _DWORD, _DWORD))(*(_DWORD *)*(&Direct_Sound_Secondary_Buffer_Array_[16 * a3]
                                                                                    + 2
                                                                                    * (*((_BYTE *)&byte_493780 + a3)
                                                                                     / 12)
                                                                                    + *((_BYTE *)&byte_4A4D98 + a3))
                                                                       + 48))(
-                     *(&dword_4A4B48[16 * a3] + 2 * (*((_BYTE *)&byte_493780 + a3) / 12) + *((_BYTE *)&byte_4A4D98 + a3)),
+                     *(&Direct_Sound_Secondary_Buffer_Array_[16 * a3]
+                     + 2 * (*((_BYTE *)&byte_493780 + a3) / 12)
+                     + *((_BYTE *)&byte_4A4D98 + a3)),
                      0,
                      0,
                      0);
@@ -17241,17 +17198,19 @@ int __cdecl sub_41ADC0(unsigned __int8 a1, int a2, char a3, int a4)
         result = a3;
         if ( *((_BYTE *)&byte_493780 + a3) != 255 )
         {
-          (*(void (__cdecl **)(_DWORD))(*(_DWORD *)*(&dword_4A4B48[16 * a3]
+          (*(void (__cdecl **)(_DWORD))(*(_DWORD *)*(&Direct_Sound_Secondary_Buffer_Array_[16 * a3]
                                                    + 2 * (*((_BYTE *)&byte_493780 + a3) / 12)
                                                    + *((_BYTE *)&byte_4A4D98 + a3))
-                                      + 72))(*(&dword_4A4B48[16 * a3]
+                                      + 72))(*(&Direct_Sound_Secondary_Buffer_Array_[16 * a3]
                                              + 2 * (*((_BYTE *)&byte_493780 + a3) / 12)
                                              + *((_BYTE *)&byte_4A4D98 + a3)));
-          result = (*(int (__cdecl **)(_DWORD, _DWORD))(*(_DWORD *)*(&dword_4A4B48[16 * a3]
+          result = (*(int (__cdecl **)(_DWORD, _DWORD))(*(_DWORD *)*(&Direct_Sound_Secondary_Buffer_Array_[16 * a3]
                                                                    + 2 * (*((_BYTE *)&byte_493780 + a3) / 12)
                                                                    + *((_BYTE *)&byte_4A4D98 + a3))
                                                       + 52))(
-                     *(&dword_4A4B48[16 * a3] + 2 * (*((_BYTE *)&byte_493780 + a3) / 12) + *((_BYTE *)&byte_4A4D98 + a3)),
+                     *(&Direct_Sound_Secondary_Buffer_Array_[16 * a3]
+                     + 2 * (*((_BYTE *)&byte_493780 + a3) / 12)
+                     + *((_BYTE *)&byte_4A4D98 + a3)),
                      0);
         }
       }
@@ -17259,7 +17218,7 @@ int __cdecl sub_41ADC0(unsigned __int8 a1, int a2, char a3, int a4)
   }
   return result;
 }
-// 4A4B48: using guessed type int dword_4A4B48[];
+// 4A4B48: using guessed type int Direct_Sound_Secondary_Buffer_Array_[];
 
 //----- (0041B2A0) --------------------------------------------------------
 int __cdecl sub_41B2A0(char a1)
@@ -17267,14 +17226,14 @@ int __cdecl sub_41B2A0(char a1)
   int result; // eax@8
   signed int i; // [sp+0h] [bp-4h]@2
 
-  if ( DirectSoundObj )
+  if ( Direct_Sound_Object )
   {
     for ( i = 0; i < 8; ++i )
     {
-      if ( *(&dword_4A4B48[16 * a1] + 2 * i) )
+      if ( *(&Direct_Sound_Secondary_Buffer_Array_[16 * a1] + 2 * i) )
       {
-        (*(void (__cdecl **)(_DWORD))(*(_DWORD *)*(&dword_4A4B48[16 * a1] + 2 * i) + 8))(*(&dword_4A4B48[16 * a1] + 2 * i));
-        *(&dword_4A4B48[16 * a1] + 2 * i) = 0;
+        (*(void (__cdecl **)(_DWORD))(*(_DWORD *)*(&Direct_Sound_Secondary_Buffer_Array_[16 * a1] + 2 * i) + 8))(*(&Direct_Sound_Secondary_Buffer_Array_[16 * a1] + 2 * i));
+        *(&Direct_Sound_Secondary_Buffer_Array_[16 * a1] + 2 * i) = 0;
       }
       if ( *(&dword_4A4B4C[16 * a1] + 2 * i) )
       {
@@ -17286,7 +17245,7 @@ int __cdecl sub_41B2A0(char a1)
   }
   return result;
 }
-// 4A4B48: using guessed type int dword_4A4B48[];
+// 4A4B48: using guessed type int Direct_Sound_Secondary_Buffer_Array_[];
 // 4A4B4C: using guessed type int dword_4A4B4C[];
 
 //----- (0041B380) --------------------------------------------------------
@@ -17297,7 +17256,7 @@ signed int sub_41B380()
   void *source; // ST10_4@5
   HRSRC hResInfo; // [sp+0h] [bp-8h]@3
 
-  if ( DirectSoundObj )
+  if ( Direct_Sound_Object )
   {
     hResInfo = FindResourceA(0, "WAVE100", "WAVE");
     if ( hResInfo )
@@ -17324,7 +17283,7 @@ signed int __cdecl sub_41B3F0(char a1, char a2, char a3)
 {
   signed int result; // eax@2
 
-  if ( DirectSoundObj )
+  if ( Direct_Sound_Object )
   {
     if ( a2 <= 99 )
     {
@@ -17349,7 +17308,7 @@ int __cdecl sub_41B440(unsigned __int8 a1, char a2)
 {
   int result; // eax@2
 
-  if ( DirectSoundObj )
+  if ( Direct_Sound_Object )
     result = (*(int (__stdcall **)(int, int))(*(_DWORD *)dword_4A57C0[a2] + 68))(dword_4A57C0[a2], 800 * a1 + 100);
   return result;
 }
@@ -17360,7 +17319,7 @@ int __cdecl sub_41B480(unsigned __int8 a1, char a2)
 {
   int result; // eax@2
 
-  if ( DirectSoundObj )
+  if ( Direct_Sound_Object )
     result = (*(int (__stdcall **)(int, int))(*(_DWORD *)dword_4A57C0[a2] + 64))(
                dword_4A57C0[a2],
                10 * (word_493764[a1] - 256));
@@ -17374,7 +17333,7 @@ int __cdecl sub_41B4D0(int a1, char a2)
 {
   int result; // eax@2
 
-  if ( DirectSoundObj )
+  if ( Direct_Sound_Object )
     result = (*(int (__stdcall **)(int, int))(*(_DWORD *)dword_4A57C0[a2] + 60))(dword_4A57C0[a2], 8 * a1 - 2040);
   return result;
 }
@@ -17385,7 +17344,7 @@ int __cdecl sub_41B510(unsigned __int8 a1, int a2, char a3)
 {
   int result; // eax@2
 
-  if ( DirectSoundObj )
+  if ( Direct_Sound_Object )
   {
     result = a3;
     if ( dword_4A57C0[a3] )
@@ -17459,12 +17418,12 @@ signed int __thiscall sub_41B650(int this)
 //----- (0041B730) --------------------------------------------------------
 signed int __thiscall sub_41B730(int this, int a2, char a3)
 {
-  int v4; // [sp+4h] [bp-2Ch]@1
-  char str; // [sp+8h] [bp-28h]@4
-  int v6; // [sp+28h] [bp-8h]@1
-  int i; // [sp+2Ch] [bp-4h]@8
+  int v4; // [sp+0h] [bp-2Ch]@1
+  char str; // [sp+4h] [bp-28h]@4
+  int v6; // [sp+24h] [bp-8h]@1
+  int i; // [sp+28h] [bp-4h]@8
 
-  v6 = Prevent_Crash_Report_Failure;
+  v6 = Crash_Report_Failure_Check;
   v4 = this;
   if ( a3 & 2 )
   {
@@ -17501,7 +17460,7 @@ signed int __thiscall sub_41B730(int this, int a2, char a3)
   }
   return 1;
 }
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 
 //----- (0041B890) --------------------------------------------------------
 signed int __thiscall sub_41B890(_BYTE *this, unsigned __int16 a2)
@@ -17574,74 +17533,72 @@ int __thiscall sub_41BAD0(_BYTE *this, LPCSTR lpName)
   int result; // eax@2
   HGLOBAL v3; // eax@3
   int v4; // ST18_4@20
-  _BYTE *v5; // [sp+4h] [bp-9Ch]@1
-  signed int j; // [sp+8h] [bp-98h]@15
-  signed int k; // [sp+8h] [bp-98h]@39
-  signed int l; // [sp+8h] [bp-98h]@42
-  int v9; // [sp+Ch] [bp-94h]@20
-  int v10; // [sp+Ch] [bp-94h]@23
-  int v11; // [sp+Ch] [bp-94h]@26
-  int v12; // [sp+Ch] [bp-94h]@29
-  int v13; // [sp+Ch] [bp-94h]@32
-  int v14; // [sp+Ch] [bp-94h]@35
-  __int16 v15; // [sp+10h] [bp-90h]@9
-  char v16; // [sp+12h] [bp-8Eh]@9
-  char v17; // [sp+13h] [bp-8Dh]@9
-  int v18; // [sp+14h] [bp-8Ch]@9
-  int v19; // [sp+18h] [bp-88h]@9
-  __int16 v20; // [sp+1Ch] [bp-84h]@11
-  char v21; // [sp+1Eh] [bp-82h]@14
-  char v22; // [sp+1Fh] [bp-81h]@13
-  __int16 v23[50]; // [sp+20h] [bp-80h]@18
-  char destination; // [sp+84h] [bp-1Ch]@3
-  int v25; // [sp+8Ch] [bp-14h]@1
-  HRSRC hResInfo; // [sp+90h] [bp-10h]@1
-  char v27; // [sp+97h] [bp-9h]@1
-  int i; // [sp+98h] [bp-8h]@9
-  void *source; // [sp+9Ch] [bp-4h]@3
+  _BYTE *v5; // [sp+0h] [bp-9Ch]@1
+  signed int j; // [sp+4h] [bp-98h]@15
+  signed int k; // [sp+4h] [bp-98h]@39
+  signed int l; // [sp+4h] [bp-98h]@42
+  int v9; // [sp+8h] [bp-94h]@20
+  int v10; // [sp+8h] [bp-94h]@23
+  int v11; // [sp+8h] [bp-94h]@26
+  int v12; // [sp+8h] [bp-94h]@29
+  int v13; // [sp+8h] [bp-94h]@32
+  int v14; // [sp+8h] [bp-94h]@35
+  int destination; // [sp+Ch] [bp-90h]@9
+  int v16; // [sp+10h] [bp-8Ch]@9
+  int v17; // [sp+14h] [bp-88h]@9
+  __int16 v18; // [sp+18h] [bp-84h]@11
+  char v19; // [sp+1Ah] [bp-82h]@14
+  char v20; // [sp+1Bh] [bp-81h]@13
+  __int16 v21[50]; // [sp+1Ch] [bp-80h]@18
+  int ptr1; // [sp+80h] [bp-1Ch]@3
+  int v23; // [sp+88h] [bp-14h]@1
+  HRSRC hResInfo; // [sp+8Ch] [bp-10h]@1
+  char v25; // [sp+93h] [bp-9h]@1
+  int i; // [sp+94h] [bp-8h]@9
+  void *source; // [sp+98h] [bp-4h]@3
 
-  v25 = Prevent_Crash_Report_Failure;
+  v23 = Crash_Report_Failure_Check;
   v5 = this;
-  v27 = 0;
+  v25 = 0;
   hResInfo = FindResourceA(0, lpName, &off_48C6D4);
   if ( hResInfo )
   {
     v3 = LoadResource(0, hResInfo);
     source = LockResource(v3);
-    memcpy(&destination, source, 6u);
+    memcpy(&ptr1, source, 6u);
     source = (char *)source + 6;
-    if ( !memcmp(&destination, aOrg01, 6u) )
-      v27 = 1;
-    if ( !memcmp(&destination, aOrg02, 6u) )
-      v27 = 2;
-    if ( v27 )
+    if ( !memcmp(&ptr1, aOrg01, 6u) )
+      v25 = 1;
+    if ( !memcmp(&ptr1, aOrg02, 6u) )
+      v25 = 2;
+    if ( v25 )
     {
-      memcpy(&v15, source, 0x6Cu);
+      memcpy(&destination, source, 0x6Cu);
       source = (char *)source + 108;
-      *(_WORD *)v5 = v15;
-      v5[2] = v16;
-      v5[3] = v17;
-      *((_DWORD *)v5 + 2) = v18;
-      *((_DWORD *)v5 + 3) = v19;
+      *(_WORD *)v5 = destination;
+      v5[2] = BYTE2(destination);
+      v5[3] = BYTE3(destination);
+      *((_DWORD *)v5 + 2) = v16;
+      *((_DWORD *)v5 + 3) = v17;
       for ( i = 0; i < 16; ++i )
       {
-        *(_WORD *)&v5[12 * i + 16] = *(&v20 + 3 * i);
-        if ( v27 == 1 )
+        *(_WORD *)&v5[12 * i + 16] = *(&v18 + 3 * i);
+        if ( v25 == 1 )
           v5[12 * i + 19] = 0;
         else
-          v5[12 * i + 19] = *(&v22 + 6 * i);
-        v5[12 * i + 18] = *(&v21 + 6 * i);
+          v5[12 * i + 19] = *(&v20 + 6 * i);
+        v5[12 * i + 18] = *(&v19 + 6 * i);
       }
       for ( j = 0; j < 16; ++j )
       {
-        if ( v23[3 * j] )
+        if ( v21[3 * j] )
         {
           v4 = *(_DWORD *)&v5[12 * j + 20];
           *(_DWORD *)&v5[12 * j + 24] = *(_DWORD *)&v5[12 * j + 20];
           *(_DWORD *)v4 = 0;
           *(_DWORD *)(v4 + 4) = v4 + 16;
           v9 = v4 + 16;
-          for ( i = 1; i < (unsigned __int16)v23[3 * j]; ++i )
+          for ( i = 1; i < (unsigned __int16)v21[3 * j]; ++i )
           {
             *(_DWORD *)v9 = v9 - 16;
             *(_DWORD *)(v9 + 4) = v9 + 16;
@@ -17649,35 +17606,35 @@ int __thiscall sub_41BAD0(_BYTE *this, LPCSTR lpName)
           }
           *(_DWORD *)(v9 - 16 + 4) = 0;
           v10 = *(_DWORD *)&v5[12 * j + 20];
-          for ( i = 0; i < (unsigned __int16)v23[3 * j]; ++i )
+          for ( i = 0; i < (unsigned __int16)v21[3 * j]; ++i )
           {
             memcpy((void *)(v10 + 8), source, 4u);
             source = (char *)source + 4;
             v10 += 16;
           }
           v11 = *(_DWORD *)&v5[12 * j + 20];
-          for ( i = 0; i < (unsigned __int16)v23[3 * j]; ++i )
+          for ( i = 0; i < (unsigned __int16)v21[3 * j]; ++i )
           {
             memcpy((void *)(v11 + 13), source, 1u);
             source = (char *)source + 1;
             v11 += 16;
           }
           v12 = *(_DWORD *)&v5[12 * j + 20];
-          for ( i = 0; i < (unsigned __int16)v23[3 * j]; ++i )
+          for ( i = 0; i < (unsigned __int16)v21[3 * j]; ++i )
           {
             memcpy((void *)(v12 + 12), source, 1u);
             source = (char *)source + 1;
             v12 += 16;
           }
           v13 = *(_DWORD *)&v5[12 * j + 20];
-          for ( i = 0; i < (unsigned __int16)v23[3 * j]; ++i )
+          for ( i = 0; i < (unsigned __int16)v21[3 * j]; ++i )
           {
             memcpy((void *)(v13 + 14), source, 1u);
             source = (char *)source + 1;
             v13 += 16;
           }
           v14 = *(_DWORD *)&v5[12 * j + 20];
-          for ( i = 0; i < (unsigned __int16)v23[3 * j]; ++i )
+          for ( i = 0; i < (unsigned __int16)v21[3 * j]; ++i )
           {
             memcpy((void *)(v14 + 15), source, 1u);
             source = (char *)source + 1;
@@ -17707,7 +17664,7 @@ int __thiscall sub_41BAD0(_BYTE *this, LPCSTR lpName)
   }
   return result;
 }
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 // 41BAD0: using guessed type __int16 var_80[50];
 
 //----- (0041C180) --------------------------------------------------------
@@ -17746,12 +17703,12 @@ int __cdecl Setup_ORG_Playback_Timer(UINT uDelay)
 int __stdcall fptc(UINT uTimerID, UINT uMsg, DWORD dwUser, DWORD dw1, DWORD dw2)
 {
   timeGetTime();
-  return sub_41C2B0(&word_4A4E18);
+  return sub_41C2B0(&Music_Object_);
 }
-// 4A4E18: using guessed type __int16 word_4A4E18;
+// 4A4E18: using guessed type __int16 Music_Object_;
 
 //----- (0041C250) --------------------------------------------------------
-signed int sub_41C250()
+signed int Stop_Previous_Org_Song()
 {
   signed int result; // eax@2
 
@@ -17789,7 +17746,7 @@ int __thiscall sub_41C2B0(_WORD *this)
   signed int j; // [sp+4h] [bp-4h]@25
 
   v3 = this;
-  if ( dword_4A4E10 && dword_4937A4 )
+  if ( Music_Fade_Flag_ && dword_4937A4 )
     dword_4937A4 -= 2;
   if ( dword_4937A4 < 0 )
     dword_4937A4 = 0;
@@ -17849,7 +17806,7 @@ int __thiscall sub_41C2B0(_WORD *this)
 // 4A4D48: using guessed type int dword_4A4D48[];
 // 4A4DB0: using guessed type int dword_4A4DB0[];
 // 4A4DD0: using guessed type int dword_4A4DD0[];
-// 4A4E10: using guessed type int dword_4A4E10;
+// 4A4E10: using guessed type int Music_Fade_Flag_;
 
 //----- (0041C630) --------------------------------------------------------
 int __thiscall sub_41C630(_DWORD *this, int a2)
@@ -17878,11 +17835,11 @@ signed int sub_41C6C0()
 {
   signed int result; // eax@2
 
-  if ( DirectSoundObj )
+  if ( Direct_Sound_Object )
   {
     if ( sub_41B380() )
     {
-      sub_41B650((int)&word_4A4E18);
+      sub_41B650((int)&Music_Object_);
       result = 1;
     }
     else
@@ -17896,19 +17853,19 @@ signed int sub_41C6C0()
   }
   return result;
 }
-// 4A4E18: using guessed type __int16 word_4A4E18;
+// 4A4E18: using guessed type __int16 Music_Object_;
 
 //----- (0041C6F0) --------------------------------------------------------
-int __cdecl sub_41C6F0(LPCSTR lpName)
+int __cdecl Load_Org_Music(LPCSTR lpName)
 {
   int result; // eax@2
 
-  if ( DirectSoundObj )
+  if ( Direct_Sound_Object )
   {
-    if ( sub_41BAD0(&word_4A4E18, lpName) )
+    if ( sub_41BAD0(&Music_Object_, lpName) )
     {
       dword_4937A4 = 100;
-      dword_4A4E10 = 0;
+      Music_Fade_Flag_ = 0;
       result = 0;
     }
     else
@@ -17923,32 +17880,32 @@ int __cdecl sub_41C6F0(LPCSTR lpName)
   return result;
 }
 // 4937A4: using guessed type int dword_4937A4;
-// 4A4E10: using guessed type int dword_4A4E10;
-// 4A4E18: using guessed type __int16 word_4A4E18;
+// 4A4E10: using guessed type int Music_Fade_Flag_;
+// 4A4E18: using guessed type __int16 Music_Object_;
 
 //----- (0041C730) --------------------------------------------------------
-int __cdecl sub_41C730(int a1)
+int __cdecl Set_Org_Music_Position(int a1)
 {
   int result; // eax@2
 
-  if ( DirectSoundObj )
+  if ( Direct_Sound_Object )
   {
-    result = sub_41C630(&word_4A4E18, a1);
+    result = sub_41C630(&Music_Object_, a1);
     dword_4937A4 = 100;
-    dword_4A4E10 = 0;
+    Music_Fade_Flag_ = 0;
   }
   return result;
 }
 // 4937A4: using guessed type int dword_4937A4;
-// 4A4E10: using guessed type int dword_4A4E10;
-// 4A4E18: using guessed type __int16 word_4A4E18;
+// 4A4E10: using guessed type int Music_Fade_Flag_;
+// 4A4E18: using guessed type __int16 Music_Object_;
 
 //----- (0041C770) --------------------------------------------------------
-int sub_41C770()
+int Get_Org_Music_Position()
 {
   int result; // eax@2
 
-  if ( DirectSoundObj )
+  if ( Direct_Sound_Object )
     result = Song_Current_Beat;
   else
     result = 0;
@@ -17957,26 +17914,26 @@ int sub_41C770()
 // 4A4B00: using guessed type int Song_Current_Beat;
 
 //----- (0041C790) --------------------------------------------------------
-int sub_41C790()
+int Start_Org_Playback()
 {
   int result; // eax@2
 
-  if ( DirectSoundObj )
+  if ( Direct_Sound_Object )
   {
-    sub_41C250();
+    Stop_Previous_Org_Song();
     sub_41C180();
-    result = Setup_ORG_Playback_Timer((unsigned __int16)word_4A4E18);
+    result = Setup_ORG_Playback_Timer((unsigned __int16)Music_Object_);
   }
   return result;
 }
-// 4A4E18: using guessed type __int16 word_4A4E18;
+// 4A4E18: using guessed type __int16 Music_Object_;
 
 //----- (0041C7C0) --------------------------------------------------------
-signed int __cdecl sub_41C7C0(signed int a1)
+signed int __cdecl Set_Org_Volume(signed int a1)
 {
   signed int result; // eax@2
 
-  if ( DirectSoundObj )
+  if ( Direct_Sound_Object )
   {
     if ( a1 >= 0 && a1 <= 100 )
     {
@@ -18001,9 +17958,9 @@ void sub_41C7F0()
 {
   signed int i; // [sp+0h] [bp-4h]@2
 
-  if ( DirectSoundObj )
+  if ( Direct_Sound_Object )
   {
-    sub_41C250();
+    Stop_Previous_Org_Song();
     for ( i = 0; i < 8; ++i )
       sub_41ADC0(0, 2, i, 0);
     memset(&byte_493780, 255, 0x10u);
@@ -18019,10 +17976,10 @@ int sub_41C890()
   int result; // eax@2
   signed int i; // [sp+0h] [bp-4h]@2
 
-  if ( DirectSoundObj )
+  if ( Direct_Sound_Object )
   {
-    sub_41C250();
-    result = sub_41BA70((void **)&word_4A4E18);
+    Stop_Previous_Org_Song();
+    result = sub_41BA70((void **)&Music_Object_);
     for ( i = 0; i < 8; ++i )
     {
       sub_41ADC0(0, 0, i, 0);
@@ -18032,7 +17989,7 @@ int sub_41C890()
   }
   return result;
 }
-// 4A4E18: using guessed type __int16 word_4A4E18;
+// 4A4E18: using guessed type __int16 Music_Object_;
 
 //----- (0041C8F0) --------------------------------------------------------
 void sub_41C8F0()
@@ -18058,13 +18015,13 @@ signed int __cdecl Sound_Thingy(int a1, int a2)
   double v15; // [sp+40h] [bp-130h]@20
   double v16; // [sp+48h] [bp-128h]@17
   double v17; // [sp+50h] [bp-120h]@13
-  char ptr[260]; // [sp+58h] [bp-118h]@1
+  _BYTE ptr[260]; // [sp+58h] [bp-118h]@1
   int v19; // [sp+15Ch] [bp-14h]@1
   int i; // [sp+160h] [bp-10h]@1
   int v21; // [sp+164h] [bp-Ch]@24
   double v22; // [sp+168h] [bp-8h]@13
 
-  v19 = Prevent_Crash_Report_Failure;
+  v19 = Crash_Report_Failure_Check;
   sub_41C8F0();
   memset(ptr, 0, 0x100u);
   i = 0;
@@ -18151,8 +18108,7 @@ signed int __cdecl Sound_Thingy(int a1, int a2)
   }
   return 1;
 }
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
-// 41CB10: using guessed type char ptr[260];
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 
 //----- (0041CFC0) --------------------------------------------------------
 // Returns 1 or 0
@@ -18160,10 +18116,10 @@ bool Check_Profile_DAT(void)
 {
   bool result; // eax@2
   char str; // [sp+0h] [bp-110h]@1
-  int v2; // [sp+108h] [bp-8h]@1
+  int Prevent_Crash; // [sp+108h] [bp-8h]@1
   HANDLE hObject; // [sp+10Ch] [bp-4h]@1
 
-  v2 = Prevent_Crash_Report_Failure;
+  Prevent_Crash = Crash_Report_Failure_Check;
   sprintf(&str, "%s\\%s", FullExePath, off_4937A8[0]);
   hObject = CreateFileA(&str, 0, 1u, 0, 3u, 0x80u, 0);
   if ( hObject == (HANDLE)-1 )
@@ -18178,14 +18134,14 @@ bool Check_Profile_DAT(void)
   return result;
 }
 // 4937A8: using guessed type char *off_4937A8[2];
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 
 //----- (0041D040) --------------------------------------------------------
-signed int __cdecl sub_41D040(int a1)
+signed int __cdecl Save_Profile(int a1)
 {
   signed int result; // eax@5
   char str; // [sp+0h] [bp-720h]@2
-  char ptr; // [sp+108h] [bp-618h]@6
+  int ptr; // [sp+108h] [bp-618h]@6
   int v4; // [sp+110h] [bp-610h]@6
   int v5; // [sp+114h] [bp-60Ch]@6
   int v6; // [sp+118h] [bp-608h]@6
@@ -18199,17 +18155,17 @@ signed int __cdecl sub_41D040(int a1)
   int v14; // [sp+134h] [bp-5ECh]@6
   int v15; // [sp+138h] [bp-5E8h]@6
   int v16; // [sp+13Ch] [bp-5E4h]@6
-  char v17; // [sp+140h] [bp-5E0h]@6
-  char v18; // [sp+1E0h] [bp-540h]@6
-  char v19; // [sp+260h] [bp-4C0h]@6
-  char v20; // [sp+2A0h] [bp-480h]@6
-  char destination; // [sp+320h] [bp-400h]@6
-  char v22; // [sp+324h] [bp-3FCh]@6
-  int v23; // [sp+714h] [bp-Ch]@1
+  int v17; // [sp+140h] [bp-5E0h]@6
+  int v18; // [sp+1E0h] [bp-540h]@6
+  int v19; // [sp+260h] [bp-4C0h]@6
+  int v20; // [sp+2A0h] [bp-480h]@6
+  int destination; // [sp+320h] [bp-400h]@6
+  int v22; // [sp+324h] [bp-3FCh]@6
+  int Prevent_Crash; // [sp+714h] [bp-Ch]@1
   FILE *stream; // [sp+718h] [bp-8h]@4
   void *source; // [sp+71Ch] [bp-4h]@1
 
-  v23 = Prevent_Crash_Report_Failure;
+  Prevent_Crash = Crash_Report_Failure_Check;
   source = "FLAG";
   if ( a1 )
     sprintf(&str, "%s\\%s", FullExePath, a1);
@@ -18221,8 +18177,8 @@ signed int __cdecl sub_41D040(int a1)
     memset(&ptr, 0, 0x604u);
     memcpy(&ptr, off_4937AC, 8u);
     memcpy(&destination, source, 4u);
-    v4 = CurrentMapID;
-    v5 = CurrentSongID;
+    v4 = Current_Map_ID;
+    v5 = Current_Song_ID;
     v6 = Quote_X_Position;
     v7 = Quote_Y_Position;
     v8 = *(_DWORD *)&Quote_Direction_Faced;
@@ -18238,8 +18194,8 @@ signed int __cdecl sub_41D040(int a1)
     memcpy(&v18, Quote_Inventory, 0x80u);
     memcpy(&v19, &dword_4A5500, 0x40u);
     memcpy(&v20, &byte_49E5B8, 0x80u);
-    memcpy(&v22, &byte_49DC69[311], 0x3E8u);
-    sub_481981((FILE *)&ptr, 0x604u, 1u, stream);
+    memcpy(&v22, &Event_Flags, 0x3E8u);
+    fwrite_wrapper(&ptr, 0x604u, 1u, stream);
     fclose(stream);
     result = 1;
   }
@@ -18250,7 +18206,7 @@ signed int __cdecl sub_41D040(int a1)
   return result;
 }
 // 4937A8: using guessed type char *off_4937A8[2];
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 // 499C68: using guessed type int SelectedWeaponID;
 // 499C6C: using guessed type int SelectedItemID;
 // 49E1EC: using guessed type int GameTime;
@@ -18259,15 +18215,15 @@ signed int __cdecl sub_41D040(int a1)
 // 49E6CC: using guessed type __int16 Quote_Health_Current;
 // 49E6CE: using guessed type __int16 NumWhimStars;
 // 49E6D0: using guessed type __int16 Quote_Health_Max;
-// 4A57F0: using guessed type int CurrentMapID;
-// 4A57F4: using guessed type int CurrentSongID;
+// 4A57F0: using guessed type int Current_Map_ID;
+// 4A57F4: using guessed type int Current_Song_ID;
 
 //----- (0041D260) --------------------------------------------------------
 signed int __cdecl sub_41D260(int a1)
 {
   signed int result; // eax@5
   char str; // [sp+0h] [bp-718h]@2
-  char ptr1; // [sp+108h] [bp-610h]@6
+  int ptr1; // [sp+108h] [bp-610h]@6
   int v4; // [sp+110h] [bp-608h]@8
   int Music_To_Play; // [sp+114h] [bp-604h]@8
   int v6; // [sp+118h] [bp-600h]@10
@@ -18281,15 +18237,15 @@ signed int __cdecl sub_41D260(int a1)
   int v14; // [sp+134h] [bp-5E4h]@10
   int v15; // [sp+138h] [bp-5E0h]@10
   int v16; // [sp+13Ch] [bp-5DCh]@8
-  char source; // [sp+140h] [bp-5D8h]@8
-  char v18; // [sp+1E0h] [bp-538h]@8
-  char v19; // [sp+260h] [bp-4B8h]@8
-  char v20; // [sp+2A0h] [bp-478h]@8
-  char v21; // [sp+324h] [bp-3F4h]@8
+  int source; // [sp+140h] [bp-5D8h]@8
+  int v18; // [sp+1E0h] [bp-538h]@8
+  int v19; // [sp+260h] [bp-4B8h]@8
+  int v20; // [sp+2A0h] [bp-478h]@8
+  int v21; // [sp+324h] [bp-3F4h]@8
   int v22; // [sp+710h] [bp-8h]@1
   FILE *stream; // [sp+714h] [bp-4h]@4
 
-  v22 = Prevent_Crash_Report_Failure;
+  v22 = Crash_Report_Failure_Check;
   if ( a1 )
     sprintf(&str, "%s", a1);
   else
@@ -18297,12 +18253,12 @@ signed int __cdecl sub_41D260(int a1)
   stream = fopen(&str, "rb");
   if ( stream )
   {
-    sub_480F55((FILE *)&ptr1, 8u, 1u, stream);
+    fread_wrapper(&ptr1, 8u, 1u, stream);
     if ( !memcmp(&ptr1, off_4937AC, 8u) )
     {
       fseek(stream, 0, 0);
       memset(&ptr1, 0, 0x604u);
-      sub_480F55((FILE *)&ptr1, 0x604u, 1u, stream);
+      fread_wrapper(&ptr1, 0x604u, 1u, stream);
       fclose(stream);
       SelectedWeaponID = v12;
       SelectedItemID = v13;
@@ -18311,10 +18267,10 @@ signed int __cdecl sub_41D260(int a1)
       memcpy(Quote_Inventory, &v18, 0x80u);
       memcpy(&dword_4A5500, &v19, 0x40u);
       memcpy(&byte_49E5B8, &v20, 0x80u);
-      memcpy(&byte_49DC69[311], &v21, 0x3E8u);
+      memcpy(&Event_Flags, &v21, 0x3E8u);
       Tsc_CMU(Music_To_Play);
       Create_Quote_();
-      if ( sub_420BE0(v4, 0, 0, 1) )
+      if ( Load_Room(v4, 0, 0, 1) )
       {
         EquippedItems = v14;
         InFishBattle = v15;
@@ -18359,7 +18315,7 @@ signed int __cdecl sub_41D260(int a1)
 }
 // 47B450: using guessed type int _crt_debugger_hook_2(void);
 // 4937A8: using guessed type char *off_4937A8[2];
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 // 499C68: using guessed type int SelectedWeaponID;
 // 499C6C: using guessed type int SelectedItemID;
 // 49E1EC: using guessed type int GameTime;
@@ -18389,7 +18345,7 @@ int __cdecl sub_41D550(HWND hWnd)
   sub_41D610();
   memset_init_maps();
   Clear_Event_Flags();
-  if ( sub_420BE0(13, 200, 10, 8) )
+  if ( Load_Room(13, 200, 10, 8) )
   {
     sub_40DEA0();
     Set_Camera_Upon_Enter_Room();
@@ -18476,7 +18432,7 @@ int sub_41D740()
 // 4A5544: using guessed type int dword_4A5544;
 
 //----- (0041D840) --------------------------------------------------------
-int sub_41D840()
+int Draw_Teleporter_Menu()
 {
   int result; // eax@6
   int v1; // [sp+0h] [bp-5Ch]@10
@@ -18552,26 +18508,26 @@ int sub_41D840()
 // 4A5548: using guessed type int dword_4A5548;
 
 //----- (0041DA00) --------------------------------------------------------
-signed int __cdecl sub_41DA00(_DWORD *a1)
+signed int __cdecl Game_Loop_Stage_Select(_DWORD *a1)
 {
   int v2; // [sp+0h] [bp-128h]@8
   int v3; // [sp+4h] [bp-124h]@3
-  char v4[4]; // [sp+8h] [bp-120h]@1
+  char v4; // [sp+8h] [bp-120h]@1
   int v5; // [sp+114h] [bp-14h]@1
   int Dst_Rects; // [sp+118h] [bp-10h]@1
   int v7; // [sp+11Ch] [bp-Ch]@1
   int v8; // [sp+120h] [bp-8h]@1
   int v9; // [sp+124h] [bp-4h]@1
 
-  v5 = Prevent_Crash_Report_Failure;
+  v5 = Crash_Report_Failure_Check;
   Dst_Rects = 0;
   v7 = 0;
   v8 = 320;
   v9 = 240;
   dword_4A5544 = 0;
   Capture_Screen_To_Surface(10, (int)&unk_48F92C);
-  _fputchar((int)v4);
-  sub_421660("StageSelect.tsc");
+  _fputchar((int)&v4);
+  Load_Special_TSC("StageSelect.tsc");
   Y_Position = 54;
   Call_TSC_Event(*((_DWORD *)&dword_4A5500 + 2 * dword_4A5544) + 1000);
   do
@@ -18592,19 +18548,19 @@ signed int __cdecl sub_41DA00(_DWORD *a1)
     if ( v2 == 2 )
       return 2;
     Draw_Sprite_With_Transparency((int)&Dst_Rects, 0, 0, (int)&Dst_Rects, 10);
-    sub_41D840();
-    sub_421F10();
+    Draw_Teleporter_Menu();
+    Draw_Text_Box();
     if ( Key_For_Jump & Key_Pressed )
     {
       sub_421C50();
-      sub_421750(v4);
+      Process_TSC_File(&v4);
       *a1 = dword_4A5504[2 * dword_4A5544];
       return 1;
     }
     if ( Key_For_Shoot & Key_Pressed )
     {
       sub_421C50();
-      sub_421750(v4);
+      Process_TSC_File(&v4);
       *a1 = 0;
       return 1;
     }
@@ -18615,7 +18571,7 @@ signed int __cdecl sub_41DA00(_DWORD *a1)
 }
 // 493628: using guessed type int Key_For_Jump;
 // 49362C: using guessed type int Key_For_Shoot;
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 // 49E210: using guessed type int Key_Held;
 // 49E214: using guessed type int Key_Pressed;
 // 4A5504: using guessed type int dword_4A5504[];
@@ -19661,7 +19617,7 @@ int __cdecl Spur(int a1)
 char sub_41FE70()
 {
   int v0; // eax@2
-  int v1; // ST10_4@9
+  int Weapon_In_Use; // ST10_4@9
   int v3; // [sp+0h] [bp-Ch]@23
   int v4; // [sp+4h] [bp-8h]@15
 
@@ -19678,9 +19634,9 @@ char sub_41FE70()
   LOBYTE(v0) = *(_BYTE *)&Player_Flags & 2;
   if ( !(*(_BYTE *)&Player_Flags & 2) )
   {
-    v1 = *((_DWORD *)&WeaponData_ID + 5 * SelectedWeaponID);
-    LOBYTE(v0) = v1 - 1;
-    switch ( v1 )
+    Weapon_In_Use = *((_DWORD *)&WeaponData_ID + 5 * SelectedWeaponID);
+    LOBYTE(v0) = Weapon_In_Use - 1;
+    switch ( Weapon_In_Use )
     {
       case 1:
         LOBYTE(v0) = Snake(WeaponData_Level[5 * SelectedWeaponID]);
@@ -19752,29 +19708,29 @@ char sub_41FE70()
 // 4A5564: using guessed type int dword_4A5564;
 
 //----- (004200C0) --------------------------------------------------------
-signed int __cdecl sub_4200C0(int a1)
+signed int __cdecl Init_Direct_Sound(int a1)
 {
   signed int result; // eax@2
   int ptr; // [sp+0h] [bp-18h]@3
   int v3; // [sp+4h] [bp-14h]@3
   int i; // [sp+14h] [bp-4h]@3
 
-  if ( DirectSoundCreate(0, &DirectSoundObj, 0) )
+  if ( DirectSoundCreate(0, &Direct_Sound_Object, 0) )
   {
-    DirectSoundObj = 0;
+    Direct_Sound_Object = 0;
     sub_41C6C0();
     result = 0;
   }
   else
   {
-    (*((void (__cdecl **)(_DWORD, _DWORD, _DWORD))DirectSoundObj->lpVtbl + 6))(DirectSoundObj, a1, 3);
+    (*((void (__cdecl **)(_DWORD, _DWORD, _DWORD))Direct_Sound_Object->lpVtbl + 6))(Direct_Sound_Object, a1, 3);
     memset(&ptr, 0, 0x14u);
     ptr = 20;
     v3 = 193;
-    (*((void (__cdecl **)(_DWORD, _DWORD, _DWORD, _DWORD))DirectSoundObj->lpVtbl + 3))(
-      DirectSoundObj,
+    (*((void (__cdecl **)(_DWORD, _DWORD, _DWORD, _DWORD))Direct_Sound_Object->lpVtbl + 3))(
+      Direct_Sound_Object,
       &ptr,
-      &dword_4A57EC,
+      &Direct_Sound_Primary_Buffer,
       0);
     for ( i = 0; i < 160; ++i )
       SoundBufferArray[i] = 0;
@@ -19784,15 +19740,15 @@ signed int __cdecl sub_4200C0(int a1)
   return result;
 }
 // 4A5568: using guessed type int SoundBufferArray[];
-// 4A57EC: using guessed type int dword_4A57EC;
+// 4A57EC: using guessed type int Direct_Sound_Primary_Buffer;
 
 //----- (004201A0) --------------------------------------------------------
-int sub_4201A0()
+int Kill_Direct_Sound_()
 {
   int result; // eax@2
   signed int i; // [sp+0h] [bp-4h]@2
 
-  if ( DirectSoundObj )
+  if ( Direct_Sound_Object )
   {
     result = sub_41C890();
     for ( i = 0; i < 160; ++i )
@@ -19801,23 +19757,23 @@ int sub_4201A0()
         (*(void (__cdecl **)(int))(*(_DWORD *)SoundBufferArray[i] + 8))(SoundBufferArray[i]);
       result = i + 1;
     }
-    if ( dword_4A57EC )
-      result = (*(int (__cdecl **)(int))(*(_DWORD *)dword_4A57EC + 8))(dword_4A57EC);
-    if ( DirectSoundObj )
-      result = (*((int (__cdecl **)(_DWORD))DirectSoundObj->lpVtbl + 2))(DirectSoundObj);
-    DirectSoundObj = 0;
+    if ( Direct_Sound_Primary_Buffer )
+      result = (*(int (__cdecl **)(int))(*(_DWORD *)Direct_Sound_Primary_Buffer + 8))(Direct_Sound_Primary_Buffer);
+    if ( Direct_Sound_Object )
+      result = (*((int (__cdecl **)(_DWORD))Direct_Sound_Object->lpVtbl + 2))(Direct_Sound_Object);
+    Direct_Sound_Object = 0;
   }
   return result;
 }
 // 4A5568: using guessed type int SoundBufferArray[];
-// 4A57EC: using guessed type int dword_4A57EC;
+// 4A57EC: using guessed type int Direct_Sound_Primary_Buffer;
 
 //----- (00420640) --------------------------------------------------------
 int __cdecl Play_Sound_Effect(int SoundID, int Channel)
 {
   int result; // eax@2
 
-  if ( DirectSoundObj )
+  if ( Direct_Sound_Object )
   {
     result = SoundID;
     if ( SoundBufferArray[SoundID] )
@@ -19858,7 +19814,7 @@ int __cdecl sub_420720(int a1, int a2)
 {
   int result; // eax@2
 
-  if ( DirectSoundObj )
+  if ( Direct_Sound_Object )
     result = (*(int (__stdcall **)(int, int))(*(_DWORD *)SoundBufferArray[a1] + 68))(
                SoundBufferArray[a1],
                10 * a2 + 100);
@@ -19877,7 +19833,7 @@ size_t __cdecl Sound_Loader(int Ptr_Sound, int Channels, int SoundID)
   int ptr; // [sp+10h] [bp-6Ch]@8
   int v9; // [sp+14h] [bp-68h]@8
   size_t v10; // [sp+18h] [bp-64h]@8
-  __int16 *v11; // [sp+20h] [bp-5Ch]@8
+  int *v11; // [sp+20h] [bp-5Ch]@8
   void *v12; // [sp+24h] [bp-58h]@34
   void *source; // [sp+28h] [bp-54h]@3
   void *v14; // [sp+2Ch] [bp-50h]@3
@@ -19888,41 +19844,39 @@ size_t __cdecl Sound_Loader(int Ptr_Sound, int Channels, int SoundID)
   void *v19; // [sp+40h] [bp-3Ch]@10
   size_t v20; // [sp+44h] [bp-38h]@34
   int v21; // [sp+48h] [bp-34h]@3
-  char destination; // [sp+4Ch] [bp-30h]@3
+  int destination; // [sp+4Ch] [bp-30h]@3
   int v23; // [sp+50h] [bp-2Ch]@3
-  char v24; // [sp+54h] [bp-28h]@3
-  char v25; // [sp+58h] [bp-24h]@3
+  int v24; // [sp+54h] [bp-28h]@3
+  int v25; // [sp+58h] [bp-24h]@3
   int v26; // [sp+5Ch] [bp-20h]@3
-  __int16 v27; // [sp+60h] [bp-1Ch]@3
-  __int16 v28; // [sp+62h] [bp-1Ah]@3
-  int v29; // [sp+64h] [bp-18h]@3
-  int v30; // [sp+68h] [bp-14h]@3
-  __int16 v31; // [sp+6Ch] [bp-10h]@3
-  __int16 v32; // [sp+6Eh] [bp-Eh]@3
-  char v33; // [sp+70h] [bp-Ch]@3
-  int v34; // [sp+74h] [bp-8h]@3
-  int v35; // [sp+78h] [bp-4h]@1
+  int v27; // [sp+60h] [bp-1Ch]@3
+  int v28; // [sp+64h] [bp-18h]@3
+  int v29; // [sp+68h] [bp-14h]@3
+  __int16 v30; // [sp+6Ch] [bp-10h]@3
+  __int16 v31; // [sp+6Eh] [bp-Eh]@3
+  int v32; // [sp+70h] [bp-Ch]@3
+  int v33; // [sp+74h] [bp-8h]@3
+  int v34; // [sp+78h] [bp-4h]@1
 
-  v35 = Prevent_Crash_Report_Failure;
-  if ( DirectSoundObj )
+  v34 = Crash_Report_Failure_Check;
+  if ( Direct_Sound_Object )
   {
     source = "RIFF";
     v14 = "fmt ";
     v16 = "WAVE";
     v7 = "data";
-    v32 = 8;
-    v29 = 22050;
-    v28 = 1;
-    v27 = 1;
+    v31 = 8;
+    v28 = 22050;
+    v27 = 65537;
     v26 = 16;
     memcpy(&destination, "RIFF", 4u);
     memcpy(&v25, "fmt ", 4u);
     memcpy(&v24, "WAVE", 4u);
-    memcpy(&v33, "data", 4u);
-    v31 = 1;
-    v30 = 22050;
-    v34 = *(_DWORD *)(Ptr_Sound + 4);
-    v23 = v34 + 36;
+    memcpy(&v32, "data", 4u);
+    v30 = 1;
+    v29 = 22050;
+    v33 = *(_DWORD *)(Ptr_Sound + 4);
+    v23 = v33 + 36;
     v21 = Ptr_Sound;
     size = 0;
     for ( i = 0; i < Channels; ++i )
@@ -19936,8 +19890,8 @@ size_t __cdecl Sound_Loader(int Ptr_Sound, int Channels, int SoundID)
     v9 = 32994;
     v10 = size;
     v11 = &v27;
-    if ( (*((int (__cdecl **)(_DWORD, _DWORD, _DWORD, _DWORD))DirectSoundObj->lpVtbl + 3))(
-           DirectSoundObj,
+    if ( (*((int (__cdecl **)(_DWORD, _DWORD, _DWORD, _DWORD))Direct_Sound_Object->lpVtbl + 3))(
+           Direct_Sound_Object,
            &ptr,
            4 * SoundID + 4871528,
            0) )
@@ -20024,11 +19978,11 @@ size_t __cdecl Sound_Loader(int Ptr_Sound, int Channels, int SoundID)
   }
   return result;
 }
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 // 4A5568: using guessed type int SoundBufferArray[];
 
 //----- (00420BE0) --------------------------------------------------------
-signed int __cdecl sub_420BE0(int a1, int Event, int a3, int a4)
+signed int __cdecl Load_Room(int a1, int Event, int a3, int a4)
 {
   signed int result; // eax@18
   char str; // [sp+0h] [bp-128h]@1
@@ -20036,7 +19990,7 @@ signed int __cdecl sub_420BE0(int a1, int Event, int a3, int a4)
   char destination; // [sp+110h] [bp-18h]@1
   int v8; // [sp+124h] [bp-4h]@1
 
-  v8 = Prevent_Crash_Report_Failure;
+  v8 = Crash_Report_Failure_Check;
   Move_Quote(a3 << 13, a4 << 13);
   v6 = 0;
   strcpy(&destination, "stage");
@@ -20050,10 +20004,10 @@ signed int __cdecl sub_420BE0(int a1, int Event, int a3, int a4)
   if ( !Process_PXM_file((int)&str) )
     v6 = 1;
   sprintf(&str, "%s\\%s.pxe", &destination, &ROM_MapHeaders_Map_File_Name[200 * a1]);
-  if ( !sub_46EB50((int)&str) )
+  if ( !Process_PXE_File((int)&str) )
     v6 = 1;
   sprintf(&str, "%s\\%s.tsc", &destination, &ROM_MapHeaders_Map_File_Name[200 * a1]);
-  if ( !sub_421750(&str) )
+  if ( !Process_TSC_File(&str) )
     v6 = 1;
   sprintf(&str, "%s", &ROM_MapHeaders_BGImage_File[200 * a1]);
   if ( !Load_Background_Sprite(&str, ROM_MapHeaders_BGType[50 * a1]) )
@@ -20078,9 +20032,9 @@ signed int __cdecl sub_420BE0(int a1, int Event, int a3, int a4)
     Clear_All_Effects();
     Clear_Value_View();
     Stop_All_Quake_Effects();
-    sub_472740(ROM_MapHeaders_Boss_ID[200 * a1]);
+    Set_Room_Boss_ID(ROM_MapHeaders_Boss_ID[200 * a1]);
     Occasional_Flash_0();
-    CurrentMapID = a1;
+    Current_Map_ID = a1;
     result = 1;
   }
   return result;
@@ -20088,8 +20042,8 @@ signed int __cdecl sub_420BE0(int a1, int Event, int a3, int a4)
 // 40EE60: using guessed type int Occasional_Flash_0(void);
 // 4937F0: using guessed type int ROM_MapHeaders_BGType[];
 // 493834: using guessed type int ROM_MapHeaders_Sprite_File_B[];
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
-// 4A57F0: using guessed type int CurrentMapID;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
+// 4A57F0: using guessed type int Current_Map_ID;
 
 //----- (00420EE0) --------------------------------------------------------
 // CMU : Change MUsic
@@ -20098,66 +20052,67 @@ int __cdecl Tsc_CMU(int Music_To_Play)
 {
   int result; // eax@2
 
-  if ( !Music_To_Play || (result = Music_To_Play, Music_To_Play != CurrentSongID) )
+  if ( !Music_To_Play || (result = Music_To_Play, Music_To_Play != Current_Song_ID) )
   {
-    PreviousSongBeat = sub_41C770();
-    PreviousSongID = CurrentSongID;
+    Previous_Song_Beat = Get_Org_Music_Position();
+    Previous_Song_ID = Current_Song_ID;
     sub_41C7F0();
-    sub_41C6F0((&Ptr_Songs)[4 * Music_To_Play]);
-    sub_41C7C0(100);
-    sub_41C730(0);
-    result = sub_41C790();
-    CurrentSongID = Music_To_Play;
+    Load_Org_Music((&Ptr_Songs)[4 * Music_To_Play]);
+    Set_Org_Volume(100);
+    Set_Org_Music_Position(0);
+    result = Start_Org_Playback();
+    Current_Song_ID = Music_To_Play;
   }
   return result;
 }
-// 4A57F4: using guessed type int CurrentSongID;
-// 4A57F8: using guessed type int PreviousSongBeat;
-// 4A57FC: using guessed type int PreviousSongID;
+// 4A57F4: using guessed type int Current_Song_ID;
+// 4A57F8: using guessed type int Previous_Song_Beat;
+// 4A57FC: using guessed type int Previous_Song_ID;
 
 //----- (00420F50) --------------------------------------------------------
+// RMU : Play pRevious MUsic
 int Tsc_RMU()
 {
   int result; // eax@1
 
   sub_41C7F0();
-  sub_41C6F0((&Ptr_Songs)[4 * PreviousSongID]);
-  sub_41C730(PreviousSongBeat);
-  sub_41C7C0(100);
-  sub_41C790();
-  result = PreviousSongID;
-  CurrentSongID = PreviousSongID;
+  Load_Org_Music((&Ptr_Songs)[4 * Previous_Song_ID]);
+  Set_Org_Music_Position(Previous_Song_Beat);
+  Set_Org_Volume(100);
+  Start_Org_Playback();
+  result = Previous_Song_ID;
+  Current_Song_ID = Previous_Song_ID;
   return result;
 }
-// 4A57F4: using guessed type int CurrentSongID;
-// 4A57F8: using guessed type int PreviousSongBeat;
-// 4A57FC: using guessed type int PreviousSongID;
+// 4A57F4: using guessed type int Current_Song_ID;
+// 4A57F8: using guessed type int Previous_Song_Beat;
+// 4A57FC: using guessed type int Previous_Song_ID;
 
 //----- (00420FA0) --------------------------------------------------------
 int sub_420FA0()
 {
   int result; // eax@1
 
-  memset(&WhimsicalStar, 0, 0xCCu);
-  WhimsicalStar_X_Position[0] = Quote_X_Position;
-  WhimsicalStar_Y_Position[0] = Quote_Y_Position;
+  memset(&Whimsical_Star, 0, 0xCCu);
+  Whimsical_Star_X_Position[0] = Quote_X_Position;
+  Whimsical_Star_Y_Position[0] = Quote_Y_Position;
   dword_4A5850 = Quote_X_Position;
   result = Quote_Y_Position;
   dword_4A5854 = Quote_Y_Position;
   dword_4A5894 = Quote_X_Position;
   dword_4A5898 = Quote_Y_Position;
-  WhimsicalStar_X_Velocity[0] = 1024;
-  WhimsicalStar_Y_Velocity[0] = -512;
+  Whimsical_Star_X_Velocity[0] = 1024;
+  Whimsical_Star_Y_Velocity[0] = -512;
   dword_4A5858 = -512;
   dword_4A585C = 1024;
   dword_4A589C = 512;
   dword_4A58A0 = 512;
   return result;
 }
-// 4A580C: using guessed type int WhimsicalStar_X_Position[];
-// 4A5810: using guessed type int WhimsicalStar_Y_Position[];
-// 4A5814: using guessed type int WhimsicalStar_X_Velocity[];
-// 4A5818: using guessed type int WhimsicalStar_Y_Velocity[];
+// 4A580C: using guessed type int Whimsical_Star_X_Position[];
+// 4A5810: using guessed type int Whimsical_Star_Y_Position[];
+// 4A5814: using guessed type int Whimsical_Star_X_Velocity[];
+// 4A5818: using guessed type int Whimsical_Star_Y_Velocity[];
 // 4A5850: using guessed type int dword_4A5850;
 // 4A5854: using guessed type int dword_4A5854;
 // 4A5858: using guessed type int dword_4A5858;
@@ -20179,45 +20134,45 @@ int sub_421040()
   {
     if ( i )
     {
-      if ( WhimsicalStar_X_Position[17 * (i - 1)] >= WhimsicalStar_X_Position[17 * i] )
-        WhimsicalStar_X_Velocity[17 * i] += 128;
+      if ( Whimsical_Star_X_Position[17 * (i - 1)] >= Whimsical_Star_X_Position[17 * i] )
+        Whimsical_Star_X_Velocity[17 * i] += 128;
       else
-        WhimsicalStar_X_Velocity[17 * i] -= 128;
-      if ( WhimsicalStar_Y_Position[17 * (i - 1)] >= WhimsicalStar_Y_Position[17 * i] )
-        WhimsicalStar_Y_Velocity[17 * i] += 170;
+        Whimsical_Star_X_Velocity[17 * i] -= 128;
+      if ( Whimsical_Star_Y_Position[17 * (i - 1)] >= Whimsical_Star_Y_Position[17 * i] )
+        Whimsical_Star_Y_Velocity[17 * i] += 170;
       else
-        WhimsicalStar_Y_Velocity[17 * i] -= 170;
+        Whimsical_Star_Y_Velocity[17 * i] -= 170;
     }
     else
     {
-      if ( Quote_X_Position >= WhimsicalStar_X_Position[0] )
-        WhimsicalStar_X_Velocity[0] += 128;
+      if ( Quote_X_Position >= Whimsical_Star_X_Position[0] )
+        Whimsical_Star_X_Velocity[0] += 128;
       else
-        WhimsicalStar_X_Velocity[0] -= 128;
-      if ( Quote_Y_Position >= WhimsicalStar_Y_Position[0] )
-        WhimsicalStar_Y_Velocity[0] += 170;
+        Whimsical_Star_X_Velocity[0] -= 128;
+      if ( Quote_Y_Position >= Whimsical_Star_Y_Position[0] )
+        Whimsical_Star_Y_Velocity[0] += 170;
       else
-        WhimsicalStar_Y_Velocity[0] -= 170;
+        Whimsical_Star_Y_Velocity[0] -= 170;
     }
-    if ( WhimsicalStar_X_Velocity[17 * i] > 2560 )
-      WhimsicalStar_X_Velocity[17 * i] = 2560;
-    if ( WhimsicalStar_X_Velocity[17 * i] < -2560 )
-      WhimsicalStar_X_Velocity[17 * i] = -2560;
-    if ( WhimsicalStar_Y_Velocity[17 * i] > 2560 )
-      WhimsicalStar_Y_Velocity[17 * i] = 2560;
-    if ( WhimsicalStar_Y_Velocity[17 * i] < -2560 )
-      WhimsicalStar_Y_Velocity[17 * i] = -2560;
-    if ( WhimsicalStar_X_Velocity[17 * i] > 2560 )
-      WhimsicalStar_X_Velocity[17 * i] = 2560;
-    if ( WhimsicalStar_X_Velocity[17 * i] < -2560 )
-      WhimsicalStar_X_Velocity[17 * i] = -2560;
-    if ( WhimsicalStar_Y_Velocity[17 * i] > 2560 )
-      WhimsicalStar_Y_Velocity[17 * i] = 2560;
-    if ( WhimsicalStar_Y_Velocity[17 * i] < -2560 )
-      WhimsicalStar_Y_Velocity[17 * i] = -2560;
-    WhimsicalStar_X_Position[17 * i] += WhimsicalStar_X_Velocity[17 * i];
+    if ( Whimsical_Star_X_Velocity[17 * i] > 2560 )
+      Whimsical_Star_X_Velocity[17 * i] = 2560;
+    if ( Whimsical_Star_X_Velocity[17 * i] < -2560 )
+      Whimsical_Star_X_Velocity[17 * i] = -2560;
+    if ( Whimsical_Star_Y_Velocity[17 * i] > 2560 )
+      Whimsical_Star_Y_Velocity[17 * i] = 2560;
+    if ( Whimsical_Star_Y_Velocity[17 * i] < -2560 )
+      Whimsical_Star_Y_Velocity[17 * i] = -2560;
+    if ( Whimsical_Star_X_Velocity[17 * i] > 2560 )
+      Whimsical_Star_X_Velocity[17 * i] = 2560;
+    if ( Whimsical_Star_X_Velocity[17 * i] < -2560 )
+      Whimsical_Star_X_Velocity[17 * i] = -2560;
+    if ( Whimsical_Star_Y_Velocity[17 * i] > 2560 )
+      Whimsical_Star_Y_Velocity[17 * i] = 2560;
+    if ( Whimsical_Star_Y_Velocity[17 * i] < -2560 )
+      Whimsical_Star_Y_Velocity[17 * i] = -2560;
+    Whimsical_Star_X_Position[17 * i] += Whimsical_Star_X_Velocity[17 * i];
     result = 68 * i;
-    WhimsicalStar_Y_Position[17 * i] += WhimsicalStar_Y_Velocity[17 * i];
+    Whimsical_Star_Y_Position[17 * i] += Whimsical_Star_Y_Velocity[17 * i];
     if ( i < NumWhimStars )
     {
       if ( EquippedItems & 0x80 )
@@ -20228,8 +20183,8 @@ int sub_421040()
           if ( CurrentStarID == i )
             result = Create_Bullet(
                        45,
-                       WhimsicalStar_X_Position[17 * CurrentStarID],
-                       WhimsicalStar_Y_Position[17 * CurrentStarID],
+                       Whimsical_Star_X_Position[17 * CurrentStarID],
+                       Whimsical_Star_Y_Position[17 * CurrentStarID],
                        0);
         }
       }
@@ -20240,14 +20195,14 @@ int sub_421040()
 // 49E1E8: using guessed type int Game_State;
 // 49E650: using guessed type int EquippedItems;
 // 49E6CE: using guessed type __int16 NumWhimStars;
-// 4A580C: using guessed type int WhimsicalStar_X_Position[];
-// 4A5810: using guessed type int WhimsicalStar_Y_Position[];
-// 4A5814: using guessed type int WhimsicalStar_X_Velocity[];
-// 4A5818: using guessed type int WhimsicalStar_Y_Velocity[];
+// 4A580C: using guessed type int Whimsical_Star_X_Position[];
+// 4A5810: using guessed type int Whimsical_Star_Y_Position[];
+// 4A5814: using guessed type int Whimsical_Star_X_Velocity[];
+// 4A5818: using guessed type int Whimsical_Star_Y_Velocity[];
 // 4A58CC: using guessed type int CurrentStarID;
 
 //----- (004213B0) --------------------------------------------------------
-int __cdecl sub_4213B0(signed int a1, signed int a2)
+int __cdecl Draw_Whimsical_Star(signed int a1, signed int a2)
 {
   int result; // eax@1
   signed int i; // [sp+0h] [bp-34h]@3
@@ -20285,8 +20240,8 @@ int __cdecl sub_4213B0(signed int a1, signed int a2)
       if ( i < NumWhimStars )
         result = Draw_Sprite_With_Transparency(
                    (int)&FullscreenRect,
-                   WhimsicalStar_X_Position[17 * i] / 512 - a1 / 512 - 4,
-                   WhimsicalStar_Y_Position[17 * i] / 512 - a2 / 512 - 4,
+                   Whimsical_Star_X_Position[17 * i] / 512 - a1 / 512 - 4,
+                   Whimsical_Star_Y_Position[17 * i] / 512 - a2 / 512 - 4,
                    (int)(&Src_Rects + 4 * i),
                    16);
     }
@@ -20296,11 +20251,12 @@ int __cdecl sub_4213B0(signed int a1, signed int a2)
 // 48F91C: using guessed type int FullscreenRect;
 // 49E650: using guessed type int EquippedItems;
 // 49E6CE: using guessed type __int16 NumWhimStars;
-// 4A580C: using guessed type int WhimsicalStar_X_Position[];
-// 4A5810: using guessed type int WhimsicalStar_Y_Position[];
+// 4A580C: using guessed type int Whimsical_Star_X_Position[];
+// 4A5810: using guessed type int Whimsical_Star_Y_Position[];
 
 //----- (004214E0) --------------------------------------------------------
-bool sub_4214E0()
+// Might be related to text box text surfaces ?
+bool Initiate_TSC_Buffer_()
 {
   signed int i; // [sp+0h] [bp-4h]@1
 
@@ -20331,7 +20287,7 @@ void *sub_421570()
 }
 
 //----- (004215C0) --------------------------------------------------------
-_BYTE *__cdecl sub_4215C0(int a1, signed int a2)
+_BYTE *__cdecl Decode_TSC(int a1, signed int a2)
 {
   _BYTE *result; // eax@1
   int v3; // [sp+0h] [bp-10h]@2
@@ -20359,15 +20315,15 @@ _BYTE *__cdecl sub_4215C0(int a1, signed int a2)
 }
 
 //----- (00421660) --------------------------------------------------------
-int __cdecl sub_421660(char *source)
+int __cdecl Load_Special_TSC(char *source)
 {
   int result; // eax@2
   char str; // [sp+0h] [bp-110h]@1
   int v3; // [sp+108h] [bp-8h]@1
   FILE *stream; // [sp+10Ch] [bp-4h]@3
 
-  v3 = Prevent_Crash_Report_Failure;
-  sprintf(&str, "%s\\%s", FullExePath_data, source);
+  v3 = Crash_Report_Failure_Check;
+  sprintf(&str, "%s\\%s", Data_Folder_Full_Path, source);
   dword_4A5AD4 = Get_File_Size(&str);
   if ( dword_4A5AD4 == -1 )
   {
@@ -20378,11 +20334,11 @@ int __cdecl sub_421660(char *source)
     stream = fopen(&str, "rb");
     if ( stream )
     {
-      sub_480F55((FILE *)Current_Script, 1u, dword_4A5AD4, stream);
+      fread_wrapper(Current_Script, 1u, dword_4A5AD4, stream);
       *((_BYTE *)Current_Script + dword_4A5AD4) = 0;
       fclose(stream);
       strcpy(byte_4A59D0, source);
-      sub_4215C0((int)Current_Script, dword_4A5AD4);
+      Decode_TSC((int)Current_Script, dword_4A5AD4);
       result = 1;
     }
     else
@@ -20392,20 +20348,20 @@ int __cdecl sub_421660(char *source)
   }
   return result;
 }
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 
 //----- (00421750) --------------------------------------------------------
-int __cdecl sub_421750(char *source)
+int __cdecl Process_TSC_File(char *source)
 {
   int result; // eax@2
   char str; // [sp+0h] [bp-118h]@1
-  int v3; // [sp+108h] [bp-10h]@1
+  int Prevent_Crash; // [sp+108h] [bp-10h]@1
   size_t v4; // [sp+10Ch] [bp-Ch]@1
   FILE *stream; // [sp+110h] [bp-8h]@3
   size_t v6; // [sp+114h] [bp-4h]@5
 
-  v3 = Prevent_Crash_Report_Failure;
-  sprintf(&str, "%s\\%s", FullExePath_data, "Head.tsc");
+  Prevent_Crash = Crash_Report_Failure_Check;
+  sprintf(&str, "%s\\%s", Data_Folder_Full_Path, "Head.tsc");
   v4 = Get_File_Size(&str);
   if ( v4 == -1 )
   {
@@ -20416,11 +20372,11 @@ int __cdecl sub_421750(char *source)
     stream = fopen(&str, "rb");
     if ( stream )
     {
-      sub_480F55((FILE *)Current_Script, 1u, v4, stream);
-      sub_4215C0((int)Current_Script, v4);
+      fread_wrapper(Current_Script, 1u, v4, stream);
+      Decode_TSC((int)Current_Script, v4);
       *((_BYTE *)Current_Script + v4) = 0;
       fclose(stream);
-      sprintf(&str, "%s\\%s", FullExePath_data, source);
+      sprintf(&str, "%s\\%s", Data_Folder_Full_Path, source);
       v6 = Get_File_Size(&str);
       if ( v6 == -1 )
       {
@@ -20431,8 +20387,8 @@ int __cdecl sub_421750(char *source)
         stream = fopen(&str, "rb");
         if ( stream )
         {
-          sub_480F55((FILE *)((char *)Current_Script + v4), 1u, v6, stream);
-          sub_4215C0((int)Current_Script + v4, v6);
+          fread_wrapper((char *)Current_Script + v4, 1u, v6, stream);
+          Decode_TSC((int)Current_Script + v4, v6);
           *((_BYTE *)Current_Script + v6 + v4) = 0;
           fclose(stream);
           dword_4A5AD4 = v6 + v4;
@@ -20452,7 +20408,7 @@ int __cdecl sub_421750(char *source)
   }
   return result;
 }
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 
 //----- (00421900) --------------------------------------------------------
 // Getting 4 decimal digits from a TSC file and converting to hexadecimal number
@@ -20481,7 +20437,7 @@ signed int __cdecl Call_TSC_Event(int Event)
   dword_4A5B14 = 0;
   dword_4A5B2C = 0;
   Invincibility_Timer = 0;
-  dword_4A5B1C = 52;
+  Draw_Sprite_Mask_2 = 52;
   dword_4A5B20 = 184;
   dword_4A5B24 = 268;
   dword_4A5B28 = 232;
@@ -20511,7 +20467,7 @@ signed int __cdecl Call_TSC_Event(int Event)
 // 4A5AFC: using guessed type int dword_4A5AFC;
 // 4A5B0C: using guessed type int FaceID;
 // 4A5B14: using guessed type int dword_4A5B14;
-// 4A5B1C: using guessed type int dword_4A5B1C;
+// 4A5B1C: using guessed type int Draw_Sprite_Mask_2;
 // 4A5B20: using guessed type int dword_4A5B20;
 // 4A5B24: using guessed type int dword_4A5B24;
 // 4A5B28: using guessed type int dword_4A5B28;
@@ -20598,7 +20554,7 @@ void *sub_421C80()
 // 4A5AEC: using guessed type int dword_4A5AEC[];
 
 //----- (00421D10) --------------------------------------------------------
-void *__cdecl sub_421D10(int a1)
+void *__cdecl Print_NUM(int a1)
 {
   void *result; // eax@7
   char Ptr_String; // [sp+0h] [bp-2Ch]@5
@@ -20613,7 +20569,7 @@ void *__cdecl sub_421D10(int a1)
   int i; // [sp+24h] [bp-8h]@1
   int v12; // [sp+28h] [bp-4h]@1
 
-  v4 = Prevent_Crash_Report_Failure;
+  v4 = Crash_Report_Failure_Check;
   v7 = 1000;
   v8 = 100;
   v9 = 10;
@@ -20647,7 +20603,7 @@ void *__cdecl sub_421D10(int a1)
   }
   return result;
 }
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 // 4A5AE4: using guessed type int TextColumn;
 // 4A5AE8: using guessed type int dword_4A5AE8;
 // 4A5B30: using guessed type char byte_4A5B30;
@@ -20678,7 +20634,7 @@ int sub_421E90()
 // 4A5B2C: using guessed type int dword_4A5B2C;
 
 //----- (00421F10) --------------------------------------------------------
-int sub_421F10()
+int Draw_Text_Box()
 {
   int result; // eax@1
   int v1; // edx@19
@@ -20771,14 +20727,14 @@ int sub_421F10()
     v17 = 48 * (FaceID / 6) + 48;
     if ( dword_4A5B10 < 26624 )
       dword_4A5B10 += 4096;
-    Draw_Sprite_With_Transparency((int)&dword_4A5B1C, dword_4A5B10 / 512, dword_4A5B20 - 3, (int)&v14, 27);
+    Draw_Sprite_With_Transparency((int)&Draw_Sprite_Mask_2, dword_4A5B10 / 512, dword_4A5B20 - 3, (int)&v14, 27);
     if ( FaceID )
       v47 = 56;
     else
       v47 = 0;
     for ( Y_Position = 0; Y_Position < 4; ++Y_Position )
       Draw_Sprite_With_Transparency(
-        (int)&dword_4A5B1C,
+        (int)&Draw_Sprite_Mask_2,
         v47 + 52,
         dword_4A5B2C + dword_4A5AEC[Y_Position] + dword_4A5B20,
         (int)asc_498290,
@@ -20871,7 +20827,7 @@ int sub_421F10()
 // 4A5B0C: using guessed type int FaceID;
 // 4A5B10: using guessed type int dword_4A5B10;
 // 4A5B14: using guessed type int dword_4A5B14;
-// 4A5B1C: using guessed type int dword_4A5B1C;
+// 4A5B1C: using guessed type int Draw_Sprite_Mask_2;
 // 4A5B20: using guessed type int dword_4A5B20;
 // 4A5B28: using guessed type int dword_4A5B28;
 // 4A5B2C: using guessed type int dword_4A5B2C;
@@ -20884,24 +20840,24 @@ int Tsc_Parser(void)
   int v1; // [sp+0h] [bp-C8h]@421
   signed int v2; // [sp+4h] [bp-C4h]@308
   signed int v3; // [sp+8h] [bp-C0h]@300
-  char str; // [sp+10h] [bp-B8h]@430
-  char destination[72]; // [sp+50h] [bp-78h]@443
+  const CHAR Text; // [sp+10h] [bp-B8h]@430
+  char format[72]; // [sp+50h] [bp-78h]@443
   int v6; // [sp+98h] [bp-30h]@1
   int v7; // [sp+9Ch] [bp-2Ch]@6
-  char Ptr_String; // [sp+A0h] [bp-28h]@446
+  char source; // [sp+A0h] [bp-28h]@446
   char v9; // [sp+A1h] [bp-27h]@447
   char v10; // [sp+A2h] [bp-26h]@447
-  __int16 Life_To_Add[2]; // [sp+A4h] [bp-24h]@20
+  int SoundID; // [sp+A4h] [bp-24h]@20
   int v12; // [sp+A8h] [bp-20h]@1
   int v13; // [sp+ACh] [bp-1Ch]@1
   int v14; // [sp+B0h] [bp-18h]@1
   int v15; // [sp+B4h] [bp-14h]@1
   int i; // [sp+B8h] [bp-10h]@463
-  __int16 Health_To_Restore[2]; // [sp+BCh] [bp-Ch]@16
+  signed int Flag_hashtag; // [sp+BCh] [bp-Ch]@16
   size_t num; // [sp+C0h] [bp-8h]@56
   int NPC_ID; // [sp+C4h] [bp-4h]@44
 
-  v6 = Prevent_Crash_Report_Failure;
+  v6 = Crash_Report_Failure_Check;
   v12 = 64;
   v13 = 48;
   v14 = 72;
@@ -21197,19 +21153,19 @@ jmp_42256C_default_case:
                                                                                                                                                                                           }
                                                                                                                                                                                           else if ( byte_4A5ADD & 0x10 )
                                                                                                                                                                                           {
-                                                                                                                                                                                            for ( *(_DWORD *)Health_To_Restore = Script_Position;
-                                                                                                                                                                                                  *((_BYTE *)Current_Script + *(_DWORD *)Health_To_Restore) != 60 && *((_BYTE *)Current_Script + *(_DWORD *)Health_To_Restore) != 13;
-                                                                                                                                                                                                  ++*(_DWORD *)Health_To_Restore )
+                                                                                                                                                                                            for ( Flag_hashtag = Script_Position;
+                                                                                                                                                                                                  *((_BYTE *)Current_Script + Flag_hashtag) != 60 && *((_BYTE *)Current_Script + Flag_hashtag) != 13;
+                                                                                                                                                                                                  ++Flag_hashtag )
                                                                                                                                                                                             {
-                                                                                                                                                                                              if ( *((_BYTE *)Current_Script + *(_DWORD *)Health_To_Restore) & 0x80 )
-                                                                                                                                                                                                ++*(_DWORD *)Health_To_Restore;
+                                                                                                                                                                                              if ( *((_BYTE *)Current_Script + Flag_hashtag) & 0x80 )
+                                                                                                                                                                                                ++Flag_hashtag;
                                                                                                                                                                                             }
-                                                                                                                                                                                            num = *(_DWORD *)Health_To_Restore - Script_Position;
-                                                                                                                                                                                            memcpy(destination, (char *)Current_Script + Script_Position, *(_DWORD *)Health_To_Restore - Script_Position);
-                                                                                                                                                                                            destination[num] = 0;
-                                                                                                                                                                                            TextColumn = *(_DWORD *)Health_To_Restore;
-                                                                                                                                                                                            Draw_String_Onto_Surface(0, 0, destination, 0xFEFFFFu, dword_4A5AE8 % 4 + 30);
-                                                                                                                                                                                            sprintf((char *)&unk_4A58D0 + 64 * (dword_4A5AE8 % 4), destination);
+                                                                                                                                                                                            num = Flag_hashtag - Script_Position;
+                                                                                                                                                                                            memcpy(format, (char *)Current_Script + Script_Position, Flag_hashtag - Script_Position);
+                                                                                                                                                                                            format[num] = 0;
+                                                                                                                                                                                            TextColumn = Flag_hashtag;
+                                                                                                                                                                                            Draw_String_Onto_Surface(0, 0, format, 0xFEFFFFu, dword_4A5AE8 % 4 + 30);
+                                                                                                                                                                                            sprintf((char *)&unk_4A58D0 + 64 * (dword_4A5AE8 % 4), format);
                                                                                                                                                                                             Script_Position += num;
                                                                                                                                                                                             if ( TextColumn >= 35 )
                                                                                                                                                                                               sub_421C80();
@@ -21217,8 +21173,8 @@ jmp_42256C_default_case:
                                                                                                                                                                                           }
                                                                                                                                                                                           else
                                                                                                                                                                                           {
-                                                                                                                                                                                            Ptr_String = *((_BYTE *)Current_Script + Script_Position);
-                                                                                                                                                                                            if ( Ptr_String & 0x80 )
+                                                                                                                                                                                            source = *((_BYTE *)Current_Script + Script_Position);
+                                                                                                                                                                                            if ( source & 0x80 )
                                                                                                                                                                                             {
                                                                                                                                                                                               v9 = *((_BYTE *)Current_Script + Script_Position + 1);
                                                                                                                                                                                               v10 = 0;
@@ -21227,14 +21183,14 @@ jmp_42256C_default_case:
                                                                                                                                                                                             {
                                                                                                                                                                                               v9 = 0;
                                                                                                                                                                                             }
-                                                                                                                                                                                            if ( Ptr_String == 61 )
+                                                                                                                                                                                            if ( source == 61 )
                                                                                                                                                                                               Draw_Sprite_Onto_Surface(6 * TextColumn, 2, (int)&v12, dword_4A5AE8 % 4 + 30, 26);
                                                                                                                                                                                             else
-                                                                                                                                                                                              Draw_String_Onto_Surface(6 * TextColumn, 0, &Ptr_String, 0xFEFFFFu, dword_4A5AE8 % 4 + 30);
-                                                                                                                                                                                            strcat((char *)&unk_4A58D0 + 64 * (dword_4A5AE8 % 4), &Ptr_String);
+                                                                                                                                                                                              Draw_String_Onto_Surface(6 * TextColumn, 0, &source, 0xFEFFFFu, dword_4A5AE8 % 4 + 30);
+                                                                                                                                                                                            strcat((char *)&unk_4A58D0 + 64 * (dword_4A5AE8 % 4), &source);
                                                                                                                                                                                             Play_Sound_Effect(2, 1);
                                                                                                                                                                                             byte_4A5B30 = 0;
-                                                                                                                                                                                            if ( Ptr_String & 0x80 )
+                                                                                                                                                                                            if ( source & 0x80 )
                                                                                                                                                                                             {
                                                                                                                                                                                               Script_Position += 2;
                                                                                                                                                                                               TextColumn += 2;
@@ -21264,14 +21220,14 @@ jmp_42256C_default_case:
                                                                                                                                                                                       }
                                                                                                                                                                                       if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'L' || *((_BYTE *)Current_Script + Script_Position + 2) != 'I' || *((_BYTE *)Current_Script + Script_Position + 3) != '+' )
                                                                                                                                                                                         break;
-                                                                                                                                                                                      *(_DWORD *)Health_To_Restore = TSC_Dec_to_Hex(Script_Position + 4);
-                                                                                                                                                                                      TSC_LIplus(Health_To_Restore[0]);
+                                                                                                                                                                                      Flag_hashtag = TSC_Dec_to_Hex(Script_Position + 4);
+                                                                                                                                                                                      TSC_LIplus(Flag_hashtag);
                                                                                                                                                                                       Script_Position += 8;
                                                                                                                                                                                     }
                                                                                                                                                                                     if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'M' || *((_BYTE *)Current_Script + Script_Position + 2) != 'L' || *((_BYTE *)Current_Script + Script_Position + 3) != '+' )
                                                                                                                                                                                       break;
-                                                                                                                                                                                    *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
-                                                                                                                                                                                    TSC_MLplus(Life_To_Add[0]);
+                                                                                                                                                                                    SoundID = TSC_Dec_to_Hex(Script_Position + 4);
+                                                                                                                                                                                    TSC_MLplus(SoundID);
                                                                                                                                                                                     Script_Position += 8;
                                                                                                                                                                                   }
                                                                                                                                                                                   if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'A' || *((_BYTE *)Current_Script + Script_Position + 2) != 'E' || *((_BYTE *)Current_Script + Script_Position + 3) != '+' )
@@ -21281,43 +21237,43 @@ jmp_42256C_default_case:
                                                                                                                                                                                 }
                                                                                                                                                                                 if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'I' || *((_BYTE *)Current_Script + Script_Position + 2) != 'T' || *((_BYTE *)Current_Script + Script_Position + 3) != '+' )
                                                                                                                                                                                   break;
-                                                                                                                                                                                *(_DWORD *)Health_To_Restore = TSC_Dec_to_Hex(Script_Position + 4);
+                                                                                                                                                                                Flag_hashtag = TSC_Dec_to_Hex(Script_Position + 4);
                                                                                                                                                                                 Play_Sound_Effect(38, 1);
-                                                                                                                                                                                TSC_ITplus(*(int *)Health_To_Restore);
+                                                                                                                                                                                TSC_ITplus(Flag_hashtag);
                                                                                                                                                                                 Script_Position += 8;
                                                                                                                                                                               }
                                                                                                                                                                               if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'I' || *((_BYTE *)Current_Script + Script_Position + 2) != 'T' || *((_BYTE *)Current_Script + Script_Position + 3) != '-' )
                                                                                                                                                                                 break;
-                                                                                                                                                                              *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
-                                                                                                                                                                              TSC_ITminus(*(int *)Life_To_Add);
+                                                                                                                                                                              SoundID = TSC_Dec_to_Hex(Script_Position + 4);
+                                                                                                                                                                              TSC_ITminus(SoundID);
                                                                                                                                                                               Script_Position += 8;
                                                                                                                                                                             }
                                                                                                                                                                             if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'E' || *((_BYTE *)Current_Script + Script_Position + 2) != 'Q' || *((_BYTE *)Current_Script + Script_Position + 3) != '+' )
                                                                                                                                                                               break;
-                                                                                                                                                                            *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
-                                                                                                                                                                            TSC_EQplus(*(int *)Life_To_Add, 1);
+                                                                                                                                                                            SoundID = TSC_Dec_to_Hex(Script_Position + 4);
+                                                                                                                                                                            TSC_EQplus(SoundID, 1);
                                                                                                                                                                             Script_Position += 8;
                                                                                                                                                                           }
                                                                                                                                                                           if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'E' || *((_BYTE *)Current_Script + Script_Position + 2) != 'Q' || *((_BYTE *)Current_Script + Script_Position + 3) != '-' )
                                                                                                                                                                             break;
-                                                                                                                                                                          *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
-                                                                                                                                                                          TSC_EQplus(*(int *)Life_To_Add, 0);
+                                                                                                                                                                          SoundID = TSC_Dec_to_Hex(Script_Position + 4);
+                                                                                                                                                                          TSC_EQplus(SoundID, 0);
                                                                                                                                                                           Script_Position += 8;
                                                                                                                                                                         }
                                                                                                                                                                         if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'A' || *((_BYTE *)Current_Script + Script_Position + 2) != 'M' || *((_BYTE *)Current_Script + Script_Position + 3) != '+' )
                                                                                                                                                                           break;
                                                                                                                                                                         NPC_ID = TSC_Dec_to_Hex(Script_Position + 4);
-                                                                                                                                                                        *(_DWORD *)Health_To_Restore = TSC_Dec_to_Hex(Script_Position + 9);
-                                                                                                                                                                        dword_4A5B34[0] = *(_DWORD *)Health_To_Restore;
-                                                                                                                                                                        dword_4A5B38 = *(_DWORD *)Life_To_Add;
+                                                                                                                                                                        Flag_hashtag = TSC_Dec_to_Hex(Script_Position + 9);
+                                                                                                                                                                        dword_4A5B34[0] = Flag_hashtag;
+                                                                                                                                                                        dword_4A5B38 = SoundID;
                                                                                                                                                                         Play_Sound_Effect(38, 1);
-                                                                                                                                                                        TSC_AMplus(NPC_ID, *(int *)Health_To_Restore);
+                                                                                                                                                                        TSC_AMplus(NPC_ID, Flag_hashtag);
                                                                                                                                                                         Script_Position += 13;
                                                                                                                                                                       }
                                                                                                                                                                       if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'A' || *((_BYTE *)Current_Script + Script_Position + 2) != 'M' || *((_BYTE *)Current_Script + Script_Position + 3) != '-' )
                                                                                                                                                                         break;
-                                                                                                                                                                      *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
-                                                                                                                                                                      TSC_AMminus(*(int *)Life_To_Add);
+                                                                                                                                                                      SoundID = TSC_Dec_to_Hex(Script_Position + 4);
+                                                                                                                                                                      TSC_AMminus(SoundID);
                                                                                                                                                                       Script_Position += 8;
                                                                                                                                                                     }
                                                                                                                                                                     if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'Z' || *((_BYTE *)Current_Script + Script_Position + 2) != 'A' || *((_BYTE *)Current_Script + Script_Position + 3) != 'M' )
@@ -21327,29 +21283,29 @@ jmp_42256C_default_case:
                                                                                                                                                                   }
                                                                                                                                                                   if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'T' || *((_BYTE *)Current_Script + Script_Position + 2) != 'A' || *((_BYTE *)Current_Script + Script_Position + 3) != 'M' )
                                                                                                                                                                     break;
-                                                                                                                                                                  *(_DWORD *)Health_To_Restore = TSC_Dec_to_Hex(Script_Position + 4);
+                                                                                                                                                                  Flag_hashtag = TSC_Dec_to_Hex(Script_Position + 4);
                                                                                                                                                                   num = TSC_Dec_to_Hex(Script_Position + 9);
-                                                                                                                                                                  *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 14);
-                                                                                                                                                                  TSC_TAM(*(int *)Health_To_Restore, num, *(int *)Life_To_Add);
+                                                                                                                                                                  SoundID = TSC_Dec_to_Hex(Script_Position + 14);
+                                                                                                                                                                  TSC_TAM(Flag_hashtag, num, SoundID);
                                                                                                                                                                   Script_Position += 18;
                                                                                                                                                                 }
                                                                                                                                                                 if ( *((_BYTE *)Current_Script + Script_Position + 1) != 80 || *((_BYTE *)Current_Script + Script_Position + 2) != 83 || *((_BYTE *)Current_Script + Script_Position + 3) != 43 )
                                                                                                                                                                   break;
-                                                                                                                                                                *(_DWORD *)Health_To_Restore = TSC_Dec_to_Hex(Script_Position + 4);
+                                                                                                                                                                Flag_hashtag = TSC_Dec_to_Hex(Script_Position + 4);
                                                                                                                                                                 num = TSC_Dec_to_Hex(Script_Position + 9);
-                                                                                                                                                                sub_41D630(*(int *)Health_To_Restore, num);
+                                                                                                                                                                sub_41D630(Flag_hashtag, num);
                                                                                                                                                                 Script_Position += 13;
                                                                                                                                                               }
                                                                                                                                                               if ( *((_BYTE *)Current_Script + Script_Position + 1) != 77 || *((_BYTE *)Current_Script + Script_Position + 2) != 80 || *((_BYTE *)Current_Script + Script_Position + 3) != 43 )
                                                                                                                                                                 break;
-                                                                                                                                                              *(_DWORD *)Health_To_Restore = TSC_Dec_to_Hex(Script_Position + 4);
-                                                                                                                                                              sub_414B40(*(int *)Health_To_Restore);
+                                                                                                                                                              Flag_hashtag = TSC_Dec_to_Hex(Script_Position + 4);
+                                                                                                                                                              sub_414B40(Flag_hashtag);
                                                                                                                                                               Script_Position += 8;
                                                                                                                                                             }
                                                                                                                                                             if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'U' || *((_BYTE *)Current_Script + Script_Position + 2) != 'N' || *((_BYTE *)Current_Script + Script_Position + 3) != 'I' )
                                                                                                                                                               break;
-                                                                                                                                                            *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
-                                                                                                                                                            sub_416C40(Life_To_Add[0]);
+                                                                                                                                                            SoundID = TSC_Dec_to_Hex(Script_Position + 4);
+                                                                                                                                                            sub_416C40(SoundID);
                                                                                                                                                             Script_Position += 8;
                                                                                                                                                           }
                                                                                                                                                           if ( *((_BYTE *)Current_Script + Script_Position + 1) != 83 || *((_BYTE *)Current_Script + Script_Position + 2) != 84 || *((_BYTE *)Current_Script + Script_Position + 3) != 67 )
@@ -21359,11 +21315,11 @@ jmp_42256C_default_case:
                                                                                                                                                         }
                                                                                                                                                         if ( *((_BYTE *)Current_Script + Script_Position + 1) != 84 || *((_BYTE *)Current_Script + Script_Position + 2) != 82 || *((_BYTE *)Current_Script + Script_Position + 3) != 65 )
                                                                                                                                                           break;
-                                                                                                                                                        *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
+                                                                                                                                                        SoundID = TSC_Dec_to_Hex(Script_Position + 4);
                                                                                                                                                         NPC_ID = TSC_Dec_to_Hex(Script_Position + 9);
-                                                                                                                                                        *(_DWORD *)Health_To_Restore = TSC_Dec_to_Hex(Script_Position + 14);
+                                                                                                                                                        Flag_hashtag = TSC_Dec_to_Hex(Script_Position + 14);
                                                                                                                                                         num = TSC_Dec_to_Hex(Script_Position + 19);
-                                                                                                                                                        if ( !sub_420BE0(*(int *)Life_To_Add, NPC_ID, *(int *)Health_To_Restore, num) )
+                                                                                                                                                        if ( !Load_Room(SoundID, NPC_ID, Flag_hashtag, num) )
                                                                                                                                                         {
                                                                                                                                                           MessageBoxA(AppWinHandle, "ステージの読み込みに失敗", "エラー", 0);
                                                                                                                                                           return 0;
@@ -21371,9 +21327,9 @@ jmp_42256C_default_case:
                                                                                                                                                       }
                                                                                                                                                       if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'M' || *((_BYTE *)Current_Script + Script_Position + 2) != 'O' || *((_BYTE *)Current_Script + Script_Position + 3) != 'V' )
                                                                                                                                                         break;
-                                                                                                                                                      *(_DWORD *)Health_To_Restore = TSC_Dec_to_Hex(Script_Position + 4);
+                                                                                                                                                      Flag_hashtag = TSC_Dec_to_Hex(Script_Position + 4);
                                                                                                                                                       num = TSC_Dec_to_Hex(Script_Position + 9);
-                                                                                                                                                      Move_Quote(*(_DWORD *)Health_To_Restore << 13, num << 13);
+                                                                                                                                                      Move_Quote(Flag_hashtag << 13, num << 13);
                                                                                                                                                       Script_Position += 13;
                                                                                                                                                     }
                                                                                                                                                     if ( *((_BYTE *)Current_Script + Script_Position + 1) != 72 || *((_BYTE *)Current_Script + Script_Position + 2) != 77 || *((_BYTE *)Current_Script + Script_Position + 3) != 67 )
@@ -21388,26 +21344,26 @@ jmp_42256C_default_case:
                                                                                                                                                 }
                                                                                                                                                 if ( *((_BYTE *)Current_Script + Script_Position + 1) != 70 || *((_BYTE *)Current_Script + Script_Position + 2) != 76 || *((_BYTE *)Current_Script + Script_Position + 3) != 43 )
                                                                                                                                                   break;
-                                                                                                                                                *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
-                                                                                                                                                TSC_FLplus(*(signed int *)Life_To_Add);
+                                                                                                                                                SoundID = TSC_Dec_to_Hex(Script_Position + 4);
+                                                                                                                                                TSC_FLplus(SoundID);
                                                                                                                                                 Script_Position += 8;
                                                                                                                                               }
                                                                                                                                               if ( *((_BYTE *)Current_Script + Script_Position + 1) != 70 || *((_BYTE *)Current_Script + Script_Position + 2) != 76 || *((_BYTE *)Current_Script + Script_Position + 3) != 45 )
                                                                                                                                                 break;
-                                                                                                                                              *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
-                                                                                                                                              TSC_FLminues(*(signed int *)Life_To_Add);
+                                                                                                                                              SoundID = TSC_Dec_to_Hex(Script_Position + 4);
+                                                                                                                                              TSC_FLminues(SoundID);
                                                                                                                                               Script_Position += 8;
                                                                                                                                             }
                                                                                                                                             if ( *((_BYTE *)Current_Script + Script_Position + 1) != 83 || *((_BYTE *)Current_Script + Script_Position + 2) != 75 || *((_BYTE *)Current_Script + Script_Position + 3) != 43 )
                                                                                                                                               break;
-                                                                                                                                            *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
-                                                                                                                                            TSC_SKplus(*(signed int *)Life_To_Add);
+                                                                                                                                            SoundID = TSC_Dec_to_Hex(Script_Position + 4);
+                                                                                                                                            TSC_SKplus(SoundID);
                                                                                                                                             Script_Position += 8;
                                                                                                                                           }
                                                                                                                                           if ( *((_BYTE *)Current_Script + Script_Position + 1) != 83 || *((_BYTE *)Current_Script + Script_Position + 2) != 75 || *((_BYTE *)Current_Script + Script_Position + 3) != 45 )
                                                                                                                                             break;
-                                                                                                                                          *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
-                                                                                                                                          TSC_SKminus(*(signed int *)Life_To_Add);
+                                                                                                                                          SoundID = TSC_Dec_to_Hex(Script_Position + 4);
+                                                                                                                                          TSC_SKminus(SoundID);
                                                                                                                                           Script_Position += 8;
                                                                                                                                         }
                                                                                                                                         if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'K' || *((_BYTE *)Current_Script + Script_Position + 2) != 'E' || *((_BYTE *)Current_Script + Script_Position + 3) != 'Y' )
@@ -21506,8 +21462,8 @@ jmp_42256C_default_case:
                                                                                                             }
                                                                                                             if ( *((_BYTE *)Current_Script + Script_Position + 1) != 69 || *((_BYTE *)Current_Script + Script_Position + 2) != 86 || *((_BYTE *)Current_Script + Script_Position + 3) != 69 )
                                                                                                               break;
-                                                                                                            *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
-                                                                                                            sub_421AF0(*(int *)Life_To_Add);
+                                                                                                            SoundID = TSC_Dec_to_Hex(Script_Position + 4);
+                                                                                                            sub_421AF0(SoundID);
                                                                                                           }
                                                                                                           if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'Y' || *((_BYTE *)Current_Script + Script_Position + 2) != 'N' || *((_BYTE *)Current_Script + Script_Position + 3) != 'J' )
                                                                                                             break;
@@ -21521,46 +21477,46 @@ jmp_42256C_default_case:
                                                                                                         }
                                                                                                         if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'F' || *((_BYTE *)Current_Script + Script_Position + 2) != 'L' || *((_BYTE *)Current_Script + Script_Position + 3) != 'J' )
                                                                                                           break;
-                                                                                                        *(_DWORD *)Health_To_Restore = TSC_Dec_to_Hex(Script_Position + 4);
-                                                                                                        *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 9);
-                                                                                                        if ( Check_Flag(*(signed int *)Health_To_Restore) )
-                                                                                                          sub_421AF0(*(int *)Life_To_Add);
+                                                                                                        Flag_hashtag = TSC_Dec_to_Hex(Script_Position + 4);
+                                                                                                        SoundID = TSC_Dec_to_Hex(Script_Position + 9);
+                                                                                                        if ( Check_Flag(Flag_hashtag) )
+                                                                                                          sub_421AF0(SoundID);
                                                                                                         else
                                                                                                           Script_Position += 13;
                                                                                                       }
                                                                                                       if ( *((_BYTE *)Current_Script + Script_Position + 1) != 83 || *((_BYTE *)Current_Script + Script_Position + 2) != 75 || *((_BYTE *)Current_Script + Script_Position + 3) != 74 )
                                                                                                         break;
-                                                                                                      *(_DWORD *)Health_To_Restore = TSC_Dec_to_Hex(Script_Position + 4);
-                                                                                                      *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 9);
-                                                                                                      if ( sub_40EA10(*(signed int *)Health_To_Restore) )
-                                                                                                        sub_421AF0(*(int *)Life_To_Add);
+                                                                                                      Flag_hashtag = TSC_Dec_to_Hex(Script_Position + 4);
+                                                                                                      SoundID = TSC_Dec_to_Hex(Script_Position + 9);
+                                                                                                      if ( sub_40EA10(Flag_hashtag) )
+                                                                                                        sub_421AF0(SoundID);
                                                                                                       else
                                                                                                         Script_Position += 13;
                                                                                                     }
                                                                                                     if ( *((_BYTE *)Current_Script + Script_Position + 1) != 73 || *((_BYTE *)Current_Script + Script_Position + 2) != 84 || *((_BYTE *)Current_Script + Script_Position + 3) != 74 )
                                                                                                       break;
-                                                                                                    *(_DWORD *)Health_To_Restore = TSC_Dec_to_Hex(Script_Position + 4);
-                                                                                                    *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 9);
-                                                                                                    if ( Chk_If_Has_Item(*(int *)Health_To_Restore) )
-                                                                                                      sub_421AF0(*(int *)Life_To_Add);
+                                                                                                    Flag_hashtag = TSC_Dec_to_Hex(Script_Position + 4);
+                                                                                                    SoundID = TSC_Dec_to_Hex(Script_Position + 9);
+                                                                                                    if ( Chk_If_Has_Item(Flag_hashtag) )
+                                                                                                      sub_421AF0(SoundID);
                                                                                                     else
                                                                                                       Script_Position += 13;
                                                                                                   }
                                                                                                   if ( *((_BYTE *)Current_Script + Script_Position + 1) != 65 || *((_BYTE *)Current_Script + Script_Position + 2) != 77 || *((_BYTE *)Current_Script + Script_Position + 3) != 74 )
                                                                                                     break;
-                                                                                                  *(_DWORD *)Health_To_Restore = TSC_Dec_to_Hex(Script_Position + 4);
-                                                                                                  *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 9);
-                                                                                                  if ( Chk_If_Has_Weap(*(int *)Health_To_Restore) )
-                                                                                                    sub_421AF0(*(int *)Life_To_Add);
+                                                                                                  Flag_hashtag = TSC_Dec_to_Hex(Script_Position + 4);
+                                                                                                  SoundID = TSC_Dec_to_Hex(Script_Position + 9);
+                                                                                                  if ( Chk_If_Has_Weap(Flag_hashtag) )
+                                                                                                    sub_421AF0(SoundID);
                                                                                                   else
                                                                                                     Script_Position += 13;
                                                                                                 }
                                                                                                 if ( *((_BYTE *)Current_Script + Script_Position + 1) != 85 || *((_BYTE *)Current_Script + Script_Position + 2) != 78 || *((_BYTE *)Current_Script + Script_Position + 3) != 74 )
                                                                                                   break;
-                                                                                                *(_DWORD *)Health_To_Restore = TSC_Dec_to_Hex(Script_Position + 4);
-                                                                                                *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 9);
-                                                                                                if ( Return_InFishBattle() == *(_DWORD *)Health_To_Restore )
-                                                                                                  sub_421AF0(*(int *)Life_To_Add);
+                                                                                                Flag_hashtag = TSC_Dec_to_Hex(Script_Position + 4);
+                                                                                                SoundID = TSC_Dec_to_Hex(Script_Position + 9);
+                                                                                                if ( Return_InFishBattle() == Flag_hashtag )
+                                                                                                  sub_421AF0(SoundID);
                                                                                                 else
                                                                                                   Script_Position += 13;
                                                                                               }
@@ -21570,10 +21526,10 @@ jmp_42256C_default_case:
                                                                                               {
                                                                                                 break;
                                                                                               }
-                                                                                              *(_DWORD *)Health_To_Restore = TSC_Dec_to_Hex(Script_Position + 4);
-                                                                                              *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 9);
-                                                                                              if ( sub_4704F0(*(int *)Health_To_Restore) )
-                                                                                                sub_421AF0(*(int *)Life_To_Add);
+                                                                                              Flag_hashtag = TSC_Dec_to_Hex(Script_Position + 4);
+                                                                                              SoundID = TSC_Dec_to_Hex(Script_Position + 9);
+                                                                                              if ( sub_4704F0(Flag_hashtag) )
+                                                                                                sub_421AF0(SoundID);
                                                                                               else
                                                                                                 Script_Position += 13;
                                                                                             }
@@ -21589,10 +21545,10 @@ jmp_42256C_default_case:
                                                                                             {
                                                                                               break;
                                                                                             }
-                                                                                            *(_DWORD *)Health_To_Restore = TSC_Dec_to_Hex(Script_Position + 4);
-                                                                                            *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 9);
-                                                                                            if ( sub_470490(*(int *)Health_To_Restore) )
-                                                                                              sub_421AF0(*(int *)Life_To_Add);
+                                                                                            Flag_hashtag = TSC_Dec_to_Hex(Script_Position + 4);
+                                                                                            SoundID = TSC_Dec_to_Hex(Script_Position + 9);
+                                                                                            if ( sub_470490(Flag_hashtag) )
+                                                                                              sub_421AF0(SoundID);
                                                                                             else
                                                                                               Script_Position += 13;
                                                                                           }
@@ -21608,9 +21564,9 @@ jmp_42256C_default_case:
                                                                                           {
                                                                                             break;
                                                                                           }
-                                                                                          *(_DWORD *)Health_To_Restore = TSC_Dec_to_Hex(Script_Position + 4);
+                                                                                          Flag_hashtag = TSC_Dec_to_Hex(Script_Position + 4);
                                                                                           if ( sub_414B00() )
-                                                                                            sub_421AF0(*(int *)Health_To_Restore);
+                                                                                            sub_421AF0(Flag_hashtag);
                                                                                           else
                                                                                             Script_Position += 8;
                                                                                         }
@@ -21626,10 +21582,8 @@ jmp_42256C_default_case:
                                                                                         {
                                                                                           break;
                                                                                         }
-                                                                                        *(_DWORD *)Health_To_Restore = TSC_Dec_to_Hex(Script_Position + 4);
-                                                                                        TSC_SSS_SPS_(
-                                                                                          1,
-                                                                                          *(int *)Health_To_Restore);
+                                                                                        Flag_hashtag = TSC_Dec_to_Hex(Script_Position + 4);
+                                                                                        TSC_SSS_SPS_(1, Flag_hashtag);
                                                                                         Script_Position += 8;
                                                                                       }
                                                                                       if ( *((_BYTE *)Current_Script
@@ -21659,9 +21613,7 @@ jmp_42256C_default_case:
                                                                                     {
                                                                                       break;
                                                                                     }
-                                                                                    TSC_SSS_SPS_(
-                                                                                      2,
-                                                                                      *(int *)Health_To_Restore);
+                                                                                    TSC_SSS_SPS_(2, Flag_hashtag);
                                                                                     Script_Position += 4;
                                                                                   }
                                                                                   if ( *((_BYTE *)Current_Script
@@ -21691,8 +21643,8 @@ jmp_42256C_default_case:
                                                                                 {
                                                                                   break;
                                                                                 }
-                                                                                *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
-                                                                                TSC_QUA(*(int *)Life_To_Add);
+                                                                                SoundID = TSC_Dec_to_Hex(Script_Position + 4);
+                                                                                TSC_QUA(SoundID);
                                                                                 Script_Position += 8;
                                                                               }
                                                                               if ( *((_BYTE *)Current_Script
@@ -21722,8 +21674,8 @@ jmp_42256C_default_case:
                                                                             {
                                                                               break;
                                                                             }
-                                                                            *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
-                                                                            TSC_FAI_Begin_Fade_In(Life_To_Add[0]);
+                                                                            SoundID = TSC_Dec_to_Hex(Script_Position + 4);
+                                                                            TSC_FAI_Begin_Fade_In(SoundID);
                                                                             byte_4A5ADC = 5;
                                                                             Script_Position += 8;
                                                                             v7 = 1;
@@ -21740,8 +21692,8 @@ jmp_42256C_default_case:
                                                                           {
                                                                             break;
                                                                           }
-                                                                          *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
-                                                                          TSC_FAO_Begin_Fade_Out(Life_To_Add[0]);
+                                                                          SoundID = TSC_Dec_to_Hex(Script_Position + 4);
+                                                                          TSC_FAO_Begin_Fade_Out(SoundID);
                                                                           byte_4A5ADC = 5;
                                                                           Script_Position += 8;
                                                                           v7 = 1;
@@ -21773,8 +21725,8 @@ jmp_42256C_default_case:
                                                                       {
                                                                         break;
                                                                       }
-                                                                      *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
-                                                                      TSC_FOM(*(int *)Life_To_Add);
+                                                                      SoundID = TSC_Dec_to_Hex(Script_Position + 4);
+                                                                      TSC_FOM(SoundID);
                                                                       Script_Position += 8;
                                                                     }
                                                                     if ( *((_BYTE *)Current_Script + Script_Position + 1) != 70
@@ -21783,9 +21735,9 @@ jmp_42256C_default_case:
                                                                     {
                                                                       break;
                                                                     }
-                                                                    *(_DWORD *)Health_To_Restore = TSC_Dec_to_Hex(Script_Position + 4);
+                                                                    Flag_hashtag = TSC_Dec_to_Hex(Script_Position + 4);
                                                                     num = TSC_Dec_to_Hex(Script_Position + 9);
-                                                                    TSC_FON(*(int *)Health_To_Restore, num);
+                                                                    TSC_FON(Flag_hashtag, num);
                                                                     Script_Position += 13;
                                                                   }
                                                                   if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'F'
@@ -21794,9 +21746,9 @@ jmp_42256C_default_case:
                                                                   {
                                                                     break;
                                                                   }
-                                                                  *(_DWORD *)Health_To_Restore = TSC_Dec_to_Hex(Script_Position + 4);
+                                                                  Flag_hashtag = TSC_Dec_to_Hex(Script_Position + 4);
                                                                   num = TSC_Dec_to_Hex(Script_Position + 9);
-                                                                  TSC_FOB(*(int *)Health_To_Restore, num);
+                                                                  TSC_FOB(Flag_hashtag, num);
                                                                   Script_Position += 13;
                                                                 }
                                                                 if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'S'
@@ -21805,8 +21757,8 @@ jmp_42256C_default_case:
                                                                 {
                                                                   break;
                                                                 }
-                                                                *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
-                                                                Play_Sound_Effect(*(int *)Life_To_Add, 1);
+                                                                SoundID = TSC_Dec_to_Hex(Script_Position + 4);
+                                                                Play_Sound_Effect(SoundID, 1);
                                                                 Script_Position += 8;
                                                               }
                                                               if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'C'
@@ -21815,8 +21767,8 @@ jmp_42256C_default_case:
                                                               {
                                                                 break;
                                                               }
-                                                              *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
-                                                              Tsc_CMU(*(int *)Life_To_Add);
+                                                              SoundID = TSC_Dec_to_Hex(Script_Position + 4);
+                                                              Tsc_CMU(SoundID);
                                                               Script_Position += 8;
                                                             }
                                                             if ( *((_BYTE *)Current_Script + Script_Position + 1) != 70
@@ -21825,7 +21777,7 @@ jmp_42256C_default_case:
                                                             {
                                                               break;
                                                             }
-                                                            __setargv_0();
+                                                            Fade_Music();
                                                             Script_Position += 4;
                                                           }
                                                           if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'R'
@@ -21858,12 +21810,12 @@ jmp_42256C_default_case:
                                                         break;
                                                       }
                                                       v7 = 1;
-                                                      v2 = sub_41DA00((_DWORD *)Life_To_Add);
+                                                      v2 = Game_Loop_Stage_Select(&SoundID);
                                                       if ( !v2 )
                                                         return 0;
                                                       if ( v2 == 2 )
                                                         return 2;
-                                                      sub_421AF0(*(int *)Life_To_Add);
+                                                      sub_421AF0(SoundID);
                                                       Game_State &= 0xFFFFFFFC;
                                                     }
                                                     if ( *((_BYTE *)Current_Script + Script_Position + 1) != 68
@@ -21872,18 +21824,18 @@ jmp_42256C_default_case:
                                                     {
                                                       break;
                                                     }
-                                                    *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
-                                                    sub_470250(*(int *)Life_To_Add);
+                                                    SoundID = TSC_Dec_to_Hex(Script_Position + 4);
+                                                    sub_470250(SoundID);
                                                     Script_Position += 8;
                                                   }
-                                                  if ( *((_BYTE *)Current_Script + Script_Position + 1) != 68
-                                                    || *((_BYTE *)Current_Script + Script_Position + 2) != 78
-                                                    || *((_BYTE *)Current_Script + Script_Position + 3) != 65 )
+                                                  if ( *((_BYTE *)Current_Script + Script_Position + 1) != 'D'
+                                                    || *((_BYTE *)Current_Script + Script_Position + 2) != 'N'
+                                                    || *((_BYTE *)Current_Script + Script_Position + 3) != 'A' )
                                                   {
                                                     break;
                                                   }
-                                                  *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
-                                                  sub_4702D0(*(int *)Life_To_Add, 1);
+                                                  SoundID = TSC_Dec_to_Hex(Script_Position + 4);
+                                                  Kill_Objects(SoundID, 1);
                                                   Script_Position += 8;
                                                 }
                                                 if ( *((_BYTE *)Current_Script + Script_Position + 1) != 66
@@ -21892,8 +21844,8 @@ jmp_42256C_default_case:
                                                 {
                                                   break;
                                                 }
-                                                *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
-                                                sub_472940(*(int *)Life_To_Add);
+                                                SoundID = TSC_Dec_to_Hex(Script_Position + 4);
+                                                Set_Boss_Script_State(SoundID);
                                                 Script_Position += 8;
                                               }
                                               if ( *((_BYTE *)Current_Script + Script_Position + 1) != 67
@@ -21902,10 +21854,10 @@ jmp_42256C_default_case:
                                               {
                                                 break;
                                               }
-                                              *(_DWORD *)Health_To_Restore = TSC_Dec_to_Hex(Script_Position + 4);
+                                              Flag_hashtag = TSC_Dec_to_Hex(Script_Position + 4);
                                               num = TSC_Dec_to_Hex(Script_Position + 9);
-                                              *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 14);
-                                              sub_46FAB0(*(int *)Health_To_Restore, num, *(int *)Life_To_Add);
+                                              SoundID = TSC_Dec_to_Hex(Script_Position + 14);
+                                              Spawn_NPC(Flag_hashtag, num, SoundID);
                                               Script_Position += 18;
                                             }
                                             if ( *((_BYTE *)Current_Script + Script_Position + 1) != 65
@@ -21914,10 +21866,10 @@ jmp_42256C_default_case:
                                             {
                                               break;
                                             }
-                                            *(_DWORD *)Health_To_Restore = TSC_Dec_to_Hex(Script_Position + 4);
+                                            Flag_hashtag = TSC_Dec_to_Hex(Script_Position + 4);
                                             num = TSC_Dec_to_Hex(Script_Position + 9);
-                                            *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 14);
-                                            sub_46FF90(*(int *)Health_To_Restore, num, *(int *)Life_To_Add);
+                                            SoundID = TSC_Dec_to_Hex(Script_Position + 14);
+                                            sub_46FF90(Flag_hashtag, num, SoundID);
                                             Script_Position += 18;
                                           }
                                           if ( *((_BYTE *)Current_Script + Script_Position + 1) != 73
@@ -21926,10 +21878,10 @@ jmp_42256C_default_case:
                                           {
                                             break;
                                           }
-                                          *(_DWORD *)Health_To_Restore = TSC_Dec_to_Hex(Script_Position + 4);
+                                          Flag_hashtag = TSC_Dec_to_Hex(Script_Position + 4);
                                           num = TSC_Dec_to_Hex(Script_Position + 9);
-                                          *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 14);
-                                          sub_46FD10(*(int *)Health_To_Restore, num, *(int *)Life_To_Add);
+                                          SoundID = TSC_Dec_to_Hex(Script_Position + 14);
+                                          Spawn_NPC_2(Flag_hashtag, num, SoundID);
                                           Script_Position += 18;
                                         }
                                         if ( *((_BYTE *)Current_Script + Script_Position + 1) != 83
@@ -21939,18 +21891,10 @@ jmp_42256C_default_case:
                                           break;
                                         }
                                         NPC_ID = TSC_Dec_to_Hex(Script_Position + 4);
-                                        *(_DWORD *)Health_To_Restore = TSC_Dec_to_Hex(Script_Position + 9);
+                                        Flag_hashtag = TSC_Dec_to_Hex(Script_Position + 9);
                                         num = TSC_Dec_to_Hex(Script_Position + 14);
-                                        *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 19);
-                                        NPC_Create(
-                                          NPC_ID,
-                                          *(_DWORD *)Health_To_Restore << 13,
-                                          num << 13,
-                                          0,
-                                          0,
-                                          *(int *)Life_To_Add,
-                                          0,
-                                          256);
+                                        SoundID = TSC_Dec_to_Hex(Script_Position + 19);
+                                        NPC_Create(NPC_ID, Flag_hashtag << 13, num << 13, 0, 0, SoundID, 0, 256);
                                         Script_Position += 23;
                                       }
                                       if ( *((_BYTE *)Current_Script + Script_Position + 1) != 77
@@ -21960,14 +21904,10 @@ jmp_42256C_default_case:
                                         break;
                                       }
                                       NPC_ID = TSC_Dec_to_Hex(Script_Position + 4);
-                                      *(_DWORD *)Health_To_Restore = TSC_Dec_to_Hex(Script_Position + 9);
+                                      Flag_hashtag = TSC_Dec_to_Hex(Script_Position + 9);
                                       num = TSC_Dec_to_Hex(Script_Position + 14);
-                                      *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 19);
-                                      sub_470060(
-                                        NPC_ID,
-                                        *(_DWORD *)Health_To_Restore << 13,
-                                        num << 13,
-                                        *(int *)Life_To_Add);
+                                      SoundID = TSC_Dec_to_Hex(Script_Position + 19);
+                                      sub_470060(NPC_ID, Flag_hashtag << 13, num << 13, SoundID);
                                       Script_Position += 23;
                                     }
                                     if ( *((_BYTE *)Current_Script + Script_Position + 1) != 83
@@ -21976,9 +21916,9 @@ jmp_42256C_default_case:
                                     {
                                       break;
                                     }
-                                    *(_DWORD *)Health_To_Restore = TSC_Dec_to_Hex(Script_Position + 4);
+                                    Flag_hashtag = TSC_Dec_to_Hex(Script_Position + 4);
                                     num = TSC_Dec_to_Hex(Script_Position + 9);
-                                    Decrement_Tile(*(int *)Health_To_Restore, num);
+                                    Decrement_Tile(Flag_hashtag, num);
                                     Script_Position += 13;
                                   }
                                   if ( *((_BYTE *)Current_Script + Script_Position + 1) != 67
@@ -21987,10 +21927,10 @@ jmp_42256C_default_case:
                                   {
                                     break;
                                   }
-                                  *(_DWORD *)Health_To_Restore = TSC_Dec_to_Hex(Script_Position + 4);
+                                  Flag_hashtag = TSC_Dec_to_Hex(Script_Position + 4);
                                   num = TSC_Dec_to_Hex(Script_Position + 9);
-                                  *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 14);
-                                  sub_413A60(*(int *)Health_To_Restore, num, Life_To_Add[0]);
+                                  SoundID = TSC_Dec_to_Hex(Script_Position + 14);
+                                  sub_413A60(Flag_hashtag, num, SoundID);
                                   Script_Position += 18;
                                 }
                                 if ( *((_BYTE *)Current_Script + Script_Position + 1) != 66
@@ -21999,9 +21939,9 @@ jmp_42256C_default_case:
                                 {
                                   break;
                                 }
-                                *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
-                                if ( *(_DWORD *)Life_To_Add )
-                                  sub_47B460(*(int *)Life_To_Add);
+                                SoundID = TSC_Dec_to_Hex(Script_Position + 4);
+                                if ( SoundID )
+                                  sub_47B460(SoundID);
                                 else
                                   sub_47B500();
                                 Script_Position += 8;
@@ -22012,8 +21952,8 @@ jmp_42256C_default_case:
                               {
                                 break;
                               }
-                              *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
-                              sub_416B70(Life_To_Add[0]);
+                              SoundID = TSC_Dec_to_Hex(Script_Position + 4);
+                              sub_416B70(SoundID);
                               Script_Position += 8;
                             }
                             if ( *((_BYTE *)Current_Script + Script_Position + 1) != 77
@@ -22022,8 +21962,8 @@ jmp_42256C_default_case:
                             {
                               break;
                             }
-                            *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
-                            sub_470150(*(int *)Life_To_Add);
+                            SoundID = TSC_Dec_to_Hex(Script_Position + 4);
+                            sub_470150(SoundID);
                             Script_Position += 8;
                           }
                           if ( *((_BYTE *)Current_Script + Script_Position + 1) != 77
@@ -22050,7 +21990,7 @@ jmp_42256C_default_case:
                       {
                         break;
                       }
-                      sub_41D040(0);
+                      Save_Profile(0);
                       Script_Position += 4;
                     }
                     if ( *((_BYTE *)Current_Script + Script_Position + 1) != 76
@@ -22068,10 +22008,10 @@ jmp_42256C_default_case:
                   {
                     break;
                   }
-                  *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
-                  if ( FaceID != SLOBYTE(Life_To_Add[0]) )
+                  SoundID = TSC_Dec_to_Hex(Script_Position + 4);
+                  if ( FaceID != (char)SoundID )
                   {
-                    FaceID = SLOBYTE(Life_To_Add[0]);
+                    FaceID = (char)SoundID;
                     dword_4A5B10 = 2048;
                   }
                   Script_Position += 8;
@@ -22082,10 +22022,10 @@ jmp_42256C_default_case:
                 {
                   break;
                 }
-                *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
-                if ( FaceID != SLOBYTE(Life_To_Add[0]) )
+                SoundID = TSC_Dec_to_Hex(Script_Position + 4);
+                if ( FaceID != (char)SoundID )
                 {
-                  FaceID = SLOBYTE(Life_To_Add[0]);
+                  FaceID = (char)SoundID;
                   dword_4A5B10 = 2048;
                 }
                 Script_Position += 8;
@@ -22096,8 +22036,8 @@ jmp_42256C_default_case:
               {
                 break;
               }
-              *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
-              dword_4A5B14 = *(_DWORD *)Life_To_Add;
+              SoundID = TSC_Dec_to_Hex(Script_Position + 4);
+              dword_4A5B14 = SoundID;
               dword_4A5B18 = 128;
               Script_Position += 8;
             }
@@ -22107,8 +22047,8 @@ jmp_42256C_default_case:
             {
               break;
             }
-            *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
-            sub_421D10(*(int *)Life_To_Add);
+            SoundID = TSC_Dec_to_Hex(Script_Position + 4);
+            Print_NUM(SoundID);
             Script_Position += 8;
           }
           if ( *((_BYTE *)Current_Script + Script_Position + 1) != 67
@@ -22127,8 +22067,8 @@ jmp_42256C_default_case:
         {
           break;
         }
-        *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
-        TSC_SIL(*(int *)Life_To_Add);
+        SoundID = TSC_Dec_to_Hex(Script_Position + 4);
+        TSC_SIL(SoundID);
         Script_Position += 8;
       }
       if ( *((_BYTE *)Current_Script + Script_Position + 1) != 67
@@ -22147,8 +22087,8 @@ jmp_42256C_default_case:
       break;
     }
     v7 = 1;
-    *(_DWORD *)Life_To_Add = TSC_Dec_to_Hex(Script_Position + 4);
-    v1 = TSC_XX1_Game_Loop_Island_Crash(AppWinHandle, *(int *)Life_To_Add);
+    SoundID = TSC_Dec_to_Hex(Script_Position + 4);
+    v1 = TSC_XX1_Game_Loop_Island_Crash(AppWinHandle, SoundID);
     if ( !v1 )
       return 0;
     if ( v1 == 2 )
@@ -22160,12 +22100,12 @@ jmp_42256C_default_case:
     || *((_BYTE *)Current_Script + Script_Position + 3) != 'C' )
   {
     sprintf(
-      &str,
+      (char *)&Text,
       "不明のコード:<%c%c%c",
       *((_BYTE *)Current_Script + Script_Position + 1),
       *((_BYTE *)Current_Script + Script_Position + 2),
       *((_BYTE *)Current_Script + Script_Position + 3));
-    MessageBoxA(0, &str, "エラー", 0);
+    MessageBoxA(0, &Text, "エラー", 0);
     result = 0;
   }
   else
@@ -22175,12 +22115,12 @@ jmp_42256C_default_case:
   return result;
 }
 // 416B50: using guessed type int _crt_debugger_hook_0(void);
-// 41C880: using guessed type int __setargv_0(void);
+// 41C880: using guessed type int Fade_Music(void);
 // 493628: using guessed type int Key_For_Jump;
 // 49362C: using guessed type int Key_For_Shoot;
 // 493630: using guessed type int Key_For_Left;
 // 493638: using guessed type int Key_For_Right;
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 // 49E1E8: using guessed type int Game_State;
 // 49E210: using guessed type int Key_Held;
 // 49E214: using guessed type int Key_Pressed;
@@ -22202,19 +22142,19 @@ jmp_42256C_default_case:
 // 4A5B30: using guessed type char byte_4A5B30;
 // 4A5B34: using guessed type int dword_4A5B34[];
 // 4A5B38: using guessed type int dword_4A5B38;
-// 422510: using guessed type char destination[72];
+// 422510: using guessed type char format[72];
 
 //----- (00425790) --------------------------------------------------------
-int sub_425790()
+int Draw_Text_To_Text_Box_Surfaces()
 {
   int result; // eax@3
-  signed int i; // [sp+0h] [bp-4h]@1
+  signed int Loop_Counter; // [sp+0h] [bp-4h]@1
 
-  for ( i = 0; i < 4; ++i )
+  for ( Loop_Counter = 0; Loop_Counter < 4; ++Loop_Counter )
   {
-    Draw_Color_Fill_Onto_Surface((int)asc_498290, 0, i + 30);
-    Draw_String_Onto_Surface(0, 0, (char *)&unk_4A58D0 + 64 * i, 0xFEFFFFu, i + 30);
-    result = i + 1;
+    Draw_Color_Fill_Onto_Surface((int)asc_498290, 0, Loop_Counter + 30);
+    Draw_String_Onto_Surface(0, 0, (char *)&unk_4A58D0 + 64 * Loop_Counter, 0xFEFFFFu, Loop_Counter + 30);
+    result = Loop_Counter + 1;
   }
   return result;
 }
@@ -23174,71 +23114,71 @@ int __cdecl NPC4_Smoke(int a1)
   int *v6; // ecx@14
   int v7; // edx@14
   int *v8; // edx@16
-  int v9; // [sp+4h] [bp-108h]@1
-  int v10; // [sp+8h] [bp-104h]@1
-  int v11; // [sp+Ch] [bp-100h]@1
-  int v12; // [sp+10h] [bp-FCh]@1
-  int v13; // [sp+14h] [bp-F8h]@1
-  int v14; // [sp+18h] [bp-F4h]@1
-  int v15; // [sp+1Ch] [bp-F0h]@1
-  int v16; // [sp+20h] [bp-ECh]@1
-  int v17; // [sp+24h] [bp-E8h]@1
-  int v18; // [sp+28h] [bp-E4h]@1
-  int v19; // [sp+2Ch] [bp-E0h]@1
-  int v20; // [sp+30h] [bp-DCh]@1
-  int v21; // [sp+34h] [bp-D8h]@1
-  int v22; // [sp+38h] [bp-D4h]@1
-  int v23; // [sp+3Ch] [bp-D0h]@1
-  int v24; // [sp+40h] [bp-CCh]@1
-  int v25; // [sp+44h] [bp-C8h]@1
-  int v26; // [sp+48h] [bp-C4h]@1
-  int v27; // [sp+4Ch] [bp-C0h]@1
-  int v28; // [sp+50h] [bp-BCh]@1
-  int v29; // [sp+54h] [bp-B8h]@1
-  int v30; // [sp+58h] [bp-B4h]@1
-  int v31; // [sp+5Ch] [bp-B0h]@1
-  int v32; // [sp+60h] [bp-ACh]@1
-  int v33; // [sp+64h] [bp-A8h]@1
-  int v34; // [sp+68h] [bp-A4h]@1
-  int v35; // [sp+6Ch] [bp-A0h]@1
-  int v36; // [sp+70h] [bp-9Ch]@1
-  int v37; // [sp+74h] [bp-98h]@1
-  int v38; // [sp+78h] [bp-94h]@1
-  int v39; // [sp+7Ch] [bp-90h]@1
-  int v40; // [sp+80h] [bp-8Ch]@1
-  int v41; // [sp+84h] [bp-88h]@1
-  int v42; // [sp+88h] [bp-84h]@1
-  int v43; // [sp+8Ch] [bp-80h]@1
-  int v44; // [sp+90h] [bp-7Ch]@1
-  int v45; // [sp+94h] [bp-78h]@1
-  int v46; // [sp+98h] [bp-74h]@1
-  int v47; // [sp+9Ch] [bp-70h]@1
-  int v48; // [sp+A0h] [bp-6Ch]@1
-  int v49; // [sp+A4h] [bp-68h]@1
-  int v50; // [sp+A8h] [bp-64h]@1
-  int v51; // [sp+ACh] [bp-60h]@1
-  int v52; // [sp+B0h] [bp-5Ch]@1
-  int v53; // [sp+B4h] [bp-58h]@1
-  int v54; // [sp+B8h] [bp-54h]@1
-  int v55; // [sp+BCh] [bp-50h]@1
-  int v56; // [sp+C0h] [bp-4Ch]@1
-  int v57; // [sp+C4h] [bp-48h]@1
-  int v58; // [sp+C8h] [bp-44h]@1
-  int v59; // [sp+CCh] [bp-40h]@1
-  int v60; // [sp+D0h] [bp-3Ch]@1
-  int v61; // [sp+D4h] [bp-38h]@1
-  int v62; // [sp+D8h] [bp-34h]@1
-  int v63; // [sp+DCh] [bp-30h]@1
-  int v64; // [sp+E0h] [bp-2Ch]@1
-  int v65; // [sp+E4h] [bp-28h]@1
-  int v66; // [sp+E8h] [bp-24h]@1
-  int v67; // [sp+ECh] [bp-20h]@1
-  int v68; // [sp+F0h] [bp-1Ch]@1
-  int v69; // [sp+F4h] [bp-18h]@1
-  int v70; // [sp+F8h] [bp-14h]@1
-  int v71; // [sp+FCh] [bp-10h]@1
-  int v72; // [sp+100h] [bp-Ch]@1
-  char v73; // [sp+10Bh] [bp-1h]@4
+  int v9; // [sp+0h] [bp-108h]@1
+  int v10; // [sp+4h] [bp-104h]@1
+  int v11; // [sp+8h] [bp-100h]@1
+  int v12; // [sp+Ch] [bp-FCh]@1
+  int v13; // [sp+10h] [bp-F8h]@1
+  int v14; // [sp+14h] [bp-F4h]@1
+  int v15; // [sp+18h] [bp-F0h]@1
+  int v16; // [sp+1Ch] [bp-ECh]@1
+  int v17; // [sp+20h] [bp-E8h]@1
+  int v18; // [sp+24h] [bp-E4h]@1
+  int v19; // [sp+28h] [bp-E0h]@1
+  int v20; // [sp+2Ch] [bp-DCh]@1
+  int v21; // [sp+30h] [bp-D8h]@1
+  int v22; // [sp+34h] [bp-D4h]@1
+  int v23; // [sp+38h] [bp-D0h]@1
+  int v24; // [sp+3Ch] [bp-CCh]@1
+  int v25; // [sp+40h] [bp-C8h]@1
+  int v26; // [sp+44h] [bp-C4h]@1
+  int v27; // [sp+48h] [bp-C0h]@1
+  int v28; // [sp+4Ch] [bp-BCh]@1
+  int v29; // [sp+50h] [bp-B8h]@1
+  int v30; // [sp+54h] [bp-B4h]@1
+  int v31; // [sp+58h] [bp-B0h]@1
+  int v32; // [sp+5Ch] [bp-ACh]@1
+  int v33; // [sp+60h] [bp-A8h]@1
+  int v34; // [sp+64h] [bp-A4h]@1
+  int v35; // [sp+68h] [bp-A0h]@1
+  int v36; // [sp+6Ch] [bp-9Ch]@1
+  int v37; // [sp+70h] [bp-98h]@1
+  int v38; // [sp+74h] [bp-94h]@1
+  int v39; // [sp+78h] [bp-90h]@1
+  int v40; // [sp+7Ch] [bp-8Ch]@1
+  int v41; // [sp+80h] [bp-88h]@1
+  int v42; // [sp+84h] [bp-84h]@1
+  int v43; // [sp+88h] [bp-80h]@1
+  int v44; // [sp+8Ch] [bp-7Ch]@1
+  int v45; // [sp+90h] [bp-78h]@1
+  int v46; // [sp+94h] [bp-74h]@1
+  int v47; // [sp+98h] [bp-70h]@1
+  int v48; // [sp+9Ch] [bp-6Ch]@1
+  int v49; // [sp+A0h] [bp-68h]@1
+  int v50; // [sp+A4h] [bp-64h]@1
+  int v51; // [sp+A8h] [bp-60h]@1
+  int v52; // [sp+ACh] [bp-5Ch]@1
+  int v53; // [sp+B0h] [bp-58h]@1
+  int v54; // [sp+B4h] [bp-54h]@1
+  int v55; // [sp+B8h] [bp-50h]@1
+  int v56; // [sp+BCh] [bp-4Ch]@1
+  int v57; // [sp+C0h] [bp-48h]@1
+  int v58; // [sp+C4h] [bp-44h]@1
+  int v59; // [sp+C8h] [bp-40h]@1
+  int v60; // [sp+CCh] [bp-3Ch]@1
+  int v61; // [sp+D0h] [bp-38h]@1
+  int v62; // [sp+D4h] [bp-34h]@1
+  int v63; // [sp+D8h] [bp-30h]@1
+  int v64; // [sp+DCh] [bp-2Ch]@1
+  int v65; // [sp+E0h] [bp-28h]@1
+  int v66; // [sp+E4h] [bp-24h]@1
+  int v67; // [sp+E8h] [bp-20h]@1
+  int v68; // [sp+ECh] [bp-1Ch]@1
+  int v69; // [sp+F0h] [bp-18h]@1
+  int v70; // [sp+F4h] [bp-14h]@1
+  int v71; // [sp+F8h] [bp-10h]@1
+  int v72; // [sp+FCh] [bp-Ch]@1
+  char v73; // [sp+107h] [bp-1h]@4
 
   v9 = 16;
   v10 = 0;
@@ -24137,43 +24077,46 @@ LABEL_17:
 // Balrog when he is shooting an energy shot.
 int __cdecl NPC10_Boss_Balrog_shooting(int a1)
 {
-  int *v1; // eax@11
-  int v2; // ecx@11
-  int result; // eax@11
-  int *v4; // eax@12
-  int v5; // ecx@12
-  int v6; // [sp+4h] [bp-90h]@7
-  int v7; // [sp+8h] [bp-8Ch]@7
-  int v8; // [sp+Ch] [bp-88h]@7
-  int v9; // [sp+10h] [bp-84h]@7
-  int v10; // [sp+14h] [bp-80h]@7
-  int v11; // [sp+18h] [bp-7Ch]@7
-  int v12; // [sp+1Ch] [bp-78h]@7
-  int v13; // [sp+20h] [bp-74h]@7
-  int v14; // [sp+24h] [bp-70h]@7
-  int v15; // [sp+28h] [bp-6Ch]@7
-  int v16; // [sp+2Ch] [bp-68h]@7
-  int v17; // [sp+30h] [bp-64h]@7
-  int v18; // [sp+34h] [bp-60h]@7
-  int v19; // [sp+38h] [bp-5Ch]@7
-  int v20; // [sp+3Ch] [bp-58h]@7
-  int v21; // [sp+40h] [bp-54h]@7
-  int v22; // [sp+4Ch] [bp-48h]@7
-  int v23; // [sp+50h] [bp-44h]@7
-  int v24; // [sp+54h] [bp-40h]@7
-  int v25; // [sp+58h] [bp-3Ch]@7
-  int v26; // [sp+5Ch] [bp-38h]@7
-  int v27; // [sp+60h] [bp-34h]@7
-  int v28; // [sp+64h] [bp-30h]@7
-  int v29; // [sp+68h] [bp-2Ch]@7
-  int v30; // [sp+6Ch] [bp-28h]@7
-  int v31; // [sp+70h] [bp-24h]@7
-  int v32; // [sp+74h] [bp-20h]@7
-  int v33; // [sp+78h] [bp-1Ch]@7
-  int v34; // [sp+7Ch] [bp-18h]@7
-  int v35; // [sp+80h] [bp-14h]@7
-  int v36; // [sp+84h] [bp-10h]@7
-  int v37; // [sp+88h] [bp-Ch]@7
+  int *v1; // eax@29
+  int v2; // ecx@29
+  int result; // eax@29
+  int *v4; // eax@30
+  int v5; // ecx@30
+  int v6; // [sp+4h] [bp-90h]@25
+  int v7; // [sp+8h] [bp-8Ch]@25
+  int v8; // [sp+Ch] [bp-88h]@25
+  int v9; // [sp+10h] [bp-84h]@25
+  int v10; // [sp+14h] [bp-80h]@25
+  int v11; // [sp+18h] [bp-7Ch]@25
+  int v12; // [sp+1Ch] [bp-78h]@25
+  int v13; // [sp+20h] [bp-74h]@25
+  int v14; // [sp+24h] [bp-70h]@25
+  int v15; // [sp+28h] [bp-6Ch]@25
+  int v16; // [sp+2Ch] [bp-68h]@25
+  int v17; // [sp+30h] [bp-64h]@25
+  int v18; // [sp+34h] [bp-60h]@25
+  int v19; // [sp+38h] [bp-5Ch]@25
+  int v20; // [sp+3Ch] [bp-58h]@25
+  int v21; // [sp+40h] [bp-54h]@25
+  int Y_Velocity; // [sp+44h] [bp-50h]@7
+  int X_Velocity; // [sp+48h] [bp-4Ch]@7
+  int v24; // [sp+4Ch] [bp-48h]@25
+  int v25; // [sp+50h] [bp-44h]@25
+  int v26; // [sp+54h] [bp-40h]@25
+  int v27; // [sp+58h] [bp-3Ch]@25
+  int v28; // [sp+5Ch] [bp-38h]@25
+  int v29; // [sp+60h] [bp-34h]@25
+  int v30; // [sp+64h] [bp-30h]@25
+  int v31; // [sp+68h] [bp-2Ch]@25
+  int v32; // [sp+6Ch] [bp-28h]@25
+  int v33; // [sp+70h] [bp-24h]@25
+  int v34; // [sp+74h] [bp-20h]@25
+  int v35; // [sp+78h] [bp-1Ch]@25
+  int v36; // [sp+7Ch] [bp-18h]@25
+  int v37; // [sp+80h] [bp-14h]@25
+  int v38; // [sp+84h] [bp-10h]@25
+  int v39; // [sp+88h] [bp-Ch]@25
+  unsigned __int8 v40; // [sp+93h] [bp-1h]@7
 
   switch ( *(_DWORD *)(a1 + 116) )
   {
@@ -24190,6 +24133,59 @@ LABEL_3:
         *(_DWORD *)(a1 + 104) = 1;
       }
       break;
+    case 2:
+      if ( ++*(_DWORD *)(a1 + 120) > 16 )
+      {
+        --*(_DWORD *)(a1 + 108);
+        *(_DWORD *)(a1 + 120) = 0;
+        v40 = Angle_Calculator(*(_DWORD *)(a1 + 8) - Quote_X_Position, *(_DWORD *)(a1 + 12) + 2048 - Quote_Y_Position);
+        v40 += RNG_Range(-16, 16);
+        Y_Velocity = SIN_function(v40);
+        X_Velocity = COS_function(v40);
+        NPC_Create(11, *(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12) + 2048, X_Velocity, Y_Velocity, 0, 0, 256);
+        Play_Sound_Effect(39, 1);
+        if ( !*(_DWORD *)(a1 + 108) )
+        {
+          *(_DWORD *)(a1 + 116) = 3;
+          *(_DWORD *)(a1 + 120) = 0;
+        }
+      }
+      break;
+    case 3:
+      if ( ++*(_DWORD *)(a1 + 120) > 3 )
+      {
+        *(_DWORD *)(a1 + 116) = 4;
+        *(_DWORD *)(a1 + 120) = 0;
+        *(_DWORD *)(a1 + 16) = (Quote_X_Position - *(_DWORD *)(a1 + 8)) / 100;
+        *(_DWORD *)(a1 + 20) = -1536;
+        *(_DWORD *)(a1 + 104) = 3;
+      }
+      break;
+    case 4:
+      if ( *(_DWORD *)(a1 + 4) & 5 )
+        *(_DWORD *)(a1 + 16) = 0;
+      if ( *(_DWORD *)(a1 + 12) + 0x2000 >= Quote_Y_Position )
+        *(_DWORD *)(a1 + 164) = 0;
+      else
+        *(_DWORD *)(a1 + 164) = 5;
+      if ( *(_DWORD *)(a1 + 4) & 8 )
+      {
+        *(_DWORD *)(a1 + 116) = 5;
+        *(_DWORD *)(a1 + 120) = 0;
+        *(_DWORD *)(a1 + 104) = 2;
+        Play_Sound_Effect(26, 1);
+        TSC_QUA(30);
+        *(_DWORD *)(a1 + 164) = 0;
+      }
+      break;
+    case 5:
+      *(_DWORD *)(a1 + 16) = 0;
+      if ( ++*(_DWORD *)(a1 + 120) > 3 )
+      {
+        *(_DWORD *)(a1 + 116) = 1;
+        *(_DWORD *)(a1 + 120) = 0;
+      }
+      break;
     default:
       break;
   }
@@ -24198,22 +24194,22 @@ LABEL_3:
     *(_DWORD *)(a1 + 20) = 1535;
   *(_DWORD *)(a1 + 8) += *(_DWORD *)(a1 + 16);
   *(_DWORD *)(a1 + 12) += *(_DWORD *)(a1 + 20);
-  v22 = 0;
-  v23 = 0;
-  v24 = 40;
-  v25 = 24;
+  v24 = 0;
+  v25 = 0;
   v26 = 40;
-  v27 = 0;
-  v28 = 80;
-  v29 = 24;
+  v27 = 24;
+  v28 = 40;
+  v29 = 0;
   v30 = 80;
-  v31 = 0;
-  v32 = 120;
-  v33 = 24;
+  v31 = 24;
+  v32 = 80;
+  v33 = 0;
   v34 = 120;
-  v35 = 0;
-  v36 = 160;
-  v37 = 24;
+  v35 = 24;
+  v36 = 120;
+  v37 = 0;
+  v38 = 160;
+  v39 = 24;
   v6 = 0;
   v7 = 24;
   v8 = 40;
@@ -24246,7 +24242,7 @@ LABEL_3:
   }
   else
   {
-    v1 = &v22 + 4 * *(_DWORD *)(a1 + 104);
+    v1 = &v24 + 4 * *(_DWORD *)(a1 + 104);
     v2 = a1 + 84;
     *(_DWORD *)v2 = *v1;
     *(_DWORD *)(v2 + 4) = v1[1];
@@ -24666,8 +24662,8 @@ LABEL_87:
         *(_DWORD *)(a1 + 104) = 3;
         *(_DWORD *)(a1 + 20) = -2048;
         *(_WORD *)(a1 + 80) |= 8u;
-        sub_4702D0(150, 0);
-        sub_4702D0(117, 0);
+        Kill_Objects(150, 0);
+        Kill_Objects(117, 0);
         NPC_Create(355, 0, 0, 0, 0, 0, a1, 256);
         NPC_Create(355, 0, 0, 0, 0, 1, a1, 256);
       }
@@ -27135,7 +27131,7 @@ int __cdecl NPC35(int a1)
   if ( *(_DWORD *)(a1 + 116) < 3 && *(_DWORD *)(a1 + 64) < 90 )
   {
     Play_Sound_Effect(71, 1);
-    sub_46F150(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), *(_DWORD *)(a1 + 148), 8);
+    Create_Dust_Clouds(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), *(_DWORD *)(a1 + 148), 8);
     Spawn_Exp(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), *(_DWORD *)(a1 + 68));
     *(_DWORD *)(a1 + 116) = 3;
     *(_DWORD *)(a1 + 120) = 0;
@@ -27598,7 +27594,7 @@ int __cdecl NPC38(int a1)
     if ( v3 == 10 )
     {
       *(_DWORD *)(a1 + 116) = 11;
-      result = sub_46F150(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), *(_DWORD *)(a1 + 148), 8);
+      result = Create_Dust_Clouds(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), *(_DWORD *)(a1 + 148), 8);
     }
     else if ( v3 != 11 )
     {
@@ -28529,7 +28525,7 @@ LABEL_6:
   {
     for ( i = 0; i < 10; ++i )
       NPC_Create(45, *(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), 0, 0, 0, 0, 256);
-    sub_46F150(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), *(_DWORD *)(a1 + 148), 8);
+    Create_Dust_Clouds(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), *(_DWORD *)(a1 + 148), 8);
     Play_Sound_Effect(25, 1);
     *(_BYTE *)a1 = 0;
   }
@@ -29498,24 +29494,24 @@ int __cdecl NPC53(void *a1)
   char *v5; // ecx@23
   int *v6; // eax@24
   char *v7; // ecx@24
-  int v8; // [sp+4h] [bp-48h]@3
-  int v9; // [sp+8h] [bp-44h]@1
-  int v10; // [sp+Ch] [bp-40h]@1
-  int v11; // [sp+10h] [bp-3Ch]@1
-  int v12; // [sp+14h] [bp-38h]@1
-  int v13; // [sp+18h] [bp-34h]@1
-  int v14; // [sp+1Ch] [bp-30h]@1
-  int v15; // [sp+20h] [bp-2Ch]@1
-  int v16; // [sp+24h] [bp-28h]@1
-  int v17; // [sp+28h] [bp-24h]@1
-  int v18; // [sp+2Ch] [bp-20h]@1
-  int v19; // [sp+30h] [bp-1Ch]@1
-  int v20; // [sp+34h] [bp-18h]@1
-  int v21; // [sp+38h] [bp-14h]@1
-  int v22; // [sp+3Ch] [bp-10h]@1
-  int v23; // [sp+40h] [bp-Ch]@1
-  int v24; // [sp+44h] [bp-8h]@1
-  unsigned __int8 v25; // [sp+4Bh] [bp-1h]@17
+  int v8; // [sp+0h] [bp-48h]@3
+  int v9; // [sp+4h] [bp-44h]@1
+  int v10; // [sp+8h] [bp-40h]@1
+  int v11; // [sp+Ch] [bp-3Ch]@1
+  int v12; // [sp+10h] [bp-38h]@1
+  int v13; // [sp+14h] [bp-34h]@1
+  int v14; // [sp+18h] [bp-30h]@1
+  int v15; // [sp+1Ch] [bp-2Ch]@1
+  int v16; // [sp+20h] [bp-28h]@1
+  int v17; // [sp+24h] [bp-24h]@1
+  int v18; // [sp+28h] [bp-20h]@1
+  int v19; // [sp+2Ch] [bp-1Ch]@1
+  int v20; // [sp+30h] [bp-18h]@1
+  int v21; // [sp+34h] [bp-14h]@1
+  int v22; // [sp+38h] [bp-10h]@1
+  int v23; // [sp+3Ch] [bp-Ch]@1
+  int v24; // [sp+40h] [bp-8h]@1
+  unsigned __int8 v25; // [sp+47h] [bp-1h]@17
 
   v17 = 0;
   v18 = 128;
@@ -29536,7 +29532,7 @@ int __cdecl NPC53(void *a1)
   if ( *(_DWORD *)(*((_DWORD *)a1 + 42) + 40) == 3 )
   {
     sub_46F760(a1);
-    return sub_46F150(*((_DWORD *)a1 + 2), *((_DWORD *)a1 + 3), *((_DWORD *)a1 + 37), 4);
+    return Create_Dust_Clouds(*((_DWORD *)a1 + 2), *((_DWORD *)a1 + 3), *((_DWORD *)a1 + 37), 4);
   }
   v8 = *((_DWORD *)a1 + 29);
   if ( !v8 )
@@ -29668,7 +29664,7 @@ char *__cdecl NPC54(void *a1)
         if ( *((_DWORD *)a1 + 30) > 50 )
         {
           sub_46F760(a1);
-          sub_46F150(*((_DWORD *)a1 + 2), *((_DWORD *)a1 + 3), *((_DWORD *)a1 + 37), 8);
+          Create_Dust_Clouds(*((_DWORD *)a1 + 2), *((_DWORD *)a1 + 3), *((_DWORD *)a1 + 37), 8);
           Play_Sound_Effect(25, 1);
         }
       }
@@ -31210,7 +31206,7 @@ LABEL_38:
         *(_DWORD *)(a1 + 20) = -1024;
         *(_DWORD *)(a1 + 16) = 512;
         Play_Sound_Effect(71, 1);
-        sub_46F150(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), 2048, 4);
+        Create_Dust_Clouds(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), 2048, 4);
       }
       break;
     case 0x28:
@@ -33166,7 +33162,7 @@ int __cdecl NPC73(int a1)
       *(_BYTE *)a1 = 0;
   }
   result = a1;
-  if ( *(_DWORD *)(a1 + 12) > *(signed __int16 *)&word_49E588 << 13 )
+  if ( *(_DWORD *)(a1 + 12) > *(signed __int16 *)&Level_Height << 13 )
     *(_BYTE *)a1 = 0;
   return result;
 }
@@ -33422,38 +33418,38 @@ int __cdecl NPC77_Sandaim_the_Farmer(int a1)
 {
   int *v1; // edx@12
   int result; // eax@12
-  int v3; // [sp+0h] [bp-34h]@1
-  int v4; // [sp+4h] [bp-30h]@1
-  int v5; // [sp+8h] [bp-2Ch]@1
-  int v6; // [sp+Ch] [bp-28h]@1
-  int v7; // [sp+10h] [bp-24h]@1
-  int v8; // [sp+14h] [bp-20h]@1
-  int v9; // [sp+18h] [bp-1Ch]@1
-  int v10; // [sp+1Ch] [bp-18h]@1
-  int v11; // [sp+20h] [bp-14h]@1
-  int v12; // [sp+24h] [bp-10h]@1
-  int v13; // [sp+28h] [bp-Ch]@1
-  int v14; // [sp+2Ch] [bp-8h]@1
-  int v15; // [sp+30h] [bp-4h]@1
+  int Script_State; // [sp+0h] [bp-34h]@1
+  int Rect_1_1; // [sp+4h] [bp-30h]@1
+  int Rect_1_2; // [sp+8h] [bp-2Ch]@1
+  int Rect_1_3; // [sp+Ch] [bp-28h]@1
+  int Rect_1_4; // [sp+10h] [bp-24h]@1
+  int Rect_2_1; // [sp+14h] [bp-20h]@1
+  int Rect_2_2; // [sp+18h] [bp-1Ch]@1
+  int Rect_2_3; // [sp+1Ch] [bp-18h]@1
+  int Rect_2_4; // [sp+20h] [bp-14h]@1
+  int Rect_3_1; // [sp+24h] [bp-10h]@1
+  int Rect_3_2; // [sp+28h] [bp-Ch]@1
+  int Rect_3_3; // [sp+2Ch] [bp-8h]@1
+  int Rect_3_4; // [sp+30h] [bp-4h]@1
 
-  v4 = 0;
-  v5 = 16;
-  v6 = 48;
-  v7 = 48;
-  v8 = 48;
-  v9 = 16;
-  v10 = 96;
-  v11 = 48;
-  v12 = 96;
-  v13 = 16;
-  v14 = 144;
-  v15 = 48;
-  v3 = *(_DWORD *)(a1 + 116);
-  if ( v3 )
+  Rect_1_1 = 0;
+  Rect_1_2 = 16;
+  Rect_1_3 = 48;
+  Rect_1_4 = 48;
+  Rect_2_1 = 48;
+  Rect_2_2 = 16;
+  Rect_2_3 = 96;
+  Rect_2_4 = 48;
+  Rect_3_1 = 96;
+  Rect_3_2 = 16;
+  Rect_3_3 = 144;
+  Rect_3_4 = 48;
+  Script_State = *(_DWORD *)(a1 + 116);
+  if ( Script_State )
   {
-    if ( v3 != 1 )
+    if ( Script_State != 1 )
     {
-      if ( v3 == 2 && ++*(_DWORD *)(a1 + 120) > 8 )
+      if ( Script_State == 2 && ++*(_DWORD *)(a1 + 120) > 8 )
       {
         *(_DWORD *)(a1 + 116) = 1;
         *(_DWORD *)(a1 + 104) = 0;
@@ -33477,14 +33473,14 @@ LABEL_11:
   if ( *(_DWORD *)(a1 + 76) )
   {
     result = a1 + 84;
-    *(_DWORD *)result = v12;
-    *(_DWORD *)(result + 4) = v13;
-    *(_DWORD *)(result + 8) = v14;
-    *(_DWORD *)(result + 12) = v15;
+    *(_DWORD *)result = Rect_3_1;
+    *(_DWORD *)(result + 4) = Rect_3_2;
+    *(_DWORD *)(result + 8) = Rect_3_3;
+    *(_DWORD *)(result + 12) = Rect_3_4;
   }
   else
   {
-    v1 = &v4 + 4 * *(_DWORD *)(a1 + 104);
+    v1 = &Rect_1_1 + 4 * *(_DWORD *)(a1 + 104);
     result = a1 + 84;
     *(_DWORD *)result = *v1;
     *(_DWORD *)(result + 4) = v1[1];
@@ -33532,55 +33528,55 @@ int __cdecl NPC79(int a1)
   int *v4; // eax@22
   int v5; // ecx@22
   int v6; // [sp+0h] [bp-64h]@1
-  int v7; // [sp+4h] [bp-60h]@1
-  int v8; // [sp+8h] [bp-5Ch]@1
-  int v9; // [sp+Ch] [bp-58h]@1
-  int v10; // [sp+10h] [bp-54h]@1
-  int v11; // [sp+14h] [bp-50h]@1
-  int v12; // [sp+18h] [bp-4Ch]@1
-  int v13; // [sp+1Ch] [bp-48h]@1
-  int v14; // [sp+20h] [bp-44h]@1
-  int v15; // [sp+24h] [bp-40h]@1
-  int v16; // [sp+28h] [bp-3Ch]@1
-  int v17; // [sp+2Ch] [bp-38h]@1
-  int v18; // [sp+30h] [bp-34h]@1
-  int v19; // [sp+34h] [bp-30h]@1
-  int v20; // [sp+38h] [bp-2Ch]@1
-  int v21; // [sp+3Ch] [bp-28h]@1
-  int v22; // [sp+40h] [bp-24h]@1
-  int v23; // [sp+44h] [bp-20h]@1
-  int v24; // [sp+48h] [bp-1Ch]@1
-  int v25; // [sp+4Ch] [bp-18h]@1
-  int v26; // [sp+50h] [bp-14h]@1
-  int v27; // [sp+54h] [bp-10h]@1
-  int v28; // [sp+58h] [bp-Ch]@1
-  int v29; // [sp+5Ch] [bp-8h]@1
-  int v30; // [sp+60h] [bp-4h]@1
+  int Frame_4_1; // [sp+4h] [bp-60h]@1
+  int Frame_4_2; // [sp+8h] [bp-5Ch]@1
+  int Frame_4_3; // [sp+Ch] [bp-58h]@1
+  int Frame_4_4; // [sp+10h] [bp-54h]@1
+  int Frame_5_1; // [sp+14h] [bp-50h]@1
+  int Frame_5_2; // [sp+18h] [bp-4Ch]@1
+  int Frame_5_3; // [sp+1Ch] [bp-48h]@1
+  int Frame_5_4; // [sp+20h] [bp-44h]@1
+  int Frame_6_1; // [sp+24h] [bp-40h]@1
+  int Frame_6_2; // [sp+28h] [bp-3Ch]@1
+  int Frame_6_3; // [sp+2Ch] [bp-38h]@1
+  int Frame_6_4; // [sp+30h] [bp-34h]@1
+  int Frame_1_1; // [sp+34h] [bp-30h]@1
+  int Frame_1_2; // [sp+38h] [bp-2Ch]@1
+  int Frame_1_3; // [sp+3Ch] [bp-28h]@1
+  int Frame_1_4; // [sp+40h] [bp-24h]@1
+  int Frame_2_1; // [sp+44h] [bp-20h]@1
+  int Frame_2_2; // [sp+48h] [bp-1Ch]@1
+  int Frame_2_3; // [sp+4Ch] [bp-18h]@1
+  int Frame_2_4; // [sp+50h] [bp-14h]@1
+  int Frame_3_1; // [sp+54h] [bp-10h]@1
+  int Frame_3_2; // [sp+58h] [bp-Ch]@1
+  int Frame_3_3; // [sp+5Ch] [bp-8h]@1
+  int Frame_3_4; // [sp+60h] [bp-4h]@1
 
-  v19 = 0;
-  v20 = 0;
-  v21 = 16;
-  v22 = 16;
-  v23 = 16;
-  v24 = 0;
-  v25 = 32;
-  v26 = 16;
-  v27 = 32;
-  v28 = 0;
-  v29 = 48;
-  v30 = 16;
-  v7 = 0;
-  v8 = 16;
-  v9 = 16;
-  v10 = 32;
-  v11 = 16;
-  v12 = 16;
-  v13 = 32;
-  v14 = 32;
-  v15 = 32;
-  v16 = 16;
-  v17 = 48;
-  v18 = 32;
+  Frame_1_1 = 0;
+  Frame_1_2 = 0;
+  Frame_1_3 = 16;
+  Frame_1_4 = 16;
+  Frame_2_1 = 16;
+  Frame_2_2 = 0;
+  Frame_2_3 = 32;
+  Frame_2_4 = 16;
+  Frame_3_1 = 32;
+  Frame_3_2 = 0;
+  Frame_3_3 = 48;
+  Frame_3_4 = 16;
+  Frame_4_1 = 0;
+  Frame_4_2 = 16;
+  Frame_4_3 = 16;
+  Frame_4_4 = 32;
+  Frame_5_1 = 16;
+  Frame_5_2 = 16;
+  Frame_5_3 = 32;
+  Frame_5_4 = 32;
+  Frame_6_1 = 32;
+  Frame_6_2 = 16;
+  Frame_6_3 = 48;
+  Frame_6_4 = 32;
   v6 = *(_DWORD *)(a1 + 116);
   if ( v6 )
   {
@@ -33622,7 +33618,7 @@ int __cdecl NPC79(int a1)
   *(_DWORD *)(a1 + 12) += *(_DWORD *)(a1 + 20);
   if ( *(_DWORD *)(a1 + 76) )
   {
-    v4 = &v7 + 4 * *(_DWORD *)(a1 + 104);
+    v4 = &Frame_4_1 + 4 * *(_DWORD *)(a1 + 104);
     v5 = a1 + 84;
     *(_DWORD *)v5 = *v4;
     *(_DWORD *)(v5 + 4) = v4[1];
@@ -33632,7 +33628,7 @@ int __cdecl NPC79(int a1)
   }
   else
   {
-    v1 = &v19 + 4 * *(_DWORD *)(a1 + 104);
+    v1 = &Frame_1_1 + 4 * *(_DWORD *)(a1 + 104);
     v2 = a1 + 84;
     *(_DWORD *)v2 = *v1;
     *(_DWORD *)(v2 + 4) = v1[1];
@@ -33896,103 +33892,103 @@ int __cdecl NPC81(int a1)
   int *v4; // eax@43
   int v5; // ecx@43
   signed int v6; // [sp+0h] [bp-C8h]@32
-  int v7; // [sp+8h] [bp-C0h]@1
-  int v8; // [sp+Ch] [bp-BCh]@1
-  int v9; // [sp+10h] [bp-B8h]@1
-  int v10; // [sp+14h] [bp-B4h]@1
-  int v11; // [sp+18h] [bp-B0h]@1
-  int v12; // [sp+1Ch] [bp-ACh]@1
-  int v13; // [sp+20h] [bp-A8h]@1
-  int v14; // [sp+24h] [bp-A4h]@1
-  int v15; // [sp+28h] [bp-A0h]@1
-  int v16; // [sp+2Ch] [bp-9Ch]@1
-  int v17; // [sp+30h] [bp-98h]@1
-  int v18; // [sp+34h] [bp-94h]@1
-  int v19; // [sp+38h] [bp-90h]@1
-  int v20; // [sp+3Ch] [bp-8Ch]@1
-  int v21; // [sp+40h] [bp-88h]@1
-  int v22; // [sp+44h] [bp-84h]@1
-  int v23; // [sp+48h] [bp-80h]@1
-  int v24; // [sp+4Ch] [bp-7Ch]@1
-  int v25; // [sp+50h] [bp-78h]@1
-  int v26; // [sp+54h] [bp-74h]@1
-  int v27; // [sp+58h] [bp-70h]@1
-  int v28; // [sp+5Ch] [bp-6Ch]@1
-  int v29; // [sp+60h] [bp-68h]@1
-  int v30; // [sp+64h] [bp-64h]@1
-  int v31; // [sp+68h] [bp-60h]@1
-  int v32; // [sp+6Ch] [bp-5Ch]@1
-  int v33; // [sp+70h] [bp-58h]@1
-  int v34; // [sp+74h] [bp-54h]@1
-  int v35; // [sp+78h] [bp-50h]@1
-  int v36; // [sp+7Ch] [bp-4Ch]@1
-  int v37; // [sp+80h] [bp-48h]@1
-  int v38; // [sp+84h] [bp-44h]@1
-  int v39; // [sp+88h] [bp-40h]@1
-  int v40; // [sp+8Ch] [bp-3Ch]@1
-  int v41; // [sp+90h] [bp-38h]@1
-  int v42; // [sp+94h] [bp-34h]@1
-  int v43; // [sp+98h] [bp-30h]@1
-  int v44; // [sp+9Ch] [bp-2Ch]@1
-  int v45; // [sp+A0h] [bp-28h]@1
-  int v46; // [sp+A4h] [bp-24h]@1
-  int v47; // [sp+A8h] [bp-20h]@1
-  int v48; // [sp+ACh] [bp-1Ch]@1
-  int v49; // [sp+B0h] [bp-18h]@1
-  int v50; // [sp+B4h] [bp-14h]@1
-  int v51; // [sp+B8h] [bp-10h]@1
-  int v52; // [sp+BCh] [bp-Ch]@1
-  int v53; // [sp+C0h] [bp-8h]@1
-  int v54; // [sp+C4h] [bp-4h]@1
+  int Frame_7_1; // [sp+8h] [bp-C0h]@1
+  int Frame_7_2; // [sp+Ch] [bp-BCh]@1
+  int Frame_7_3; // [sp+10h] [bp-B8h]@1
+  int Frame_7_4; // [sp+14h] [bp-B4h]@1
+  int Frame_8_1; // [sp+18h] [bp-B0h]@1
+  int Frame_8_2; // [sp+1Ch] [bp-ACh]@1
+  int Frame_8_3; // [sp+20h] [bp-A8h]@1
+  int Frame_8_4; // [sp+24h] [bp-A4h]@1
+  int Frame_9_1; // [sp+28h] [bp-A0h]@1
+  int Frame_9_2; // [sp+2Ch] [bp-9Ch]@1
+  int Frame_9_3; // [sp+30h] [bp-98h]@1
+  int Frame_9_4; // [sp+34h] [bp-94h]@1
+  int Frame_10_1; // [sp+38h] [bp-90h]@1
+  int Frame_10_2; // [sp+3Ch] [bp-8Ch]@1
+  int Frame_10_3; // [sp+40h] [bp-88h]@1
+  int Frame_10_4; // [sp+44h] [bp-84h]@1
+  int Frame_11_1; // [sp+48h] [bp-80h]@1
+  int Frame_11_2; // [sp+4Ch] [bp-7Ch]@1
+  int Frame_11_3; // [sp+50h] [bp-78h]@1
+  int Frame_11_4; // [sp+54h] [bp-74h]@1
+  int Frame_12_1; // [sp+58h] [bp-70h]@1
+  int Frame_12_2; // [sp+5Ch] [bp-6Ch]@1
+  int Frame_12_3; // [sp+60h] [bp-68h]@1
+  int Frame_12_4; // [sp+64h] [bp-64h]@1
+  int Frame_1_1; // [sp+68h] [bp-60h]@1
+  int Frame_1_2; // [sp+6Ch] [bp-5Ch]@1
+  int Frame_1_3; // [sp+70h] [bp-58h]@1
+  int Frame_1_4; // [sp+74h] [bp-54h]@1
+  int Frame_2_1; // [sp+78h] [bp-50h]@1
+  int Frame_2_2; // [sp+7Ch] [bp-4Ch]@1
+  int Frame_2_3; // [sp+80h] [bp-48h]@1
+  int Frame_2_4; // [sp+84h] [bp-44h]@1
+  int Frame_3_1; // [sp+88h] [bp-40h]@1
+  int Frame_3_2; // [sp+8Ch] [bp-3Ch]@1
+  int Frame_3_3; // [sp+90h] [bp-38h]@1
+  int Frame_3_4; // [sp+94h] [bp-34h]@1
+  int Frame_4_1; // [sp+98h] [bp-30h]@1
+  int Frame_4_2; // [sp+9Ch] [bp-2Ch]@1
+  int Frame_4_3; // [sp+A0h] [bp-28h]@1
+  int Frame_4_4; // [sp+A4h] [bp-24h]@1
+  int Frame_5_1; // [sp+A8h] [bp-20h]@1
+  int Frame_5_2; // [sp+ACh] [bp-1Ch]@1
+  int Frame_5_3; // [sp+B0h] [bp-18h]@1
+  int Frame_5_4; // [sp+B4h] [bp-14h]@1
+  int Frame_6_1; // [sp+B8h] [bp-10h]@1
+  int Frame_6_2; // [sp+BCh] [bp-Ch]@1
+  int Frame_6_3; // [sp+C0h] [bp-8h]@1
+  int Frame_6_4; // [sp+C4h] [bp-4h]@1
 
-  v31 = 144;
-  v32 = 64;
-  v33 = 168;
-  v34 = 88;
-  v35 = 168;
-  v36 = 64;
-  v37 = 192;
-  v38 = 88;
-  v39 = 192;
-  v40 = 64;
-  v41 = 216;
-  v42 = 88;
-  v43 = 216;
-  v44 = 64;
-  v45 = 240;
-  v46 = 88;
-  v47 = 144;
-  v48 = 64;
-  v49 = 168;
-  v50 = 88;
-  v51 = 240;
-  v52 = 64;
-  v53 = 264;
-  v54 = 88;
-  v7 = 144;
-  v8 = 88;
-  v9 = 168;
-  v10 = 112;
-  v11 = 168;
-  v12 = 88;
-  v13 = 192;
-  v14 = 112;
-  v15 = 192;
-  v16 = 88;
-  v17 = 216;
-  v18 = 112;
-  v19 = 216;
-  v20 = 88;
-  v21 = 240;
-  v22 = 112;
-  v23 = 144;
-  v24 = 88;
-  v25 = 168;
-  v26 = 112;
-  v27 = 240;
-  v28 = 88;
-  v29 = 264;
-  v30 = 112;
+  Frame_1_1 = 144;
+  Frame_1_2 = 64;
+  Frame_1_3 = 168;
+  Frame_1_4 = 88;
+  Frame_2_1 = 168;
+  Frame_2_2 = 64;
+  Frame_2_3 = 192;
+  Frame_2_4 = 88;
+  Frame_3_1 = 192;
+  Frame_3_2 = 64;
+  Frame_3_3 = 216;
+  Frame_3_4 = 88;
+  Frame_4_1 = 216;
+  Frame_4_2 = 64;
+  Frame_4_3 = 240;
+  Frame_4_4 = 88;
+  Frame_5_1 = 144;
+  Frame_5_2 = 64;
+  Frame_5_3 = 168;
+  Frame_5_4 = 88;
+  Frame_6_1 = 240;
+  Frame_6_2 = 64;
+  Frame_6_3 = 264;
+  Frame_6_4 = 88;
+  Frame_7_1 = 144;
+  Frame_7_2 = 88;
+  Frame_7_3 = 168;
+  Frame_7_4 = 112;
+  Frame_8_1 = 168;
+  Frame_8_2 = 88;
+  Frame_8_3 = 192;
+  Frame_8_4 = 112;
+  Frame_9_1 = 192;
+  Frame_9_2 = 88;
+  Frame_9_3 = 216;
+  Frame_9_4 = 112;
+  Frame_10_1 = 216;
+  Frame_10_2 = 88;
+  Frame_10_3 = 240;
+  Frame_10_4 = 112;
+  Frame_11_1 = 144;
+  Frame_11_2 = 88;
+  Frame_11_3 = 168;
+  Frame_11_4 = 112;
+  Frame_12_1 = 240;
+  Frame_12_2 = 88;
+  Frame_12_3 = 264;
+  Frame_12_4 = 112;
   switch ( *(_DWORD *)(a1 + 116) )
   {
     case 0:
@@ -34089,7 +34085,7 @@ LABEL_16:
   *(_DWORD *)(a1 + 12) += *(_DWORD *)(a1 + 20);
   if ( *(_DWORD *)(a1 + 76) )
   {
-    v4 = &v7 + 4 * *(_DWORD *)(a1 + 104);
+    v4 = &Frame_7_1 + 4 * *(_DWORD *)(a1 + 104);
     v5 = a1 + 84;
     *(_DWORD *)v5 = *v4;
     *(_DWORD *)(v5 + 4) = v4[1];
@@ -34099,7 +34095,7 @@ LABEL_16:
   }
   else
   {
-    v1 = &v31 + 4 * *(_DWORD *)(a1 + 104);
+    v1 = &Frame_1_1 + 4 * *(_DWORD *)(a1 + 104);
     v2 = a1 + 84;
     *(_DWORD *)v2 = *v1;
     *(_DWORD *)(v2 + 4) = v1[1];
@@ -37404,7 +37400,7 @@ LABEL_45:
         *(_DWORD *)(a1 + 104) = 6;
       break;
     case 0x6E:
-      sub_46F150(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), 0x2000, 16);
+      Create_Dust_Clouds(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), 0x2000, 16);
       *(_BYTE *)a1 = 0;
       break;
     default:
@@ -38901,7 +38897,7 @@ LABEL_9:
     case 5:
       *(_DWORD *)(a1 + 116) = 6;
       *(_DWORD *)(a1 + 104) = 5;
-      sub_46F150(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), *(_DWORD *)(a1 + 148), 8);
+      Create_Dust_Clouds(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), *(_DWORD *)(a1 + 148), 8);
       break;
     case 6:
       *(_DWORD *)(a1 + 104) = 5;
@@ -39975,7 +39971,7 @@ int __cdecl NPC125(int a1)
 
   if ( *(_DWORD *)(a1 + 64) < 990 )
   {
-    sub_46F150(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), *(_DWORD *)(a1 + 148), 8);
+    Create_Dust_Clouds(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), *(_DWORD *)(a1 + 148), 8);
     Play_Sound_Effect(70, 1);
     if ( *(_DWORD *)(a1 + 76) )
       NPC_Create(86, *(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), 0, 0, 2, 0, 0);
@@ -43026,7 +43022,7 @@ int __cdecl NPC146(int a1)
           *(_DWORD *)(a1 + 164) = 10;
         if ( *(_DWORD *)(a1 + 104) > 4 )
         {
-          sub_46F150(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), 4096, 8);
+          Create_Dust_Clouds(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), 4096, 8);
           *(_BYTE *)a1 = 0;
         }
       }
@@ -43059,7 +43055,7 @@ LABEL_16:
 // Checks for starblock tile & if bullet can break it
 int __cdecl NPC147(int a1)
 {
-  int Y_Velocity; // ST24_4@43
+  int Sin; // ST24_4@43
   int *v2; // ecx@67
   int v3; // edx@67
   int result; // eax@67
@@ -43114,7 +43110,7 @@ int __cdecl NPC147(int a1)
   int v53; // [sp+C4h] [bp-14h]@1
   int v54; // [sp+C8h] [bp-10h]@1
   int v55; // [sp+CCh] [bp-Ch]@1
-  unsigned __int8 v56; // [sp+D7h] [bp-1h]@43
+  unsigned __int8 Angle; // [sp+D7h] [bp-1h]@43
 
   v32 = 0;
   v33 = 96;
@@ -43250,11 +43246,11 @@ LABEL_3:
           *(_DWORD *)(a1 + 20) = -512;
         if ( *(_DWORD *)(a1 + 120) % 30 == 6 )
         {
-          v56 = Angle_Calculator(*(_DWORD *)(a1 + 8) - Quote_X_Position, *(_DWORD *)(a1 + 12) - Quote_Y_Position);
-          v56 += RNG_Range(-6, 6);
-          Y_Velocity = 3 * SIN_function(v56);
-          X_Velocity = 3 * COS_function(v56);
-          NPC_Create(148, *(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), X_Velocity, Y_Velocity, 0, 0, 256);
+          Angle = Angle_Calculator(*(_DWORD *)(a1 + 8) - Quote_X_Position, *(_DWORD *)(a1 + 12) - Quote_Y_Position);
+          Angle += RNG_Range(-6, 6);
+          Sin = 3 * SIN_function(Angle);
+          X_Velocity = 3 * COS_function(Angle);
+          NPC_Create(148, *(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), X_Velocity, Sin, 0, 0, 256);
           Play_Sound_Effect(39, 1);
         }
         if ( ++*(_DWORD *)(a1 + 100) > 0 )
@@ -44809,7 +44805,7 @@ LABEL_3:
       *(_DWORD *)(a1 + 20) = 2560;
       if ( *(_DWORD *)(a1 + 4) & 8 )
       {
-        sub_4702D0(161, 1);
+        Kill_Objects(161, 1);
         for ( i = 0; i < 4; ++i )
         {
           v1 = RNG_Range(-1536, 0);
@@ -45055,7 +45051,7 @@ int __cdecl NPC162(int a1)
   switch ( *(_DWORD *)(a1 + 116) )
   {
     case 0:
-      sub_4702D0(161, 1);
+      Kill_Objects(161, 1);
       Play_Sound_Effect(72, 1);
       for ( i = 0; i < 10; ++i )
       {
@@ -45150,7 +45146,7 @@ LABEL_12:
     case 3:
       if ( ++*(_DWORD *)(a1 + 108) >= 60 )
       {
-        sub_4702D0(161, 1);
+        Kill_Objects(161, 1);
         *(_BYTE *)a1 = 0;
       }
       break;
@@ -46023,7 +46019,7 @@ int __cdecl NPC170(void *Frame_1_A_4)
   if ( v15 )
   {
     Play_Sound_Effect(44, 1);
-    sub_46F150(*((_DWORD *)Frame_1_A_4 + 2), *((_DWORD *)Frame_1_A_4 + 3), 0, 3);
+    Create_Dust_Clouds(*((_DWORD *)Frame_1_A_4 + 2), *((_DWORD *)Frame_1_A_4 + 3), 0, 3);
     return sub_46F760(Frame_1_A_4);
   }
   v6 = *((_DWORD *)Frame_1_A_4 + 29);
@@ -46526,7 +46522,7 @@ LABEL_8:
         }
         if ( *(_DWORD *)(a1 + 64) <= 985 )
         {
-          result = sub_46F150(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), 0, 2);
+          result = Create_Dust_Clouds(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), 0, 2);
           *(_DWORD *)(a1 + 40) = 154;
           *(_DWORD *)(a1 + 116) = 0;
         }
@@ -48289,24 +48285,24 @@ int __cdecl NPC188(int a1)
   int *v3; // edx@34
   int result; // eax@34
   int *v5; // edx@35
-  int v6; // [sp+4h] [bp-48h]@1
-  int v7; // [sp+8h] [bp-44h]@33
-  int v8; // [sp+Ch] [bp-40h]@33
-  int v9; // [sp+10h] [bp-3Ch]@33
-  int v10; // [sp+14h] [bp-38h]@33
-  int v11; // [sp+18h] [bp-34h]@33
-  int v12; // [sp+1Ch] [bp-30h]@33
-  int v13; // [sp+20h] [bp-2Ch]@33
-  int v14; // [sp+24h] [bp-28h]@33
-  int v15; // [sp+28h] [bp-24h]@33
-  int v16; // [sp+2Ch] [bp-20h]@33
-  int v17; // [sp+30h] [bp-1Ch]@33
-  int v18; // [sp+34h] [bp-18h]@33
-  int v19; // [sp+38h] [bp-14h]@33
-  int v20; // [sp+3Ch] [bp-10h]@33
-  int v21; // [sp+40h] [bp-Ch]@33
-  int v22; // [sp+44h] [bp-8h]@33
-  char v23; // [sp+4Bh] [bp-1h]@8
+  int v6; // [sp+0h] [bp-48h]@1
+  int v7; // [sp+4h] [bp-44h]@33
+  int v8; // [sp+8h] [bp-40h]@33
+  int v9; // [sp+Ch] [bp-3Ch]@33
+  int v10; // [sp+10h] [bp-38h]@33
+  int v11; // [sp+14h] [bp-34h]@33
+  int v12; // [sp+18h] [bp-30h]@33
+  int v13; // [sp+1Ch] [bp-2Ch]@33
+  int v14; // [sp+20h] [bp-28h]@33
+  int v15; // [sp+24h] [bp-24h]@33
+  int v16; // [sp+28h] [bp-20h]@33
+  int v17; // [sp+2Ch] [bp-1Ch]@33
+  int v18; // [sp+30h] [bp-18h]@33
+  int v19; // [sp+34h] [bp-14h]@33
+  int v20; // [sp+38h] [bp-10h]@33
+  int v21; // [sp+3Ch] [bp-Ch]@33
+  int v22; // [sp+40h] [bp-8h]@33
+  char v23; // [sp+47h] [bp-1h]@8
 
   v6 = *(_DWORD *)(a1 + 116);
   if ( !v6 )
@@ -49231,7 +49227,7 @@ int __cdecl NPC200(int a1)
   if ( *(_DWORD *)(a1 + 116) < 100 && *(_DWORD *)(a1 + 64) < 950 )
   {
     Play_Sound_Effect(72, 1);
-    sub_46F150(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), *(_DWORD *)(a1 + 148), 8);
+    Create_Dust_Clouds(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), *(_DWORD *)(a1 + 148), 8);
     Spawn_Exp(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), *(_DWORD *)(a1 + 68));
     *(_DWORD *)(a1 + 116) = 100;
     *(_WORD *)(a1 + 80) &= 0xFFDFu;
@@ -49657,7 +49653,7 @@ LABEL_3:
         goto LABEL_18;
       if ( !(*(_BYTE *)&Player_Flags & 2) )
         Play_Sound_Effect(12, 1);
-      result = sub_46F150(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), *(_DWORD *)(a1 + 148), 4);
+      result = Create_Dust_Clouds(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), *(_DWORD *)(a1 + 148), 4);
       *(_BYTE *)a1 = 0;
       break;
     default:
@@ -49747,7 +49743,7 @@ LABEL_3:
       *(_DWORD *)(a1 + 20) = 0;
       *(_DWORD *)(a1 + 164) = 0;
       Play_Sound_Effect(12, 1);
-      sub_46F150(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), *(_DWORD *)(a1 + 148), 4);
+      Create_Dust_Clouds(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), *(_DWORD *)(a1 + 148), 4);
       return Create_Bullet(24, *(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), 0);
     case 4:
       if ( ++*(_DWORD *)(a1 + 120) > 4 )
@@ -49838,7 +49834,7 @@ LABEL_3:
           *(_DWORD *)(a1 + 136) = 51200;
           *(_DWORD *)(a1 + 164) = 30;
           Play_Sound_Effect(35, 1);
-          sub_46F150(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), 0x10000, 100);
+          Create_Dust_Clouds(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), 0x10000, 100);
           TSC_QUA(20);
           *(_BYTE *)a1 |= 8u;
         }
@@ -50868,7 +50864,7 @@ int __cdecl NPC214(int a1)
     *(_WORD *)(a1 + 80) &= 0xFFF7u;
   if ( *(_DWORD *)(a1 + 4) & 0xFF )
   {
-    sub_46F150(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), *(_DWORD *)(a1 + 148), 4);
+    Create_Dust_Clouds(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), *(_DWORD *)(a1 + 148), 4);
     Play_Sound_Effect(28, 1);
     *(_BYTE *)a1 = 0;
   }
@@ -53733,7 +53729,7 @@ int __cdecl NPC242(void *a1)
   int v37; // [sp+7Ch] [bp-8h]@23
   int v38; // [sp+80h] [bp-4h]@23
 
-  if ( *((_DWORD *)a1 + 2) < 0 || *((_DWORD *)a1 + 2) > *(signed __int16 *)&word_49E586 << 13 )
+  if ( *((_DWORD *)a1 + 2) < 0 || *((_DWORD *)a1 + 2) > *(signed __int16 *)&Level_Width << 13 )
     return sub_46F760(a1);
   v6 = *((_DWORD *)a1 + 29);
   if ( v6 )
@@ -54511,7 +54507,7 @@ LABEL_81:
       *(_DWORD *)(a1 + 36) = *(_DWORD *)(a1 + 12);
       *(_DWORD *)(a1 + 16) = 0;
       *(_DWORD *)(a1 + 20) = 0;
-      sub_4702D0(252, 1);
+      Kill_Objects(252, 1);
       NPC_Create(4, *(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), 0, 0, 0, 0, 256);
       NPC_Create(4, *(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), 0, 0, 0, 0, 256);
       NPC_Create(4, *(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), 0, 0, 0, 0, 256);
@@ -54799,7 +54795,7 @@ int __cdecl NPC251(int a1)
   *(_DWORD *)(a1 + 12) += 4096;
   if ( *(_DWORD *)(a1 + 4) & 0xFF )
   {
-    sub_46F150(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), *(_DWORD *)(a1 + 148), 3);
+    Create_Dust_Clouds(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), *(_DWORD *)(a1 + 148), 3);
     *(_BYTE *)a1 = 0;
   }
 LABEL_9:
@@ -54821,39 +54817,39 @@ int __cdecl NPC252(int a1)
   int *v3; // edx@18
   int result; // eax@18
   int *v5; // edx@19
-  int v6; // [sp+8h] [bp-88h]@1
-  int v7; // [sp+Ch] [bp-84h]@1
-  int v8; // [sp+10h] [bp-80h]@1
-  int v9; // [sp+14h] [bp-7Ch]@1
-  int v10; // [sp+18h] [bp-78h]@1
-  int v11; // [sp+1Ch] [bp-74h]@1
-  int v12; // [sp+20h] [bp-70h]@1
-  int v13; // [sp+24h] [bp-6Ch]@1
-  int v14; // [sp+28h] [bp-68h]@1
-  int v15; // [sp+2Ch] [bp-64h]@1
-  int v16; // [sp+30h] [bp-60h]@1
-  int v17; // [sp+34h] [bp-5Ch]@1
-  int v18; // [sp+38h] [bp-58h]@1
-  int v19; // [sp+3Ch] [bp-54h]@1
-  int v20; // [sp+40h] [bp-50h]@1
-  int v21; // [sp+44h] [bp-4Ch]@1
-  int v22; // [sp+48h] [bp-48h]@1
-  int v23; // [sp+4Ch] [bp-44h]@1
-  int v24; // [sp+50h] [bp-40h]@1
-  int v25; // [sp+54h] [bp-3Ch]@1
-  int v26; // [sp+58h] [bp-38h]@1
-  int v27; // [sp+5Ch] [bp-34h]@1
-  int v28; // [sp+60h] [bp-30h]@1
-  int v29; // [sp+64h] [bp-2Ch]@1
-  int v30; // [sp+68h] [bp-28h]@1
-  int v31; // [sp+6Ch] [bp-24h]@1
-  int v32; // [sp+70h] [bp-20h]@1
-  int v33; // [sp+74h] [bp-1Ch]@1
-  int v34; // [sp+78h] [bp-18h]@1
-  int v35; // [sp+7Ch] [bp-14h]@1
-  int v36; // [sp+80h] [bp-10h]@1
-  int v37; // [sp+84h] [bp-Ch]@1
-  unsigned __int8 v38; // [sp+8Fh] [bp-1h]@3
+  int v6; // [sp+4h] [bp-88h]@1
+  int v7; // [sp+8h] [bp-84h]@1
+  int v8; // [sp+Ch] [bp-80h]@1
+  int v9; // [sp+10h] [bp-7Ch]@1
+  int v10; // [sp+14h] [bp-78h]@1
+  int v11; // [sp+18h] [bp-74h]@1
+  int v12; // [sp+1Ch] [bp-70h]@1
+  int v13; // [sp+20h] [bp-6Ch]@1
+  int v14; // [sp+24h] [bp-68h]@1
+  int v15; // [sp+28h] [bp-64h]@1
+  int v16; // [sp+2Ch] [bp-60h]@1
+  int v17; // [sp+30h] [bp-5Ch]@1
+  int v18; // [sp+34h] [bp-58h]@1
+  int v19; // [sp+38h] [bp-54h]@1
+  int v20; // [sp+3Ch] [bp-50h]@1
+  int v21; // [sp+40h] [bp-4Ch]@1
+  int v22; // [sp+44h] [bp-48h]@1
+  int v23; // [sp+48h] [bp-44h]@1
+  int v24; // [sp+4Ch] [bp-40h]@1
+  int v25; // [sp+50h] [bp-3Ch]@1
+  int v26; // [sp+54h] [bp-38h]@1
+  int v27; // [sp+58h] [bp-34h]@1
+  int v28; // [sp+5Ch] [bp-30h]@1
+  int v29; // [sp+60h] [bp-2Ch]@1
+  int v30; // [sp+64h] [bp-28h]@1
+  int v31; // [sp+68h] [bp-24h]@1
+  int v32; // [sp+6Ch] [bp-20h]@1
+  int v33; // [sp+70h] [bp-1Ch]@1
+  int v34; // [sp+74h] [bp-18h]@1
+  int v35; // [sp+78h] [bp-14h]@1
+  int v36; // [sp+7Ch] [bp-10h]@1
+  int v37; // [sp+80h] [bp-Ch]@1
+  unsigned __int8 v38; // [sp+8Bh] [bp-1h]@3
 
   v22 = 48;
   v23 = 32;
@@ -55006,7 +55002,7 @@ LABEL_9:
   if ( *(_DWORD *)(a1 + 64) <= 100 )
   {
     Spawn_Exp(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), *(_DWORD *)(a1 + 44));
-    sub_46F150(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), *(_DWORD *)(a1 + 148), 8);
+    Create_Dust_Clouds(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), *(_DWORD *)(a1 + 148), 8);
     Play_Sound_Effect(25, 1);
     *(_BYTE *)a1 = 0;
   }
@@ -56254,7 +56250,7 @@ char *__cdecl NPC264(void *a1)
   int v3; // [sp+0h] [bp-18h]@4
   char v4; // [sp+17h] [bp-1h]@8
 
-  if ( *((_DWORD *)a1 + 2) < 0 || *((_DWORD *)a1 + 2) > *(signed __int16 *)&word_49E586 << 13 )
+  if ( *((_DWORD *)a1 + 2) < 0 || *((_DWORD *)a1 + 2) > *(signed __int16 *)&Level_Width << 13 )
     return (char *)sub_46F760(a1);
   v3 = *((_DWORD *)a1 + 29);
   if ( !v3 )
@@ -56962,7 +56958,7 @@ LABEL_106:
     {
       if ( v27 == 500 )
       {
-        sub_4702D0(269, 1);
+        Kill_Objects(269, 1);
         *(_WORD *)(a1 + 80) &= 0xFFDFu;
         *(_DWORD *)(a1 + 104) = 4;
         *(_DWORD *)(a1 + 20) += 32;
@@ -57667,7 +57663,7 @@ void *__cdecl NPC271(void *a1)
 
   if ( *((_DWORD *)a1 + 4) >= 0 || *((_DWORD *)a1 + 2) >= -8192 )
   {
-    if ( *((_DWORD *)a1 + 4) <= 0 || *((_DWORD *)a1 + 2) <= (*(signed __int16 *)&word_49E586 << 13) + 0x2000 )
+    if ( *((_DWORD *)a1 + 4) <= 0 || *((_DWORD *)a1 + 2) <= (*(signed __int16 *)&Level_Width << 13) + 0x2000 )
     {
       if ( !*((_DWORD *)a1 + 29) )
       {
@@ -58415,7 +58411,7 @@ LABEL_15:
         *(_DWORD *)(a1 + 104) = 2;
         TSC_QUA(10);
         Spawn_Exp(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), 19);
-        sub_46F150(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), *(_DWORD *)(a1 + 148), 8);
+        Create_Dust_Clouds(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), *(_DWORD *)(a1 + 148), 8);
         Play_Sound_Effect(72, 1);
       }
       break;
@@ -58797,7 +58793,7 @@ LABEL_11:
       goto LABEL_25;
     case 0x6E:
       *(_DWORD *)(a1 + 20) += 64;
-      result = (*(signed __int16 *)&word_49E588 << 13) + 0x4000;
+      result = (*(signed __int16 *)&Level_Height << 13) + 0x4000;
       if ( *(_DWORD *)(a1 + 12) <= result )
         goto LABEL_25;
       *(_BYTE *)a1 = 0;
@@ -58977,7 +58973,7 @@ LABEL_4:
 LABEL_8:
       if ( ++*(_DWORD *)(a1 + 120) > 250 )
       {
-        sub_4702D0(270, 0);
+        Kill_Objects(270, 0);
         *(_DWORD *)(a1 + 116) = 22;
       }
       break;
@@ -59429,12 +59425,12 @@ LABEL_61:
         }
         if ( X_Position < 0x4000 )
           X_Position = 0x4000;
-        if ( X_Position > (*(signed __int16 *)&word_49E586 - 2) << 13 )
-          X_Position = (*(signed __int16 *)&word_49E586 - 2) << 13;
+        if ( X_Position > (*(signed __int16 *)&Level_Width - 2) << 13 )
+          X_Position = (*(signed __int16 *)&Level_Width - 2) << 13;
         if ( Y_Position < 0x4000 )
           Y_Position = 0x4000;
-        if ( Y_Position > (*(signed __int16 *)&word_49E588 - 2) << 13 )
-          Y_Position = (*(signed __int16 *)&word_49E588 - 2) << 13;
+        if ( Y_Position > (*(signed __int16 *)&Level_Height - 2) << 13 )
+          Y_Position = (*(signed __int16 *)&Level_Height - 2) << 13;
         Play_Sound_Effect(39, 1);
         NPC_Create(*(_DWORD *)(a1 + 112), X_Position, Y_Position, 0, 0, 0, 0, 256);
       }
@@ -59905,7 +59901,7 @@ LABEL_7:
       *(_DWORD *)(a1 + 144) = 0x2000;
       *(_DWORD *)(a1 + 148) = 0x2000;
       *(_DWORD *)(a1 + 140) = 0x2000;
-      sub_4702D0(257, 1);
+      Kill_Objects(257, 1);
       break;
     case 0x14:
       *(_DWORD *)(a1 + 116) = 21;
@@ -59982,18 +59978,18 @@ LABEL_28:
       *(_DWORD *)(a1 + 16) = 3 * COS_function(v110);
       *(_DWORD *)(a1 + 20) = 3 * SIN_function(v110);
       *(_WORD *)(a1 + 80) &= 0xFFF7u;
-      if ( *(_DWORD *)(a1 + 8) < (*(signed __int16 *)&word_49E586 << 13) / 2 && *(_DWORD *)(a1 + 16) > 0 )
+      if ( *(_DWORD *)(a1 + 8) < (*(signed __int16 *)&Level_Width << 13) / 2 && *(_DWORD *)(a1 + 16) > 0 )
       {
-        if ( *(_DWORD *)(a1 + 12) < (*(signed __int16 *)&word_49E588 << 13) / 2 && *(_DWORD *)(a1 + 20) > 0 )
+        if ( *(_DWORD *)(a1 + 12) < (*(signed __int16 *)&Level_Height << 13) / 2 && *(_DWORD *)(a1 + 20) > 0 )
           *(_WORD *)(a1 + 80) |= 8u;
-        if ( *(_DWORD *)(a1 + 12) > (*(signed __int16 *)&word_49E588 << 13) / 2 && *(_DWORD *)(a1 + 20) < 0 )
+        if ( *(_DWORD *)(a1 + 12) > (*(signed __int16 *)&Level_Height << 13) / 2 && *(_DWORD *)(a1 + 20) < 0 )
           *(_WORD *)(a1 + 80) |= 8u;
       }
-      if ( *(_DWORD *)(a1 + 8) > (*(signed __int16 *)&word_49E586 << 13) / 2 && *(_DWORD *)(a1 + 16) < 0 )
+      if ( *(_DWORD *)(a1 + 8) > (*(signed __int16 *)&Level_Width << 13) / 2 && *(_DWORD *)(a1 + 16) < 0 )
       {
-        if ( *(_DWORD *)(a1 + 12) < (*(signed __int16 *)&word_49E588 << 13) / 2 && *(_DWORD *)(a1 + 20) > 0 )
+        if ( *(_DWORD *)(a1 + 12) < (*(signed __int16 *)&Level_Height << 13) / 2 && *(_DWORD *)(a1 + 20) > 0 )
           *(_WORD *)(a1 + 80) |= 8u;
-        if ( *(_DWORD *)(a1 + 12) > (*(signed __int16 *)&word_49E588 << 13) / 2 && *(_DWORD *)(a1 + 20) < 0 )
+        if ( *(_DWORD *)(a1 + 12) > (*(signed __int16 *)&Level_Height << 13) / 2 && *(_DWORD *)(a1 + 20) < 0 )
           *(_WORD *)(a1 + 80) |= 8u;
       }
       if ( *(_DWORD *)(a1 + 16) <= 0 )
@@ -60020,18 +60016,18 @@ LABEL_56:
       *(_DWORD *)(a1 + 20) = 3 * SIN_function(v110);
       *(_DWORD *)(a1 + 16) = 3 * COS_function(v110);
       *(_WORD *)(a1 + 80) &= 0xFFF7u;
-      if ( *(_DWORD *)(a1 + 8) < (*(signed __int16 *)&word_49E586 << 13) / 2 && *(_DWORD *)(a1 + 16) > 0 )
+      if ( *(_DWORD *)(a1 + 8) < (*(signed __int16 *)&Level_Width << 13) / 2 && *(_DWORD *)(a1 + 16) > 0 )
       {
-        if ( *(_DWORD *)(a1 + 12) < (*(signed __int16 *)&word_49E588 << 13) / 2 && *(_DWORD *)(a1 + 20) > 0 )
+        if ( *(_DWORD *)(a1 + 12) < (*(signed __int16 *)&Level_Height << 13) / 2 && *(_DWORD *)(a1 + 20) > 0 )
           *(_WORD *)(a1 + 80) |= 8u;
-        if ( *(_DWORD *)(a1 + 12) > (*(signed __int16 *)&word_49E588 << 13) / 2 && *(_DWORD *)(a1 + 20) < 0 )
+        if ( *(_DWORD *)(a1 + 12) > (*(signed __int16 *)&Level_Height << 13) / 2 && *(_DWORD *)(a1 + 20) < 0 )
           *(_WORD *)(a1 + 80) |= 8u;
       }
-      if ( *(_DWORD *)(a1 + 8) > (*(signed __int16 *)&word_49E586 << 13) / 2 && *(_DWORD *)(a1 + 16) < 0 )
+      if ( *(_DWORD *)(a1 + 8) > (*(signed __int16 *)&Level_Width << 13) / 2 && *(_DWORD *)(a1 + 16) < 0 )
       {
-        if ( *(_DWORD *)(a1 + 12) < (*(signed __int16 *)&word_49E588 << 13) / 2 && *(_DWORD *)(a1 + 20) > 0 )
+        if ( *(_DWORD *)(a1 + 12) < (*(signed __int16 *)&Level_Height << 13) / 2 && *(_DWORD *)(a1 + 20) > 0 )
           *(_WORD *)(a1 + 80) |= 8u;
-        if ( *(_DWORD *)(a1 + 12) > (*(signed __int16 *)&word_49E588 << 13) / 2 && *(_DWORD *)(a1 + 20) < 0 )
+        if ( *(_DWORD *)(a1 + 12) > (*(signed __int16 *)&Level_Height << 13) / 2 && *(_DWORD *)(a1 + 20) < 0 )
           *(_WORD *)(a1 + 80) |= 8u;
       }
       if ( *(_DWORD *)(a1 + 16) <= 0 )
@@ -60171,7 +60167,7 @@ int __cdecl NPC285(void *a1)
   int v3; // [sp+0h] [bp-18h]@4
   char v4; // [sp+17h] [bp-1h]@8
 
-  if ( *((_DWORD *)a1 + 2) < 0 || *((_DWORD *)a1 + 2) > *(signed __int16 *)&word_49E586 << 13 )
+  if ( *((_DWORD *)a1 + 2) < 0 || *((_DWORD *)a1 + 2) > *(signed __int16 *)&Level_Width << 13 )
     return sub_46F760(a1);
   v3 = *((_DWORD *)a1 + 29);
   if ( !v3 )
@@ -60465,7 +60461,7 @@ LABEL_23:
         else
           NPC_Create(287, *(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), 0, -1024, 0, 0, 256);
       }
-      if ( *(_DWORD *)(a1 + 8) < 0x2000 || *(_DWORD *)(a1 + 8) > (*(signed __int16 *)&word_49E586 << 13) - 0x2000 )
+      if ( *(_DWORD *)(a1 + 8) < 0x2000 || *(_DWORD *)(a1 + 8) > (*(signed __int16 *)&Level_Width << 13) - 0x2000 )
         *(_BYTE *)a1 = 0;
       break;
     default:
@@ -60591,7 +60587,7 @@ LABEL_5:
       goto LABEL_24;
     case 0xC:
       *((_WORD *)a1 + 40) |= 8u;
-      if ( *((_DWORD *)a1 + 3) <= *(signed __int16 *)&word_49E588 << 13 )
+      if ( *((_DWORD *)a1 + 3) <= *(signed __int16 *)&Level_Height << 13 )
         goto LABEL_24;
       result = sub_46F760(a1);
       break;
@@ -60737,8 +60733,8 @@ LABEL_8:
       *((_DWORD *)a1 + 4) -= 16;
     if ( *((_DWORD *)a1 + 2) < 0
       || *((_DWORD *)a1 + 3) < 0
-      || *((_DWORD *)a1 + 2) > *(signed __int16 *)&word_49E586 << 13
-      || *((_DWORD *)a1 + 3) > *(signed __int16 *)&word_49E588 << 13 )
+      || *((_DWORD *)a1 + 2) > *(signed __int16 *)&Level_Width << 13
+      || *((_DWORD *)a1 + 3) > *(signed __int16 *)&Level_Height << 13 )
     {
       return sub_46F760(a1);
     }
@@ -60907,8 +60903,8 @@ int __cdecl NPC294(int a1)
         if ( *(_DWORD *)(a1 + 8) < 188416 )
           *(_DWORD *)(a1 + 8) = 188416;
       }
-      if ( *(_DWORD *)(a1 + 8) > (*(signed __int16 *)&word_49E586 - 10) << 13 )
-        *(_DWORD *)(a1 + 8) = (*(signed __int16 *)&word_49E586 - 10) << 13;
+      if ( *(_DWORD *)(a1 + 8) > (*(signed __int16 *)&Level_Width - 10) << 13 )
+        *(_DWORD *)(a1 + 8) = (*(signed __int16 *)&Level_Width - 10) << 13;
       result = a1;
       if ( *(_DWORD *)(a1 + 120) > 24 )
       {
@@ -60926,7 +60922,7 @@ int __cdecl NPC294(int a1)
       }
     }
   }
-  else if ( Quote_X_Position < (*(signed __int16 *)&word_49E586 - 6) << 13 )
+  else if ( Quote_X_Position < (*(signed __int16 *)&Level_Width - 6) << 13 )
   {
     result = a1;
     *(_DWORD *)(a1 + 116) = 1;
@@ -63248,7 +63244,7 @@ LABEL_100:
           *(_DWORD *)(a1 + 104) = 8;
           *(_DWORD *)(a1 + 32) = *(_DWORD *)(a1 + 8);
           *(_DWORD *)(a1 + 164) = 0;
-          sub_4702D0(315, 1);
+          Kill_Objects(315, 1);
           goto LABEL_108;
         case 501:
 LABEL_108:
@@ -63601,7 +63597,7 @@ LABEL_6:
   {
     *(_DWORD *)(a1 + 20) += 64;
     result = a1;
-    if ( *(_DWORD *)(a1 + 12) > (*(signed __int16 *)&word_49E588 << 13) + 0x4000 )
+    if ( *(_DWORD *)(a1 + 12) > (*(signed __int16 *)&Level_Height << 13) + 0x4000 )
     {
       *(_BYTE *)a1 = 0;
       return result;
@@ -64302,7 +64298,7 @@ int __cdecl NPC319(int a1)
       if ( *(_DWORD *)(a1 + 4) & 8 )
       {
         Play_Sound_Effect(12, 1);
-        sub_46F150(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), 0, 3);
+        Create_Dust_Clouds(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), 0, 3);
         *(_BYTE *)a1 = 0;
       }
     }
@@ -64316,7 +64312,7 @@ int __cdecl NPC319(int a1)
       *(_DWORD *)(a1 + 8) = *(_DWORD *)(*(_DWORD *)(a1 + 168) + 8) + 3584;
     if ( *(_DWORD *)(*(_DWORD *)(a1 + 168) + 40) == 318 )
     {
-      result = sub_46F150(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), 0, 3);
+      result = Create_Dust_Clouds(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), 0, 3);
       *(_BYTE *)a1 = 0;
       return result;
     }
@@ -64711,7 +64707,7 @@ LABEL_11:
         *(_DWORD *)(a1 + 136) = 24576;
         *(_DWORD *)(a1 + 164) = 12;
         Play_Sound_Effect(26, 1);
-        sub_46F150(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), 24576, 40);
+        Create_Dust_Clouds(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), 24576, 40);
         TSC_QUA(10);
         if ( *(_DWORD *)(a1 + 76) )
         {
@@ -64983,7 +64979,7 @@ LABEL_6:
       *(_DWORD *)(a1 + 140) = 4096;
       *(_DWORD *)(a1 + 144) = 6144;
       Play_Sound_Effect(101, 1);
-      sub_46F150(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12) + 43008, 0, 3);
+      Create_Dust_Clouds(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12) + 43008, 0, 3);
     }
     goto LABEL_17;
   }
@@ -66037,8 +66033,8 @@ char *__cdecl NPC338(void *a1)
     *((_DWORD *)a1 + 4) = -1024;
   if ( *((_DWORD *)a1 + 2) < 0
     || *((_DWORD *)a1 + 3) < 0
-    || *((_DWORD *)a1 + 2) > *(signed __int16 *)&word_49E586 << 13
-    || *((_DWORD *)a1 + 3) > *(signed __int16 *)&word_49E588 << 13 )
+    || *((_DWORD *)a1 + 2) > *(signed __int16 *)&Level_Width << 13
+    || *((_DWORD *)a1 + 3) > *(signed __int16 *)&Level_Height << 13 )
   {
     return (char *)sub_46F760(a1);
   }
@@ -66280,7 +66276,7 @@ int __cdecl NPC340(int a1)
           *(_DWORD *)(a1 + 32) = *(_DWORD *)(a1 + 8);
           *(_DWORD *)(a1 + 16) = 0;
           *(_WORD *)(a1 + 80) &= 0xFFDFu;
-          sub_46F150(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), 16, 16);
+          Create_Dust_Clouds(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), 16, 16);
           Play_Sound_Effect(72, 1);
         }
         else if ( v7 != 1001 )
@@ -66845,20 +66841,20 @@ int __cdecl NPC342(void *a1)
   int v3; // esi@105
   int *v4; // eax@106
   char *v5; // ecx@106
-  signed int v6; // [sp+8h] [bp-38h]@4
-  int v7; // [sp+Ch] [bp-34h]@1
-  int v8; // [sp+10h] [bp-30h]@1
-  int v9; // [sp+14h] [bp-2Ch]@1
-  int v10; // [sp+18h] [bp-28h]@1
-  int v11; // [sp+1Ch] [bp-24h]@1
-  int v12; // [sp+20h] [bp-20h]@1
-  int v13; // [sp+24h] [bp-1Ch]@1
-  int v14; // [sp+28h] [bp-18h]@1
-  int v15; // [sp+2Ch] [bp-14h]@1
-  int v16; // [sp+30h] [bp-10h]@1
-  int v17; // [sp+34h] [bp-Ch]@1
-  int v18; // [sp+38h] [bp-8h]@1
-  char v19; // [sp+3Fh] [bp-1h]@105
+  signed int v6; // [sp+4h] [bp-38h]@4
+  int v7; // [sp+8h] [bp-34h]@1
+  int v8; // [sp+Ch] [bp-30h]@1
+  int v9; // [sp+10h] [bp-2Ch]@1
+  int v10; // [sp+14h] [bp-28h]@1
+  int v11; // [sp+18h] [bp-24h]@1
+  int v12; // [sp+1Ch] [bp-20h]@1
+  int v13; // [sp+20h] [bp-1Ch]@1
+  int v14; // [sp+24h] [bp-18h]@1
+  int v15; // [sp+28h] [bp-14h]@1
+  int v16; // [sp+2Ch] [bp-10h]@1
+  int v17; // [sp+30h] [bp-Ch]@1
+  int v18; // [sp+34h] [bp-8h]@1
+  char v19; // [sp+3Bh] [bp-1h]@105
 
   v7 = 240;
   v8 = 48;
@@ -66939,7 +66935,7 @@ LABEL_29:
           {
             *((_DWORD *)a1 + 29) = 22;
             *((_WORD *)a1 + 40) &= 0xFFDFu;
-            sub_46F150(*((_DWORD *)a1 + 2), *((_DWORD *)a1 + 3), 0x2000, 32);
+            Create_Dust_Clouds(*((_DWORD *)a1 + 2), *((_DWORD *)a1 + 3), 0x2000, 32);
             Play_Sound_Effect(71, 1);
           }
           *(_DWORD *)(*((_DWORD *)a1 + 42) + 108) = 4;
@@ -66983,7 +66979,7 @@ LABEL_29:
       *((_DWORD *)a1 + 26) = 2;
       *((_DWORD *)a1 + 41) = 5;
       *((_WORD *)a1 + 40) &= 0xFFD7u;
-      sub_46F150(*((_DWORD *)a1 + 2), *((_DWORD *)a1 + 3), 0x2000, 32);
+      Create_Dust_Clouds(*((_DWORD *)a1 + 2), *((_DWORD *)a1 + 3), 0x2000, 32);
       Play_Sound_Effect(71, 1);
 LABEL_70:
       if ( *((_DWORD *)a1 + 1) & 1 )
@@ -67050,7 +67046,7 @@ LABEL_70:
   }
   if ( *((_DWORD *)a1 + 27) <= 0 )
   {
-    sub_46F150(*((_DWORD *)a1 + 2), *((_DWORD *)a1 + 3), 0x2000, 32);
+    Create_Dust_Clouds(*((_DWORD *)a1 + 2), *((_DWORD *)a1 + 3), 0x2000, 32);
     Play_Sound_Effect(71, 1);
     return sub_46F760(a1);
   }
@@ -67260,7 +67256,7 @@ LABEL_6:
   {
     *(_DWORD *)(a1 + 20) += 64;
     result = a1;
-    if ( *(_DWORD *)(a1 + 12) > (*(signed __int16 *)&word_49E588 << 13) + 0x4000 )
+    if ( *(_DWORD *)(a1 + 12) > (*(signed __int16 *)&Level_Height << 13) + 0x4000 )
     {
       *(_BYTE *)a1 = 0;
       return result;
@@ -67294,7 +67290,7 @@ int __cdecl NPC346(int a1)
   __int64 v4; // rax@58
   __int64 v5; // rax@63
   int result; // eax@67
-  signed int v7; // [sp+4h] [bp-18h]@4
+  signed int v7; // [sp+0h] [bp-18h]@4
 
   if ( *(_DWORD *)(a1 + 116) < 1000 && *(_DWORD *)(*(_DWORD *)(a1 + 168) + 116) >= 1000 )
     *(_DWORD *)(a1 + 116) = 1000;
@@ -67384,7 +67380,7 @@ LABEL_15:
     *(_WORD *)(a1 + 80) &= 0xFFBFu;
   }
   *(_DWORD *)(a1 + 20) += 64;
-  if ( *(_DWORD *)(a1 + 12) > *(signed __int16 *)&word_49E588 << 13 )
+  if ( *(_DWORD *)(a1 + 12) > *(signed __int16 *)&Level_Height << 13 )
     *(_BYTE *)a1 = 0;
 LABEL_50:
   if ( *(_DWORD *)(a1 + 116) < 1000 )
@@ -67847,7 +67843,7 @@ LABEL_38:
         *((_DWORD *)a1 + 4) += 32;
       else
         *((_DWORD *)a1 + 4) -= 32;
-      if ( *((_DWORD *)a1 + 2) >= 0 && *((_DWORD *)a1 + 2) <= *(signed __int16 *)&word_49E586 << 13 )
+      if ( *((_DWORD *)a1 + 2) >= 0 && *((_DWORD *)a1 + 2) <= *(signed __int16 *)&Level_Width << 13 )
         goto LABEL_53;
       result = sub_46F760(a1);
       break;
@@ -68940,68 +68936,67 @@ signed int __cdecl NPC360_Thank_You(int a1)
 // 49E650: using guessed type int EquippedItems;
 
 //----- (0046EB30) --------------------------------------------------------
-void *sub_46EB30()
+void *Kill_NPC_RAM()
 {
   return memset(&Is_NPC_Alive, 0, 0x15800u);
 }
 
 //----- (0046EB50) --------------------------------------------------------
-signed int __cdecl sub_46EB50(int a1)
+signed int __cdecl Process_PXE_File(int a1)
 {
   signed int result; // eax@2
   char str; // [sp+0h] [bp-130h]@1
   int v3; // [sp+10Ch] [bp-24h]@1
-  __int16 v4; // [sp+110h] [bp-20h]@7
-  __int16 v5; // [sp+112h] [bp-1Eh]@7
-  __int16 v6; // [sp+114h] [bp-1Ch]@7
-  __int16 v7; // [sp+116h] [bp-1Ah]@7
-  __int16 v8; // [sp+118h] [bp-18h]@7
-  __int16 v9; // [sp+11Ah] [bp-16h]@7
-  char ptr1; // [sp+11Ch] [bp-14h]@3
+  int v4; // [sp+110h] [bp-20h]@7
+  __int16 v5; // [sp+114h] [bp-1Ch]@7
+  __int16 v6; // [sp+116h] [bp-1Ah]@7
+  __int16 v7; // [sp+118h] [bp-18h]@7
+  __int16 v8; // [sp+11Ah] [bp-16h]@7
+  int ptr1; // [sp+11Ch] [bp-14h]@3
   FILE *stream; // [sp+120h] [bp-10h]@1
   int i; // [sp+124h] [bp-Ch]@5
-  int v13; // [sp+128h] [bp-8h]@5
-  int v14; // [sp+12Ch] [bp-4h]@5
+  int v12; // [sp+128h] [bp-8h]@5
+  int v13; // [sp+12Ch] [bp-4h]@5
 
-  v3 = Prevent_Crash_Report_Failure;
-  sprintf(&str, "%s\\%s", FullExePath_data, a1);
+  v3 = Crash_Report_Failure_Check;
+  sprintf(&str, "%s\\%s", Data_Folder_Full_Path, a1);
   stream = fopen(&str, "rb");
   if ( stream )
   {
-    sub_480F55((FILE *)&ptr1, 1u, 4u, stream);
+    fread_wrapper(&ptr1, 1u, 4u, stream);
     if ( !memcmp(&ptr1, off_498540, 3u) )
     {
-      sub_480F55((FILE *)&v14, 4u, 1u, stream);
+      fread_wrapper(&v13, 4u, 1u, stream);
       memset(&Is_NPC_Alive, 0, 0x15800u);
-      v13 = 170;
-      for ( i = 0; i < v14; ++i )
+      v12 = 170;
+      for ( i = 0; i < v13; ++i )
       {
-        sub_480F55((FILE *)&v4, 0xCu, 1u, stream);
-        NPC_Direction[43 * v13] = (v9 & 0x1000) != 0 ? 2 : 0;
-        NPC_Type[43 * v13] = v8;
-        NPC_Event_Number[43 * v13] = v7;
-        NPC_Unknown[43 * v13] = v6;
-        NPC_X_Position[43 * v13] = v4 << 13;
-        NPC_Y_Position[43 * v13] = v5 << 13;
-        NPC_Flags[86 * v13] = v9;
-        NPC_Flags[86 * v13] |= *((_WORD *)NPCStruct_Flags + 12 * NPC_Type[43 * v13]);
-        NPC_EXP_Health_Missiles_Dropped[43 * v13] = *((_DWORD *)NPCStruct_Flags + 6 * NPC_Type[43 * v13] + 2);
-        sub_46EE50((int)&Is_NPC_Alive + 172 * v13);
-        if ( NPC_Flags[86 * v13] & 0x800 )
+        fread_wrapper(&v4, 0xCu, 1u, stream);
+        NPC_Direction[43 * v12] = (v8 & 0x1000) != 0 ? 2 : 0;
+        NPC_Type[43 * v12] = v7;
+        NPC_Event_Number[43 * v12] = v6;
+        NPC_Unknown[43 * v12] = v5;
+        NPC_X_Position[43 * v12] = (signed __int16)v4 << 13;
+        NPC_Y_Position[43 * v12] = SHIWORD(v4) << 13;
+        NPC_Flags[86 * v12] = v8;
+        NPC_Flags[86 * v12] |= *((_WORD *)NPCStruct_Flags + 12 * NPC_Type[43 * v12]);
+        NPC_EXP_Health_Missiles_Dropped[43 * v12] = *((_DWORD *)NPCStruct_Flags + 6 * NPC_Type[43 * v12] + 2);
+        Load_NPC_Table_Values_To_Object((int)&Is_NPC_Alive + 172 * v12);
+        if ( NPC_Flags[86 * v12] & 0x800 )
         {
-          if ( Check_Flag(NPC_Unknown[43 * v13]) == 1 )
-            *((_BYTE *)&Is_NPC_Alive + 172 * v13) |= 0x80u;
+          if ( Check_Flag(NPC_Unknown[43 * v12]) == 1 )
+            *((_BYTE *)&Is_NPC_Alive + 172 * v12) |= 0x80u;
         }
-        else if ( NPC_Flags[86 * v13] & 0x4000 )
+        else if ( NPC_Flags[86 * v12] & 0x4000 )
         {
-          if ( !Check_Flag(NPC_Unknown[43 * v13]) )
-            *((_BYTE *)&Is_NPC_Alive + 172 * v13) |= 0x80u;
+          if ( !Check_Flag(NPC_Unknown[43 * v12]) )
+            *((_BYTE *)&Is_NPC_Alive + 172 * v12) |= 0x80u;
         }
         else
         {
-          *((_BYTE *)&Is_NPC_Alive + 172 * v13) = -128;
+          *((_BYTE *)&Is_NPC_Alive + 172 * v12) = -128;
         }
-        ++v13;
+        ++v12;
       }
       fclose(stream);
       result = 1;
@@ -69017,7 +69012,7 @@ signed int __cdecl sub_46EB50(int a1)
   }
   return result;
 }
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 // 4A6228: using guessed type int NPC_X_Position[];
 // 4A622C: using guessed type int NPC_Y_Position[];
 // 4A6248: using guessed type int NPC_Type[];
@@ -69028,7 +69023,7 @@ signed int __cdecl sub_46EB50(int a1)
 // 4A6270: using guessed type __int16 NPC_Flags[];
 
 //----- (0046EE50) --------------------------------------------------------
-int __cdecl sub_46EE50(int a1)
+int __cdecl Load_NPC_Table_Values_To_Object(int a1)
 {
   int v1; // ST00_4@1
   int result; // eax@1
@@ -69074,7 +69069,7 @@ int __cdecl NPC_Create(int NPC_ID, int X_Position, int Y_Position, int X_Velocit
     NPC_Parent_Variable[43 * i] = a7;
     NPC_Flags[86 * i] = *((_WORD *)NPCStruct_Flags + 12 * NPC_Type[43 * i]);
     NPC_EXP_Health_Missiles_Dropped[43 * i] = *((_DWORD *)NPCStruct_Flags + 6 * NPC_Type[43 * i] + 2);
-    result = sub_46EE50((int)&Is_NPC_Alive + 172 * i);
+    result = Load_NPC_Table_Values_To_Object((int)&Is_NPC_Alive + 172 * i);
   }
   return result;
 }
@@ -69089,7 +69084,7 @@ int __cdecl NPC_Create(int NPC_ID, int X_Position, int Y_Position, int X_Velocit
 // 4A62C8: using guessed type int NPC_Parent_Variable[];
 
 //----- (0046F150) --------------------------------------------------------
-int __cdecl sub_46F150(int X_Position, int Y_Position, int maximum, int a4)
+int __cdecl Create_Dust_Clouds(int X_Position, int Y_Position, int maximum, int a4)
 {
   int v4; // ST24_4@3
   int v5; // ST20_4@3
@@ -69131,7 +69126,7 @@ int __cdecl Spawn_Exp(int X_Position, int Y_Position, signed int XP_Amount)
   int v4; // [sp+0h] [bp-8h]@0
   signed int i; // [sp+4h] [bp-4h]@1
 
-  for ( i = 256; XP_Amount; result = sub_46EE50((int)&Is_NPC_Alive + 172 * i) )
+  for ( i = 256; XP_Amount; result = Load_NPC_Table_Values_To_Object((int)&Is_NPC_Alive + 172 * i) )
   {
     while ( i < 512 )
     {
@@ -69230,7 +69225,7 @@ signed int __cdecl Spawn_Missiles(int a1, int a2, int a3)
       NPC_Y_Position[43 * i] = a2;
       NPC_Flags[86 * i] = *((_WORD *)NPCStruct_Flags + 12 * NPC_Type[43 * i]);
       NPC_EXP_Health_Missiles_Dropped[43 * i] = a3;
-      sub_46EE50((int)&Is_NPC_Alive + 172 * i);
+      Load_NPC_Table_Values_To_Object((int)&Is_NPC_Alive + 172 * i);
       result = 1;
     }
   }
@@ -69271,7 +69266,7 @@ signed int __cdecl Spawn_HP(int a1, int a2, int a3)
     NPC_Y_Position[43 * i] = a2;
     NPC_Flags[86 * i] = *((_WORD *)NPCStruct_Flags + 12 * NPC_Type[43 * i]);
     NPC_EXP_Health_Missiles_Dropped[43 * i] = a3;
-    sub_46EE50((int)&Is_NPC_Alive + 172 * i);
+    Load_NPC_Table_Values_To_Object((int)&Is_NPC_Alive + 172 * i);
     result = 1;
   }
   return result;
@@ -69300,12 +69295,12 @@ int __cdecl sub_46F760(void *ptr)
   *((_DWORD *)ptr + 10) = 3;
   *((_WORD *)ptr + 40) = *((_WORD *)NPCStruct_Flags + 12 * *((_DWORD *)ptr + 10));
   *((_DWORD *)ptr + 17) = *((_DWORD *)NPCStruct_Flags + 6 * *((_DWORD *)ptr + 10) + 2);
-  return sub_46EE50((int)ptr);
+  return Load_NPC_Table_Values_To_Object((int)ptr);
 }
 // 4BBA30: using guessed type int dword_4BBA30;
 
 //----- (0046F810) --------------------------------------------------------
-void __cdecl sub_46F810(signed int a1, signed int a2)
+void __cdecl Draw_NPCs(signed int a1, signed int a2)
 {
   __int64 v2; // rax@12
   int v3; // ST08_4@12
@@ -69359,7 +69354,7 @@ void __cdecl sub_46F810(signed int a1, signed int a2)
 // 4A62C0: using guessed type int NPC_Damage_Taken[];
 
 //----- (0046FA00) --------------------------------------------------------
-int sub_46FA00()
+int Update_NPCs()
 {
   int result; // eax@6
   signed int i; // [sp+4h] [bp-4h]@1
@@ -69380,7 +69375,7 @@ int sub_46FA00()
 // 4A6248: using guessed type int NPC_Type[];
 
 //----- (0046FAB0) --------------------------------------------------------
-int __cdecl sub_46FAB0(int a1, int a2, int a3)
+int __cdecl Spawn_NPC(int a1, int a2, int a3)
 {
   int result; // eax@13
   signed int i; // [sp+0h] [bp-4h]@1
@@ -69393,7 +69388,7 @@ int __cdecl sub_46FAB0(int a1, int a2, int a3)
       NPC_Type[43 * i] = a2;
       NPC_Flags[86 * i] |= *((_WORD *)NPCStruct_Flags + 12 * NPC_Type[43 * i]);
       NPC_EXP_Health_Missiles_Dropped[43 * i] = *((_DWORD *)NPCStruct_Flags + 6 * NPC_Type[43 * i] + 2);
-      sub_46EE50((int)&Is_NPC_Alive + 172 * i);
+      Load_NPC_Table_Values_To_Object((int)&Is_NPC_Alive + 172 * i);
       *((_BYTE *)&Is_NPC_Alive + 172 * i) |= 0x80u;
       NPC_Generic_4[43 * i] = 0;
       NPC_Generic_5[43 * i] = 0;
@@ -69440,7 +69435,7 @@ int __cdecl sub_46FAB0(int a1, int a2, int a3)
 // 4A6298: using guessed type int NPC_Generic_5[];
 
 //----- (0046FD10) --------------------------------------------------------
-int __cdecl sub_46FD10(int a1, int a2, int a3)
+int __cdecl Spawn_NPC_2(int a1, int a2, int a3)
 {
   int result; // eax@13
   signed int i; // [sp+0h] [bp-4h]@1
@@ -69454,7 +69449,7 @@ int __cdecl sub_46FD10(int a1, int a2, int a3)
       NPC_Type[43 * i] = a2;
       NPC_Flags[86 * i] |= *((_WORD *)NPCStruct_Flags + 12 * NPC_Type[43 * i]);
       NPC_EXP_Health_Missiles_Dropped[43 * i] = *((_DWORD *)NPCStruct_Flags + 6 * NPC_Type[43 * i] + 2);
-      sub_46EE50((int)&Is_NPC_Alive + 172 * i);
+      Load_NPC_Table_Values_To_Object((int)&Is_NPC_Alive + 172 * i);
       *((_BYTE *)&Is_NPC_Alive + 172 * i) |= 0x80u;
       NPC_Generic_4[43 * i] = 0;
       NPC_Generic_5[43 * i] = 0;
@@ -69678,7 +69673,7 @@ int __cdecl sub_470250(int a1)
 // 4A6250: using guessed type int NPC_Event_Number[];
 
 //----- (004702D0) --------------------------------------------------------
-int __cdecl sub_4702D0(int a1, int a2)
+int __cdecl Kill_Objects(int a1, int a2)
 {
   int result; // eax@13
   int v3; // [sp+0h] [bp-8h]@6
@@ -69699,13 +69694,13 @@ int __cdecl sub_4702D0(int a1, int a2)
           switch ( v3 )
           {
             case 1:
-              sub_46F150(NPC_X_Position[43 * i], NPC_Y_Position[43 * i], dword_4A62B4[43 * i], 4);
+              Create_Dust_Clouds(NPC_X_Position[43 * i], NPC_Y_Position[43 * i], dword_4A62B4[43 * i], 4);
               break;
             case 2:
-              sub_46F150(NPC_X_Position[43 * i], NPC_Y_Position[43 * i], dword_4A62B4[43 * i], 8);
+              Create_Dust_Clouds(NPC_X_Position[43 * i], NPC_Y_Position[43 * i], dword_4A62B4[43 * i], 8);
               break;
             case 3:
-              sub_46F150(NPC_X_Position[43 * i], NPC_Y_Position[43 * i], dword_4A62B4[43 * i], 16);
+              Create_Dust_Clouds(NPC_X_Position[43 * i], NPC_Y_Position[43 * i], dword_4A62B4[43 * i], 16);
               break;
           }
         }
@@ -69800,7 +69795,7 @@ int __cdecl sub_470870(int a1, int a2, int a3)
   __int64 v3; // rax@3
   __int64 v4; // rax@5
   int result; // eax@8
-  signed int v6; // [sp+4h] [bp-4h]@1
+  signed int v6; // [sp+0h] [bp-4h]@1
 
   v6 = 0;
   if ( *(_DWORD *)(a1 + 8) < (16 * a2 + 8) << 9 && *(_DWORD *)(a1 + 8) > (16 * a2 - 8) << 9 )
@@ -69827,7 +69822,7 @@ int __cdecl sub_470970(int a1, int a2, int a3)
   __int64 v3; // rax@3
   __int64 v4; // rax@5
   int result; // eax@8
-  signed int v6; // [sp+4h] [bp-4h]@1
+  signed int v6; // [sp+0h] [bp-4h]@1
 
   v6 = 0;
   if ( *(_DWORD *)(a1 + 8) < (16 * a2 + 8) << 9 && *(_DWORD *)(a1 + 8) > (16 * a2 - 8) << 9 )
@@ -69854,7 +69849,7 @@ int __cdecl sub_470A70(int a1, int a2, int a3)
   __int64 v3; // rax@3
   __int64 v4; // rax@5
   int result; // eax@8
-  signed int v6; // [sp+4h] [bp-4h]@1
+  signed int v6; // [sp+0h] [bp-4h]@1
 
   v6 = 0;
   if ( *(_DWORD *)(a1 + 8) < (16 * a2 + 8) << 9 && *(_DWORD *)(a1 + 8) > (16 * a2 - 8) << 9 )
@@ -69881,7 +69876,7 @@ int __cdecl sub_470B70(int a1, int a2, int a3)
   __int64 v3; // rax@3
   __int64 v4; // rax@5
   int result; // eax@8
-  signed int v6; // [sp+4h] [bp-4h]@1
+  signed int v6; // [sp+0h] [bp-4h]@1
 
   v6 = 0;
   if ( *(_DWORD *)(a1 + 8) < (16 * a2 + 8) << 9 && *(_DWORD *)(a1 + 8) > (16 * a2 - 8) << 9 )
@@ -69908,7 +69903,7 @@ int __cdecl sub_470C70(int a1, int a2, int a3)
   __int64 v3; // rax@3
   __int64 v4; // rax@5
   int result; // eax@8
-  signed int v6; // [sp+4h] [bp-4h]@1
+  signed int v6; // [sp+0h] [bp-4h]@1
 
   v6 = 0x10000;
   if ( *(_DWORD *)(a1 + 8) < (16 * a2 + 8) << 9 && *(_DWORD *)(a1 + 8) > (16 * a2 - 8) << 9 )
@@ -69935,7 +69930,7 @@ int __cdecl sub_470D80(int a1, int a2, int a3)
   __int64 v3; // rax@3
   __int64 v4; // rax@5
   int result; // eax@8
-  signed int v6; // [sp+4h] [bp-4h]@1
+  signed int v6; // [sp+0h] [bp-4h]@1
 
   v6 = 0x20000;
   if ( *(_DWORD *)(a1 + 8) < (16 * a2 + 8) << 9 && *(_DWORD *)(a1 + 8) >= (16 * a2 - 8) << 9 )
@@ -69962,7 +69957,7 @@ int __cdecl sub_470E90(int a1, int a2, int a3)
   __int64 v3; // rax@3
   __int64 v4; // rax@5
   int result; // eax@8
-  signed int v6; // [sp+4h] [bp-4h]@1
+  signed int v6; // [sp+0h] [bp-4h]@1
 
   v6 = 0x40000;
   if ( *(_DWORD *)(a1 + 8) < (16 * a2 + 8) << 9 && *(_DWORD *)(a1 + 8) > (16 * a2 - 8) << 9 )
@@ -69989,7 +69984,7 @@ int __cdecl sub_470FA0(int a1, int a2, int a3)
   __int64 v3; // rax@3
   __int64 v4; // rax@5
   int result; // eax@8
-  signed int v6; // [sp+4h] [bp-4h]@1
+  signed int v6; // [sp+0h] [bp-4h]@1
 
   v6 = 0x80000;
   if ( *(_DWORD *)(a1 + 8) < (16 * a2 + 8) << 9 && *(_DWORD *)(a1 + 8) > (16 * a2 - 8) << 9 )
@@ -70030,7 +70025,7 @@ int __cdecl sub_4710B0(int a1, int a2, int a3)
 }
 
 //----- (00471160) --------------------------------------------------------
-void Entity_Tile_Collision_Algorithms()
+void Do_NPC_Level_Collision()
 {
   __int64 v0; // rax@7
   __int64 v1; // rax@7
@@ -70238,13 +70233,25 @@ void *__cdecl NPC_Death_(void *Is_NPC_Alive, int a2)
   switch ( v5 )
   {
     case 1:
-      sub_46F150(*((_DWORD *)Is_NPC_Alive + 2), *((_DWORD *)Is_NPC_Alive + 3), *((_DWORD *)Is_NPC_Alive + 37), 3);
+      Create_Dust_Clouds(
+        *((_DWORD *)Is_NPC_Alive + 2),
+        *((_DWORD *)Is_NPC_Alive + 3),
+        *((_DWORD *)Is_NPC_Alive + 37),
+        3);
       break;
     case 2:
-      sub_46F150(*((_DWORD *)Is_NPC_Alive + 2), *((_DWORD *)Is_NPC_Alive + 3), *((_DWORD *)Is_NPC_Alive + 37), 7);
+      Create_Dust_Clouds(
+        *((_DWORD *)Is_NPC_Alive + 2),
+        *((_DWORD *)Is_NPC_Alive + 3),
+        *((_DWORD *)Is_NPC_Alive + 37),
+        7);
       break;
     case 3:
-      sub_46F150(*((_DWORD *)Is_NPC_Alive + 2), *((_DWORD *)Is_NPC_Alive + 3), *((_DWORD *)Is_NPC_Alive + 37), 12);
+      Create_Dust_Clouds(
+        *((_DWORD *)Is_NPC_Alive + 2),
+        *((_DWORD *)Is_NPC_Alive + 3),
+        *((_DWORD *)Is_NPC_Alive + 37),
+        12);
       break;
   }
   if ( *((_DWORD *)Is_NPC_Alive + 17) )
@@ -70426,7 +70433,7 @@ LABEL_2:
 // 4A62C0: using guessed type int NPC_Damage_Taken[];
 
 //----- (00472400) --------------------------------------------------------
-int __cdecl sub_472400(LPCSTR lpFileName)
+int __cdecl Load_NPC_Table(LPCSTR lpFileName)
 {
   int result; // eax@2
   unsigned int v2; // [sp+0h] [bp-10h]@1
@@ -70458,25 +70465,25 @@ int __cdecl sub_472400(LPCSTR lpFileName)
       if ( stream )
       {
         for ( i = 0; i < v4; ++i )
-          sub_480F55((FILE *)((char *)NPCStruct_Flags + 24 * i), 2u, 1u, stream);
+          fread_wrapper((char *)NPCStruct_Flags + 24 * i, 2u, 1u, stream);
         for ( j = 0; j < v4; ++j )
-          sub_480F55((FILE *)((char *)NPCStruct_Flags + 24 * j + 2), 2u, 1u, stream);
+          fread_wrapper((char *)NPCStruct_Flags + 24 * j + 2, 2u, 1u, stream);
         for ( k = 0; k < v4; ++k )
-          sub_480F55((FILE *)((char *)NPCStruct_Flags + 24 * k + 4), 1u, 1u, stream);
+          fread_wrapper((char *)NPCStruct_Flags + 24 * k + 4, 1u, 1u, stream);
         for ( l = 0; l < v4; ++l )
-          sub_480F55((FILE *)((char *)NPCStruct_Flags + 24 * l + 6), 1u, 1u, stream);
+          fread_wrapper((char *)NPCStruct_Flags + 24 * l + 6, 1u, 1u, stream);
         for ( m = 0; m < v4; ++m )
-          sub_480F55((FILE *)((char *)NPCStruct_Flags + 24 * m + 5), 1u, 1u, stream);
+          fread_wrapper((char *)NPCStruct_Flags + 24 * m + 5, 1u, 1u, stream);
         for ( n = 0; n < v4; ++n )
-          sub_480F55((FILE *)((char *)NPCStruct_Flags + 24 * n + 7), 1u, 1u, stream);
+          fread_wrapper((char *)NPCStruct_Flags + 24 * n + 7, 1u, 1u, stream);
         for ( ii = 0; ii < v4; ++ii )
-          sub_480F55((FILE *)((char *)NPCStruct_Flags + 24 * ii + 8), 4u, 1u, stream);
+          fread_wrapper((char *)NPCStruct_Flags + 24 * ii + 8, 4u, 1u, stream);
         for ( jj = 0; jj < v4; ++jj )
-          sub_480F55((FILE *)((char *)NPCStruct_Flags + 24 * jj + 12), 4u, 1u, stream);
+          fread_wrapper((char *)NPCStruct_Flags + 24 * jj + 12, 4u, 1u, stream);
         for ( kk = 0; kk < v4; ++kk )
-          sub_480F55((FILE *)((char *)NPCStruct_Flags + 24 * kk + 16), 4u, 1u, stream);
+          fread_wrapper((char *)NPCStruct_Flags + 24 * kk + 16, 4u, 1u, stream);
         for ( ll = 0; ll < v4; ++ll )
-          sub_480F55((FILE *)((char *)NPCStruct_Flags + 24 * ll + 20), 4u, 1u, stream);
+          fread_wrapper((char *)NPCStruct_Flags + 24 * ll + 20, 4u, 1u, stream);
         fclose(stream);
         result = 1;
       }
@@ -70506,7 +70513,7 @@ void sub_472710()
 }
 
 //----- (00472740) --------------------------------------------------------
-int __cdecl sub_472740(int a1)
+int __cdecl Set_Room_Boss_ID(int a1)
 {
   int result; // eax@1
 
@@ -70519,7 +70526,7 @@ int __cdecl sub_472740(int a1)
 // 4BBA80: using guessed type int dword_4BBA80;
 
 //----- (00472770) --------------------------------------------------------
-void __cdecl sub_472770(signed int a1, signed int a2)
+void __cdecl Draw_Boss_(signed int a1, signed int a2)
 {
   __int64 v2; // rax@12
   int v3; // ST08_4@12
@@ -70577,7 +70584,7 @@ void __cdecl sub_472770(signed int a1, signed int a2)
 // retn
 // (offset 472940
 // 8B 45 08 A3 CC BA 4B 00 C3 90 90)
-int __cdecl sub_472940(int a1)
+int __cdecl Set_Boss_Script_State(int a1)
 {
   int result; // eax@1
 
@@ -70662,13 +70669,25 @@ int sub_472950()
                   switch ( v1 )
                   {
                     case 1:
-                      sub_46F150(*(&dword_4BBA60 + 43 * v5), *(&dword_4BBA64 + 43 * v5), dword_4BBAEC[43 * v5], 4);
+                      Create_Dust_Clouds(
+                        *(&dword_4BBA60 + 43 * v5),
+                        *(&dword_4BBA64 + 43 * v5),
+                        dword_4BBAEC[43 * v5],
+                        4);
                       break;
                     case 2:
-                      sub_46F150(*(&dword_4BBA60 + 43 * v5), *(&dword_4BBA64 + 43 * v5), dword_4BBAEC[43 * v5], 8);
+                      Create_Dust_Clouds(
+                        *(&dword_4BBA60 + 43 * v5),
+                        *(&dword_4BBA64 + 43 * v5),
+                        dword_4BBAEC[43 * v5],
+                        8);
                       break;
                     case 3:
-                      sub_46F150(*(&dword_4BBA60 + 43 * v5), *(&dword_4BBA64 + 43 * v5), dword_4BBAEC[43 * v5], 16);
+                      Create_Dust_Clouds(
+                        *(&dword_4BBA60 + 43 * v5),
+                        *(&dword_4BBA64 + 43 * v5),
+                        dword_4BBAEC[43 * v5],
+                        16);
                       break;
                   }
                   *((_BYTE *)&byte_4BBA58 + 172 * v5) = 0;
@@ -70727,7 +70746,7 @@ int sub_472950()
 // 4BBAF8: using guessed type int dword_4BBAF8[];
 
 //----- (00473000) --------------------------------------------------------
-int sub_473000()
+int Update_Boss()
 {
   int result; // eax@1
   signed int i; // [sp+4h] [bp-4h]@2
@@ -70797,8 +70816,8 @@ int Tile_Collision_Algorithm_For_Larger_Entities()
   int v42; // [sp+A8h] [bp-8h]@7
   int v43; // [sp+ACh] [bp-4h]@7
 
-  result = Prevent_Crash_Report_Failure;
-  v24 = Prevent_Crash_Report_Failure;
+  result = Crash_Report_Failure_Check;
+  v24 = Crash_Report_Failure_Check;
   v6 = 0;
   v7 = 1;
   v8 = 0;
@@ -70939,7 +70958,7 @@ LABEL_14:
   }
   return result;
 }
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 // 4BBA5C: using guessed type int dword_4BBA5C[];
 // 4BBAA0: using guessed type int dword_4BBAA0[];
 // 4BBAA8: using guessed type __int16 word_4BBAA8[];
@@ -71233,7 +71252,7 @@ LABEL_15:
 LABEL_23:
       *(_DWORD *)(a1 + 16) += 32;
       *(_DWORD *)(a1 + 8) += *(_DWORD *)(a1 + 16);
-      if ( *(_DWORD *)(a1 + 8) > (*(signed __int16 *)&word_49E586 << 13) + 0x4000 )
+      if ( *(_DWORD *)(a1 + 8) > (*(signed __int16 *)&Level_Width << 13) + 0x4000 )
         *(_BYTE *)a1 = 0;
       break;
     default:
@@ -71306,11 +71325,11 @@ int Boss_4_Core()
   int v16; // ST0C_4@74
   int v17; // ST08_4@74
   int v18; // eax@74
-  signed int v20; // [sp+Ch] [bp-1Ch]@1
-  signed int v21; // [sp+10h] [bp-18h]@1
-  signed int i; // [sp+20h] [bp-8h]@49
-  signed int j; // [sp+20h] [bp-8h]@52
-  signed int k; // [sp+20h] [bp-8h]@72
+  signed int v20; // [sp+4h] [bp-1Ch]@1
+  signed int v21; // [sp+8h] [bp-18h]@1
+  signed int i; // [sp+18h] [bp-8h]@49
+  signed int j; // [sp+18h] [bp-8h]@52
+  signed int k; // [sp+18h] [bp-8h]@72
 
   v21 = 0;
   v20 = *((_DWORD *)&byte_4BBA58 + 29);
@@ -71767,14 +71786,14 @@ int Boss_7_Undead_Core()
   int v13; // eax@103
   int v14; // eax@115
   int v15; // eax@117
-  signed int v17; // [sp+10h] [bp-18h]@1
-  signed int v18; // [sp+14h] [bp-14h]@1
-  signed int j; // [sp+1Ch] [bp-Ch]@73
-  signed int k; // [sp+1Ch] [bp-Ch]@76
-  signed int i; // [sp+1Ch] [bp-Ch]@90
-  signed int l; // [sp+1Ch] [bp-Ch]@101
-  int v23; // [sp+20h] [bp-8h]@0
-  int Y_Position; // [sp+24h] [bp-4h]@0
+  signed int v17; // [sp+8h] [bp-18h]@1
+  signed int v18; // [sp+Ch] [bp-14h]@1
+  signed int j; // [sp+14h] [bp-Ch]@73
+  signed int k; // [sp+14h] [bp-Ch]@76
+  signed int i; // [sp+14h] [bp-Ch]@90
+  signed int l; // [sp+14h] [bp-Ch]@101
+  int v23; // [sp+18h] [bp-8h]@0
+  int Y_Position; // [sp+1Ch] [bp-4h]@0
 
   v18 = 0;
   v17 = *((_DWORD *)&byte_4BBA58 + 29);
@@ -71986,7 +72005,7 @@ LABEL_29:
           Play_Sound_Effect(44, 1);
         v8 = dword_4BBA64 + (RNG_Range(-64, 64) << 9);
         v9 = RNG_Range(-72, 72);
-        sub_46F150(dword_4BBA60 + (v9 << 9), v8, 1, 1);
+        Create_Dust_Clouds(dword_4BBA60 + (v9 << 9), v8, 1, 1);
         if ( dword_4BBAD0 > 100 )
         {
           dword_4BBAD0 = 0;
@@ -72002,8 +72021,8 @@ LABEL_29:
         {
           for ( i = 0; i < 20; ++i )
             *((_BYTE *)&byte_4BBA58 + 172 * i) = 0;
-          sub_4702D0(158, 1);
-          sub_4702D0(301, 1);
+          Kill_Objects(158, 1);
+          Kill_Objects(301, 1);
         }
       }
       goto LABEL_94;
@@ -72049,7 +72068,7 @@ LABEL_79:
       v3 = RNG_Range(-128, 128);
       NPC_Create(4, *((_DWORD *)&byte_4BBA58 + 2) + (v3 << 9), v2, v1, v0, 0, 0, 0);
     }
-    sub_4702D0(282, 1);
+    Kill_Objects(282, 1);
     word_4BC20C &= 0xFFDFu;
     for ( k = 0; k < 12; ++k )
       word_4BBAA8[86 * k] &= 0xFFFBu;
@@ -72187,7 +72206,7 @@ LABEL_94:
   {
     if ( *((_DWORD *)&byte_4BBA58 + 2) < 98304 )
       *((_DWORD *)&byte_4BBA58 + 19) = 2;
-    if ( *((_DWORD *)&byte_4BBA58 + 2) > (*(signed __int16 *)&word_49E586 - 4) << 13 )
+    if ( *((_DWORD *)&byte_4BBA58 + 2) > (*(signed __int16 *)&Level_Width - 4) << 13 )
       *((_DWORD *)&byte_4BBA58 + 19) = 0;
     if ( *((_DWORD *)&byte_4BBA58 + 19) )
       *((_DWORD *)&byte_4BBA58 + 4) += 4;
@@ -72204,12 +72223,12 @@ LABEL_94:
       {
         *((_DWORD *)&byte_4BBA58 + 28) = 0;
         v14 = RNG_Range(-1, 3);
-        NPC_Create(282, (*(signed __int16 *)&word_49E586 << 13) + 64, (v14 + 10) << 13, 0, 0, 0, 0, 48);
+        NPC_Create(282, (*(signed __int16 *)&Level_Width << 13) + 64, (v14 + 10) << 13, 0, 0, 0, 0, 48);
       }
       else if ( *((_DWORD *)&byte_4BBA58 + 28) == 75 )
       {
         v15 = RNG_Range(-3, 0);
-        NPC_Create(282, (*(signed __int16 *)&word_49E586 << 13) + 64, (v15 + 3) << 13, 0, 0, 0, 0, 48);
+        NPC_Create(282, (*(signed __int16 *)&Level_Width << 13) + 64, (v15 + 3) << 13, 0, 0, 0, 0, 48);
       }
       break;
     default:
@@ -72582,19 +72601,19 @@ int __cdecl sub_476E50(int a1)
   int v3; // esi@15
   int *v4; // ecx@16
   int v5; // edx@16
-  int v6; // [sp+8h] [bp-34h]@1
-  int v7; // [sp+Ch] [bp-30h]@1
-  int v8; // [sp+10h] [bp-2Ch]@1
-  int v9; // [sp+14h] [bp-28h]@1
-  int v10; // [sp+18h] [bp-24h]@1
-  int v11; // [sp+1Ch] [bp-20h]@1
-  int v12; // [sp+20h] [bp-1Ch]@1
-  int v13; // [sp+24h] [bp-18h]@1
-  int v14; // [sp+28h] [bp-14h]@1
-  int v15; // [sp+2Ch] [bp-10h]@1
-  int v16; // [sp+30h] [bp-Ch]@1
-  int v17; // [sp+34h] [bp-8h]@1
-  int v18; // [sp+38h] [bp-4h]@13
+  int v6; // [sp+4h] [bp-34h]@1
+  int v7; // [sp+8h] [bp-30h]@1
+  int v8; // [sp+Ch] [bp-2Ch]@1
+  int v9; // [sp+10h] [bp-28h]@1
+  int v10; // [sp+14h] [bp-24h]@1
+  int v11; // [sp+18h] [bp-20h]@1
+  int v12; // [sp+1Ch] [bp-1Ch]@1
+  int v13; // [sp+20h] [bp-18h]@1
+  int v14; // [sp+24h] [bp-14h]@1
+  int v15; // [sp+28h] [bp-10h]@1
+  int v16; // [sp+2Ch] [bp-Ch]@1
+  int v17; // [sp+30h] [bp-8h]@1
+  int v18; // [sp+34h] [bp-4h]@13
 
   v6 = 256;
   v7 = 0;
@@ -72651,7 +72670,7 @@ int __cdecl sub_476E50(int a1)
 LABEL_9:
         *(_DWORD *)(a1 + 16) += 32;
         *(_DWORD *)(a1 + 8) += *(_DWORD *)(a1 + 16);
-        if ( *(_DWORD *)(a1 + 8) > (*(signed __int16 *)&word_49E586 << 13) + 0x4000 )
+        if ( *(_DWORD *)(a1 + 8) > (*(signed __int16 *)&Level_Width << 13) + 0x4000 )
           *(_BYTE *)a1 = 0;
         break;
       default:
@@ -72731,16 +72750,16 @@ int Boss_9_Ballos_Ball()
   int v12; // eax@171
   int v13; // ST34_4@174
   int v14; // eax@174
-  signed int v16; // [sp+8h] [bp-14h]@1
-  int l; // [sp+10h] [bp-Ch]@32
-  int k; // [sp+10h] [bp-Ch]@61
-  int i; // [sp+10h] [bp-Ch]@69
-  signed int j; // [sp+10h] [bp-Ch]@75
-  signed int m; // [sp+10h] [bp-Ch]@102
-  int n; // [sp+10h] [bp-Ch]@117
-  int jj; // [sp+10h] [bp-Ch]@156
-  int ii; // [sp+10h] [bp-Ch]@160
-  int kk; // [sp+10h] [bp-Ch]@166
+  signed int v16; // [sp+0h] [bp-14h]@1
+  int l; // [sp+8h] [bp-Ch]@32
+  int k; // [sp+8h] [bp-Ch]@61
+  int i; // [sp+8h] [bp-Ch]@69
+  signed int j; // [sp+8h] [bp-Ch]@75
+  signed int m; // [sp+8h] [bp-Ch]@102
+  int n; // [sp+8h] [bp-Ch]@117
+  int jj; // [sp+8h] [bp-Ch]@156
+  int ii; // [sp+8h] [bp-Ch]@160
+  int kk; // [sp+8h] [bp-Ch]@166
 
   v16 = *((_DWORD *)&byte_4BBA58 + 29);
   if ( v16 <= 314 )
@@ -73108,7 +73127,7 @@ LABEL_45:
           *((_DWORD *)&byte_4BBA58 + 30) = 0;
           *((_DWORD *)&byte_4BBA58 + 4) = 0;
           *((_DWORD *)&byte_4BBA58 + 5) = 0;
-          sub_4702D0(339, 0);
+          Kill_Objects(339, 0);
           goto LABEL_101;
         case 401:
 LABEL_101:
@@ -73273,8 +73292,8 @@ LABEL_120:
         byte_4BBC5C = 0;
         byte_4BBD08 = 0;
         byte_4BBDB4 = 0;
-        sub_4702D0(350, 1);
-        sub_4702D0(348, 1);
+        Kill_Objects(350, 1);
+        Kill_Objects(348, 1);
       }
     }
     goto LABEL_152;
@@ -73283,7 +73302,7 @@ LABEL_120:
     Play_Sound_Effect(44, 1);
   v5 = dword_4BBA64 + (RNG_Range(-60, 60) << 9);
   v6 = RNG_Range(-60, 60);
-  sub_46F150(dword_4BBA60 + (v6 << 9), v5, 1, 1);
+  Create_Dust_Clouds(dword_4BBA60 + (v6 << 9), v5, 1, 1);
   if ( dword_4BBAD0 > 150 )
   {
     dword_4BBAD0 = 0;
@@ -73533,9 +73552,9 @@ LABEL_10:
       *(_DWORD *)(a1 + 116) = 301;
       *(_DWORD *)(a1 + 104) = 4;
       if ( *(_DWORD *)(a1 + 76) )
-        sub_46F150(*(_DWORD *)(a1 + 8) + 2048, *(_DWORD *)(a1 + 12), 2048, 10);
+        Create_Dust_Clouds(*(_DWORD *)(a1 + 8) + 2048, *(_DWORD *)(a1 + 12), 2048, 10);
       else
-        sub_46F150(*(_DWORD *)(a1 + 8) - 2048, *(_DWORD *)(a1 + 12), 2048, 10);
+        Create_Dust_Clouds(*(_DWORD *)(a1 + 8) - 2048, *(_DWORD *)(a1 + 12), 2048, 10);
       break;
     default:
       break;
@@ -74586,9 +74605,9 @@ LABEL_22:
       v7 = RNG_Range(-128, 128);
       NPC_Create(4, *((_DWORD *)&byte_4BBA58 + 2) + (v7 << 9), v6, v5, v4, 0, 0, 256);
     }
-    sub_4702D0(197, 1);
-    sub_4702D0(271, 1);
-    sub_4702D0(272, 1);
+    Kill_Objects(197, 1);
+    Kill_Objects(271, 1);
+    Kill_Objects(272, 1);
   }
   else if ( v16 != 1001 )
   {
@@ -74752,7 +74771,7 @@ signed int sub_47B500()
 // 4BBA98: using guessed type int Omega_Health[];
 
 //----- (0047B540) --------------------------------------------------------
-LONG Boss_HP_Bar_Render_()
+LONG Draw_Boss_Health()
 {
   LONG result; // eax@2
   int Src_Rects; // [sp+0h] [bp-50h]@1
@@ -74839,22 +74858,22 @@ int Boss_1_Omega()
   int v4; // eax@81
   int *v5; // eax@86
   int result; // eax@86
-  int v7; // [sp+Ch] [bp-40h]@86
-  int v8; // [sp+10h] [bp-3Ch]@86
-  int v9; // [sp+14h] [bp-38h]@86
-  int v10; // [sp+18h] [bp-34h]@86
-  int v11; // [sp+1Ch] [bp-30h]@86
-  int v12; // [sp+20h] [bp-2Ch]@86
-  int v13; // [sp+24h] [bp-28h]@86
-  int v14; // [sp+28h] [bp-24h]@86
-  int v15; // [sp+2Ch] [bp-20h]@86
-  int v16; // [sp+30h] [bp-1Ch]@86
-  int v17; // [sp+34h] [bp-18h]@86
-  int v18; // [sp+38h] [bp-14h]@86
-  int v19; // [sp+3Ch] [bp-10h]@86
-  int v20; // [sp+40h] [bp-Ch]@86
-  int v21; // [sp+44h] [bp-8h]@86
-  int v22; // [sp+48h] [bp-4h]@86
+  int v7; // [sp+4h] [bp-40h]@86
+  int v8; // [sp+8h] [bp-3Ch]@86
+  int v9; // [sp+Ch] [bp-38h]@86
+  int v10; // [sp+10h] [bp-34h]@86
+  int v11; // [sp+14h] [bp-30h]@86
+  int v12; // [sp+18h] [bp-2Ch]@86
+  int v13; // [sp+1Ch] [bp-28h]@86
+  int v14; // [sp+20h] [bp-24h]@86
+  int v15; // [sp+24h] [bp-20h]@86
+  int v16; // [sp+28h] [bp-1Ch]@86
+  int v17; // [sp+2Ch] [bp-18h]@86
+  int v18; // [sp+30h] [bp-14h]@86
+  int v19; // [sp+34h] [bp-10h]@86
+  int v20; // [sp+38h] [bp-Ch]@86
+  int v21; // [sp+3Ch] [bp-8h]@86
+  int v22; // [sp+40h] [bp-4h]@86
 
   switch ( dword_4BBACC[0] )
   {
@@ -75111,7 +75130,7 @@ LABEL_4:
         Play_Sound_Effect(52, 1);
       v3 = dword_4BBA64 + (RNG_Range(-48, 24) << 9);
       v4 = RNG_Range(-48, 48);
-      sub_46F150(dword_4BBA60 + (v4 << 9), v3, 1, 1);
+      Create_Dust_Clouds(dword_4BBA60 + (v4 << 9), v3, 1, 1);
       if ( dword_4BBAD0 > 100 )
       {
         dword_4BBAD0 = 0;
@@ -75169,7 +75188,7 @@ LABEL_4:
     dword_4BBAD0 = 0;
     dword_4BBAFC[0] = 0;
     dword_4BBE58 = 0;
-    result = sub_4702D0(48, 1);
+    result = Kill_Objects(48, 1);
   }
   return result;
 }
@@ -75445,34 +75464,34 @@ char *Boss_8_Heavy_Press()
   char *result; // eax@59
   int *v7; // edx@60
   int *v8; // edx@62
-  signed int v9; // [sp+8h] [bp-70h]@1
-  signed int i; // [sp+10h] [bp-68h]@21
-  signed int k; // [sp+10h] [bp-68h]@28
-  signed int j; // [sp+10h] [bp-68h]@52
-  int v13; // [sp+18h] [bp-60h]@57
-  int v14; // [sp+1Ch] [bp-5Ch]@57
-  int v15; // [sp+20h] [bp-58h]@57
-  int v16; // [sp+24h] [bp-54h]@57
-  int v17; // [sp+28h] [bp-50h]@57
-  int v18; // [sp+2Ch] [bp-4Ch]@57
-  int v19; // [sp+30h] [bp-48h]@57
-  int v20; // [sp+34h] [bp-44h]@57
-  int v21; // [sp+38h] [bp-40h]@57
-  int v22; // [sp+3Ch] [bp-3Ch]@57
-  int v23; // [sp+40h] [bp-38h]@57
-  int v24; // [sp+44h] [bp-34h]@57
-  int v25; // [sp+48h] [bp-30h]@57
-  int v26; // [sp+4Ch] [bp-2Ch]@57
-  int v27; // [sp+50h] [bp-28h]@57
-  int v28; // [sp+54h] [bp-24h]@57
-  int v29; // [sp+58h] [bp-20h]@57
-  int v30; // [sp+5Ch] [bp-1Ch]@57
-  int v31; // [sp+60h] [bp-18h]@57
-  int v32; // [sp+64h] [bp-14h]@57
-  int v33; // [sp+68h] [bp-10h]@57
-  int v34; // [sp+6Ch] [bp-Ch]@57
-  int v35; // [sp+70h] [bp-8h]@57
-  int v36; // [sp+74h] [bp-4h]@57
+  signed int v9; // [sp+0h] [bp-70h]@1
+  signed int i; // [sp+8h] [bp-68h]@21
+  signed int k; // [sp+8h] [bp-68h]@28
+  signed int j; // [sp+8h] [bp-68h]@52
+  int v13; // [sp+10h] [bp-60h]@57
+  int v14; // [sp+14h] [bp-5Ch]@57
+  int v15; // [sp+18h] [bp-58h]@57
+  int v16; // [sp+1Ch] [bp-54h]@57
+  int v17; // [sp+20h] [bp-50h]@57
+  int v18; // [sp+24h] [bp-4Ch]@57
+  int v19; // [sp+28h] [bp-48h]@57
+  int v20; // [sp+2Ch] [bp-44h]@57
+  int v21; // [sp+30h] [bp-40h]@57
+  int v22; // [sp+34h] [bp-3Ch]@57
+  int v23; // [sp+38h] [bp-38h]@57
+  int v24; // [sp+3Ch] [bp-34h]@57
+  int v25; // [sp+40h] [bp-30h]@57
+  int v26; // [sp+44h] [bp-2Ch]@57
+  int v27; // [sp+48h] [bp-28h]@57
+  int v28; // [sp+4Ch] [bp-24h]@57
+  int v29; // [sp+50h] [bp-20h]@57
+  int v30; // [sp+54h] [bp-1Ch]@57
+  int v31; // [sp+58h] [bp-18h]@57
+  int v32; // [sp+5Ch] [bp-14h]@57
+  int v33; // [sp+60h] [bp-10h]@57
+  int v34; // [sp+64h] [bp-Ch]@57
+  int v35; // [sp+68h] [bp-8h]@57
+  int v36; // [sp+6Ch] [bp-4h]@57
 
   v9 = *((_DWORD *)&byte_4BBA58 + 29);
   if ( v9 <= 31 )
@@ -75555,7 +75574,7 @@ LABEL_16:
           {
             v0 = *((_DWORD *)&byte_4BBA58 + 3) + (RNG_Range(-60, 60) << 9);
             v1 = RNG_Range(-40, 40);
-            sub_46F150(*((_DWORD *)&byte_4BBA58 + 2) + (v1 << 9), v0, 1, 1);
+            Create_Dust_Clouds(*((_DWORD *)&byte_4BBA58 + 2) + (v1 << 9), v0, 1, 1);
           }
           break;
         case 30:
@@ -75587,7 +75606,7 @@ LABEL_16:
           for ( j = 0; j < 7; ++j )
           {
             sub_413A60(j + 7, 14, 0);
-            sub_46F150((j + 7) << 13, 114688, 0, 0);
+            Create_Dust_Clouds((j + 7) << 13, 114688, 0, 0);
             Play_Sound_Effect(12, 1);
           }
         }
@@ -75602,7 +75621,7 @@ LABEL_41:
       Play_Sound_Effect(12, 1);
       v3 = *((_DWORD *)&byte_4BBA58 + 3) + (RNG_Range(-60, 60) << 9);
       v4 = RNG_Range(-40, 40);
-      sub_46F150(*((_DWORD *)&byte_4BBA58 + 2) + (v4 << 9), v3, 1, 1);
+      Create_Dust_Clouds(*((_DWORD *)&byte_4BBA58 + 2) + (v4 << 9), v3, 1, 1);
     }
     if ( *((_DWORD *)&byte_4BBA58 + 30) == 95 )
       *((_DWORD *)&byte_4BBA58 + 26) = 1;
@@ -75618,8 +75637,8 @@ LABEL_41:
     *((_DWORD *)&byte_4BBA58 + 29) = 501;
     *((_DWORD *)&byte_4BBA58 + 30) = 0;
     *((_DWORD *)&byte_4BBA58 + 27) = 0;
-    sub_4702D0(325, 1);
-    sub_4702D0(330, 1);
+    Kill_Objects(325, 1);
+    Kill_Objects(330, 1);
     goto LABEL_41;
   }
   if ( v9 == 100 )
@@ -75652,7 +75671,7 @@ LABEL_41:
     for ( k = 0; k < 5; ++k )
     {
       sub_413A60(k + 8, *((_DWORD *)&byte_4BBA58 + 28), 0);
-      sub_46F150((k + 8) << 13, *((_DWORD *)&byte_4BBA58 + 28) << 13, 0, 4);
+      Create_Dust_Clouds((k + 8) << 13, *((_DWORD *)&byte_4BBA58 + 28) << 13, 0, 4);
       Play_Sound_Effect(12, 1);
     }
   }
@@ -75754,7 +75773,7 @@ int Boss_6_Dragon_Sisters()
   int v1; // eax@67
   char *v2; // edx@83
   int result; // eax@83
-  signed int v4; // [sp+8h] [bp-18h]@1
+  signed int v4; // [sp+0h] [bp-18h]@1
 
   v4 = *((_DWORD *)&byte_4BBA58 + 29);
   if ( v4 > 401 )
@@ -75768,7 +75787,11 @@ int Boss_6_Dragon_Sisters()
         dword_4BBCD0 = 1000;
         dword_4BBD7C = 1000;
         dword_4BBE28 = 1000;
-        sub_46F150(*((_DWORD *)&byte_4BBA58 + 2), *((_DWORD *)&byte_4BBA58 + 3), *((_DWORD *)&byte_4BBA58 + 37), 40);
+        Create_Dust_Clouds(
+          *((_DWORD *)&byte_4BBA58 + 2),
+          *((_DWORD *)&byte_4BBA58 + 3),
+          *((_DWORD *)&byte_4BBA58 + 37),
+          40);
         goto LABEL_65;
       case 1001:
 LABEL_65:
@@ -75801,7 +75824,7 @@ LABEL_65:
       case 1020:
         if ( ++dword_4BBAD0 > 50 )
         {
-          sub_4702D0(211, 1);
+          Kill_Objects(211, 1);
           *(_BYTE *)&byte_4BBA58 = 0;
           byte_4BBB04 = 0;
           byte_4BBBB0 = 0;
@@ -76094,32 +76117,32 @@ int __cdecl sub_47DAA0(int a1)
   int result; // eax@27
   int *v17; // eax@28
   int v18; // ecx@28
-  signed int v19; // [sp+4h] [bp-68h]@1
-  int v20; // [sp+8h] [bp-64h]@1
-  int v21; // [sp+Ch] [bp-60h]@1
-  int v22; // [sp+10h] [bp-5Ch]@1
-  int v23; // [sp+14h] [bp-58h]@1
-  int v24; // [sp+18h] [bp-54h]@1
-  int v25; // [sp+1Ch] [bp-50h]@1
-  int v26; // [sp+20h] [bp-4Ch]@1
-  int v27; // [sp+24h] [bp-48h]@1
-  int v28; // [sp+28h] [bp-44h]@1
-  int v29; // [sp+2Ch] [bp-40h]@1
-  int v30; // [sp+30h] [bp-3Ch]@1
-  int v31; // [sp+34h] [bp-38h]@1
-  int v32; // [sp+38h] [bp-34h]@1
-  int v33; // [sp+3Ch] [bp-30h]@1
-  int v34; // [sp+40h] [bp-2Ch]@1
-  int v35; // [sp+44h] [bp-28h]@1
-  int v36; // [sp+48h] [bp-24h]@1
-  int v37; // [sp+4Ch] [bp-20h]@1
-  int v38; // [sp+50h] [bp-1Ch]@1
-  int v39; // [sp+54h] [bp-18h]@1
-  int v40; // [sp+58h] [bp-14h]@1
-  int v41; // [sp+5Ch] [bp-10h]@1
-  int v42; // [sp+60h] [bp-Ch]@1
-  int v43; // [sp+64h] [bp-8h]@1
-  char v44; // [sp+6Bh] [bp-1h]@9
+  signed int v19; // [sp+0h] [bp-68h]@1
+  int v20; // [sp+4h] [bp-64h]@1
+  int v21; // [sp+8h] [bp-60h]@1
+  int v22; // [sp+Ch] [bp-5Ch]@1
+  int v23; // [sp+10h] [bp-58h]@1
+  int v24; // [sp+14h] [bp-54h]@1
+  int v25; // [sp+18h] [bp-50h]@1
+  int v26; // [sp+1Ch] [bp-4Ch]@1
+  int v27; // [sp+20h] [bp-48h]@1
+  int v28; // [sp+24h] [bp-44h]@1
+  int v29; // [sp+28h] [bp-40h]@1
+  int v30; // [sp+2Ch] [bp-3Ch]@1
+  int v31; // [sp+30h] [bp-38h]@1
+  int v32; // [sp+34h] [bp-34h]@1
+  int v33; // [sp+38h] [bp-30h]@1
+  int v34; // [sp+3Ch] [bp-2Ch]@1
+  int v35; // [sp+40h] [bp-28h]@1
+  int v36; // [sp+44h] [bp-24h]@1
+  int v37; // [sp+48h] [bp-20h]@1
+  int v38; // [sp+4Ch] [bp-1Ch]@1
+  int v39; // [sp+50h] [bp-18h]@1
+  int v40; // [sp+54h] [bp-14h]@1
+  int v41; // [sp+58h] [bp-10h]@1
+  int v42; // [sp+5Ch] [bp-Ch]@1
+  int v43; // [sp+60h] [bp-8h]@1
+  char v44; // [sp+67h] [bp-1h]@9
 
   v32 = 0;
   v33 = 0;
@@ -76389,7 +76412,7 @@ LABEL_14:
           if ( *(_DWORD *)(a1 + 112) > 10 )
           {
             Play_Sound_Effect(51, 1);
-            sub_46F150(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), *(_DWORD *)(a1 + 148), 4);
+            Create_Dust_Clouds(*(_DWORD *)(a1 + 8), *(_DWORD *)(a1 + 12), *(_DWORD *)(a1 + 148), 4);
             *(_DWORD *)(a1 + 116) = 300;
             *(_DWORD *)(a1 + 120) = 0;
             *(_DWORD *)(a1 + 104) = 3;
@@ -76489,8 +76512,8 @@ void *Boss_3_Monster_X()
   int v1; // eax@119
   __int64 v2; // rax@127
   void *result; // eax@135
-  signed int v4; // [sp+8h] [bp-Ch]@1
-  signed int i; // [sp+10h] [bp-4h]@123
+  signed int v4; // [sp+0h] [bp-Ch]@1
+  signed int i; // [sp+8h] [bp-4h]@123
 
   v4 = *((_DWORD *)&byte_4BBA58 + 29);
   if ( v4 > 401 )
@@ -76506,7 +76529,7 @@ void *Boss_3_Monster_X()
           {
             for ( i = 0; i < 20; ++i )
               *((_BYTE *)&byte_4BBA58 + 172 * i) = 0;
-            sub_4702D0(158, 1);
+            Kill_Objects(158, 1);
             NPC_Create(159, *((_DWORD *)&byte_4BBA58 + 2), *((_DWORD *)&byte_4BBA58 + 3) - 12288, 0, 0, 0, 0, 0);
           }
         }
@@ -76518,7 +76541,7 @@ void *Boss_3_Monster_X()
           Play_Sound_Effect(52, 1);
         v0 = *((_DWORD *)&byte_4BBA58 + 3) + (RNG_Range(-64, 64) << 9);
         v1 = RNG_Range(-72, 72);
-        sub_46F150(*((_DWORD *)&byte_4BBA58 + 2) + (v1 << 9), v0, 1, 1);
+        Create_Dust_Clouds(*((_DWORD *)&byte_4BBA58 + 2) + (v1 << 9), v0, 1, 1);
         if ( *((_DWORD *)&byte_4BBA58 + 30) > 100 )
         {
           *((_DWORD *)&byte_4BBA58 + 30) = 0;
@@ -76855,27 +76878,27 @@ LABEL_20:
     }
   }
 LABEL_127:
-  sub_47F710((int)&byte_4BC064);
-  sub_47F710((int)&unk_4BC110);
-  sub_47F710((int)&byte_4BC1BC);
-  sub_47F710((int)&unk_4BC268);
+  Spawn_Part_Of_Monster_X_3((int)&byte_4BC064);
+  Spawn_Part_Of_Monster_X_3((int)&unk_4BC110);
+  Spawn_Part_Of_Monster_X_3((int)&byte_4BC1BC);
+  Spawn_Part_Of_Monster_X_3((int)&unk_4BC268);
   v2 = (dword_4BC270 + dword_4BC1C4 + dword_4BC118 + dword_4BC06C) / 4 - *((_DWORD *)&byte_4BBA58 + 2);
   *((_DWORD *)&byte_4BBA58 + 2) += ((BYTE4(v2) & 0xF) + (signed int)v2) >> 4;
-  sub_4808C0((int)&byte_4BBF0C);
-  sub_480090((int)&byte_4BC314);
-  sub_480090((int)&unk_4BC3C0);
-  sub_480090((int)&unk_4BC46C);
-  sub_480090((int)&unk_4BC518);
-  sub_4802A0((int)&byte_4BBB04);
-  sub_4802A0((int)&byte_4BBBB0);
+  Spawn_Part_Of_Monster_X_2((int)&byte_4BBF0C);
+  Create_Fish_Missiles((int)&byte_4BC314);
+  Create_Fish_Missiles((int)&unk_4BC3C0);
+  Create_Fish_Missiles((int)&unk_4BC46C);
+  Create_Fish_Missiles((int)&unk_4BC518);
+  Spawn_Part_Of_Monster_X((int)&byte_4BBB04);
+  Spawn_Part_Of_Monster_X((int)&byte_4BBBB0);
   if ( byte_4BBC5C )
-    sub_480550((int)&byte_4BBC5C);
+    Create_Enemy_Projectiles((int)&byte_4BBC5C);
   if ( byte_4BBD08 )
-    sub_480550((int)&byte_4BBD08);
+    Create_Enemy_Projectiles((int)&byte_4BBD08);
   if ( byte_4BBDB4 )
-    sub_480550((int)&byte_4BBDB4);
+    Create_Enemy_Projectiles((int)&byte_4BBDB4);
   if ( byte_4BBE60 )
-    sub_480550((int)&byte_4BBE60);
+    Create_Enemy_Projectiles((int)&byte_4BBE60);
   result = &byte_4BBA58;
   if ( !*((_DWORD *)&byte_4BBA58 + 16) && *((_DWORD *)&byte_4BBA58 + 29) < 1000 )
   {
@@ -76994,7 +77017,7 @@ LABEL_127:
 // 4BC5AC: using guessed type int dword_4BC5AC;
 
 //----- (0047F710) --------------------------------------------------------
-int __cdecl sub_47F710(int a1)
+int __cdecl Spawn_Part_Of_Monster_X_3(int a1)
 {
   int *v1; // ecx@69
   int v2; // edx@69
@@ -77293,7 +77316,7 @@ LABEL_15:
 }
 
 //----- (00480090) --------------------------------------------------------
-int __cdecl sub_480090(int a1)
+int __cdecl Create_Fish_Missiles(int a1)
 {
   __int64 v1; // rax@14
   __int64 v2; // rax@14
@@ -77394,7 +77417,7 @@ LABEL_14:
 }
 
 //----- (004802A0) --------------------------------------------------------
-int __cdecl sub_4802A0(int a1)
+int __cdecl Spawn_Part_Of_Monster_X(int a1)
 {
   int v1; // eax@14
   int result; // eax@14
@@ -77490,7 +77513,7 @@ int __cdecl sub_4802A0(int a1)
 // 4BC58C: using guessed type int dword_4BC58C;
 
 //----- (00480550) --------------------------------------------------------
-int __cdecl sub_480550(int a1)
+int __cdecl Create_Enemy_Projectiles(int a1)
 {
   int Y_Velocity; // ST28_4@13
   int X_Velocity; // ST2C_4@13
@@ -77629,7 +77652,7 @@ LABEL_14:
 }
 
 //----- (004808C0) --------------------------------------------------------
-int __cdecl sub_4808C0(int a1)
+int __cdecl Spawn_Part_Of_Monster_X_2(int a1)
 {
   int v1; // eax@8
   int *v2; // ecx@15
@@ -77718,19 +77741,19 @@ signed int report_failure_Return_1()
 }
 
 //----- (00480F55) --------------------------------------------------------
-void __cdecl sub_480F55(FILE *stream, size_t sizea, size_t counta, FILE *file)
+void __cdecl fread_wrapper(void *ptr, size_t size, size_t count, FILE *file)
 {
   _lock_file(file);
-  fread(stream, sizea, counta, file);
+  fread(ptr, size, count, file);
   JUMPOUT(&loc_480F97);
 }
 
 //----- (00481981) --------------------------------------------------------
-void __cdecl sub_481981(FILE *stream, size_t sizea, size_t counta, FILE *file)
+void __cdecl fwrite_wrapper(void *ptr, size_t size, size_t count, FILE *file)
 {
   _SEH_prolog(&stru_48CAC8, 12);
   _lock_file(file);
-  fwrite(stream, sizea, counta, file);
+  fwrite(ptr, size, count, file);
   JUMPOUT(&loc_4819C3);
 }
 // 4820AC: using guessed type _DWORD __cdecl _SEH_prolog(_DWORD, _DWORD);
@@ -77744,7 +77767,7 @@ signed int __security_error_handler_return_1()
 }
 
 //----- (00481F9E) --------------------------------------------------------
-#error "481F91: positive sp value has been found (funcsize=0)"
+#error "481F9E: positive sp value has been found (funcsize=0)"
 
 //----- (00482475) --------------------------------------------------------
 int __usercall flsall_sub_482475@<eax>(int a1@<esi>)
@@ -77793,7 +77816,7 @@ void sub_486CC0()
 }
 
 //----- (00486D04) --------------------------------------------------------
-void sub_486D04(void)
+void func(void)
 {
   int v0; // [sp+0h] [bp-28h]@0
   int v1; // [sp+4h] [bp-24h]@0
@@ -77843,30 +77866,30 @@ int __cdecl sub_488F5F(int a1, int a2)
 //----- (00488F75) --------------------------------------------------------
 int __cdecl sub_488F75(int a1, int a2)
 {
-  char v3; // [sp+0h] [bp-14h]@1
-  char v4; // [sp+4h] [bp-10h]@1
+  int v3; // [sp+0h] [bp-14h]@1
+  int v4; // [sp+4h] [bp-10h]@1
   int v5; // [sp+10h] [bp-4h]@1
 
-  v5 = Prevent_Crash_Report_Failure;
+  v5 = Crash_Report_Failure_Check;
   __strgtold12(&v4, &v3, a2, 0, 0, 0, 0);
   return sub_488F49((int)&v4, a1);
 }
 // 48A1AB: using guessed type _DWORD __cdecl __strgtold12(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD);
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 
 //----- (00488FB2) --------------------------------------------------------
 int __cdecl sub_488FB2(int a1, int a2)
 {
-  char v3; // [sp+0h] [bp-14h]@1
-  char v4; // [sp+4h] [bp-10h]@1
+  int v3; // [sp+0h] [bp-14h]@1
+  int v4; // [sp+4h] [bp-10h]@1
   int v5; // [sp+10h] [bp-4h]@1
 
-  v5 = Prevent_Crash_Report_Failure;
+  v5 = Crash_Report_Failure_Check;
   __strgtold12(&v4, &v3, a2, 0, 0, 0, 0);
   return sub_488F5F((int)&v4, a1);
 }
 // 48A1AB: using guessed type _DWORD __cdecl __strgtold12(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD);
-// 498B20: using guessed type int Prevent_Crash_Report_Failure;
+// 498B20: using guessed type int Crash_Report_Failure_Check;
 
 //----- (0048AD5E) --------------------------------------------------------
 int Return_0()

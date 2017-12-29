@@ -45,10 +45,10 @@ static GenInfo(void) {
 	Tabs(1);
 	Comments(0);
 	Voids(0);
-	XrefShow(0);
+	XrefShow(2);
 	AutoShow(1);
-	Indent(0);
-	CmtIndent(24);
+	Indent(16);
+	CmtIndent(40);
 	TailDepth(0x10);
 	LoadTil("vc6win");
 }
@@ -89,11 +89,36 @@ static Segments(void) {
 	SegDefReg(0x48F000,"ss",0x0);
 	SegDefReg(0x48F000,"ds",0x3);
 	SetSegmentType(0X48F000,3);
-	SegCreate(0X4BF000,0X4C3FFE,0,1,0,0);
-	SegRename(0X4BF000,"seg004");
-	SegClass (0X4BF000,"");
 	LowVoids(0x10000);
 	HighVoids(0x7FFE1000);
+}
+
+static Enums_0(id) {
+
+	id = AddEnum(-1,"_MEDIA_TYPE",0x1100000);
+	AddConstEx(id,"F5_1Pt2_512",	0X1,	-1);
+	AddConstEx(id,"F3_1Pt44_512",	0X2,	-1);
+	AddConstEx(id,"F3_2Pt88_512",	0X3,	-1);
+	AddConstEx(id,"F3_20Pt8_512",	0X4,	-1);
+	AddConstEx(id,"F3_720_512",	0X5,	-1);
+	AddConstEx(id,"F5_360_512",	0X6,	-1);
+	AddConstEx(id,"F5_320_512",	0X7,	-1);
+	AddConstEx(id,"F5_320_1024",	0X8,	-1);
+	AddConstEx(id,"F5_180_512",	0X9,	-1);
+	AddConstEx(id,"F5_160_512",	0XA,	-1);
+	AddConstEx(id,"RemovableMedia",	0XB,	-1);
+	AddConstEx(id,"FixedMedia",	0XC,	-1);
+	AddConstEx(id,"F3_120M_512",	0XD,	-1);
+	AddConstEx(id,"F3_640_512",	0XE,	-1);
+	AddConstEx(id,"F5_640_512",	0XF,	-1);
+	AddConstEx(id,"F5_720_512",	0X10,	-1);
+	AddConstEx(id,"F3_1Pt2_512",	0X11,	-1);
+	AddConstEx(id,"F3_1Pt23_1024",	0X12,	-1);
+	AddConstEx(id,"F5_1Pt23_1024",	0X13,	-1);
+	AddConstEx(id,"F3_128Mb_512",	0X14,	-1);
+	AddConstEx(id,"F3_230Mb_512",	0X15,	-1);
+	AddConstEx(id,"F8_256_128",	0X16,	-1);
+	return id;
 }
 
 //------------------------------------------------------------------------
@@ -102,6 +127,7 @@ static Segments(void) {
 static Enums(void) {
         auto id;
         BeginTypeUpdating(UTP_ENUM);
+	id = Enums_0(id);
         EndTypeUpdating(UTP_ENUM);
 }
 
@@ -231,15 +257,15 @@ static ApplyStrucTInfos_0(void) {
 	SetType(GetMemberId(id, 0x8), "struct _EH3_EXCEPTION_REGISTRATION");
 	id = GetStrucIdByName("_msEH");
 	id = GetStrucIdByName("struct_0");
-	id = GetStrucIdByName("_SCOPETABLE_ENTRY");
-	SetType(GetMemberId(id, 0x0), "int");
-	SetType(GetMemberId(id, 0x4), "void *");
-	SetType(GetMemberId(id, 0x8), "void *");
 	id = GetStrucIdByName("_EH3_EXCEPTION_REGISTRATION");
 	SetType(GetMemberId(id, 0x0), "struct _EH3_EXCEPTION_REGISTRATION *");
 	SetType(GetMemberId(id, 0x4), "PVOID");
 	SetType(GetMemberId(id, 0x8), "PSCOPETABLE_ENTRY");
 	SetType(GetMemberId(id, 0xC), "DWORD");
+	id = GetStrucIdByName("_SCOPETABLE_ENTRY");
+	SetType(GetMemberId(id, 0x0), "int");
+	SetType(GetMemberId(id, 0x4), "void *");
+	SetType(GetMemberId(id, 0x8), "void *");
 	return id;
 }
 
@@ -275,8 +301,8 @@ static Structures_0(id) {
 	id = AddStrucEx(-1,"CPPEH_RECORD",0);
 	id = AddStrucEx(-1,"_msEH",0);
 	id = AddStrucEx(-1,"struct_0",0);
-	id = AddStrucEx(-1,"_SCOPETABLE_ENTRY",0);
 	id = AddStrucEx(-1,"_EH3_EXCEPTION_REGISTRATION",0);
+	id = AddStrucEx(-1,"_SCOPETABLE_ENTRY",0);
 	
 	id = GetStrucIdByName("_SYSTEM_INFO::$41710344DA04EC56A327D4EA11DEF6D2::$AA04DEB0C6383F89F13D312A174572A9");
 	mid = AddStrucMember(id,"wProcessorArchitecture",	0,	0x10000400,	-1,	2);
@@ -18056,6 +18082,8 @@ static Bytes_3(void) {
 	MakeCode	(0X4107CB);
 	MakeCode	(x=0X4107DE);
 	OpStkvar	(x,	1);
+	MakeByte	(0X4107EC);
+	MakeCode	(0X4107ED);
 	MakeCode	(x=0X4107F3);
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X4107F6);
@@ -21066,7 +21094,6 @@ static Bytes_3(void) {
 	MakeCode	(x=0X412D4A);
 	OpStkvar	(x,	0);
 	MakeComm	(0X412D4D,	"uFlags");
-	MakeComm	(0X412D4F,	"uPosition");
 }
 
 //------------------------------------------------------------------------
@@ -21076,6 +21103,7 @@ static Bytes_4(void) {
         auto x;
 #define id x
 
+	MakeComm	(0X412D4F,	"uPosition");
 	MakeCode	(x=0X412D54);
 	OpStkvar	(x,	1);
 	MakeComm	(0X412D57,	"hMenu");
@@ -23176,6 +23204,8 @@ static Bytes_4(void) {
 	MakeCode	(0X414B50);
 	MakeName	(0X414B50,	"Create_Quote?");
 	MakeComm	(0X414B53,	"length");
+	MakeCode	(x=0X414B53);
+	OpDecimal	(x,	0);
 	MakeComm	(0X414B58,	"value");
 	MakeComm	(0X414B5A,	"ptr");
 	MakeCode	(x=0X414B5A);
@@ -23883,6 +23913,7 @@ static Bytes_4(void) {
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X415C40);
 	OpHex		(x,	1);
+	MakeName	(0X415C5D,	"Decrease_Booster_Fuel");
 	MakeCode	(x=0X415C70);
 	OpHex		(x,	1);
 	MakeCode	(x=0X415C8F);
@@ -24194,7 +24225,7 @@ static Bytes_4(void) {
 	MakeCode	(x=0X416998);
 	OpHex		(x,	1);
 	MakeComm	(0X41699B,	"If not, branch");
-	MakeComm	(0X41699D,	"Air given when wearing air tank\n10 units = 1 tick");
+	MakeComm	(0X41699D,	"Air given when wearing air tank\n10 units = 1 seen unit");
 	MakeCode	(x=0X41699D);
 	OpDecimal	(x,	1);
 	MakeCode	(0X4169B6);
@@ -24202,7 +24233,7 @@ static Bytes_4(void) {
 	MakeCode	(x=0X4169BC);
 	OpHex		(x,	1);
 	MakeComm	(0X4169C2,	"If not, branch");
-	MakeComm	(0X4169C4,	"Air given when not in water");
+	MakeComm	(0X4169C4,	"Air given when not in water\n10 units = 1 seen unit");
 	MakeCode	(x=0X4169C4);
 	OpDecimal	(x,	1);
 	MakeCode	(0X4169D3);
@@ -24236,6 +24267,8 @@ static Bytes_4(void) {
 	OpHex		(x,	1);
 	MakeCode	(x=0X416A6B);
 	OpHex		(x,	1);
+	MakeCode	(x=0X416A73);
+	OpDecimal	(x,	1);
 	MakeCode	(0X416A7F);
 	MakeArray	(0X416A97,	0X9);
 	MakeCode	(0X416AA0);
@@ -24248,11 +24281,13 @@ static Bytes_4(void) {
 	MakeComm	(0X416AC0,	"Setting up stack");
 	MakeCode	(0X416AC0);
 	MakeName	(0X416AC0,	"Move_Quote");
+	MakeComm	(0X416AC1,	"Save stack pos");
 	MakeCode	(x=0X416AC3);
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X416ACB);
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X416B19);
+	OpSign		(x,	1);
 	OpHex		(x,	1);
 	MakeArray	(0X416B29,	0X7);
 	MakeCode	(0X416B30);
@@ -26654,6 +26689,15 @@ static Bytes_4(void) {
 	MakeCode	(x=0X419260);
 	OpOff		(x,	1,	0);
 	OpOff		(x,	129,	0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_5(void) {
+        auto x;
+#define id x
+
 	MakeComm	(0X419266,	"Event");
 	MakeCode	(x=0X41926C);
 	OpHex		(x,	1);
@@ -26668,15 +26712,6 @@ static Bytes_4(void) {
 	OpHex		(x,	1);
 	MakeCode	(x=0X419299);
 	OpStkvar	(x,	1);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_5(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X4192A2);
 	OpOff		(x,	1,	0);
 	OpOff		(x,	129,	0);
@@ -27312,7 +27347,6 @@ static Bytes_5(void) {
 	MakeName	(0X419CB0,	"TSC_MLplus");
 	MakeCode	(x=0X419CB3);
 	OpStkvar	(x,	1);
-	MakeComm	(0X419CC0,	"Quote_Health_Max += Life_To_Add");
 	MakeComm	(0X419CCE,	"Has Quote got more than 232 hp max ?");
 	MakeCode	(x=0X419CCE);
 	OpDecimal	(x,	1);
@@ -27321,8 +27355,6 @@ static Bytes_5(void) {
 	OpDecimal	(x,	1);
 	MakeCode	(x=0X419CDF);
 	OpStkvar	(x,	1);
-	MakeComm	(0X419CE3,	"Quote_Health_Current += Life_To_Add");
-	MakeComm	(0X419CFA,	"dword_49E6D4 = Quote_Health_Current");
 	MakeArray	(0X419D02,	0XE);
 	MakeCode	(0X419D10);
 	MakeName	(0X419D10,	"Draw_XP_Bar_And_Misc");
@@ -30089,6 +30121,7 @@ static Bytes_5(void) {
 	OpOff		(x,	129,	0);
 	MakeArray	(0X41C24D,	0X3);
 	MakeCode	(0X41C250);
+	MakeName	(0X41C250,	"Stop_Previous_Org_Song");
 	MakeCode	(0X41C261);
 	MakeComm	(0X41C26F,	"uTimerID");
 	MakeCode	(x=0X41C276);
@@ -30279,6 +30312,7 @@ static Bytes_5(void) {
 	OpOff		(x,	129,	0);
 	MakeArray	(0X41C6EE,	0X2);
 	MakeCode	(0X41C6F0);
+	MakeName	(0X41C6F0,	"Load_Org_Music");
 	MakeCode	(x=0X41C700);
 	OpStkvar	(x,	1);
 	MakeComm	(0X41C703,	"lpName");
@@ -30288,6 +30322,7 @@ static Bytes_5(void) {
 	MakeCode	(0X41C716);
 	MakeArray	(0X41C72E,	0X2);
 	MakeCode	(0X41C730);
+	MakeName	(0X41C730,	"Set_Org_Music_Position");
 	MakeCode	(x=0X41C73E);
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X41C742);
@@ -30295,15 +30330,18 @@ static Bytes_5(void) {
 	OpOff		(x,	129,	0);
 	MakeArray	(0X41C762,	0XE);
 	MakeCode	(0X41C770);
+	MakeName	(0X41C770,	"Get_Org_Music_Position");
 	MakeCode	(0X41C780);
 	MakeArray	(0X41C787,	0X9);
 	MakeCode	(0X41C790);
+	MakeName	(0X41C790,	"Start_Org_Playback");
 	MakeCode	(0X41C79E);
 	MakeComm	(0X41C7AF,	"uDelay");
 	MakeCode	(x=0X41C7B5);
 	OpHex		(x,	1);
 	MakeArray	(0X41C7BA,	0X6);
 	MakeCode	(0X41C7C0);
+	MakeName	(0X41C7C0,	"Set_Org_Volume");
 	MakeCode	(x=0X41C7D0);
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X41C7D6);
@@ -30352,7 +30390,7 @@ static Bytes_5(void) {
 	MakeComm	(0X41C866,	"dwMilliseconds");
 	MakeArray	(0X41C872,	0XE);
 	MakeCode	(0X41C880);
-	MakeName	(0X41C880,	"___setargv_0");
+	MakeName	(0X41C880,	"Fade_Music");
 	MakeCode	(0X41C890);
 	MakeCode	(0X41C89F);
 	MakeCode	(x=0X41C8A4);
@@ -30960,6 +30998,7 @@ static Bytes_5(void) {
 	OpStkvar	(x,	1);
 	MakeArray	(0X41D034,	0XC);
 	MakeCode	(0X41D040);
+	MakeName	(0X41D040,	"Save_Profile");
 	MakeCode	(x=0X41D043);
 	OpHex		(x,	1);
 	MakeCode	(x=0X41D04E);
@@ -31260,6 +31299,8 @@ static Bytes_5(void) {
 	MakeCode	(x=0X41D3DC);
 	OpHex		(x,	1);
 	MakeComm	(0X41D3DF,	"num");
+	MakeCode	(x=0X41D3DF);
+	OpDecimal	(x,	0);
 	MakeCode	(x=0X41D3E4);
 	OpStkvar	(x,	1);
 	MakeComm	(0X41D3EA,	"source");
@@ -31417,6 +31458,7 @@ static Bytes_5(void) {
 	OpHex		(x,	1);
 	MakeArray	(0X41D83B,	0X5);
 	MakeCode	(0X41D840);
+	MakeName	(0X41D840,	"Draw_Teleporter_Menu");
 	MakeCode	(x=0X41D843);
 	OpHex		(x,	1);
 	MakeCode	(x=0X41D846);
@@ -31551,6 +31593,7 @@ static Bytes_5(void) {
 	OpHex		(x,	1);
 	MakeCode	(0X41D9FB);
 	MakeCode	(0X41DA00);
+	MakeName	(0X41DA00,	"Game_Loop_Stage_Select");
 	MakeComm	(0X41DA03,	"Y_Position");
 	MakeCode	(x=0X41DA03);
 	OpHex		(x,	1);
@@ -32118,6 +32161,15 @@ static Bytes_5(void) {
 	MakeComm	(0X41E600,	"X_Position");
 	MakeCode	(x=0X41E601);
 	OpStkvar	(x,	1);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_6(void) {
+        auto x;
+#define id x
+
 	MakeComm	(0X41E604,	"BulletID");
 	MakeCode	(x=0X41E60A);
 	OpHex		(x,	1);
@@ -32137,15 +32189,6 @@ static Bytes_5(void) {
 	MakeCode	(x=0X41E658);
 	OpHex		(x,	1);
 	MakeComm	(0X41E65B,	"Effect_Mode");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_6(void) {
-        auto x;
-#define id x
-
 	MakeComm	(0X41E65D,	"Effect_ID");
 	MakeComm	(0X41E669,	"Y_Position");
 	MakeComm	(0X41E676,	"X_Position");
@@ -33502,6 +33545,7 @@ static Bytes_6(void) {
 	OpOff		(x,	128,	0);
 	MakeArray	(0X4200B2,	0XE);
 	MakeCode	(0X4200C0);
+	MakeName	(0X4200C0,	"Init_Direct_Sound");
 	MakeCode	(x=0X4200C3);
 	OpHex		(x,	1);
 	MakeComm	(0X4200C6,	"LPUNKNOWN");
@@ -33551,6 +33595,7 @@ static Bytes_6(void) {
 	OpHex		(x,	1);
 	MakeArray	(0X420195,	0XB);
 	MakeCode	(0X4201A0);
+	MakeName	(0X4201A0,	"Kill_Direct_Sound?");
 	MakeCode	(0X4201B2);
 	MakeCode	(x=0X4201B7);
 	OpStkvar	(x,	0);
@@ -34065,6 +34110,7 @@ static Bytes_6(void) {
 	OpStkvar	(x,	1);
 	MakeArray	(0X420BD7,	0X9);
 	MakeCode	(0X420BE0);
+	MakeName	(0X420BE0,	"Load_Room");
 	MakeCode	(x=0X420BE3);
 	OpHex		(x,	1);
 	MakeCode	(x=0X420BEE);
@@ -34599,6 +34645,7 @@ static Bytes_6(void) {
 	MakeCode	(0X42139E);
 	MakeArray	(0X4213A2,	0XE);
 	MakeCode	(0X4213B0);
+	MakeName	(0X4213B0,	"Draw_Whimsical_Star");
 	MakeCode	(x=0X4213B3);
 	OpHex		(x,	1);
 	MakeCode	(x=0X4213B6);
@@ -34689,6 +34736,7 @@ static Bytes_6(void) {
 	MakeCode	(0X4214D3);
 	MakeArray	(0X4214D7,	0X9);
 	MakeCode	(0X4214E0);
+	MakeName	(0X4214E0,	"Initiate_TSC_Buffer?");
 	MakeCode	(x=0X4214F0);
 	OpHex		(x,	1);
 	MakeCode	(x=0X4214F8);
@@ -34738,6 +34786,7 @@ static Bytes_6(void) {
 	MakeCode	(0X4215B5);
 	MakeArray	(0X4215B9,	0X7);
 	MakeCode	(0X4215C0);
+	MakeName	(0X4215C0,	"Decode_TSC");
 	MakeCode	(x=0X4215C3);
 	OpHex		(x,	1);
 	MakeCode	(x=0X4215C6);
@@ -34801,6 +34850,7 @@ static Bytes_6(void) {
 	MakeCode	(0X421658);
 	MakeArray	(0X42165C,	0X4);
 	MakeCode	(0X421660);
+	MakeName	(0X421660,	"Load_Special_TSC");
 	MakeCode	(x=0X421663);
 	OpHex		(x,	1);
 	MakeCode	(x=0X42166E);
@@ -34863,6 +34913,7 @@ static Bytes_6(void) {
 	OpStkvar	(x,	1);
 	MakeArray	(0X421741,	0XF);
 	MakeCode	(0X421750);
+	MakeName	(0X421750,	"Process_TSC_File");
 	MakeCode	(x=0X421753);
 	OpHex		(x,	1);
 	MakeCode	(x=0X42175E);
@@ -35175,6 +35226,7 @@ static Bytes_6(void) {
 	OpHex		(x,	1);
 	MakeArray	(0X421D02,	0XE);
 	MakeCode	(0X421D10);
+	MakeName	(0X421D10,	"Print_NUM");
 	MakeCode	(x=0X421D13);
 	OpHex		(x,	1);
 	MakeCode	(x=0X421D1B);
@@ -35325,6 +35377,7 @@ static Bytes_6(void) {
 	OpHex		(x,	1);
 	MakeCode	(0X421F0B);
 	MakeCode	(0X421F10);
+	MakeName	(0X421F10,	"Draw_Text_Box");
 	MakeCode	(x=0X421F13);
 	OpHex		(x,	1);
 	MakeCode	(0X421F29);
@@ -35912,8 +35965,10 @@ static Bytes_6(void) {
 	OpHex		(x,	1);
 	MakeCode	(x=0X422A03);
 	OpStkvar	(x,	1);
+	MakeComm	(0X422A06,	"Weapon_Ammo");
 	MakeCode	(x=0X422A07);
 	OpStkvar	(x,	1);
+	MakeComm	(0X422A0A,	"Weapon_To_Give");
 	MakeCode	(x=0X422A10);
 	OpHex		(x,	1);
 	MakeCode	(0X422A25);
@@ -35930,6 +35985,7 @@ static Bytes_6(void) {
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X422A78);
 	OpStkvar	(x,	1);
+	MakeComm	(0X422A7B,	"Weapon_To_Lose");
 	MakeCode	(x=0X422A81);
 	OpHex		(x,	1);
 	MakeCode	(0X422A96);
@@ -36591,6 +36647,12 @@ static Bytes_6(void) {
 	MakeCode	(x=0X42457C);
 	OpHex		(x,	1);
 	MakeCode	(0X424593);
+	MakeCode	(x=0X4245A2);
+	OpChr		(x,	1);
+	MakeCode	(x=0X4245B7);
+	OpChr		(x,	1);
+	MakeCode	(x=0X4245CC);
+	OpChr		(x,	1);
 	MakeComm	(0X4245D9,	"num");
 	MakeCode	(x=0X4245DF);
 	OpHex		(x,	1);
@@ -37186,6 +37248,7 @@ static Bytes_6(void) {
 	MakeComm	(0X425775,	"jump table for switch statement");
 	MakeArray	(0X42578D,	0X3);
 	MakeCode	(0X425790);
+	MakeName	(0X425790,	"Draw_Text_To_Text_Box_Surfaces");
 	MakeCode	(x=0X425794);
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X42579D);
@@ -37389,6 +37452,15 @@ static Bytes_6(void) {
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X4259F7);
 	OpStkvar	(x,	0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_7(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0X4259FC);
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X425A05);
@@ -37463,15 +37535,6 @@ static Bytes_6(void) {
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X425AEA);
 	OpStkvar	(x,	0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_7(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X425AEF);
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X425AF4);
@@ -38547,6 +38610,9 @@ static Bytes_7(void) {
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X426A9E);
 	OpStkvar	(x,	1);
+	MakeComm	(0X426AA1,	"Has to do with Exp duration ?");
+	MakeCode	(x=0X426AA1);
+	OpDecimal	(x,	1);
 	MakeCode	(x=0X426AAA);
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X426AB3);
@@ -40169,7 +40235,7 @@ static Bytes_7(void) {
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X42854F);
 	OpStkvar	(x,	0);
-	MakeComm	(0X428555,	"switch 2 cases ");
+	MakeComm	(0X428555,	"switch 6 cases ");
 	MakeCode	(x=0X428555);
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X428562);
@@ -40196,11 +40262,11 @@ static Bytes_7(void) {
 	MakeComm	(0X4285A8,	"Number of \"mouth shots\"");
 	MakeCode	(x=0X4285AF);
 	OpStkvar	(x,	1);
-	MakeStr		(0X4285BE,	0X4285C6);
-	MakeName	(0X4285BE,	"aLeLhxg");
-	MakeByte	(0X4285C6);
+	MakeRptCmt	(0X4285BE,	"jumptable 00428568 case 2");
+	MakeCode	(x=0X4285BE);
+	OpStkvar	(x,	1);
 	MakeCode	(x=0X4285C7);
-	OpHex		(x,	1);
+	OpStkvar	(x,	1);
 	MakeCode	(x=0X4285CD);
 	OpStkvar	(x,	1);
 	MakeComm	(0X4285D0,	"\"Mouth shot\" fire rate:\n*The higher the value, the slower Balrog shoots his shots.");
@@ -40266,6 +40332,7 @@ static Bytes_7(void) {
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X4286A1);
 	OpStkvar	(x,	1);
+	MakeRptCmt	(0X4286B0,	"jumptable 00428568 case 3");
 	MakeCode	(x=0X4286B0);
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X4286B9);
@@ -40285,6 +40352,7 @@ static Bytes_7(void) {
 	MakeComm	(0X4286F8,	"Jump Height:\n*The higher the value, the lower Balrog jumps.");
 	MakeCode	(x=0X4286FF);
 	OpStkvar	(x,	1);
+	MakeRptCmt	(0X42870E,	"jumptable 00428568 case 4");
 	MakeCode	(x=0X42870E);
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X428714);
@@ -40316,6 +40384,7 @@ static Bytes_7(void) {
 	OpHex		(x,	1);
 	MakeCode	(x=0X428791);
 	OpStkvar	(x,	1);
+	MakeRptCmt	(0X4287A0,	"jumptable 00428568 case 5");
 	MakeCode	(x=0X4287A0);
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X4287AA);
@@ -40439,19 +40508,7 @@ static Bytes_7(void) {
 	OpStkvar	(x,	1);
 	MakeComm	(0X428993,	"jump table for switch statement");
 	MakeDword	(x=0X428993);
-	MakeArray	(x,	0X2);
-	OpOff		(x,	0,	0);
-	OpOff		(x,	128,	0);
-	MakeDword	(x=0X42899B);
-	OpOff		(x,	0,	0);
-	OpOff		(x,	128,	0);
-	MakeDword	(x=0X42899F);
-	OpOff		(x,	0,	0);
-	OpOff		(x,	128,	0);
-	MakeDword	(x=0X4289A3);
-	OpOff		(x,	0,	0);
-	OpOff		(x,	128,	0);
-	MakeDword	(x=0X4289A7);
+	MakeArray	(x,	0X6);
 	OpOff		(x,	0,	0);
 	OpOff		(x,	128,	0);
 	MakeArray	(0X4289AB,	0X5);
@@ -43005,6 +43062,15 @@ static Bytes_7(void) {
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X42B16E);
 	OpStkvar	(x,	1);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_8(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0X42B176);
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X42B17F);
@@ -43081,15 +43147,6 @@ static Bytes_7(void) {
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X42B2B7);
 	OpStkvar	(x,	0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_8(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X42B2BE);
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X42B2C4);
@@ -48516,6 +48573,15 @@ static Bytes_8(void) {
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X430B0D);
 	OpStkvar	(x,	0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_9(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0X430B14);
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X430B1B);
@@ -48588,15 +48654,6 @@ static Bytes_8(void) {
 	MakeComm	(0X430BF4,	"int");
 	MakeCode	(x=0X430BF6);
 	OpStkvar	(x,	1);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_9(void) {
-        auto x;
-#define id x
-
 	MakeComm	(0X430BF9,	"int");
 	MakeCode	(x=0X430BFA);
 	OpStkvar	(x,	1);
@@ -54169,6 +54226,15 @@ static Bytes_9(void) {
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X4368E6);
 	OpStkvar	(x,	0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_10(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0X4368ED);
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X4368F4);
@@ -54249,15 +54315,6 @@ static Bytes_9(void) {
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X436A70);
 	OpStkvar	(x,	1);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_10(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X436A76);
 	OpStkvar	(x,	1);
 	MakeComm	(0X436A79,	"Check direction");
@@ -59708,6 +59765,15 @@ static Bytes_10(void) {
 	MakeArray	(x,	0X11);
 	OpOff		(x,	0,	0);
 	OpOff		(x,	128,	0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_11(void) {
+        auto x;
+#define id x
+
 	MakeComm	(0X43C436,	"indirect table for switch statement");
 	MakeByte	(0X43C436);
 	MakeArray	(0X43C436,	0X6F);
@@ -59776,15 +59842,6 @@ static Bytes_10(void) {
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X43C574);
 	OpStkvar	(x,	1);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_11(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X43C57E);
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X43C587);
@@ -65188,6 +65245,15 @@ static Bytes_11(void) {
 	MakeArray	(x,	0X5);
 	OpOff		(x,	0,	0);
 	OpOff		(x,	128,	0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_12(void) {
+        auto x;
+#define id x
+
 	MakeComm	(0X441EAB,	"indirect table for switch statement");
 	MakeByte	(0X441EAB);
 	MakeArray	(0X441EAB,	0X15);
@@ -65250,15 +65316,6 @@ static Bytes_11(void) {
 	OpOff		(x,	1,	0);
 	OpOff		(x,	129,	0);
 	MakeComm	(0X441FAC,	"switch jump");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_12(void) {
-        auto x;
-#define id x
-
 	MakeRptCmt	(0X441FB3,	"jumptable 00441FAC case 0");
 	MakeCode	(x=0X441FB3);
 	OpStkvar	(x,	1);
@@ -70624,6 +70681,15 @@ static Bytes_12(void) {
 	MakeCode	(x=0X4476A2);
 	OpHex		(x,	1);
 	MakeComm	(0X4476A5,	"Y_Velocity");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_13(void) {
+        auto x;
+#define id x
+
 	MakeComm	(0X4476A6,	"maximum");
 	MakeComm	(0X4476AB,	"minimum");
 	MakeCode	(x=0X4476B5);
@@ -70679,15 +70745,6 @@ static Bytes_12(void) {
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X447758);
 	OpStkvar	(x,	1);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_13(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X447764);
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X44776E);
@@ -75998,6 +76055,15 @@ static Bytes_13(void) {
 	MakeRptCmt	(0X44CCF5,	"jumptable 0044CCC6 case 2");
 	MakeCode	(x=0X44CCF5);
 	OpStkvar	(x,	1);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_14(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0X44CD01);
 	OpStkvar	(x,	1);
 	MakeRptCmt	(0X44CD09,	"jumptable 0044CCC6 case 3");
@@ -76058,15 +76124,6 @@ static Bytes_13(void) {
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X44CDE8);
 	OpStkvar	(x,	1);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_14(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X44CDEB);
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X44CDF4);
@@ -81566,6 +81623,15 @@ static Bytes_14(void) {
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X452510);
 	OpStkvar	(x,	0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_15(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0X452517);
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X45251E);
@@ -81626,15 +81692,6 @@ static Bytes_14(void) {
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X4525E7);
 	OpStkvar	(x,	1);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_15(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X4525F1);
 	OpStkvar	(x,	1);
 	MakeRptCmt	(0X4525FD,	"jumptable 004525A4 case 2");
@@ -87027,6 +87084,15 @@ static Bytes_15(void) {
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X457AB8);
 	OpStkvar	(x,	0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_16(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0X457ABF);
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X457AC6);
@@ -87085,15 +87151,6 @@ static Bytes_15(void) {
 	MakeComm	(0X457B79,	"X_Velocity");
 	MakeCode	(x=0X457B7B);
 	OpStkvar	(x,	1);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_16(void) {
-        auto x;
-#define id x
-
 	MakeComm	(0X457B87,	"Y_Position");
 	MakeCode	(x=0X457B88);
 	OpStkvar	(x,	1);
@@ -92517,6 +92574,15 @@ static Bytes_16(void) {
 	MakeRptCmt	(0X45D327,	"jumptable 0045D27D default case");
 	MakeCode	(x=0X45D327);
 	OpStkvar	(x,	1);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_17(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0X45D330);
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X45D33A);
@@ -92571,15 +92637,6 @@ static Bytes_16(void) {
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X45D411);
 	OpStkvar	(x,	1);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_17(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X45D424);
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X45D436);
@@ -98001,6 +98058,15 @@ static Bytes_17(void) {
 	MakeArray	(x,	0X6);
 	OpOff		(x,	0,	0);
 	OpOff		(x,	128,	0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_18(void) {
+        auto x;
+#define id x
+
 	MakeComm	(0X462A78,	"indirect table for switch statement");
 	MakeByte	(0X462A78);
 	MakeArray	(0X462A78,	0X5C);
@@ -98056,15 +98122,6 @@ static Bytes_17(void) {
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X462BA1);
 	OpStkvar	(x,	1);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_18(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X462BA9);
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X462BB3);
@@ -103543,6 +103600,15 @@ static Bytes_18(void) {
 	MakeCode	(x=0X4688EF);
 	OpStkvar	(x,	1);
 	MakeComm	(0X4688F8,	"maximum");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_19(void) {
+        auto x;
+#define id x
+
 	MakeComm	(0X4688FA,	"minimum");
 	MakeCode	(x=0X468901);
 	OpHex		(x,	1);
@@ -103605,15 +103671,6 @@ static Bytes_18(void) {
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X4689C9);
 	OpStkvar	(x,	1);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_19(void) {
-        auto x;
-#define id x
-
 	MakeArray	(0X4689D3,	0XD);
 	MakeCode	(0X4689E0);
 	MakeName	(0X4689E0,	"NPC329");
@@ -109068,6 +109125,15 @@ static Bytes_19(void) {
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X46E21A);
 	OpStkvar	(x,	1);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_20(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0X46E221);
 	OpHex		(x,	1);
 	MakeCode	(x=0X46E229);
@@ -109134,15 +109200,6 @@ static Bytes_19(void) {
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X46E2E8);
 	OpStkvar	(x,	0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_20(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X46E2EF);
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X46E2F6);
@@ -109684,6 +109741,7 @@ static Bytes_20(void) {
 	OpStkvar	(x,	0);
 	MakeArray	(0X46EB2D,	0X3);
 	MakeCode	(0X46EB30);
+	MakeName	(0X46EB30,	"Kill_NPC_RAM");
 	MakeComm	(0X46EB33,	"length");
 	MakeComm	(0X46EB38,	"value");
 	MakeComm	(0X46EB3A,	"ptr");
@@ -109694,6 +109752,7 @@ static Bytes_20(void) {
 	OpHex		(x,	1);
 	MakeArray	(0X46EB49,	0X7);
 	MakeCode	(0X46EB50);
+	MakeName	(0X46EB50,	"Process_PXE_File");
 	MakeCode	(x=0X46EB53);
 	OpHex		(x,	1);
 	MakeCode	(x=0X46EB5E);
@@ -109945,6 +110004,7 @@ static Bytes_20(void) {
 	OpStkvar	(x,	1);
 	MakeArray	(0X46EE48,	0X8);
 	MakeCode	(0X46EE50);
+	MakeName	(0X46EE50,	"Load_NPC_Table_Values_To_Object");
 	MakeCode	(x=0X46EE54);
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X46EE5A);
@@ -110142,6 +110202,7 @@ static Bytes_20(void) {
 	OpHex		(x,	1);
 	MakeArray	(0X46F143,	0XD);
 	MakeCode	(0X46F150);
+	MakeName	(0X46F150,	"Create_Dust_Clouds");
 	MakeCode	(x=0X46F153);
 	OpHex		(x,	1);
 	MakeCode	(x=0X46F156);
@@ -110712,6 +110773,7 @@ static Bytes_20(void) {
 	OpHex		(x,	1);
 	MakeArray	(0X46F80E,	0X2);
 	MakeCode	(0X46F810);
+	MakeName	(0X46F810,	"Draw_NPCs");
 	MakeCode	(x=0X46F813);
 	OpHex		(x,	1);
 	MakeCode	(x=0X46F816);
@@ -110869,6 +110931,7 @@ static Bytes_20(void) {
 	MakeCode	(0X46F9ED);
 	MakeArray	(0X46F9F1,	0XF);
 	MakeCode	(0X46FA00);
+	MakeName	(0X46FA00,	"Update_NPCs");
 	MakeCode	(x=0X46FA03);
 	OpHex		(x,	1);
 	MakeCode	(x=0X46FA06);
@@ -110926,6 +110989,7 @@ static Bytes_20(void) {
 	MakeCode	(0X46FAA6);
 	MakeArray	(0X46FAAA,	0X6);
 	MakeCode	(0X46FAB0);
+	MakeName	(0X46FAB0,	"Spawn_NPC");
 	MakeCode	(x=0X46FAB4);
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X46FABD);
@@ -111091,6 +111155,7 @@ static Bytes_20(void) {
 	MakeCode	(0X46FCFE);
 	MakeArray	(0X46FD02,	0XE);
 	MakeCode	(0X46FD10);
+	MakeName	(0X46FD10,	"Spawn_NPC_2");
 	MakeCode	(x=0X46FD14);
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X46FD1D);
@@ -111467,6 +111532,7 @@ static Bytes_20(void) {
 	MakeCode	(0X4702C5);
 	MakeArray	(0X4702C9,	0X7);
 	MakeCode	(0X4702D0);
+	MakeName	(0X4702D0,	"Kill_Objects");
 	MakeCode	(x=0X4702D3);
 	OpHex		(x,	1);
 	MakeCode	(x=0X4702D6);
@@ -112669,7 +112735,7 @@ static Bytes_20(void) {
 	OpStkvar	(x,	1);
 	MakeArray	(0X471156,	0XA);
 	MakeCode	(0X471160);
-	MakeName	(0X471160,	"Entity_Tile_Collision_Algorithms");
+	MakeName	(0X471160,	"Do_NPC_Level_Collision");
 	MakeCode	(x=0X471163);
 	OpHex		(x,	1);
 	MakeCode	(x=0X471166);
@@ -114299,6 +114365,7 @@ static Bytes_20(void) {
 	MakeCode	(0X4723F8);
 	MakeArray	(0X4723FC,	0X4);
 	MakeCode	(0X472400);
+	MakeName	(0X472400,	"Load_NPC_Table");
 	MakeCode	(x=0X472403);
 	OpHex		(x,	1);
 	MakeCode	(x=0X472406);
@@ -114546,6 +114613,7 @@ static Bytes_20(void) {
 	OpHex		(x,	1);
 	MakeArray	(0X472736,	0XA);
 	MakeCode	(0X472740);
+	MakeName	(0X472740,	"Set_Room_Boss_ID");
 	MakeComm	(0X472743,	"length");
 	MakeComm	(0X472748,	"value");
 	MakeComm	(0X47274A,	"ptr");
@@ -114558,6 +114626,7 @@ static Bytes_20(void) {
 	OpStkvar	(x,	1);
 	MakeArray	(0X472768,	0X8);
 	MakeCode	(0X472770);
+	MakeName	(0X472770,	"Draw_Boss?");
 	MakeCode	(x=0X472773);
 	OpHex		(x,	1);
 	MakeCode	(x=0X472776);
@@ -114710,6 +114779,7 @@ static Bytes_20(void) {
 	MakeCode	(0X47293A);
 	MakeArray	(0X47293E,	0X2);
 	MakeCode	(0X472940);
+	MakeName	(0X472940,	"Set_Boss_Script_State");
 	MakeCode	(x=0X472943);
 	OpStkvar	(x,	1);
 	MakeArray	(0X47294D,	0X3);
@@ -114929,6 +114999,15 @@ static Bytes_20(void) {
 	OpOff		(x,	129,	0);
 	MakeCode	(x=0X472B9A);
 	OpStkvar	(x,	1);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_21(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0X472B9D);
 	OpHex		(x,	1);
 	MakeCode	(x=0X472BA0);
@@ -115029,15 +115108,6 @@ static Bytes_20(void) {
 	OpHex		(x,	1);
 	MakeCode	(x=0X472CB6);
 	OpStkvar	(x,	1);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_21(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X472CBF);
 	OpOff		(x,	1,	0);
 	OpOff		(x,	129,	0);
@@ -115360,6 +115430,7 @@ static Bytes_21(void) {
 	MakeName	(0X472FF0,	"Boss0_NoSpecialBoss");
 	MakeArray	(0X472FF5,	0XB);
 	MakeCode	(0X473000);
+	MakeName	(0X473000,	"Update_Boss");
 	MakeCode	(x=0X473003);
 	OpHex		(x,	1);
 	MakeCode	(x=0X47300D);
@@ -120152,6 +120223,15 @@ static Bytes_21(void) {
 	OpHex		(x,	1);
 	MakeCode	(x=0X478590);
 	OpHex		(x,	1);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_22(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0X478599);
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X4785A2);
@@ -120247,15 +120327,6 @@ static Bytes_21(void) {
 	OpHex		(x,	1);
 	MakeCode	(x=0X47869D);
 	OpHex		(x,	1);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_22(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X4786A0);
 	OpStkvar	(x,	0);
 	MakeComm	(0X4786A3,	"int");
@@ -122659,7 +122730,7 @@ static Bytes_22(void) {
 	OpOff		(x,	129,	0);
 	MakeArray	(0X47B534,	0XC);
 	MakeCode	(0X47B540);
-	MakeName	(0X47B540,	"Boss_HP_Bar_Render?");
+	MakeName	(0X47B540,	"Draw_Boss_Health");
 	MakeCode	(x=0X47B543);
 	OpHex		(x,	1);
 	MakeCode	(x=0X47B546);
@@ -125512,6 +125583,15 @@ static Bytes_22(void) {
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X47F339);
 	OpStkvar	(x,	0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_23(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0X47F342);
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X47F348);
@@ -125608,15 +125688,6 @@ static Bytes_22(void) {
 	MakeCode	(x=0X47F45A);
 	OpOff		(x,	0,	0);
 	OpOff		(x,	128,	0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_23(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X47F464);
 	OpHex		(x,	1);
 	MakeCode	(x=0X47F472);
@@ -125675,6 +125746,7 @@ static Bytes_23(void) {
 	MakeArray	(0X47F69E,	0X65);
 	MakeArray	(0X47F703,	0XD);
 	MakeCode	(0X47F710);
+	MakeName	(0X47F710,	"Spawn_Part_Of_Monster_X_3");
 	MakeCode	(x=0X47F713);
 	OpHex		(x,	1);
 	MakeCode	(x=0X47F719);
@@ -126171,6 +126243,7 @@ static Bytes_23(void) {
 	MakeComm	(0X48008F,	"Trap to Debugger");
 	MakeCode	(x=0X48008F);
 	OpHex		(x,	0);
+	MakeName	(0X480090,	"Create_Fish_Missiles");
 	MakeCode	(x=0X480093);
 	OpHex		(x,	1);
 	MakeCode	(x=0X480096);
@@ -126322,6 +126395,7 @@ static Bytes_23(void) {
 	OpOff		(x,	128,	0);
 	MakeArray	(0X480296,	0XA);
 	MakeCode	(0X4802A0);
+	MakeName	(0X4802A0,	"Spawn_Part_Of_Monster_X");
 	MakeCode	(x=0X4802A3);
 	OpHex		(x,	1);
 	MakeCode	(x=0X4802A6);
@@ -126446,6 +126520,7 @@ static Bytes_23(void) {
 	MakeArray	(0X48052D,	0X1F);
 	MakeArray	(0X48054C,	0X4);
 	MakeCode	(0X480550);
+	MakeName	(0X480550,	"Create_Enemy_Projectiles");
 	MakeCode	(x=0X480553);
 	OpHex		(x,	1);
 	MakeCode	(x=0X480559);
@@ -126666,6 +126741,7 @@ static Bytes_23(void) {
 	OpOff		(x,	128,	0);
 	MakeArray	(0X4808BD,	0X3);
 	MakeCode	(0X4808C0);
+	MakeName	(0X4808C0,	"Spawn_Part_Of_Monster_X_2");
 	MakeCode	(x=0X4808C3);
 	OpHex		(x,	1);
 	MakeCode	(x=0X4808C6);
@@ -126996,6 +127072,7 @@ static Bytes_23(void) {
 	MakeCode	(x=0X480F4F);
 	OpHex		(x,	1);
 	MakeCode	(0X480F55);
+	MakeName	(0X480F55,	"fread_wrapper");
 	MakeCode	(x=0X480F57);
 	OpOff		(x,	0,	0);
 	OpOff		(x,	128,	0);
@@ -127656,6 +127733,7 @@ static Bytes_23(void) {
 	MakeCode	(x=0X48197C);
 	OpStkvar	(x,	1);
 	MakeCode	(0X481981);
+	MakeName	(0X481981,	"fwrite_wrapper");
 	MakeCode	(x=0X481983);
 	OpOff		(x,	0,	0);
 	OpOff		(x,	128,	0);
@@ -127964,14 +128042,14 @@ static Bytes_23(void) {
 	OpStkvar	(x,	0);
 	MakeComm	(0X481EB5,	"status");
 	MakeCode	(0X481EBB);
-	MakeRptCmt	(0X481EC2,	"Exception filter 0 for function 481D27");
+	MakeRptCmt	(0X481EC2,	"Exception filter 0 for function start");
 	MakeCode	(x=0X481EC2);
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X481EC9);
 	OpStkvar	(x,	0);
 	MakeComm	(0X481ECC,	"ExceptionInfo");
 	MakeComm	(0X481ECD,	"int");
-	MakeRptCmt	(0X481ED6,	"Exception handler 0 for function 481D27");
+	MakeRptCmt	(0X481ED6,	"Exception handler 0 for function start");
 	MakeCode	(x=0X481ED6);
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X481ED9);
@@ -130757,6 +130835,15 @@ static Bytes_23(void) {
 	OpHex		(x,	1);
 	MakeCode	(x=0X4854BD);
 	OpHex		(x,	1);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_24(void) {
+        auto x;
+#define id x
+
 	MakeComm	(0X4854C4,	"dwMoveMethod");
 	MakeComm	(0X4854C6,	"int");
 	MakeComm	(0X4854C7,	"int");
@@ -130864,15 +130951,6 @@ static Bytes_23(void) {
 	OpStkvar	(x,	1);
 	MakeCode	(0X485637);
 	MakeName	(0X485637,	"__write");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_24(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X485639);
 	OpOff		(x,	0,	0);
 	OpOff		(x,	128,	0);
@@ -131472,7 +131550,7 @@ static Bytes_24(void) {
 	MakeCode	(0X485EE4);
 	MakeName	(0X485EE4,	"__rtzeropop");
 	MakeRptCmt	(0X485EE6,	"Microsoft VisualC 2-8/net runtime");
-	MakeName	(0X485EE6,	"__rtzeronpo");
+	MakeName	(0X485EE6,	"__rtzeronpop");
 	MakeComm	(0X485EE8,	"Push 0 onto the stack");
 	MakeRptCmt	(0X485EEB,	"Microsoft VisualC 2-8/net runtime");
 	MakeCode	(0X485EEB);
@@ -133110,12 +133188,12 @@ static Bytes_24(void) {
 	OpHex		(x,	1);
 	MakeComm	(0X487EAD,	"should be align 10h");
 	MakeCode	(0X487EAD);
-	MakeComm	(0X487EB0,	"jump table for switch statement");
+	MakeComm	(0X487EB0,	"UnwindUp0_0");
 	MakeDword	(x=0X487EB0);
 	MakeArray	(x,	0X8);
 	OpOff		(x,	0,	0);
 	OpOff		(x,	128,	0);
-	MakeComm	(0X487EB3,	"jump table for switch statement");
+	MakeComm	(0X487EB3,	"UnwindUp0_0");
 	MakeRptCmt	(0X487ED0,	"jumptable 00487E2C case 7");
 	MakeCode	(0X487ED0);
 	MakeName	(0X487ED0,	"UnwindUp7_0");
@@ -135814,6 +135892,15 @@ static Bytes_24(void) {
 	MakeCode	(x=0X48ABC9);
 	OpHex		(x,	1);
 	MakeCode	(0X48ABD6);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_25(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0X48ABDE);
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X48ABE1);
@@ -135940,15 +136027,6 @@ static Bytes_24(void) {
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X48AD90);
 	OpStkvar	(x,	0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_25(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X48AD93);
 	OpStkvar	(x,	0);
 	OpStkvar	(x,	1);
@@ -137356,10 +137434,10 @@ static Bytes_25(void) {
 	MakeName	(0X48C270,	"aArmsitem_tsc");
 	MakeArray	(0X48C27D,	0X3);
 	MakeStr		(0X48C280,	0X48C28A);
-	MakeName	(0X48C280,	"aSS_pbm");
+	MakeName	(0X48C280,	"format");
 	MakeArray	(0X48C28A,	0X2);
 	MakeStr		(0X48C28C,	0X48C28F);
-	MakeName	(0X48C28C,	"aRb");
+	MakeName	(0X48C28C,	"mode");
 	MakeStr		(0X48C290,	0X48C2A1);
 	MakeName	(0X48C290,	"aDoukutsu200412");
 	MakeArray	(0X48C2A1,	0X3);
@@ -137412,7 +137490,7 @@ static Bytes_25(void) {
 	MakeStr		(0X48C390,	0X48C3A7);
 	MakeName	(0X48C390,	"Text");
 	MakeStr		(0X48C3A8,	0X48C3B3);
-	MakeName	(0X48C3A8,	"format");
+	MakeName	(0X48C3A8,	"aSNpc_tbl");
 	MakeStr		(0X48C3B4,	0X48C3BB);
 	MakeName	(0X48C3B4,	"aGggib_0");
 	MakeStr		(0X48C3BC,	0X48C3D2);
@@ -137478,7 +137556,7 @@ static Bytes_25(void) {
 	MakeName	(0X48C494,	"aSS_1");
 	MakeArray	(0X48C49A,	0X2);
 	MakeStr		(0X48C49C,	0X48C49F);
-	MakeName	(0X48C49C,	"mode");
+	MakeName	(0X48C49C,	"aRb_2");
 	MakeStr		(0X48C4A0,	0X48C4AA);
 	MakeName	(0X48C4A0,	"aError_log");
 	MakeArray	(0X48C4AA,	0X2);
@@ -137501,12 +137579,12 @@ static Bytes_25(void) {
 	MakeName	(0X48C4D4,	"aWb");
 	MakeComm	(0X48C4D8,	"The tag-text \"(C)Pixel\" used to protect images");
 	MakeStr		(0X48C4D8,	0X48C4E1);
-	MakeName	(0X48C4D8,	"ROM_ImageTag");
+	MakeName	(0X48C4D8,	"Pixel_Copyright_String");
 	MakeArray	(0X48C4E1,	0X3);
 	MakeStr		(0X48C4E4,	0X48C4E7);
 	MakeName	(0X48C4E4,	"aRb_15");
 	MakeStr		(0X48C4E8,	0X48C4EE);
-	MakeName	(0X48C4E8,	"Ptr_Graphic");
+	MakeName	(0X48C4E8,	"aPIXEL");
 	MakeArray	(0X48C4EE,	0X2);
 	MakeStr		(0X48C4F0,	0X48C4F7);
 	MakeName	(0X48C4F0,	"aMychar");
@@ -137542,7 +137620,7 @@ static Bytes_25(void) {
 	MakeName	(0X48C564,	"aFade");
 	MakeArray	(0X48C569,	0X3);
 	MakeStr		(0X48C56C,	0X48C575);
-	MakeName	(0X48C56C,	"aCredit01");
+	MakeName	(0X48C56C,	"Ptr_Graphic");
 	MakeArray	(0X48C575,	0X3);
 	MakeStr		(0X48C578,	0X48C58A);
 	MakeName	(0X48C578,	"aPixtoneDByte");
@@ -137644,9 +137722,9 @@ static Bytes_25(void) {
 	MakeDouble	(0X48C6F0);
 	MakeDouble	(0X48C6F8);
 	MakeStr		(0X48C700,	0X48C70C);
-	MakeName	(0X48C700,	"aProfile_dat");
+	MakeName	(0X48C700,	"Profile.dat");
 	MakeStr		(0X48C70C,	0X48C715);
-	MakeName	(0X48C70C,	"aDo041220");
+	MakeName	(0X48C70C,	"Profile.dat_Check");
 	MakeArray	(0X48C715,	0X3);
 	MakeStr		(0X48C718,	0X48C71E);
 	MakeName	(0X48C718,	"aSS_7");
@@ -137906,8 +137984,7 @@ static Bytes_25(void) {
 	MakeStr		(0X48CAD4,	0X48CAD8);
 	MakeStruct	(0X48CAD8,	"_msEH");
 	MakeStr		(0X48CAE4,	0X48CAE8);
-	MakeComm	(0X48CAE8,	"SEH scope table for function 481D27");
-	MakeStruct	(0X48CAE8,	"_SCOPETABLE_ENTRY");
+	MakeStruct	(0X48CAE8,	"_msEH");
 	MakeStr		(0X48CAF4,	0X48CB19);
 	MakeName	(0X48CAF4,	"aMicrosoftVisua");
 	MakeArray	(0X48CB19,	0X3);
@@ -139595,6 +139672,15 @@ static Bytes_25(void) {
 	MakeComm	(0X493624,	"Which key is \"minimap\"");
 	MakeDword	(0X493624);
 	MakeName	(0X493624,	"Key_For_Minimap");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_26(void) {
+        auto x;
+#define id x
+
 	MakeComm	(0X493628,	"Which key is \"jump\"");
 	MakeDword	(0X493628);
 	MakeName	(0X493628,	"Key_For_Jump");
@@ -139632,11 +139718,91 @@ static Bytes_25(void) {
 	MakeDword	(0X493660);
 	MakeName	(0X493660,	"ROM_WeaponExpTables");
 	MakeArray	(0X493664,	0X4);
-	MakeDword	(0X493668);
-	MakeByte	(0X49366C);
+	MakeDword	(x=0X493668);
+	OpDecimal	(x,	0);
+	MakeByte	(x=0X49366C);
+	OpDecimal	(x,	0);
 	MakeByte	(0X49366D);
-	MakeArray	(0X49366E,	0X2);
-	MakeWord	(0X493708);
+	MakeArray	(x,	0X2);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X493670);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X493674);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X493678);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X49367C);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X493680);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X493684);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X493688);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X49368C);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X493690);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X493694);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X493698);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X49369C);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X4936A0);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X4936A4);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X4936A8);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X4936AC);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X4936B0);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X4936B4);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X4936B8);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X4936BC);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X4936C0);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X4936C4);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X4936C8);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X4936CC);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X4936D0);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X4936D4);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X4936D8);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X4936DC);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X4936E0);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X4936E4);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X4936E8);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X4936EC);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X4936F0);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X4936F4);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X4936F8);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X4936FC);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X493700);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X493704);
+	OpDecimal	(x,	0);
+	MakeWord	(x=0X493708);
+	OpDecimal	(x,	0);
 	MakeWord	(0X49370A);
 	MakeWord	(0X49370C);
 	MakeWord	(0X49374C);
@@ -139660,15 +139826,6 @@ static Bytes_25(void) {
 	MakeName	(0X4937B0,	"ROM_MapHeaders_Tileset_Name");
 	MakeStr		(0X4937D0,	0X4937F0);
 	MakeName	(0X4937D0,	"ROM_MapHeaders_Map_File_Name");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_26(void) {
-        auto x;
-#define id x
-
 	MakeDword	(0X4937F0);
 	MakeName	(0X4937F0,	"ROM_MapHeaders_BGType");
 	MakeStr		(0X4937F4,	0X4937F7);
@@ -142685,7 +142842,7 @@ static Bytes_26(void) {
 	OpOff		(x,	128,	0);
 	MakeArray	(0X498B14,	0XC);
 	MakeDword	(0X498B20);
-	MakeName	(0X498B20,	"Prevent_Crash_Report_Failure");
+	MakeName	(0X498B20,	"Crash_Report_Failure_Check");
 	MakeArray	(0X498B24,	0XC);
 	MakeDword	(x=0X498B38);
 	OpOff		(x,	0,	0);
@@ -142903,9 +143060,9 @@ static Bytes_26(void) {
 	MakeName	(0X499C70,	"MenuRectFlash");
 	MakeDword	(0X499C74);
 	MakeDword	(0X499C78);
-	MakeName	(0X499C78,	"BackgroundSizeX");
+	MakeName	(0X499C78,	"Background_Tile_Width");
 	MakeDword	(0X499C7C);
-	MakeName	(0X499C7C,	"BackgroundSizeY");
+	MakeName	(0X499C7C,	"Background_Tile_Height");
 	MakeDword	(0X499C80);
 	MakeDword	(0X499C84);
 	MakeDword	(0X499C88);
@@ -143024,20 +143181,20 @@ static Bytes_26(void) {
 	MakeDword	(0X49CDE8);
 	MakeComm	(0X49D368,	"Handle to the game's font");
 	MakeStr		(0X49D368,	0X49D374);
-	MakeName	(0X49D368,	"Handle_Font_Object");
+	MakeName	(0X49D368,	"Font_Handle");
 	MakeDword	(0X49D374);
-	MakeName	(0X49D374,	"Fullscreen_Width");
+	MakeName	(0X49D374,	"Fullscreen_Surface_Height");
 	MakeDword	(0X49D378);
-	MakeName	(0X49D378,	"Fullscreen_Height");
+	MakeName	(0X49D378,	"Window_Surface_Width");
 	MakeComm	(0X49D37C,	"Instance of the Direct Draw object, once created");
 	MakeDword	(0X49D37C);
 	MakeName	(0X49D37C,	"Direct_Draw_Obj");
 	MakeComm	(0X49D380,	"LPDIRECTDRAW7SURFACE* to the main display");
 	MakeDword	(0X49D380);
-	MakeName	(0X49D380,	"DD7_SurfaceA");
+	MakeName	(0X49D380,	"DD7_Final_Screen_Surface");
 	MakeComm	(0X49D384,	"LPDIRECTDRAW7SURFACE* to the main display");
 	MakeDword	(0X49D384);
-	MakeName	(0X49D384,	"DD7_SurfaceB");
+	MakeName	(0X49D384,	"DD7_Screen_Surface");
 	MakeComm	(0X49D388,	"image resources");
 	MakeStr		(0X49D388,	0X49D398);
 	MakeName	(0X49D388,	"Image_Res_Surface");
@@ -143051,9 +143208,9 @@ static Bytes_26(void) {
 	MakeName	(0X49D3EC,	"DD7_SurfaceB_ReleaseDC");
 	MakeComm	(0X49D428,	"Window rect, only used once");
 	MakeStruct	(0X49D428,	"tagRECT");
-	MakeName	(0X49D428,	"Window_Rect");
+	MakeName	(0X49D428,	"Final_Screen_Dist_Rects");
 	MakeDword	(0X49D438);
-	MakeName	(0X49D438,	"Last_Tick_Count");
+	MakeName	(0X49D438,	"Previous_Tick_Count");
 	MakeDword	(0X49D43C);
 	MakeName	(0X49D43C,	"Current_Tick_Count");
 	MakeComm	(0X49D440,	"RECT struct used to copy the screen");
@@ -143066,47 +143223,44 @@ static Bytes_26(void) {
 	MakeName	(0X49D450,	"DDBLTFX_ScreenCopy");
 	MakeStr		(0X49D451,	0X49D4B4);
 	MakeStruct	(0X49D4B4,	"tagRECT");
-	MakeName	(0X49D4B4,	"Blit_Rect_4B4");
+	MakeName	(0X49D4B4,	"Final_Dst_Rect_1");
 	MakeStruct	(0X49D4C4,	"tagRECT");
-	MakeName	(0X49D4C4,	"Blit_Rect_4C4");
+	MakeName	(0X49D4C4,	"Final_Src_Rect_1");
 	MakeStruct	(0X49D4D4,	"tagRECT");
-	MakeName	(0X49D4D4,	"Blit_Rect_4D4");
+	MakeName	(0X49D4D4,	"Final_Dst_Rect_2");
 	MakeStruct	(0X49D4E4,	"tagRECT");
-	MakeName	(0X49D4E4,	"Blit_Rect_4E4");
-	MakeDword	(0X49D4F4);
-	MakeDword	(0X49D4F8);
-	MakeDword	(0X49D4FC);
-	MakeDword	(0X49D500);
-	MakeDword	(0X49D504);
-	MakeDword	(0X49D508);
-	MakeDword	(0X49D50C);
-	MakeDword	(0X49D510);
-	MakeDword	(0X49D514);
-	MakeName	(0X49D514,	"Rect_Clear");
-	MakeDword	(0X49D518);
-	MakeDword	(0X49D51C);
-	MakeDword	(0X49D520);
+	MakeName	(0X49D4E4,	"Final_Src_Rect_2");
+	MakeStruct	(0X49D4F4,	"tagRECT");
+	MakeName	(0X49D4F4,	"Final_Dst_Rect_3");
+	MakeStruct	(0X49D504,	"tagRECT");
+	MakeName	(0X49D504,	"Final_Src_Rect_3");
+	MakeStruct	(0X49D514,	"tagRECT");
+	MakeName	(0X49D514,	"Final_Dest_Rect_4");
 	MakeArray	(0X49D524,	0X4);
 	MakeStr		(0X49D528,	0X49D578);
-	MakeName	(0X49D528,	"DDBLTFX_Clear");
+	MakeName	(0X49D528,	"Draw_Colour_Fill_DDBLTFX");
 	MakeStr		(0X49D578,	0X49D58C);
-	MakeDword	(0X49D58C);
-	MakeDword	(0X49D590);
-	MakeDword	(0X49D594);
-	MakeDword	(0X49D598);
+	MakeName	(0X49D578,	"Draw_Colour_Fill_DDBLTFX_dxFillColor");
+	MakeStruct	(0X49D58C,	"tagRECT");
+	MakeName	(0X49D58C,	"Final_Dst_Rect_5");
 	MakeArray	(0X49D59C,	0X4);
 	MakeStr		(0X49D5A0,	0X49D5F0);
+	MakeName	(0X49D5A0,	"Draw_Colour_Fill_Onto_Surface_DDBLTFX");
 	MakeStr		(0X49D5F0,	0X49D608);
+	MakeName	(0X49D5F0,	"Draw_Colour_Fill_Onto_Surface_DDBLTFX_dxFillColor");
 	MakeDword	(0X49D608);
 	MakeDword	(0X49D60C);
+	MakeName	(0X49D60C,	"Credits_Picture_X");
 	MakeDword	(0X49D610);
-	MakeName	(0X49D610,	"size");
+	MakeName	(0X49D610,	"TSC_Length");
 	MakeDword	(0X49D614);
+	MakeName	(0X49D614,	"TSC_Buffer");
 	MakeDword	(0X49D618);
 	MakeDword	(0X49D61C);
 	MakeDword	(0X49D620);
 	MakeDword	(0X49D624);
 	MakeDword	(0X49D628);
+	MakeName	(0X49D628,	"Text_Object_Array?");
 	MakeDword	(0X49D62C);
 	MakeDword	(0X49D630);
 	MakeDword	(0X49D634);
@@ -143118,12 +143272,26 @@ static Bytes_26(void) {
 	MakeDword	(0X49DB30);
 	MakeName	(0X49DB30,	"Fade_Status");
 	MakeDword	(0X49DB34);
+	MakeName	(0X49DB34,	"Fade_Complete");
 	MakeDword	(0X49DB38);
+	MakeName	(0X49DB38,	"Fade_Counter");
 	MakeByte	(0X49DB3C);
+	MakeName	(0X49DB3C,	"Fade_Buffer_Int");
 	MakeStr		(0X49DB3D,	0X49DC68);
 	MakeByte	(0X49DC68);
+	MakeName	(0X49DC68,	"Fade_Buffer_Bool");
 	MakeByte	(0X49DC69);
-	MakeArray	(0X49DC69,	0X51F);
+	MakeArray	(0X49DC69,	0X12B);
+	MakeByte	(0X49DD94);
+	MakeName	(0X49DD94,	"Fade_Type");
+	MakeArray	(0X49DD95,	0X3);
+	MakeByte	(0X49DD98);
+	MakeArray	(0X49DD99,	0X7);
+	MakeComm	(0X49DDA0,	"1 bit each so 8000 flags (More than that and you're setting adresses elsewhere)");
+	MakeByte	(x=0X49DDA0);
+	MakeArray	(x,	0X3E8);
+	OpDecimal	(x,	0);
+	MakeName	(0X49DDA0,	"Event_Flags");
 	MakeDword	(0X49E188);
 	MakeDword	(0X49E18C);
 	MakeComm	(0X49E190,	"If set to true, the screen flashes occasionally");
@@ -143134,10 +143302,12 @@ static Bytes_26(void) {
 	MakeDword	(0X49E19C);
 	MakeDword	(0X49E1A0);
 	MakeDword	(0X49E1A4);
+	MakeName	(0X49E1A4,	"Draw_Sprite_Mask_6");
 	MakeDword	(0X49E1A8);
 	MakeDword	(0X49E1AC);
 	MakeDword	(0X49E1B0);
 	MakeDword	(0X49E1B4);
+	MakeName	(0X49E1B4,	"Draw_Sprite_Mask_7");
 	MakeDword	(0X49E1B8);
 	MakeDword	(0X49E1BC);
 	MakeDword	(0X49E1C0);
@@ -143145,12 +143315,15 @@ static Bytes_26(void) {
 	MakeDword	(0X49E1C4);
 	MakeName	(0X49E1C4,	"FlashColor");
 	MakeDword	(0X49E1C8);
-	MakeName	(0X49E1C8,	"Related_To_Camera");
+	MakeName	(0X49E1C8,	"Camera_X_Position_2");
 	MakeDword	(0X49E1CC);
-	MakeName	(0X49E1CC,	"Related_To_Camera_2");
+	MakeName	(0X49E1CC,	"Camera_Y_Position_2");
 	MakeDword	(0X49E1D0);
+	MakeName	(0X49E1D0,	"Camera_X_Destination");
 	MakeDword	(0X49E1D4);
+	MakeName	(0X49E1D4,	"Camera_Y_Destination");
 	MakeDword	(0X49E1D8);
+	MakeName	(0X49E1D8,	"Camera_Move_Ticks");
 	MakeComm	(0X49E1DC,	"How long the screen shakes for. Soft shake");
 	MakeDword	(0X49E1DC);
 	MakeName	(0X49E1DC,	"SoftQuakeDuration");
@@ -143184,24 +143357,29 @@ static Bytes_26(void) {
 	MakeArray	(0X49E21C,	0X4);
 	MakeByte	(0X49E220);
 	MakeArray	(0X49E220,	0X108);
-	MakeName	(0X49E220,	"FullExePath_data");
+	MakeName	(0X49E220,	"Data_Folder_Full_Path");
 	MakeComm	(0X49E328,	"Full path to the executable");
 	MakeByte	(0X49E328);
 	MakeArray	(0X49E328,	0X104);
 	MakeName	(0X49E328,	"FullExePath");
 	MakeDword	(0X49E42C);
+	MakeName	(0X49E42C,	"Controller_Button_IDs");
 	MakeStr		(0X49E430,	0X49E44C);
 	MakeDword	(0X49E44C);
 	MakeName	(0X49E44C,	"AppInstance");
 	MakeDword	(0X49E450);
+	MakeName	(0X49E450,	"Window_Width");
 	MakeDword	(0X49E454);
+	MakeName	(0X49E454,	"Window_Height");
 	MakeDword	(0X49E458);
 	MakeName	(0X49E458,	"AppWinHandle");
 	MakeDword	(0X49E45C);
+	MakeName	(0X49E45C,	"Gamepad_Enabled");
 	MakeDword	(0X49E460);
+	MakeName	(0X49E460,	"Is_Fullscreen");
 	MakeComm	(0X49E464,	"Set to non-zero to have an FPS counter");
 	MakeDword	(0X49E464);
-	MakeName	(0X49E464,	"ShowFPS");
+	MakeName	(0X49E464,	"FPS_Counter_Enabled");
 	MakeComm	(0X49E468,	"Set to 0 when focus is lost. Locks keyboard when unset");
 	MakeDword	(0X49E468);
 	MakeName	(0X49E468,	"CanAcceptInput");
@@ -143219,18 +143397,24 @@ static Bytes_26(void) {
 	MakeDword	(0X49E47C);
 	MakeName	(0X49E47C,	"hObject");
 	MakeDword	(0X49E480);
+	MakeName	(0X49E480,	"Level_Layout_Buffer");
 	MakeByte	(0X49E484);
-	MakeStr		(0X49E485,	0X49E586);
+	MakeArray	(0X49E484,	0X102);
+	MakeRptCmt	(0X49E586,	"In blocks");
 	MakeWord	(0X49E586);
+	MakeName	(0X49E586,	"Level_Width");
+	MakeRptCmt	(0X49E588,	"In blocks");
 	MakeWord	(0X49E588);
+	MakeName	(0X49E588,	"Level_Height");
 	MakeArray	(0X49E58A,	0X2);
 	MakeByte	(0X49E58C);
 	MakeArray	(0X49E58D,	0X3);
 	MakeDword	(0X49E590);
 	MakeDword	(0X49E594);
-	MakeByte	(0X49E598);
-	MakeArray	(0X49E598,	0X20);
-	MakeName	(0X49E598,	"Ptr_String");
+	MakeByte	(x=0X49E598);
+	MakeArray	(x,	0X20);
+	OpDecimal	(x,	0);
+	MakeName	(0X49E598,	"Room_Name");
 	MakeComm	(0X49E5B8,	"MPJ array, indexed by map ID");
 	MakeByte	(0X49E5B8);
 	MakeStr		(0X49E5B9,	0X49E638);
@@ -143359,6 +143543,7 @@ static Bytes_26(void) {
 	MakeArray	(0X4A4B04,	0X4);
 	MakeDword	(0X4A4B08);
 	MakeDword	(0X4A4B48);
+	MakeName	(0X4A4B48,	"Direct_Sound_Secondary_Buffer_Array?");
 	MakeDword	(0X4A4B4C);
 	MakeByte	(0X4A4B50);
 	MakeArray	(0X4A4B50,	0X1F8);
@@ -143386,8 +143571,10 @@ static Bytes_26(void) {
 	MakeDword	(0X4A4DD0);
 	MakeStr		(0X4A4DD4,	0X4A4E10);
 	MakeDword	(0X4A4E10);
+	MakeName	(0X4A4E10,	"Music_Fade_Flag?");
 	MakeArray	(0X4A4E14,	0X4);
 	MakeWord	(0X4A4E18);
+	MakeName	(0X4A4E18,	"Music_Object?");
 	MakeStr		(0X4A4E1A,	0X4A4F00);
 	MakeByte	(0X4A4F00);
 	MakeStr		(0X4A4F01,	0X4A5100);
@@ -143424,29 +143611,30 @@ static Bytes_26(void) {
 	MakeStr		(0X4A57C4,	0X4A57E8);
 	MakeComm	(0X4A57E8,	"Instance of the Direct Sound object, once created");
 	MakeDword	(0X4A57E8);
-	MakeName	(0X4A57E8,	"DirectSoundObj");
+	MakeName	(0X4A57E8,	"Direct_Sound_Object");
 	MakeDword	(0X4A57EC);
+	MakeName	(0X4A57EC,	"Direct_Sound_Primary_Buffer");
 	MakeDword	(0X4A57F0);
-	MakeName	(0X4A57F0,	"CurrentMapID");
+	MakeName	(0X4A57F0,	"Current_Map_ID");
 	MakeDword	(0X4A57F4);
-	MakeName	(0X4A57F4,	"CurrentSongID");
+	MakeName	(0X4A57F4,	"Current_Song_ID");
 	MakeComm	(0X4A57F8,	"Previous song beat");
 	MakeDword	(0X4A57F8);
-	MakeName	(0X4A57F8,	"PreviousSongBeat");
+	MakeName	(0X4A57F8,	"Previous_Song_Beat");
 	MakeComm	(0X4A57FC,	"backup to revert to the last song played");
 	MakeDword	(0X4A57FC);
-	MakeName	(0X4A57FC,	"PreviousSongID");
+	MakeName	(0X4A57FC,	"Previous_Song_ID");
 	MakeComm	(0X4A5800,	"3 elements [68 bytes]: 004A5800 - 004A58CB");
-	MakeName	(0X4A5800,	"WhimsicalStar");
+	MakeName	(0X4A5800,	"Whimsical_Star");
 	MakeStr		(0X4A5801,	0X4A580C);
 	MakeDword	(0X4A580C);
-	MakeName	(0X4A580C,	"WhimsicalStar_X_Position");
+	MakeName	(0X4A580C,	"Whimsical_Star_X_Position");
 	MakeDword	(0X4A5810);
-	MakeName	(0X4A5810,	"WhimsicalStar_Y_Position");
+	MakeName	(0X4A5810,	"Whimsical_Star_Y_Position");
 	MakeDword	(0X4A5814);
-	MakeName	(0X4A5814,	"WhimsicalStar_X_Velocity");
+	MakeName	(0X4A5814,	"Whimsical_Star_X_Velocity");
 	MakeDword	(0X4A5818);
-	MakeName	(0X4A5818,	"WhimsicalStar_Y_Velocity");
+	MakeName	(0X4A5818,	"Whimsical_Star_Y_Velocity");
 	MakeStr		(0X4A581C,	0X4A5850);
 	MakeDword	(0X4A5850);
 	MakeDword	(0X4A5854);
@@ -143475,6 +143663,15 @@ static Bytes_26(void) {
 	MakeComm	(0X4A5AE0,	"Which position into the current script file we're at");
 	MakeDword	(0X4A5AE0);
 	MakeName	(0X4A5AE0,	"Script_Position");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_27(void) {
+        auto x;
+#define id x
+
 	MakeComm	(0X4A5AE4,	"Which column text is written at");
 	MakeDword	(0X4A5AE4);
 	MakeName	(0X4A5AE4,	"TextColumn");
@@ -143492,6 +143689,7 @@ static Bytes_26(void) {
 	MakeDword	(0X4A5B14);
 	MakeDword	(0X4A5B18);
 	MakeDword	(0X4A5B1C);
+	MakeName	(0X4A5B1C,	"Draw_Sprite_Mask_2");
 	MakeDword	(0X4A5B20);
 	MakeDword	(0X4A5B24);
 	MakeDword	(0X4A5B28);
@@ -143627,15 +143825,6 @@ static Bytes_26(void) {
 	MakeName	(0X4A6234,	"NPC_Y_Velocity");
 	MakeDword	(0X4A6238);
 	MakeName	(0X4A6238,	"NPC_Generic?_X_Acceleration?");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_27(void) {
-        auto x;
-#define id x
-
 	MakeDword	(0X4A623C);
 	MakeName	(0X4A623C,	"NPC_Generic?_Y_Acceleration?");
 	MakeDword	(0X4A6240);
@@ -143696,9 +143885,11 @@ static Bytes_27(void) {
 	MakeName	(0X4A62C4,	"NPC_Damage_On_Contact");
 	MakeDword	(0X4A62C8);
 	MakeName	(0X4A62C8,	"NPC_Parent_Variable");
+	MakeComm	(0X4A62CC,	"Here is the NPC RAM");
 	MakeByte	(0X4A62CC);
 	MakeArray	(0X4A62CC,	0X15734);
-	MakeStr		(0X4BBA00,	0X4BBA20);
+	MakeByte	(0X4BBA00);
+	MakeArray	(0X4BBA00,	0X20);
 	MakeName	(0X4BBA00,	"Unused_RAM");
 	MakeDword	(0X4BBA20);
 	MakeDword	(0X4BBA24);
@@ -144141,6 +144332,7 @@ static Bytes_27(void) {
 	MakeDword	(0X4BCC90);
 	MakeDword	(0X4BCC94);
 	MakeDword	(0X4BCC98);
+	MakeName	(0X4BCC98,	"Locale_");
 	MakeDword	(0X4BCC9C);
 	MakeDword	(0X4BCCA0);
 	MakeByte	(0X4BCCA4);
@@ -144188,29 +144380,30 @@ static Bytes_27(void) {
 	MakeDword	(0X4BE040);
 	MakeDword	(0X4BE044);
 	MakeName	(0X4BE044,	"PcommandLine");
-	MakeComm	(0X4BF000,	"Nothing to see here. (Note : This is an error. TODO : Ask rain how to remove this shit)");
-	MakeByte	(0X4BF000);
-	MakeArray	(0X4BF000,	0X4FFE);
 }
 
 static Functions_0(void) {
 
 	MakeFunction    (0X401000,0X401023);
 	SetFunctionFlags(0X401000,0x4010);
+	SetType(0X401000, "void Clr_Weaps(void);");
 	SetFunctionCmt(0X401000,	"Clear Weapons", 1);
 	MakeFrame(0X401000, 0, 4, 0);
 	MakeFunction    (0X401030,0X401049);
 	SetFunctionFlags(0X401030,0x4010);
+	SetType(0X401030, "void Clr_Inv(void);");
 	SetFunctionCmt(0X401030,	"Clear Inventory", 1);
 	MakeFrame(0X401030, 0, 4, 0);
 	MakeFunction    (0X401050,0X401155);
 	SetFunctionFlags(0X401050,0x4010);
+	SetType(0X401050, "int __cdecl TSC_AMplus(int Weapon_To_Give, int Weapon_Ammo);");
 	SetFunctionCmt(0X401050,	"TSC Give Weapon [AM+]", 1);
 	MakeFrame(0X401050, 0X4, 4, 0);
 	MakeNameEx(0X40114C, "Return_1", SN_LOCAL);
 	MakeNameEx(0X401151, "Return", SN_LOCAL);
 	MakeFunction    (0X401160,0X401213);
 	SetFunctionFlags(0X401160,0x4010);
+	SetType(0X401160, "int __cdecl TSC_AMminus(int Weapon_To_Lose);");
 	SetFunctionCmt(0X401160,	"TSC Lose Weapon [AM-]", 1);
 	MakeFrame(0X401160, 0X4, 4, 0);
 	MakeNameEx(0X40120F, "Return", SN_LOCAL);
@@ -144228,22 +144421,22 @@ static Functions_0(void) {
 	MakeFrame(0X401330, 0X4, 4, 0);
 	MakeNameEx(0X4013B6, "Return", SN_LOCAL);
 	MakeFunction    (0X4013C0,0X4016EB);
-	SetFunctionFlags(0X4013C0,0x4010);
+	SetFunctionFlags(0X4013C0,0x10);
 	SetFunctionCmt(0X4013C0,	"Manage Inventory Cursor", 1);
-	MakeFrame(0X4013C0, 0X10, 4, 0);
+	MakeFrame(0X4013C0, 0XC, 4, 0);
 	MakeNameEx(0X4016A7, "jmp_Return", SN_LOCAL);
 	MakeNameEx(0X4016A9, "Play_YN_Change_Choice", SN_LOCAL);
 	MakeNameEx(0X4016E6, "Return", SN_LOCAL);
 	MakeFunction    (0X4016F0,0X401D0D);
-	SetFunctionFlags(0X4016F0,0x4010);
+	SetFunctionFlags(0X4016F0,0x10);
 	MakeFrame(0X4016F0, 0XF4, 4, 0);
 	MakeLocal(0X4016F0, 0X401D0D, "[bp-0XE4]", "Dst_Rects");
 	MakeLocal(0X4016F0, 0X401D0D, "[bp-0X20]", "Src_Rects");
 	MakeNameEx(0X401D09, "Return", SN_LOCAL);
 	MakeFunction    (0X401D10,0X401F1F);
-	SetFunctionFlags(0X401D10,0x4010);
+	SetFunctionFlags(0X401D10,0x10);
 	MakeFrame(0X401D10, 0X128, 4, 0);
-	MakeLocal(0X401D10, 0X401F1F, "[bp-0X14]", "Dst_Rects");
+	MakeLocal(0X401D10, 0X401F1F, "[bp-0X14]", "Src_Rects");
 	MakeNameEx(0X401F13, "Return", SN_LOCAL);
 	MakeFunction    (0X401F20,0X401F5A);
 	SetFunctionFlags(0X401F20,0x4010);
@@ -144276,13 +144469,13 @@ static Functions_0(void) {
 	MakeFrame(0X402090, 0X4, 4, 0);
 	MakeNameEx(0X4020D7, "Return", SN_LOCAL);
 	MakeFunction    (0X4020E0,0X40218F);
-	SetFunctionFlags(0X4020E0,0x4010);
+	SetFunctionFlags(0X4020E0,0x10);
 	SetFunctionCmt(0X4020E0,	"Switch to Next Weapon", 1);
 	MakeFrame(0X4020E0, 0X4, 4, 0);
 	MakeNameEx(0X402166, "Play_Switch_Weapon", SN_LOCAL);
 	MakeNameEx(0X40218B, "Return", SN_LOCAL);
 	MakeFunction    (0X402190,0X402237);
-	SetFunctionFlags(0X402190,0x4010);
+	SetFunctionFlags(0X402190,0x10);
 	SetFunctionCmt(0X402190,	"Switch to Previous Weapon", 1);
 	MakeFrame(0X402190, 0X4, 4, 0);
 	MakeNameEx(0X40220E, "Play_Switch_Weapon", SN_LOCAL);
@@ -144292,7 +144485,7 @@ static Functions_0(void) {
 	SetFunctionCmt(0X402240,	"Unequip Weapon", 1);
 	MakeFrame(0X402240, 0, 4, 0);
 	MakeFunction    (0X402270,0X40236C);
-	SetFunctionFlags(0X402270,0x4010);
+	SetFunctionFlags(0X402270,0x10);
 	MakeFrame(0X402270, 0X148, 4, 0);
 	MakeLocal(0X402270, 0X40236C, "[bp-0X148]", "str");
 	MakeLocal(0X402270, 0X40236C, "[bp-0X2C]", "stream");
@@ -144304,25 +144497,25 @@ static Functions_0(void) {
 	MakeFrame(0X402370, 0X4, 4, 0);
 	MakeNameEx(0X4023C6, "Return", SN_LOCAL);
 	MakeFunction    (0X4023D0,0X402809);
-	SetFunctionFlags(0X4023D0,0x4010);
+	SetFunctionFlags(0X4023D0,0x10);
 	SetFunctionCmt(0X4023D0,	"Background Code", 1);
 	MakeFrame(0X4023D0, 0X1C, 4, 0);
 	MakeLocal(0X4023D0, 0X402809, "[bp-0X18]", "X_Position");
 	MakeLocal(0X4023D0, 0X402809, "[bp-0X14]", "Y_Position");
 	MakeLocal(0X4023D0, 0X402809, "[bp-0X10]", "Src_Rects");
 	MakeFunction    (0X402830,0X4029A8);
-	SetFunctionFlags(0X402830,0x4010);
+	SetFunctionFlags(0X402830,0x10);
 	SetFunctionCmt(0X402830,	"Render Map Background (BackgroundMode 3 only) (May be related to drawing water ?)", 1);
 	MakeFrame(0X402830, 0X44, 4, 0);
 	MakeLocal(0X402830, 0X4029A8, "[bp-0X40]", "X_Position");
 	MakeLocal(0X402830, 0X4029A8, "[bp-0X28]", "Src_Rects");
 	MakeLocal(0X402830, 0X4029A8, "[bp-0X18]", "Y_Position");
 	MakeFunction    (0X4029B0,0X402B27);
-	SetFunctionFlags(0X4029B0,0x4010);
+	SetFunctionFlags(0X4029B0,0x10);
 	SetFunctionCmt(0X4029B0,	"Check for whether a bullet can break a starblock", 1);
 	MakeFrame(0X4029B0, 0X8, 4, 0);
 	MakeFunction    (0X402B30,0X402F43);
-	SetFunctionFlags(0X402B30,0x4010);
+	SetFunctionFlags(0X402B30,0x10);
 	SetFunctionCmt(0X402B30,	"Solid tile -> Two stage filter for blocks that bullets are s'posta collide with", 1);
 	MakeFrame(0X402B30, 0X20, 4, 0);
 	MakeFunction    (0X402F50,0X402FBC);
@@ -144331,41 +144524,50 @@ static Functions_0(void) {
 	MakeFrame(0X402F50, 0, 4, 0);
 	MakeNameEx(0X402F8A, "Play_Shot_Hit_Wall", SN_LOCAL);
 	MakeFunction    (0X402FC0,0X4030A9);
-	SetFunctionFlags(0X402FC0,0x4010);
+	SetFunctionFlags(0X402FC0,0x10);
 	SetType(0X402FC0, "signed int __cdecl Bullet_Tile_Collision_Roof_Slope_1(int, int, int BulletID);");
-	MakeFrame(0X402FC0, 0X8, 4, 0);
+	MakeFrame(0X402FC0, 0X4, 4, 0);
+	MakeLocal(0X402FC0, 0X4030A9, "[bp+0X10]", "BulletID");
 	MakeFunction    (0X4030B0,0X403199);
-	SetFunctionFlags(0X4030B0,0x4010);
+	SetFunctionFlags(0X4030B0,0x10);
 	SetType(0X4030B0, "signed int __cdecl Bullet_Tile_Collision_Roof_Slope_2(int, int, int BulletID);");
-	MakeFrame(0X4030B0, 0X8, 4, 0);
+	MakeFrame(0X4030B0, 0X4, 4, 0);
+	MakeLocal(0X4030B0, 0X403199, "[bp+0X10]", "BulletID");
 	MakeFunction    (0X4031A0,0X403284);
-	SetFunctionFlags(0X4031A0,0x4010);
+	SetFunctionFlags(0X4031A0,0x10);
 	SetType(0X4031A0, "signed int __cdecl Bullet_Tile_Collision_Roof_Slope_3(int, int, int BulletID);");
-	MakeFrame(0X4031A0, 0X8, 4, 0);
+	MakeFrame(0X4031A0, 0X4, 4, 0);
+	MakeLocal(0X4031A0, 0X403284, "[bp+0X10]", "BulletID");
 	MakeFunction    (0X403290,0X403374);
-	SetFunctionFlags(0X403290,0x4010);
+	SetFunctionFlags(0X403290,0x10);
 	SetType(0X403290, "signed int __cdecl Bullet_Tile_Collision_Roof_Slope_4(int, int, int BulletID);");
-	MakeFrame(0X403290, 0X8, 4, 0);
+	MakeFrame(0X403290, 0X4, 4, 0);
+	MakeLocal(0X403290, 0X403374, "[bp+0X10]", "BulletID");
 	MakeFunction    (0X403380,0X40346B);
-	SetFunctionFlags(0X403380,0x4010);
+	SetFunctionFlags(0X403380,0x10);
 	SetType(0X403380, "signed int __cdecl Bullet_Tile_Collision_Floor_Slope_1(int, int, int BulletID);");
-	MakeFrame(0X403380, 0X8, 4, 0);
+	MakeFrame(0X403380, 0X4, 4, 0);
+	MakeLocal(0X403380, 0X40346B, "[bp+0X10]", "BulletID");
 	MakeFunction    (0X403470,0X403554);
-	SetFunctionFlags(0X403470,0x4010);
+	SetFunctionFlags(0X403470,0x10);
 	SetType(0X403470, "signed int __cdecl Bullet_Tile_Collision_Floor_Slope_2(int, int, int BulletID);");
-	MakeFrame(0X403470, 0X8, 4, 0);
+	MakeFrame(0X403470, 0X4, 4, 0);
+	MakeLocal(0X403470, 0X403554, "[bp+0X10]", "BulletID");
 	MakeFunction    (0X403560,0X403646);
-	SetFunctionFlags(0X403560,0x4010);
+	SetFunctionFlags(0X403560,0x10);
 	SetType(0X403560, "signed int __cdecl Bullet_Tile_Collision_Floor_Slope_3(int, int, int BulletID);");
-	MakeFrame(0X403560, 0X8, 4, 0);
+	MakeFrame(0X403560, 0X4, 4, 0);
+	MakeLocal(0X403560, 0X403646, "[bp+0X10]", "BulletID");
 	MakeFunction    (0X403650,0X403736);
-	SetFunctionFlags(0X403650,0x4010);
+	SetFunctionFlags(0X403650,0x10);
 	SetType(0X403650, "signed int __cdecl Bullet_Tile_Collision_Floor_Slope_4(int, int, int BulletID);");
-	MakeFrame(0X403650, 0X8, 4, 0);
+	MakeFrame(0X403650, 0X4, 4, 0);
+	MakeLocal(0X403650, 0X403736, "[bp+0X10]", "BulletID");
 	MakeFunction    (0X403740,0X403B95);
-	SetFunctionFlags(0X403740,0x4010);
+	SetFunctionFlags(0X403740,0x10);
 	SetFunctionCmt(0X403740,	"Bullet tile collision algorithm", 1);
-	MakeFrame(0X403740, 0X3C, 4, 0);
+	MakeFrame(0X403740, 0X38, 4, 0);
+	MakeLocal(0X403740, 0X403B95, "[bp-0X14]", "Loop_Counter");
 	MakeFunction    (0X403C00,0X403C32);
 	SetFunctionFlags(0X403C00,0x4010);
 	MakeFrame(0X403C00, 0X4, 4, 0);
@@ -144385,8 +144587,10 @@ static Functions_0(void) {
 	SetFunctionFlags(0X403D80,0x4010);
 	MakeFrame(0X403D80, 0X4, 4, 0);
 	MakeFunction    (0X403DC0,0X403F69);
-	SetFunctionFlags(0X403DC0,0x4010);
+	SetFunctionFlags(0X403DC0,0x10);
 	MakeFrame(0X403DC0, 0X10, 4, 0);
+	MakeLocal(0X403DC0, 0X403F69, "[bp-0X10]", "WeaponObj_Direction_Copy");
+	MakeLocal(0X403DC0, 0X403F69, "[bp-0XC]", "For_Loop_Counter");
 	MakeNameEx(0X403DCF, "Restart_Loop", SN_LOCAL);
 	MakeNameEx(0X403DD8, "Start_For_Loop", SN_LOCAL);
 	MakeNameEx(0X403F60, "jmp_Restart_Loop", SN_LOCAL);
@@ -144396,11 +144600,11 @@ static Functions_0(void) {
 	SetType(0X403F80, "int __cdecl Create_Bullet(int BulletID, int X_Position, int Y_Position, char Direction);");
 	MakeFrame(0X403F80, 0X4, 4, 0);
 	MakeFunction    (0X404160,0X4043D2);
-	SetFunctionFlags(0X404160,0x4010);
+	SetFunctionFlags(0X404160,0x10);
 	MakeFrame(0X404160, 0X84, 4, 0);
 	MakeNameEx(0X404225, "jmp_4041F0_default", SN_LOCAL);
 	MakeFunction    (0X4043F0,0X404769);
-	SetFunctionFlags(0X4043F0,0x4010);
+	SetFunctionFlags(0X4043F0,0x10);
 	MakeFrame(0X4043F0, 0X40, 4, 0);
 	MakeNameEx(0X4044AD, "jmp_404478_table", SN_LOCAL);
 	MakeNameEx(0X404528, "jmp_4044CF_default_case", SN_LOCAL);
@@ -144408,9 +144612,11 @@ static Functions_0(void) {
 	MakeNameEx(0X404615, "jmp_4045A8_default", SN_LOCAL);
 	MakeNameEx(0X404765, "Return", SN_LOCAL);
 	MakeFunction    (0X4047B0,0X404AFA);
-	SetFunctionFlags(0X4047B0,0x4010);
+	SetFunctionFlags(0X4047B0,0x10);
 	SetType(0X4047B0, "int __cdecl Bullet_04_05_06_Polar_Star(int Weapon_Obj, int Level);");
 	MakeFrame(0X4047B0, 0X74, 4, 0);
+	MakeLocal(0X4047B0, 0X404AFA, "[bp+0X8]", "Weapon_Obj");
+	MakeLocal(0X4047B0, 0X404AFA, "[bp+0XC]", "Level");
 	MakeNameEx(0X40485B, "jmp_404826_default", SN_LOCAL);
 	MakeNameEx(0X4048BA, "jmp_404885_default", SN_LOCAL);
 	MakeNameEx(0X404904, "jmp_4048CF_default", SN_LOCAL);
@@ -144418,9 +144624,67 @@ static Functions_0(void) {
 	MakeNameEx(0X404AA0, "jmp_Return1", SN_LOCAL);
 	MakeNameEx(0X404AF6, "Return", SN_LOCAL);
 	MakeFunction    (0X404B30,0X405103);
-	SetFunctionFlags(0X404B30,0x4010);
+	SetFunctionFlags(0X404B30,0x10);
 	SetType(0X404B30, "int __cdecl Bullet_07_08_09_Fireball(int Weapon_Obj, int);");
 	MakeFrame(0X404B30, 0XEC, 4, 0);
+	MakeLocal(0X404B30, 0X405103, "[bp-0XEC]", "Switch_case");
+	MakeLocal(0X404B30, 0X405103, "[bp-0XE8]", "Frame_E_3");
+	MakeLocal(0X404B30, 0X405103, "[bp-0XE4]", "Frame_E_4");
+	MakeLocal(0X404B30, 0X405103, "[bp-0XE0]", "Frame_F_1");
+	MakeLocal(0X404B30, 0X405103, "[bp-0XDC]", "Frame_F_2");
+	MakeLocal(0X404B30, 0X405103, "[bp-0XD8]", "Frame_F_3");
+	MakeLocal(0X404B30, 0X405103, "[bp-0XD4]", "Frame_F_4");
+	MakeLocal(0X404B30, 0X405103, "[bp-0XD0]", "Frame_G_1");
+	MakeLocal(0X404B30, 0X405103, "[bp-0XCC]", "Frame_G_2");
+	MakeLocal(0X404B30, 0X405103, "[bp-0XC8]", "Frame_G_3");
+	MakeLocal(0X404B30, 0X405103, "[bp-0XC4]", "Frame_G_4");
+	MakeLocal(0X404B30, 0X405103, "[bp-0XC0]", "Frame_H_1");
+	MakeLocal(0X404B30, 0X405103, "[bp-0XBC]", "Frame_H_2");
+	MakeLocal(0X404B30, 0X405103, "[bp-0XB8]", "Frame_H_3");
+	MakeLocal(0X404B30, 0X405103, "[bp-0XB4]", "Frame_H_4");
+	MakeLocal(0X404B30, 0X405103, "[bp-0XB0]", "Frame_I_1");
+	MakeLocal(0X404B30, 0X405103, "[bp-0XAC]", "Frame_I_2");
+	MakeLocal(0X404B30, 0X405103, "[bp-0XA8]", "Frame_A_1");
+	MakeLocal(0X404B30, 0X405103, "[bp-0XA4]", "Frame_A_2");
+	MakeLocal(0X404B30, 0X405103, "[bp-0XA0]", "Frame_A_3");
+	MakeLocal(0X404B30, 0X405103, "[bp-0X9C]", "Frame_A_4");
+	MakeLocal(0X404B30, 0X405103, "[bp-0X98]", "Frame_B_1");
+	MakeLocal(0X404B30, 0X405103, "[bp-0X94]", "Frame_B_2");
+	MakeLocal(0X404B30, 0X405103, "[bp-0X90]", "Frame_B_3");
+	MakeLocal(0X404B30, 0X405103, "[bp-0X8C]", "Frame_B_4");
+	MakeLocal(0X404B30, 0X405103, "[bp-0X88]", "Frame_C_1");
+	MakeLocal(0X404B30, 0X405103, "[bp-0X84]", "Frame_C_2");
+	MakeLocal(0X404B30, 0X405103, "[bp-0X80]", "Frame_C_3");
+	MakeLocal(0X404B30, 0X405103, "[bp-0X7C]", "Frame_C_4");
+	MakeLocal(0X404B30, 0X405103, "[bp-0X78]", "Frame_D_1");
+	MakeLocal(0X404B30, 0X405103, "[bp-0X74]", "Frame_D_2");
+	MakeLocal(0X404B30, 0X405103, "[bp-0X70]", "Frame_E_1");
+	MakeLocal(0X404B30, 0X405103, "[bp-0X6C]", "Frame_E_2");
+	MakeLocal(0X404B30, 0X405103, "[bp-0X64]", "Frame_L_3");
+	MakeLocal(0X404B30, 0X405103, "[bp-0X60]", "Frame_L_4");
+	MakeLocal(0X404B30, 0X405103, "[bp-0X5C]", "Frame_M_1");
+	MakeLocal(0X404B30, 0X405103, "[bp-0X58]", "Frame_M_2");
+	MakeLocal(0X404B30, 0X405103, "[bp-0X54]", "Frame_M_3");
+	MakeLocal(0X404B30, 0X405103, "[bp-0X50]", "Frame_M_4");
+	MakeLocal(0X404B30, 0X405103, "[bp-0X4C]", "Frame_N_1");
+	MakeLocal(0X404B30, 0X405103, "[bp-0X48]", "Frame_N_2");
+	MakeLocal(0X404B30, 0X405103, "[bp-0X44]", "Frame_N_3");
+	MakeLocal(0X404B30, 0X405103, "[bp-0X40]", "Frame_N_4");
+	MakeLocal(0X404B30, 0X405103, "[bp-0X3C]", "Frame_O_1");
+	MakeLocal(0X404B30, 0X405103, "[bp-0X38]", "Frame_O_2");
+	MakeLocal(0X404B30, 0X405103, "[bp-0X30]", "Frame_I_3");
+	MakeLocal(0X404B30, 0X405103, "[bp-0X2C]", "Frame_I_4");
+	MakeLocal(0X404B30, 0X405103, "[bp-0X28]", "Frame_J_1");
+	MakeLocal(0X404B30, 0X405103, "[bp-0X24]", "Frame_J_2");
+	MakeLocal(0X404B30, 0X405103, "[bp-0X20]", "Frame_J_3");
+	MakeLocal(0X404B30, 0X405103, "[bp-0X1C]", "Frame_J_4");
+	MakeLocal(0X404B30, 0X405103, "[bp-0X18]", "Frame_K_1");
+	MakeLocal(0X404B30, 0X405103, "[bp-0X14]", "Frame_K_2");
+	MakeLocal(0X404B30, 0X405103, "[bp-0X10]", "Frame_K_3");
+	MakeLocal(0X404B30, 0X405103, "[bp-0XC]", "Frame_K_4");
+	MakeLocal(0X404B30, 0X405103, "[bp-0X8]", "Frame_L_1");
+	MakeLocal(0X404B30, 0X405103, "[bp-0X4]", "Frame_L_2");
+	MakeLocal(0X404B30, 0X405103, "[bp+0X8]", "Weapon_Obj");
 	MakeNameEx(0X404CBE, "dir_up_right", SN_LOCAL);
 	MakeNameEx(0X404D16, "jmp_404C67_default_jmp_Set_Rects", SN_LOCAL);
 	MakeNameEx(0X404D5B, "Shot_Angle", SN_LOCAL);
@@ -144428,55 +144692,72 @@ static Functions_0(void) {
 	MakeNameEx(0X40501D, "jmp_Return", SN_LOCAL);
 	MakeNameEx(0X4050FF, "Return", SN_LOCAL);
 	MakeFunction    (0X405120,0X405583);
-	SetFunctionFlags(0X405120,0x4010);
+	SetFunctionFlags(0X405120,0x10);
 	MakeFrame(0X405120, 0XD4, 4, 0);
+	MakeLocal(0X405120, 0X405583, "[bp-0XD0]", "Switch_case");
 	MakeNameEx(0X40540F, "jmp_40536E_default", SN_LOCAL);
 	MakeFunction    (0X4055A0,0X405D2C);
-	SetFunctionFlags(0X4055A0,0x4010);
+	SetFunctionFlags(0X4055A0,0x10);
 	MakeFrame(0X4055A0, 0XE8, 4, 0);
+	MakeLocal(0X4055A0, 0X405D2C, "[bp-0XE4]", "Switch_case_5");
+	MakeLocal(0X4055A0, 0X405D2C, "[bp-0XE0]", "Switch_case_4");
+	MakeLocal(0X4055A0, 0X405D2C, "[bp-0XDC]", "Switch_case_3");
+	MakeLocal(0X4055A0, 0X405D2C, "[bp-0XD4]", "Switch_case_2");
+	MakeLocal(0X4055A0, 0X405D2C, "[bp-0XD0]", "Switch_case");
 	MakeNameEx(0X40578B, "jmp_40576A_default", SN_LOCAL);
 	MakeNameEx(0X405836, "jmp_4057B5_default", SN_LOCAL);
 	MakeNameEx(0X405919, "jmp_4058C0_default", SN_LOCAL);
 	MakeNameEx(0X4059A4, "jmp_405937_default", SN_LOCAL);
 	MakeNameEx(0X405AF1, "jmp_405A66_default", SN_LOCAL);
 	MakeFunction    (0X405D80,0X405F2D);
-	SetFunctionFlags(0X405D80,0x4010);
+	SetFunctionFlags(0X405D80,0x10);
 	MakeFrame(0X405D80, 0XC, 4, 0);
 	MakeNameEx(0X405DE6, "Play_Missile_Impact", SN_LOCAL);
 	MakeNameEx(0X405EB6, "jmp_405F07", SN_LOCAL);
 	MakeNameEx(0X405F29, "Return", SN_LOCAL);
 	MakeFunction    (0X405F30,0X40616C);
-	SetFunctionFlags(0X405F30,0x4010);
+	SetFunctionFlags(0X405F30,0x10);
 	MakeFrame(0X405F30, 0X4C, 4, 0);
+	MakeLocal(0X405F30, 0X40616C, "[bp-0X4C]", "Switch_case_2");
+	MakeLocal(0X405F30, 0X40616C, "[bp-0X48]", "Switch_case");
 	MakeNameEx(0X405FCF, "jmp_405F9A_default", SN_LOCAL);
 	MakeNameEx(0X40602B, "jmp_405FE2_default", SN_LOCAL);
 	MakeFunction    (0X406190,0X4064A6);
-	SetFunctionFlags(0X406190,0x4010);
+	SetFunctionFlags(0X406190,0x10);
 	MakeFrame(0X406190, 0X50, 4, 0);
+	MakeLocal(0X406190, 0X4064A6, "[bp-0X50]", "Switch_case");
+	MakeLocal(0X406190, 0X4064A6, "[bp-0X4C]", "Switch_case_");
 	MakeNameEx(0X406309, "jmp_406274_default", SN_LOCAL);
 	MakeNameEx(0X406365, "jmp_40631C_default", SN_LOCAL);
 	MakeFunction    (0X4064D0,0X406897);
-	SetFunctionFlags(0X4064D0,0x4010);
+	SetFunctionFlags(0X4064D0,0x10);
 	MakeFrame(0X4064D0, 0X48, 4, 0);
+	MakeLocal(0X4064D0, 0X406897, "[bp-0X48]", "Switch_case");
 	MakeNameEx(0X406598, "jmp_Return", SN_LOCAL);
 	MakeNameEx(0X4066AA, "jmp_4065D2_default", SN_LOCAL);
 	MakeNameEx(0X406893, "Return", SN_LOCAL);
 	MakeFunction    (0X4068B0,0X406B87);
-	SetFunctionFlags(0X4068B0,0x4010);
+	SetFunctionFlags(0X4068B0,0x10);
 	MakeFrame(0X4068B0, 0X68, 4, 0);
+	MakeLocal(0X4068B0, 0X406B87, "[bp-0X68]", "Switch_case_");
+	MakeLocal(0X4068B0, 0X406B87, "[bp-0X64]", "Switch_case");
 	MakeNameEx(0X4069A9, "jmp_406930_default", SN_LOCAL);
 	MakeNameEx(0X406B83, "jmp_406AD2_default_Return", SN_LOCAL);
 	MakeFunction    (0X406BB0,0X406E47);
-	SetFunctionFlags(0X406BB0,0x4010);
+	SetFunctionFlags(0X406BB0,0x10);
 	MakeFrame(0X406BB0, 0X84, 4, 0);
+	MakeLocal(0X406BB0, 0X406E47, "[bp-0X84]", "Switch_case");
 	MakeNameEx(0X406C9A, "jmp_406D65_default", SN_LOCAL);
 	MakeFunction    (0X406E60,0X4070F7);
-	SetFunctionFlags(0X406E60,0x4010);
+	SetFunctionFlags(0X406E60,0x10);
 	MakeFrame(0X406E60, 0X84, 4, 0);
+	MakeLocal(0X406E60, 0X4070F7, "[bp-0X84]", "Switch_case");
 	MakeNameEx(0X406F4A, "jmp_406F15_default", SN_LOCAL);
 	MakeFunction    (0X407110,0X4075B8);
-	SetFunctionFlags(0X407110,0x4010);
+	SetFunctionFlags(0X407110,0x10);
 	MakeFrame(0X407110, 0X8C, 4, 0);
+	MakeLocal(0X407110, 0X4075B8, "[bp-0X8C]", "Switch_case_");
+	MakeLocal(0X407110, 0X4075B8, "[bp-0X88]", "Switch_case");
 	MakeNameEx(0X407298, "jmp_407263_default", SN_LOCAL);
 	MakeNameEx(0X4073B5, "jmp_40749E", SN_LOCAL);
 	MakeNameEx(0X407593, "jmp_4074E2_default", SN_LOCAL);
@@ -144488,29 +144769,40 @@ static Functions_0(void) {
 	SetFunctionFlags(0X4078A0,0x4010);
 	MakeFrame(0X4078A0, 0X10, 4, 0);
 	MakeFunction    (0X407910,0X408021);
-	SetFunctionFlags(0X407910,0x4010);
+	SetFunctionFlags(0X407910,0x10);
 	MakeFrame(0X407910, 0XA8, 4, 0);
+	MakeLocal(0X407910, 0X408021, "[bp-0XA4]", "Switch_case____");
+	MakeLocal(0X407910, 0X408021, "[bp-0XA0]", "Switch_case___");
+	MakeLocal(0X407910, 0X408021, "[bp-0X9C]", "Switch_case__");
+	MakeLocal(0X407910, 0X408021, "[bp-0X94]", "Switch_case_");
+	MakeLocal(0X407910, 0X408021, "[bp-0X90]", "Switch_case");
 	MakeNameEx(0X407B23, "jmp_407ADA_default", SN_LOCAL);
 	MakeNameEx(0X407BCE, "jmp_407B4D_default", SN_LOCAL);
 	MakeNameEx(0X407CB1, "jmp_407C58_default", SN_LOCAL);
 	MakeNameEx(0X407D3C, "jmp_407CD7_default", SN_LOCAL);
 	MakeNameEx(0X407E89, "jmp_407DFE_default", SN_LOCAL);
 	MakeFunction    (0X408080,0X40822D);
-	SetFunctionFlags(0X408080,0x4010);
+	SetFunctionFlags(0X408080,0x10);
 	MakeFrame(0X408080, 0XC, 4, 0);
 	MakeNameEx(0X4080E6, "Play_Missile_Impact", SN_LOCAL);
 	MakeNameEx(0X408162, "jmp_408207", SN_LOCAL);
 	MakeNameEx(0X4081B6, "jmp_408207_2", SN_LOCAL);
 	MakeNameEx(0X408229, "Return", SN_LOCAL);
 	MakeFunction    (0X408230,0X4086DD);
-	SetFunctionFlags(0X408230,0x4010);
+	SetFunctionFlags(0X408230,0x10);
 	MakeFrame(0X408230, 0X90, 4, 0);
+	MakeLocal(0X408230, 0X4086DD, "[bp-0X90]", "Switch_case__");
+	MakeLocal(0X408230, 0X4086DD, "[bp-0X8C]", "Switch_case_");
+	MakeLocal(0X408230, 0X4086DD, "[bp-0X84]", "Switch_case");
 	MakeNameEx(0X4082F1, "jmp_4082BC_default", SN_LOCAL);
 	MakeNameEx(0X40846C, "jmp_408378_default", SN_LOCAL);
 	MakeNameEx(0X408663, "jmp_4085B2_default", SN_LOCAL);
 	MakeFunction    (0X408710,0X408AA7);
-	SetFunctionFlags(0X408710,0x4010);
+	SetFunctionFlags(0X408710,0x10);
 	MakeFrame(0X408710, 0X74, 4, 0);
+	MakeLocal(0X408710, 0X408AA7, "[bp-0X70]", "Switch_case__");
+	MakeLocal(0X408710, 0X408AA7, "[bp-0X6C]", "Switch_case_");
+	MakeLocal(0X408710, 0X408AA7, "[bp-0X64]", "Switch_case");
 	MakeNameEx(0X4087D7, "jmp_4087A2_default", SN_LOCAL);
 	MakeNameEx(0X408836, "jmp_408801_default", SN_LOCAL);
 	MakeNameEx(0X408880, "jmp_40884B_default", SN_LOCAL);
@@ -144524,8 +144816,9 @@ static Functions_0(void) {
 	SetFunctionFlags(0X408F90,0x4010);
 	MakeFrame(0X408F90, 0, 4, 0);
 	MakeFunction    (0X408FC0,0X409501);
-	SetFunctionFlags(0X408FC0,0x4010);
+	SetFunctionFlags(0X408FC0,0x10);
 	MakeFrame(0X408FC0, 0X8, 4, 0);
+	MakeLocal(0X408FC0, 0X409501, "[bp-0X8]", "Switch_case");
 	MakeNameEx(0X4094F8, "jmp_409040_default_jmp_408FCF", SN_LOCAL);
 	MakeNameEx(0X4094FD, "Return", SN_LOCAL);
 	MakeFunction    (0X4095C0,0X409630);
@@ -144543,10 +144836,43 @@ static Functions_0(void) {
 	SetFunctionFlags(0X409670,0x14);
 	MakeFrame(0X409670, 0, 4, 0);
 	MakeFunction    (0X409680,0X409880);
-	SetFunctionFlags(0X409680,0x4010);
+	SetFunctionFlags(0X409680,0x10);
 	SetType(0X409680, "int __cdecl Random_Fountain_Pulsing_Disc_Particles(BOOL mode);");
 	SetFunctionCmt(0X409680,	"mode 0: blue discs, mode 1: red discs", 1);
 	MakeFrame(0X409680, 0X80, 4, 0);
+	MakeLocal(0X409680, 0X409880, "[bp-0X80]", "Red_Disk_4");
+	MakeLocal(0X409680, 0X409880, "[bp-0X7C]", "Red_Disk_4_2");
+	MakeLocal(0X409680, 0X409880, "[bp-0X78]", "Red_Disk_4_3");
+	MakeLocal(0X409680, 0X409880, "[bp-0X74]", "Red_Disk_4_4");
+	MakeLocal(0X409680, 0X409880, "[bp-0X70]", "Red_Disk_3");
+	MakeLocal(0X409680, 0X409880, "[bp-0X6C]", "Red_Disk_3_2");
+	MakeLocal(0X409680, 0X409880, "[bp-0X68]", "Red_Disk_3_3");
+	MakeLocal(0X409680, 0X409880, "[bp-0X64]", "Red_Disk_3_4");
+	MakeLocal(0X409680, 0X409880, "[bp-0X60]", "Red_Disk_2");
+	MakeLocal(0X409680, 0X409880, "[bp-0X5C]", "Red_Disk_2_2");
+	MakeLocal(0X409680, 0X409880, "[bp-0X58]", "Red_Disk_2_3");
+	MakeLocal(0X409680, 0X409880, "[bp-0X54]", "Red_Disk_2_4");
+	MakeLocal(0X409680, 0X409880, "[bp-0X50]", "Red_Disk_1");
+	MakeLocal(0X409680, 0X409880, "[bp-0X4C]", "Red_Disk_1_2");
+	MakeLocal(0X409680, 0X409880, "[bp-0X48]", "Red_Disk_1_3");
+	MakeLocal(0X409680, 0X409880, "[bp-0X44]", "Red_Disk_1_4");
+	MakeLocal(0X409680, 0X409880, "[bp-0X40]", "Blue_Disk_4");
+	MakeLocal(0X409680, 0X409880, "[bp-0X3C]", "Blue_Disk_4_2");
+	MakeLocal(0X409680, 0X409880, "[bp-0X38]", "Blue_Disk_4_3");
+	MakeLocal(0X409680, 0X409880, "[bp-0X34]", "Blue_Disk_4_4");
+	MakeLocal(0X409680, 0X409880, "[bp-0X30]", "Blue_Disk_3");
+	MakeLocal(0X409680, 0X409880, "[bp-0X2C]", "Blue_Disk_3_2");
+	MakeLocal(0X409680, 0X409880, "[bp-0X28]", "Blue_Disk_3_3");
+	MakeLocal(0X409680, 0X409880, "[bp-0X24]", "Blue_Disk_3_4");
+	MakeLocal(0X409680, 0X409880, "[bp-0X20]", "Blue_Disk_2");
+	MakeLocal(0X409680, 0X409880, "[bp-0X1C]", "Blue_Disk_2_2");
+	MakeLocal(0X409680, 0X409880, "[bp-0X18]", "Blue_Disk_2_3");
+	MakeLocal(0X409680, 0X409880, "[bp-0X14]", "Blue_Disk_2_4");
+	MakeLocal(0X409680, 0X409880, "[bp-0X10]", "Blue_Disk_1");
+	MakeLocal(0X409680, 0X409880, "[bp-0XC]", "Blue_Disk_1_2");
+	MakeLocal(0X409680, 0X409880, "[bp-0X8]", "Blue_Disk_1_3");
+	MakeLocal(0X409680, 0X409880, "[bp-0X4]", "Blue_Disk_1_4");
+	MakeLocal(0X409680, 0X409880, "[bp+0X8]", "mode");
 	MakeNameEx(0X4097A9, "Update_Position", SN_LOCAL);
 	MakeNameEx(0X40987C, "Return", SN_LOCAL);
 	MakeFunction    (0X409880,0X409B73);
@@ -144595,20 +144921,22 @@ static Functions_0(void) {
 	MakeFrame(0X40A280, 0X40, 4, 0);
 	MakeNameEx(0X40A3E7, "Return", SN_LOCAL);
 	MakeFunction    (0X40A3F0,0X40A59B);
-	SetFunctionFlags(0X40A3F0,0x4010);
+	SetFunctionFlags(0X40A3F0,0x10);
 	SetType(0X40A3F0, "signed int __cdecl Red_Damage_Rings(BOOL mode);");
 	SetFunctionCmt(0X40A3F0,	"mode 0 only", 1);
 	MakeFrame(0X40A3F0, 0X78, 4, 0);
+	MakeLocal(0X40A3F0, 0X40A59B, "[bp+0X8]", "mode");
 	MakeFunction    (0X40A5A0,0X40A64E);
 	SetFunctionFlags(0X40A5A0,0x4010);
 	SetType(0X40A5A0, "signed int __cdecl Big_Explosion(BOOL mode);");
 	SetFunctionCmt(0X40A5A0,	"mode 0 only", 1);
 	MakeFrame(0X40A5A0, 0X20, 4, 0);
 	MakeFunction    (0X40A650,0X40A7DF);
-	SetFunctionFlags(0X40A650,0x4010);
+	SetFunctionFlags(0X40A650,0x10);
 	SetType(0X40A650, "signed int __cdecl Headbump_Sparks(BOOL mode);");
 	SetFunctionCmt(0X40A650,	"mode 0 only", 1);
 	MakeFrame(0X40A650, 0X28, 4, 0);
+	MakeLocal(0X40A650, 0X40A7DF, "[bp+0X8]", "mode");
 	MakeFunction    (0X40A7E0,0X40A8E2);
 	SetFunctionFlags(0X40A7E0,0x4010);
 	MakeFrame(0X40A7E0, 0X50, 4, 0);
@@ -144628,12 +144956,14 @@ static Functions_0(void) {
 	SetFunctionCmt(0X40AAA0,	"mode 0 only", 1);
 	MakeFrame(0X40AAA0, 0X20, 4, 0);
 	MakeFunction    (0X40AB50,0X40ABB1);
-	SetFunctionFlags(0X40AB50,0x4010);
+	SetFunctionFlags(0X40AB50,0x10);
 	MakeFrame(0X40AB50, 0X8, 4, 0);
+	MakeLocal(0X40AB50, 0X40ABB1, "[bp-0X4]", "Slot_ID");
 	MakeNameEx(0X40ABAD, "Return", SN_LOCAL);
 	MakeFunction    (0X40ABC0,0X40AC8E);
-	SetFunctionFlags(0X40ABC0,0x4010);
+	SetFunctionFlags(0X40ABC0,0x10);
 	MakeFrame(0X40ABC0, 0X4, 4, 0);
+	MakeLocal(0X40ABC0, 0X40AC8E, "[bp-0X4]", "Loop_Counter");
 	MakeNameEx(0X40ABCD, "Loop_Restart", SN_LOCAL);
 	MakeNameEx(0X40ABD6, "For_Loop_Check", SN_LOCAL);
 	MakeNameEx(0X40AC85, "jmp_Loop_Restart", SN_LOCAL);
@@ -144649,13 +144979,13 @@ static Functions_0(void) {
 	MakeNameEx(0X40ACCA, "Clear_Found_Slot", SN_LOCAL);
 	MakeNameEx(0X40AD5B, "Return", SN_LOCAL);
 	MakeFunction    (0X40AD60,0X40AE30);
-	SetFunctionFlags(0X40AD60,0x4010);
+	SetFunctionFlags(0X40AD60,0x10);
 	SetType(0X40AD60, "int __cdecl Load_Config_dat(char *str1);");
 	SetFunctionCmt(0X40AD60,	"Load Config.dat, check string DOUKUTSU20041206 (return 0 if not equal)", 1);
 	MakeFrame(0X40AD60, 0X118, 4, 0);
 	MakeLocal(0X40AD60, 0X40AE30, "[bp-0X118]", "str");
 	MakeLocal(0X40AD60, 0X40AE30, "[bp-0X4]", "stream");
-	MakeLocal(0X40AD60, 0X40AE30, "[bp+0X8]", "ptr");
+	MakeLocal(0X40AD60, 0X40AE30, "[bp+0X8]", "str1");
 	MakeNameEx(0X40ADC1, "Return_0", SN_LOCAL);
 	MakeNameEx(0X40AE1F, "Return_1", SN_LOCAL);
 	MakeNameEx(0X40AE24, "Return", SN_LOCAL);
@@ -144666,16 +144996,16 @@ static Functions_0(void) {
 	MakeFrame(0X40AE30, 0, 4, 0);
 	MakeLocal(0X40AE30, 0X40AEB1, "[bp+0X8]", "ptr");
 	MakeFunction    (0X40AEC0,0X40AFBA);
-	SetFunctionFlags(0X40AEC0,0x4010);
+	SetFunctionFlags(0X40AEC0,0x10);
 	SetType(0X40AEC0, "BOOL __stdcall Version_Button(HWND, UINT, WPARAM, LPARAM);");
 	SetFunctionCmt(0X40AEC0,	"Runs when you hit \"Version\" menu button", 1);
 	MakeFrame(0X40AEC0, 0X90, 4, 0X10);
-	MakeLocal(0X40AEC0, 0X40AFBA, "[bp-0X88]", "str");
-	MakeLocal(0X40AEC0, 0X40AFBA, "[bp+0X8]", "hDlg");
+	MakeLocal(0X40AEC0, 0X40AFBA, "[bp-0X88]", "String");
+	MakeLocal(0X40AEC0, 0X40AFBA, "[bp+0X8]", "Game_Window_Handle");
 	MakeNameEx(0X40AFAA, "Return_0", SN_LOCAL);
 	MakeNameEx(0X40AFAC, "Return", SN_LOCAL);
 	MakeFunction    (0X40AFC0,0X40B1C1);
-	SetFunctionFlags(0X40AFC0,0x4010);
+	SetFunctionFlags(0X40AFC0,0x10);
 	SetType(0X40AFC0, "BOOL __stdcall Mute_Button(HWND, UINT, WPARAM, LPARAM);");
 	SetFunctionCmt(0X40AFC0,	"Runs when you hit \"Mute\" menu button", 1);
 	MakeFrame(0X40AFC0, 0X8, 4, 0X10);
@@ -144683,7 +145013,7 @@ static Functions_0(void) {
 	MakeNameEx(0X40B1B9, "Return_0", SN_LOCAL);
 	MakeNameEx(0X40B1BB, "Return", SN_LOCAL);
 	MakeFunction    (0X40B1D0,0X40B286);
-	SetFunctionFlags(0X40B1D0,0x4010);
+	SetFunctionFlags(0X40B1D0,0x10);
 	SetType(0X40B1D0, "BOOL __stdcall Debug_Save_Button(HWND, UINT, WPARAM, LPARAM);");
 	SetFunctionCmt(0X40B1D0,	"Runs when you hit \"Debug Save\" menu button", 1);
 	MakeFrame(0X40B1D0, 0X78, 4, 0X10);
@@ -144693,7 +145023,7 @@ static Functions_0(void) {
 	MakeNameEx(0X40B276, "Return_0", SN_LOCAL);
 	MakeNameEx(0X40B278, "Return", SN_LOCAL);
 	MakeFunction    (0X40B290,0X40B315);
-	SetFunctionFlags(0X40B290,0x4010);
+	SetFunctionFlags(0X40B290,0x10);
 	SetType(0X40B290, "BOOL __stdcall Quit_Button(HWND, UINT, WPARAM, LPARAM);");
 	SetFunctionCmt(0X40B290,	"Runs when you hit \"Quit\" menu button", 1);
 	MakeFrame(0X40B290, 0X8, 4, 0X10);
@@ -144729,25 +145059,25 @@ static Functions_0(void) {
 	MakeFrame(0X40B800, 0XC4, 4, 0);
 	MakeLocal(0X40B800, 0X40BABB, "[bp-0X98]", "ptr");
 	MakeFunction    (0X40BAC0,0X40BE0F);
-	SetFunctionFlags(0X40BAC0,0x4010);
+	SetFunctionFlags(0X40BAC0,0x10);
 	SetType(0X40BAC0, "int __cdecl Load_BMP_From_File_And_Create_Surface(char *source, int destination);");
 	SetFunctionCmt(0X40BAC0,	"Loads BMP from a file and creates a surface (Permanent)", 1);
 	MakeFrame(0X40BAC0, 0X1D0, 4, 0);
 	MakeLocal(0X40BAC0, 0X40BE0F, "[bp-0X1D0]", "str");
 	MakeLocal(0X40BAC0, 0X40BE0F, "[bp-0X98]", "ptr");
 	MakeLocal(0X40BAC0, 0X40BE0F, "[bp+0X8]", "source");
-	MakeLocal(0X40BAC0, 0X40BE0F, "[bp+0XC]", "Error_Number?");
+	MakeLocal(0X40BAC0, 0X40BE0F, "[bp+0XC]", "destination");
 	MakeFunction    (0X40BE10,0X40BFC6);
 	SetFunctionFlags(0X40BE10,0x4010);
 	SetType(0X40BE10, "int __cdecl Load_BMP_From_Resource_Onto_Existing_Surface(char *, int);");
 	MakeFrame(0X40BE10, 0X50, 4, 0);
 	MakeFunction    (0X40BFD0,0X40C1C2);
-	SetFunctionFlags(0X40BFD0,0x4010);
+	SetFunctionFlags(0X40BFD0,0x10);
 	SetType(0X40BFD0, "int __cdecl Load_BMP_From_File_Onto_Existing_Surface(char *source, int destination);");
 	MakeFrame(0X40BFD0, 0X158, 4, 0);
 	MakeLocal(0X40BFD0, 0X40C1C2, "[bp-0X158]", "str");
 	MakeLocal(0X40BFD0, 0X40C1C2, "[bp+0X8]", "source");
-	MakeLocal(0X40BFD0, 0X40C1C2, "[bp+0XC]", "Error_Number?");
+	MakeLocal(0X40BFD0, 0X40C1C2, "[bp+0XC]", "destination");
 	MakeFunction    (0X40C1D0,0X40C31E);
 	SetFunctionFlags(0X40C1D0,0x4010);
 	MakeFrame(0X40C1D0, 0X78, 4, 0);
@@ -144784,7 +145114,7 @@ static Functions_0(void) {
 	SetFunctionFlags(0X40CB30,0x4010);
 	MakeFrame(0X40CB30, 0X110, 4, 0);
 	MakeFunction    (0X40CB60,0X40CD42);
-	SetFunctionFlags(0X40CB60,0x4010);
+	SetFunctionFlags(0X40CB60,0x10);
 	MakeFrame(0X40CB60, 0X1C, 4, 0);
 	MakeLocal(0X40CB60, 0X40CD42, "[bp-0X8]", "destination");
 	MakeFunction    (0X40CD50,0X40CDF5);
@@ -144808,19 +145138,21 @@ static Functions_0(void) {
 	MakeNameEx(0X40D009, "jmp_Loop_Restart", SN_LOCAL);
 	MakeNameEx(0X40D00B, "Return", SN_LOCAL);
 	MakeFunction    (0X40D010,0X40D149);
-	SetFunctionFlags(0X40D010,0x4010);
+	SetFunctionFlags(0X40D010,0x10);
 	SetFunctionCmt(0X40D010,	"Draws something from Bitmap Slot 0x25, which might be the credits text", 1);
 	MakeFrame(0X40D010, 0X14, 4, 0);
+	MakeLocal(0X40D010, 0X40D149, "[bp-0X14]", "Loop_Counter");
 	MakeLocal(0X40D010, 0X40D149, "[bp-0X10]", "Src_Rects");
 	MakeNameEx(0X40D01F, "Loop_Restart", SN_LOCAL);
 	MakeNameEx(0X40D028, "For_Loop_Check", SN_LOCAL);
 	MakeNameEx(0X40D140, "jmp_Loop_Restart", SN_LOCAL);
 	MakeNameEx(0X40D145, "Return", SN_LOCAL);
 	MakeFunction    (0X40D150,0X40D234);
-	SetFunctionFlags(0X40D150,0x4010);
+	SetFunctionFlags(0X40D150,0x10);
 	SetType(0X40D150, "int __cdecl Print_Text_(int, int, char *, int);");
 	SetFunctionCmt(0X40D150,	"Draws some text", 1);
 	MakeFrame(0X40D150, 0X14, 4, 0);
+	MakeLocal(0X40D150, 0X40D234, "[bp-0X14]", "Loop_Counter");
 	MakeLocal(0X40D150, 0X40D234, "[bp-0XC]", "Y_Position");
 	MakeLocal(0X40D150, 0X40D234, "[bp+0X10]", "source");
 	MakeNameEx(0X40D15F, "Loop_Restart", SN_LOCAL);
@@ -144828,9 +145160,10 @@ static Functions_0(void) {
 	MakeNameEx(0X40D184, "jmp_Loop_Restart", SN_LOCAL);
 	MakeNameEx(0X40D230, "Return", SN_LOCAL);
 	MakeFunction    (0X40D240,0X40D2C9);
-	SetFunctionFlags(0X40D240,0x4010);
+	SetFunctionFlags(0X40D240,0x10);
 	SetFunctionCmt(0X40D240,	"Draws some text", 1);
 	MakeFrame(0X40D240, 0X14, 4, 0);
+	MakeLocal(0X40D240, 0X40D2C9, "[bp-0X14]", "Loop_Counter");
 	MakeLocal(0X40D240, 0X40D2C9, "[bp-0XC]", "Y_Position");
 	MakeNameEx(0X40D24F, "Loop_Restart", SN_LOCAL);
 	MakeNameEx(0X40D258, "For_Loop_Check", SN_LOCAL);
@@ -144841,15 +145174,16 @@ static Functions_0(void) {
 	SetFunctionCmt(0X40D2D0,	"Does some odd stuff with a few variables based on what's the value of 49D608", 1);
 	MakeFrame(0X40D2D0, 0X4, 4, 0);
 	MakeFunction    (0X40D350,0X40D39D);
-	SetFunctionFlags(0X40D350,0x4010);
+	SetFunctionFlags(0X40D350,0x10);
 	SetFunctionCmt(0X40D350,	"Draws credits image (from Bitmap Slot 0x24)", 1);
 	MakeFrame(0X40D350, 0X10, 4, 0);
 	MakeLocal(0X40D350, 0X40D39D, "[bp-0X10]", "Src_Rects");
 	MakeFunction    (0X40D3A0,0X40D3DD);
-	SetFunctionFlags(0X40D3A0,0x4010);
+	SetFunctionFlags(0X40D3A0,0x10);
 	SetFunctionCmt(0X40D3A0,	"Slot 24 : Used for Credit Pixel arts", 1);
 	MakeFrame(0X40D3A0, 0X14, 4, 0);
 	MakeLocal(0X40D3A0, 0X40D3DD, "[bp-0X14]", "str");
+	MakeLocal(0X40D3A0, 0X40D3DD, "[bp-0X4]", "Prevent_failure");
 	MakeFunction    (0X40D3E0,0X40D40A);
 	SetFunctionFlags(0X40D3E0,0x4010);
 	MakeFrame(0X40D3E0, 0, 4, 0);
@@ -144858,16 +145192,18 @@ static Functions_0(void) {
 	SetFunctionCmt(0X40D410,	"Deallocates 49D614 if it's not equal to 0", 1);
 	MakeFrame(0X40D410, 0, 4, 0);
 	MakeFunction    (0X40D440,0X40D5B5);
-	SetFunctionFlags(0X40D440,0x4010);
+	SetFunctionFlags(0X40D440,0x10);
 	SetFunctionCmt(0X40D440,	"Initializes Credits. Loads a file, puts casts.pbm into slot 0x25", 1);
 	MakeFrame(0X40D440, 0X110, 4, 0);
 	MakeLocal(0X40D440, 0X40D5B5, "[bp-0X110]", "str");
+	MakeLocal(0X40D440, 0X40D5B5, "[bp-0X8]", "anti_failure");
 	MakeFunction    (0X40D5C0,0X40D617);
-	SetFunctionFlags(0X40D5C0,0x4010);
+	SetFunctionFlags(0X40D5C0,0x10);
 	MakeFrame(0X40D5C0, 0X4, 4, 0);
 	MakeFunction    (0X40D620,0X40DA76);
-	SetFunctionFlags(0X40D620,0x4010);
+	SetFunctionFlags(0X40D620,0x10);
 	MakeFrame(0X40D620, 0X3C, 4, 0);
+	MakeLocal(0X40D620, 0X40DA76, "[bp-0X3C]", "Switch_case");
 	MakeLocal(0X40D620, 0X40DA76, "[bp-0X34]", "num");
 	MakeLocal(0X40D620, 0X40DA76, "[bp-0X30]", "Music_To_Play");
 	MakeLocal(0X40D620, 0X40DA76, "[bp-0X2C]", "destination");
@@ -144881,7 +145217,7 @@ static Functions_0(void) {
 	SetFunctionFlags(0X40DB60,0x4010);
 	MakeFrame(0X40DB60, 0, 4, 0);
 	MakeFunction    (0X40DB70,0X40DD68);
-	SetFunctionFlags(0X40DB70,0x4010);
+	SetFunctionFlags(0X40DB70,0x10);
 	SetType(0X40DB70, "int __cdecl TSC_XX1_Game_Loop_Island_Crash(HWND hWnd, int);");
 	SetFunctionCmt(0X40DB70,	"XX1 : Shows distant view of island", 1);
 	MakeFrame(0X40DB70, 0X54, 4, 0);
@@ -144889,7 +145225,7 @@ static Functions_0(void) {
 	MakeLocal(0X40DB70, 0X40DD68, "[bp-0X20]", "Src_Rects");
 	MakeLocal(0X40DB70, 0X40DD68, "[bp+0X8]", "hWnd");
 	MakeFunction    (0X40DD70,0X40DE53);
-	SetFunctionFlags(0X40DD70,0x4010);
+	SetFunctionFlags(0X40DD70,0x10);
 	SetType(0X40DD70, "int __cdecl Game_Loop_Exit_Menu(HWND hWnd);");
 	SetFunctionCmt(0X40DD70,	"Called On Esc", 1);
 	MakeFrame(0X40DD70, 0X10, 4, 0);
@@ -144910,14 +145246,15 @@ static Functions_0(void) {
 	SetFunctionFlags(0X40DEC0,0x4010);
 	MakeFrame(0X40DEC0, 0X8, 4, 0);
 	MakeFunction    (0X40DF50,0X40DFDC);
-	SetFunctionFlags(0X40DF50,0x4010);
+	SetFunctionFlags(0X40DF50,0x10);
 	MakeFrame(0X40DF50, 0X8, 4, 0);
 	MakeFunction    (0X40DFE0,0X40E73C);
-	SetFunctionFlags(0X40DFE0,0x4010);
+	SetFunctionFlags(0X40DFE0,0x10);
 	MakeFrame(0X40DFE0, 0X14, 4, 0);
+	MakeLocal(0X40DFE0, 0X40E73C, "[bp-0X10]", "Switch_case");
 	MakeNameEx(0X40E2E1, "jmp_40E01A_default", SN_LOCAL);
 	MakeFunction    (0X40E770,0X40E829);
-	SetFunctionFlags(0X40E770,0x4010);
+	SetFunctionFlags(0X40E770,0x10);
 	SetFunctionCmt(0X40E770,	"Render Fade out / Fade in", 1);
 	MakeFrame(0X40E770, 0X18, 4, 0);
 	MakeLocal(0X40E770, 0X40E829, "[bp-0X10]", "Src_Rects");
@@ -144965,7 +145302,7 @@ static Functions_0(void) {
 	SetType(0X40EA70, "int __cdecl Explosion_(int X_Position, int Y_Position, int);");
 	MakeFrame(0X40EA70, 0, 4, 0);
 	MakeFunction    (0X40EAC0,0X40ED11);
-	SetFunctionFlags(0X40EAC0,0x4010);
+	SetFunctionFlags(0X40EAC0,0x10);
 	MakeFrame(0X40EAC0, 0X14, 4, 0);
 	MakeNameEx(0X40EC29, "jmp_Return", SN_LOCAL);
 	MakeNameEx(0X40ED0D, "Return", SN_LOCAL);
@@ -144974,7 +145311,7 @@ static Functions_0(void) {
 	MakeFrame(0X40ED20, 0, 4, 0);
 	MakeNameEx(0X40EDD7, "Return", SN_LOCAL);
 	MakeFunction    (0X40EDE0,0X40EE20);
-	SetFunctionFlags(0X40EDE0,0x4010);
+	SetFunctionFlags(0X40EDE0,0x10);
 	MakeFrame(0X40EDE0, 0X4, 4, 0);
 	MakeFunction    (0X40EE20,0X40EE57);
 	SetFunctionFlags(0X40EE20,0x4010);
@@ -144985,7 +145322,7 @@ static Functions_0(void) {
 	SetFunctionCmt(0X40EE60,	"Sets Occasional_Flash to 0", 1);
 	MakeFrame(0X40EE60, 0, 4, 0);
 	MakeFunction    (0X40EE70,0X40F012);
-	SetFunctionFlags(0X40EE70,0x4010);
+	SetFunctionFlags(0X40EE70,0x10);
 	SetFunctionCmt(0X40EE70,	"The camera code. Handles quakes.", 1);
 	MakeFrame(0X40EE70, 0X8, 4, 0);
 	MakeNameEx(0X40EF76, "Check_Hard_Quake", SN_LOCAL);
@@ -144995,7 +145332,7 @@ static Functions_0(void) {
 	SetFunctionFlags(0X40F020,0x4010);
 	MakeFrame(0X40F020, 0, 4, 0);
 	MakeFunction    (0X40F130,0X40F21D);
-	SetFunctionFlags(0X40F130,0x4010);
+	SetFunctionFlags(0X40F130,0x10);
 	MakeFrame(0X40F130, 0X10, 4, 0);
 	MakeLocal(0X40F130, 0X40F21D, "[bp-0X10]", "Ptr_Store_Y");
 	MakeLocal(0X40F130, 0X40F21D, "[bp-0XC]", "Ptr_Store_X");
@@ -145005,8 +145342,9 @@ static Functions_0(void) {
 	SetFunctionCmt(0X40F220,	"Sets camera move ticks", 1);
 	MakeFrame(0X40F220, 0, 4, 0);
 	MakeFunction    (0X40F250,0X40F2C7);
-	SetFunctionFlags(0X40F250,0x4010);
+	SetFunctionFlags(0X40F250,0x10);
 	MakeFrame(0X40F250, 0X4, 4, 0);
+	MakeLocal(0X40F250, 0X40F2C7, "[bp-0X4]", "Loop_Counter");
 	MakeNameEx(0X40F25D, "Loop_Restart", SN_LOCAL);
 	MakeNameEx(0X40F266, "Loop_Check", SN_LOCAL);
 	MakeNameEx(0X40F285, "jmp_Loop_Restart", SN_LOCAL);
@@ -145028,43 +145366,154 @@ static Functions_0(void) {
 	SetFunctionFlags(0X40F330,0x4010);
 	MakeFrame(0X40F330, 0, 4, 0);
 	MakeFunction    (0X40F350,0X40F372);
-	SetFunctionFlags(0X40F350,0x4010);
+	SetFunctionFlags(0X40F350,0x10);
 	SetType(0X40F350, "int __cdecl RNG_Range(int minimum, int maximum);");
 	SetFunctionCmt(0X40F350,	"Random Number Generator (for number in designated range)", 1);
 	MakeFrame(0X40F350, 0X4, 4, 0);
+	MakeLocal(0X40F350, 0X40F372, "[bp+0X8]", "minimum");
+	MakeLocal(0X40F350, 0X40F372, "[bp+0XC]", "maximum");
 	MakeFunction    (0X40F380,0X40F5E9);
-	SetFunctionFlags(0X40F380,0x4010);
+	SetFunctionFlags(0X40F380,0x10);
 	SetType(0X40F380, "int __cdecl Draw_Numbers(int X_Position, int Y_Position, int Numbers_To_Display, int Number_Of_Digits);");
 	MakeFrame(0X40F380, 0XD0, 4, 0);
 	MakeLocal(0X40F380, 0X40F5E9, "[bp-0XD0]", "Dst_Rects");
-	MakeLocal(0X40F380, 0X40F5E9, "[bp-0XB8]", "Src_Rects");
+	MakeLocal(0X40F380, 0X40F5E9, "[bp-0XBC]", "For_Loop_Counter");
+	MakeLocal(0X40F380, 0X40F5E9, "[bp-0XB8]", "Rects");
+	MakeLocal(0X40F380, 0X40F5E9, "[bp+0X8]", "X_Position");
 	MakeLocal(0X40F380, 0X40F5E9, "[bp+0XC]", "Y_Position");
+	MakeLocal(0X40F380, 0X40F5E9, "[bp+0X10]", "Numbers_To_Display");
+	MakeLocal(0X40F380, 0X40F5E9, "[bp+0X14]", "Number_Of_Digits");
 	MakeNameEx(0X40F51F, "For_Loop_Start", SN_LOCAL);
 	MakeNameEx(0X40F533, "For_Loop_Check", SN_LOCAL);
 	MakeNameEx(0X40F5D1, "Restart_Loop", SN_LOCAL);
 	MakeNameEx(0X40F5E5, "Return", SN_LOCAL);
 	MakeFunction    (0X40F5F0,0X40F729);
-	SetFunctionFlags(0X40F5F0,0x4010);
+	SetFunctionFlags(0X40F5F0,0x10);
 	SetType(0X40F5F0, "int __cdecl Game_Loop_Selector(HWND hWnd);");
 	SetFunctionCmt(0X40F5F0,	"Updating game window, maintaining game loop, etc", 1);
 	MakeFrame(0X40F5F0, 0X110, 4, 0);
-	MakeLocal(0X40F5F0, 0X40F729, "[bp-0X110]", "str");
+	MakeLocal(0X40F5F0, 0X40F729, "[bp-0X110]", "FileName");
 	MakeLocal(0X40F5F0, 0X40F729, "[bp+0X8]", "hWnd");
 	MakeNameEx(0X40F6DC, "jmp_40F697", SN_LOCAL);
 	MakeNameEx(0X40F718, "Return_1", SN_LOCAL);
 	MakeNameEx(0X40F71D, "Return", SN_LOCAL);
 	MakeFunction    (0X40F730,0X40F9A6);
-	SetFunctionFlags(0X40F730,0x4010);
+	SetFunctionFlags(0X40F730,0x10);
 	MakeFrame(0X40F730, 0X14, 4, 0);
 	MakeNameEx(0X40F9A2, "Return", SN_LOCAL);
 	MakeFunction    (0X40F9B0,0X4103EC);
-	SetFunctionFlags(0X40F9B0,0x4010);
+	SetFunctionFlags(0X40F9B0,0x10);
 	MakeFrame(0X40F9B0, 0X1F0, 4, 0);
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X1E8]", "Quote_Frame_A_1");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X1E4]", "Quote_Frame_A_2");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X1E0]", "Quote_Frame_A_3");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X1DC]", "Quote_Frame_A_4");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X1D8]", "Quote_Frame_B_1");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X1D4]", "Quote_Frame_B_2");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X1D0]", "Quote_Frame_B_3");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X1CC]", "Quote_Frame_B_4");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X1C8]", "Quote_Frame_C_1");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X1C4]", "Quote_Frame_C_2");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X1C0]", "Quote_Frame_C_3");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X1BC]", "Quote_Frame_C_4");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X1B8]", "Quote_Frame_D_1");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X1B4]", "Quote_Frame_D_2");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X1B0]", "Quote_Frame_D_3");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X1AC]", "Quote_Frame_D_4");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X1A8]", "Sue_Frame_A_1");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X1A4]", "Sue_Frame_A_2");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X1A0]", "Sue_Frame_A_3");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X19C]", "Sue_Frame_A_4");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X198]", "Sue_Frame_B_1");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X194]", "Sue_Frame_B_2");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X190]", "Sue_Frame_B_3");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X18C]", "Sue_Frame_B_4");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X188]", "Sue_Frame_C_1");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X184]", "Sue_Frame_C_2");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X180]", "Sue_Frame_C_3");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X17C]", "Sue_Frame_C_4");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X178]", "Sue_Frame_D_1");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X174]", "Sue_Frame_D_2");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X170]", "Sue_Frame_D_3");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X16C]", "Sue_Frame_D_4");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X160]", "Toroko_Frame_A_1");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X15C]", "Toroko_Frame_A_2");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X158]", "Toroko_Frame_A_3");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X154]", "Toroko_Frame_A_4");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X150]", "Toroko_Frame_B_1");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X14C]", "Toroko_Frame_B_2");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X148]", "Toroko_Frame_B_3");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X144]", "Toroko_Frame_B_4");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X140]", "Toroko_Frame_C_1");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X13C]", "Toroko_Frame_C_2");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X138]", "Toroko_Frame_C_3");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X134]", "Toroko_Frame_C_4");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X130]", "Toroko_Frame_D_1");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X12C]", "Toroko_Frame_D_2");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X128]", "Toroko_Frame_D_3");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X124]", "Toroko_Frame_D_4");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X11C]", "Title_Screen_Mode");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X114]", "Studio_Pixel_Text_Frame_1");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X110]", "Studio_Pixel_Text_Frame_2");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X10C]", "Studio_Pixel_Text_Frame_3");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X108]", "Studio_Pixel_Text_Frame_4");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X104]", "Src_Rects");
 	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0XF4]", "Y_Position");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0XF0]", "Unknown_Frame_1");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0XEC]", "Unknown_Frame_2");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0XE8]", "Unknown_Frame_3");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0XE4]", "Unknown_Frame_4");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0XE0]", "Curly_Frame_A_1");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0XDC]", "Curly_Frame_A_2");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0XD8]", "Curly_Frame_A_3");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0XD4]", "Curly_Frame_A_4");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0XD0]", "Curly_Frame_B_1");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0XCC]", "Curly_Frame_B_2");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0XC8]", "Curly_Frame_B_3");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0XC4]", "Curly_Frame_B_4");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0XC0]", "Curly_Frame_C_1");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0XBC]", "Curly_Frame_C_2");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0XB8]", "Curly_Frame_C_3");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0XB4]", "Curly_Frame_C_4");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0XB0]", "Curly_Frame_D_1");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0XAC]", "Curly_Frame_D_2");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0XA8]", "Curly_Frame_D_3");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0XA4]", "Curly_Frame_D_4");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X98]", "Version_Dots_Frame_1");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X94]", "Version_Dots_Frame_2");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X90]", "Version_Dots_Frame_3");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X8C]", "Version_Dots_Frame_4");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X88]", "King_Frame_A_1");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X84]", "King_Frame_A_2");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X80]", "King_Frame_A_3");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X7C]", "King_Frame_A_4");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X78]", "King_Frame_B_1");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X74]", "King_Frame_B_2");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X70]", "King_Frame_B_3");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X6C]", "King_Frame_B_4");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X68]", "King_Frame_C_1");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X64]", "King_Frame_C_2");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X60]", "King_Frame_C_3");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X5C]", "King_Frame_C_4");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X58]", "King_Frame_D_1");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X54]", "King_Frame_D_2");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X50]", "King_Frame_D_3");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X4C]", "King_Frame_D_4");
 	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X40]", "Mask_Color");
 	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X3C]", "GraphicsID");
-	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X38]", "Src_Rects");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X38]", "Version_Text_Frame_1");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X34]", "Version_Text_Frame_2");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X30]", "Version_Text_Frame_3");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X2C]", "Version_Text_Frame_4");
 	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X28]", "Numbers_To_Display");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X20]", "Title_Screen_Frame_1");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X1C]", "Title_Screen_Frame_2");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X18]", "Title_Screen_Frame_3");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X14]", "Title_Screen_Frame_4");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X10]", "Continue_Button_Frame_1");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0XC]", "Continue_Button_Frame_2");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X8]", "Continue_Button_Frame_3");
+	MakeLocal(0X40F9B0, 0X4103EC, "[bp-0X4]", "Continue_Button_Frame_4");
 	MakeNameEx(0X40FDE5, "Mov_CursorPostion_0", SN_LOCAL);
 	MakeNameEx(0X40FDEF, "Chk_Hell_Less_Than_6_Minutes", SN_LOCAL);
 	MakeNameEx(0X40FE19, "Chk_Hell_Less_Than_5_Minutes", SN_LOCAL);
@@ -145080,7 +145529,7 @@ static Functions_0(void) {
 	MakeNameEx(0X4103E3, "Return_3", SN_LOCAL);
 	MakeNameEx(0X4103E8, "Return", SN_LOCAL);
 	MakeFunction    (0X410400,0X4108AA);
-	SetFunctionFlags(0X410400,0x4010);
+	SetFunctionFlags(0X410400,0x10);
 	SetFunctionCmt(0X410400,	"Main Game Loop", 1);
 	MakeFrame(0X410400, 0X20, 4, 0);
 	MakeLocal(0X410400, 0X4108AA, "[bp-0X10]", "Camera_Y_Pos");
@@ -145101,48 +145550,50 @@ static Functions_0(void) {
 	MakeNameEx(0X4108A4, "Return_0________", SN_LOCAL);
 	MakeNameEx(0X4108A6, "Return", SN_LOCAL);
 	MakeFunction    (0X4108B0,0X410981);
-	SetFunctionFlags(0X4108B0,0x4010);
+	SetFunctionFlags(0X4108B0,0x10);
 	MakeFrame(0X4108B0, 0X4C, 4, 0);
 	MakeLocal(0X4108B0, 0X410981, "[bp-0X4C]", "ptr1");
 	MakeLocal(0X4108B0, 0X410981, "[bp-0X38]", "ptr2");
 	MakeNameEx(0X41096D, "Return", SN_LOCAL);
 	MakeFunction    (0X410990,0X410AA4);
-	SetFunctionFlags(0X410990,0x4010);
+	SetFunctionFlags(0X410990,0x10);
 	SetType(0X410990, "int __cdecl Get_Version_Number(int, int, int, int);");
 	MakeFrame(0X410990, 0X128, 4, 0);
-	MakeLocal(0X410990, 0X410AA4, "[bp-0X128]", "Filename");
+	MakeLocal(0X410990, 0X410AA4, "[bp-0X128]", "tstrFilename");
 	MakeLocal(0X410990, 0X410AA4, "[bp-0X18]", "puLen");
 	MakeLocal(0X410990, 0X410AA4, "[bp-0X14]", "lpBuffer");
 	MakeLocal(0X410990, 0X410AA4, "[bp-0XC]", "dwHandle");
 	MakeLocal(0X410990, 0X410AA4, "[bp-0X8]", "size");
-	MakeLocal(0X410990, 0X410AA4, "[bp-0X4]", "lpData");
+	MakeLocal(0X410990, 0X410AA4, "[bp-0X4]", "ptr");
 	MakeFunction    (0X410AB0,0X410BBB);
-	SetFunctionFlags(0X410AB0,0x4010);
+	SetFunctionFlags(0X410AB0,0x10);
 	SetType(0X410AB0, "int __cdecl Check_For_SndVol32_exe(HWND hwnd);");
 	MakeFrame(0X410AB0, 0X330, 4, 0);
-	MakeLocal(0X410AB0, 0X410BBB, "[bp-0X330]", "Buffer");
-	MakeLocal(0X410AB0, 0X410BBB, "[bp-0X228]", "str");
-	MakeLocal(0X410AB0, 0X410BBB, "[bp-0X110]", "File");
+	MakeLocal(0X410AB0, 0X410BBB, "[bp-0X330]", "str");
+	MakeLocal(0X410AB0, 0X410BBB, "[bp-0X228]", "File");
 	MakeLocal(0X410AB0, 0X410BBB, "[bp+0X8]", "hwnd");
 	MakeNameEx(0X410BAF, "Return", SN_LOCAL);
 	MakeFunction    (0X410D10,0X410D7C);
-	SetFunctionFlags(0X410D10,0x4010);
+	SetFunctionFlags(0X410D10,0x10);
 	MakeFrame(0X410D10, 0X110, 4, 0);
 	MakeLocal(0X410D10, 0X410D7C, "[bp-0X110]", "str");
 	MakeLocal(0X410D10, 0X410D7C, "[bp-0X4]", "stream");
 	MakeFunction    (0X410D80,0X410DD4);
-	SetFunctionFlags(0X410D80,0x4010);
+	SetFunctionFlags(0X410D80,0x10);
 	SetType(0X410D80, "int __cdecl Get_File_Size(char *FileName);");
 	MakeFrame(0X410D80, 0X8, 4, 0);
-	MakeLocal(0X410D80, 0X410DD4, "[bp-0X4]", "hFile");
-	MakeLocal(0X410D80, 0X410DD4, "[bp+0X8]", "lpFileName");
+	MakeLocal(0X410D80, 0X410DD4, "[bp-0X4]", "hObject");
+	MakeLocal(0X410D80, 0X410DD4, "[bp+0X8]", "FileName");
 	MakeNameEx(0X410DD0, "Return", SN_LOCAL);
 	MakeFunction    (0X410DE0,0X410E89);
-	SetFunctionFlags(0X410DE0,0x4010);
+	SetFunctionFlags(0X410DE0,0x10);
 	SetType(0X410DE0, "int __cdecl Print_Load_BMP_Error(int Error_String?, int Error_Number?);");
 	MakeFrame(0X410DE0, 0X110, 4, 0);
-	MakeLocal(0X410DE0, 0X410E89, "[bp-0X110]", "str");
+	MakeLocal(0X410DE0, 0X410E89, "[bp-0X110]", "FileName");
+	MakeLocal(0X410DE0, 0X410E89, "[bp-0X8]", "Prevent_failure");
 	MakeLocal(0X410DE0, 0X410E89, "[bp-0X4]", "stream");
+	MakeLocal(0X410DE0, 0X410E89, "[bp+0X8]", "Error_String?");
+	MakeLocal(0X410DE0, 0X410E89, "[bp+0XC]", "Error_Number?");
 	MakeNameEx(0X410E4F, "Return_0", SN_LOCAL);
 	MakeNameEx(0X410E78, "Return_1", SN_LOCAL);
 	MakeNameEx(0X410E7D, "Return", SN_LOCAL);
@@ -145152,16 +145603,17 @@ static Functions_0(void) {
 	MakeNameEx(0X410ECF, "Return_0", SN_LOCAL);
 	MakeNameEx(0X410ED1, "Return", SN_LOCAL);
 	MakeFunction    (0X410EE0,0X410FDB);
-	SetFunctionFlags(0X410EE0,0x4010);
+	SetFunctionFlags(0X410EE0,0x10);
 	SetType(0X410EE0, "int __cdecl Center_Game_Window(HWND Game_Window_Handle);");
 	MakeFrame(0X410EE0, 0X3C, 4, 0);
 	MakeLocal(0X410EE0, 0X410FDB, "[bp-0X3C]", "Rect");
+	MakeLocal(0X410EE0, 0X410FDB, "[bp-0X2C]", "hWnd");
 	MakeLocal(0X410EE0, 0X410FDB, "[bp-0X18]", "X");
 	MakeLocal(0X410EE0, 0X410FDB, "[bp-0X14]", "Y");
 	MakeLocal(0X410EE0, 0X410FDB, "[bp-0X10]", "pvParam");
-	MakeLocal(0X410EE0, 0X410FDB, "[bp+0X8]", "hWnd");
+	MakeLocal(0X410EE0, 0X410FDB, "[bp+0X8]", "Game_Window_Handle");
 	MakeFunction    (0X410FE0,0X4111EF);
-	SetFunctionFlags(0X410FE0,0x4010);
+	SetFunctionFlags(0X410FE0,0x10);
 	SetType(0X410FE0, "int __cdecl Load_Window_Rects(HWND Window_Handle, int, int);");
 	MakeFrame(0X410FE0, 0X148, 4, 0);
 	MakeLocal(0X410FE0, 0X4111EF, "[bp-0X148]", "str");
@@ -145169,11 +145621,11 @@ static Functions_0(void) {
 	MakeLocal(0X410FE0, 0X4111EF, "[bp-0X24]", "X");
 	MakeLocal(0X410FE0, 0X4111EF, "[bp-0X20]", "Y");
 	MakeLocal(0X410FE0, 0X4111EF, "[bp-0X10]", "pvParam");
-	MakeLocal(0X410FE0, 0X4111EF, "[bp+0X8]", "hWnd");
+	MakeLocal(0X410FE0, 0X4111EF, "[bp+0X8]", "Window_Handle");
 	MakeNameEx(0X4111DE, "Return_1", SN_LOCAL);
 	MakeNameEx(0X4111E3, "Return", SN_LOCAL);
 	MakeFunction    (0X4111F0,0X4112D4);
-	SetFunctionFlags(0X4111F0,0x4010);
+	SetFunctionFlags(0X4111F0,0x10);
 	SetType(0X4111F0, "int __cdecl Save_Window_Rect_File(HWND hWnd, int);");
 	MakeFrame(0X4111F0, 0X150, 4, 0);
 	MakeLocal(0X4111F0, 0X4112D4, "[bp-0X150]", "str");
@@ -145182,10 +145634,11 @@ static Functions_0(void) {
 	MakeLocal(0X4111F0, 0X4112D4, "[bp-0X10]", "Rect");
 	MakeLocal(0X4111F0, 0X4112D4, "[bp+0X8]", "hWnd");
 	MakeFunction    (0X4112E0,0X411383);
-	SetFunctionFlags(0X4112E0,0x4010);
+	SetFunctionFlags(0X4112E0,0x10);
 	SetType(0X4112E0, "int __cdecl Is_PBM_Protected(char *);");
 	MakeFrame(0X4112E0, 0X1C, 4, 0);
 	MakeLocal(0X4112E0, 0X411383, "[bp-0X1C]", "ptr1");
+	MakeLocal(0X4112E0, 0X411383, "[bp-0XC]", "Prevent_Crash");
 	MakeLocal(0X4112E0, 0X411383, "[bp-0X8]", "num");
 	MakeLocal(0X4112E0, 0X411383, "[bp-0X4]", "stream");
 	MakeLocal(0X4112E0, 0X411383, "[bp+0X8]", "filename");
@@ -145194,10 +145647,11 @@ static Functions_0(void) {
 	MakeNameEx(0X411372, "Return_1", SN_LOCAL);
 	MakeNameEx(0X411377, "Return", SN_LOCAL);
 	MakeFunction    (0X411390,0X411E08);
-	SetFunctionFlags(0X411390,0x4010);
+	SetFunctionFlags(0X411390,0x10);
 	SetFunctionCmt(0X411390,	"Loads initial resources (Called at Startup)", 1);
 	MakeFrame(0X411390, 0X50, 4, 0);
 	MakeLocal(0X411390, 0X411E08, "[bp-0X50]", "str");
+	MakeLocal(0X411390, 0X411E08, "[bp-0XC]", "Prevent_Crash");
 	MakeNameEx(0X411DFC, "Return", SN_LOCAL);
 	MakeFunction    (0X411E60,0X411EA6);
 	SetFunctionFlags(0X411E60,0x4010);
@@ -145208,45 +145662,49 @@ static Functions_0(void) {
 	MakeFrame(0X411EB0, 0, 4, 0);
 	MakeLocal(0X411EB0, 0X411EEB, "[bp+0X8]", "hinst");
 	MakeFunction    (0X411EF0,0X411FB3);
-	SetFunctionFlags(0X411EF0,0x4010);
+	SetFunctionFlags(0X411EF0,0x10);
 	MakeFrame(0X411EF0, 0X8, 4, 0);
 	MakeFunction    (0X411FC0,0X4120E9);
-	SetFunctionFlags(0X411FC0,0x4010);
+	SetFunctionFlags(0X411FC0,0x10);
 	MakeFrame(0X411FC0, 0X108, 4, 0X8);
-	MakeLocal(0X411FC0, 0X4120E9, "[bp-0X108]", "str");
+	MakeLocal(0X411FC0, 0X4120E9, "[bp-0X108]", "OutputString");
 	MakeFunction    (0X4120F0,0X412250);
-	SetFunctionFlags(0X4120F0,0x4010);
+	SetFunctionFlags(0X4120F0,0x10);
 	MakeFrame(0X4120F0, 0X5C, 4, 0);
+	MakeLocal(0X4120F0, 0X412250, "[bp-0X8]", "Prevent_Crash");
 	MakeNameEx(0X412244, "Return", SN_LOCAL);
 	MakeFunction    (0X412250,0X4122E0);
-	SetFunctionFlags(0X412250,0x4010);
+	SetFunctionFlags(0X412250,0x10);
 	MakeFrame(0X412250, 0X58, 4, 0);
+	MakeLocal(0X412250, 0X4122E0, "[bp-0X8]", "Prevent_Crash");
 	MakeFunction    (0X4122E0,0X412313);
 	SetFunctionFlags(0X4122E0,0x4010);
 	MakeFrame(0X4122E0, 0, 4, 0);
 	MakeFunction    (0X412320,0X412368);
-	SetFunctionFlags(0X412320,0x4010);
+	SetFunctionFlags(0X412320,0x10);
 	SetType(0X412320, "int __cdecl sub_412320(HWND hWnd);");
 	MakeFrame(0X412320, 0X108, 4, 0);
-	MakeLocal(0X412320, 0X412368, "[bp-0X108]", "str");
+	MakeLocal(0X412320, 0X412368, "[bp-0X108]", "String");
 	MakeLocal(0X412320, 0X412368, "[bp+0X8]", "hWnd");
 	MakeFunction    (0X412370,0X41239E);
-	SetFunctionFlags(0X412370,0x4010);
+	SetFunctionFlags(0X412370,0x10);
 	MakeFrame(0X412370, 0X4, 4, 0);
 	MakeLocal(0X412370, 0X41239E, "[bp-0X4]", "Numbers_To_Display");
 	MakeNameEx(0X41239A, "Return", SN_LOCAL);
 	MakeFunction    (0X4123A0,0X412418);
-	SetFunctionFlags(0X4123A0,0x4010);
+	SetFunctionFlags(0X4123A0,0x10);
 	MakeFrame(0X4123A0, 0X4, 4, 0);
 	MakeNameEx(0X41240F, "Return_Timer1000Time", SN_LOCAL);
 	MakeFunction    (0X412420,0X412B92);
 	SetFunctionFlags(0X412420,0x4010);
 	SetType(0X412420, "int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd);");
 	SetFunctionCmt(0X412420,	"Creating game window, starting game", 1);
-	MakeFrame(0X412420, 0X140, 4, 0X10);
+	MakeFrame(0X412420, 0X13C, 4, 0X10);
 	MakeLocal(0X412420, 0X412B92, "[bp-0X124]", "Ptr_Img_Rects");
 	MakeLocal(0X412420, 0X412B92, "[bp-0X114]", "Src_Rects");
 	MakeLocal(0X412420, 0X412B92, "[bp-0XF8]", "str1");
+	MakeLocal(0X412420, 0X412B92, "[bp-0XD8]", "pszFaceName");
+	MakeLocal(0X412420, 0X412B92, "[bp-0X5C]", "Prevent_Crash");
 	MakeLocal(0X412420, 0X412B92, "[bp-0X58]", "ptr");
 	MakeLocal(0X412420, 0X412B92, "[bp-0X28]", "X");
 	MakeLocal(0X412420, 0X412B92, "[bp-0X24]", "nHeight");
@@ -145254,6 +145712,9 @@ static Functions_0(void) {
 	MakeLocal(0X412420, 0X412B92, "[bp-0X18]", "hWnd");
 	MakeLocal(0X412420, 0X412B92, "[bp-0X14]", "Y");
 	MakeLocal(0X412420, 0X412B92, "[bp+0X8]", "hInstance");
+	MakeLocal(0X412420, 0X412B92, "[bp+0XC]", "hPrevInstance");
+	MakeLocal(0X412420, 0X412B92, "[bp+0X10]", "lpCmdLine");
+	MakeLocal(0X412420, 0X412B92, "[bp+0X14]", "nShowCmd");
 	MakeNameEx(0X412582, "Check_for_sreverse", SN_LOCAL);
 	MakeNameEx(0X4125A7, "Dont_Switch_WeaponKeys", SN_LOCAL);
 	MakeNameEx(0X4126D2, "Switch_412663_default", SN_LOCAL);
@@ -145268,14 +145729,14 @@ static Functions_0(void) {
 	MakeFrame(0X412BF0, 0, 4, 0);
 	MakeNameEx(0X412C15, "Play_Silent_And_Return", SN_LOCAL);
 	MakeFunction    (0X412C30,0X412C9D);
-	SetFunctionFlags(0X412C30,0x4010);
+	SetFunctionFlags(0X412C30,0x10);
 	MakeFrame(0X412C30, 0X110, 4, 0);
 	MakeFunction    (0X412CA0,0X41334F);
-	SetFunctionFlags(0X412CA0,0x4010);
+	SetFunctionFlags(0X412CA0,0x10);
 	SetType(0X412CA0, "int __stdcall Window_Procedure(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);");
 	MakeFrame(0X412CA0, 0X28, 4, 0X10);
 	MakeLocal(0X412CA0, 0X41334F, "[bp-0X4]", "hMenu");
-	MakeLocal(0X412CA0, 0X41334F, "[bp+0X8]", "hWnd");
+	MakeLocal(0X412CA0, 0X41334F, "[bp+0X8]", "Window_Handle");
 	MakeLocal(0X412CA0, 0X41334F, "[bp+0XC]", "Msg");
 	MakeLocal(0X412CA0, 0X41334F, "[bp+0X10]", "wParam");
 	MakeLocal(0X412CA0, 0X41334F, "[bp+0X14]", "lParam");
@@ -145296,24 +145757,24 @@ static Functions_0(void) {
 	MakeNameEx(0X413344, "Return_1", SN_LOCAL);
 	MakeNameEx(0X413349, "Return", SN_LOCAL);
 	MakeFunction    (0X413570,0X4135DA);
-	SetFunctionFlags(0X413570,0x4010);
+	SetFunctionFlags(0X413570,0x10);
 	SetType(0X413570, "signed int MessageQueue(void);");
 	MakeFrame(0X413570, 0X1C, 4, 0);
 	MakeLocal(0X413570, 0X4135DA, "[bp-0X1C]", "Msg");
 	MakeFunction    (0X4135E0,0X413743);
-	SetFunctionFlags(0X4135E0,0x4010);
+	SetFunctionFlags(0X4135E0,0x10);
 	MakeFrame(0X4135E0, 0X98, 4, 0);
 	MakeFunction    (0X413750,0X41376C);
 	SetFunctionFlags(0X413750,0x4010);
 	MakeFrame(0X413750, 0, 4, 0);
 	MakeFunction    (0X413770,0X41389D);
-	SetFunctionFlags(0X413770,0x4010);
+	SetFunctionFlags(0X413770,0x10);
 	MakeFrame(0X413770, 0X118, 4, 0);
 	MakeLocal(0X413770, 0X41389D, "[bp-0X118]", "str");
 	MakeLocal(0X413770, 0X41389D, "[bp-0X8]", "stream");
 	MakeLocal(0X413770, 0X41389D, "[bp-0X4]", "ptr1");
 	MakeFunction    (0X4138A0,0X413924);
-	SetFunctionFlags(0X4138A0,0x4010);
+	SetFunctionFlags(0X4138A0,0x10);
 	MakeFrame(0X4138A0, 0X110, 4, 0);
 	MakeLocal(0X4138A0, 0X413924, "[bp-0X110]", "str");
 	MakeLocal(0X4138A0, 0X413924, "[bp-0X4]", "stream");
@@ -145327,7 +145788,7 @@ static Functions_0(void) {
 	SetFunctionFlags(0X413960,0x4010);
 	MakeFrame(0X413960, 0, 4, 0);
 	MakeFunction    (0X4139A0,0X4139F4);
-	SetFunctionFlags(0X4139A0,0x4010);
+	SetFunctionFlags(0X4139A0,0x10);
 	MakeFrame(0X4139A0, 0X4, 4, 0);
 	MakeFunction    (0X413A00,0X413A1C);
 	SetFunctionFlags(0X413A00,0x4010);
@@ -145336,29 +145797,30 @@ static Functions_0(void) {
 	SetFunctionFlags(0X413A20,0x4010);
 	MakeFrame(0X413A20, 0, 4, 0);
 	MakeFunction    (0X413A60,0X413AEC);
-	SetFunctionFlags(0X413A60,0x4010);
+	SetFunctionFlags(0X413A60,0x10);
 	MakeFrame(0X413A60, 0X4, 4, 0);
 	MakeFunction    (0X413AF0,0X413C51);
-	SetFunctionFlags(0X413AF0,0x4010);
+	SetFunctionFlags(0X413AF0,0x10);
 	MakeFrame(0X413AF0, 0X30, 4, 0);
 	MakeLocal(0X413AF0, 0X413C51, "[bp-0X14]", "Src_Rects");
 	MakeNameEx(0X413C4D, "Return", SN_LOCAL);
 	MakeFunction    (0X413C60,0X413E35);
-	SetFunctionFlags(0X413C60,0x4010);
+	SetFunctionFlags(0X413C60,0x10);
 	MakeFrame(0X413C60, 0X40, 4, 0);
 	MakeLocal(0X413C60, 0X413E35, "[bp-0X14]", "Src_Rects");
 	MakeFunction    (0X413E40,0X4140B3);
-	SetFunctionFlags(0X413E40,0x4010);
+	SetFunctionFlags(0X413E40,0x10);
 	MakeFrame(0X413E40, 0X34, 4, 0);
 	MakeLocal(0X413E40, 0X4140B3, "[bp-0X14]", "Src_Rects");
 	MakeNameEx(0X4140AF, "Return", SN_LOCAL);
 	MakeFunction    (0X4140F0,0X41424F);
-	SetFunctionFlags(0X4140F0,0x4010);
+	SetFunctionFlags(0X4140F0,0x10);
 	SetType(0X4140F0, "int __cdecl Draw_Room_Text_To_Surface(char *);");
 	MakeFrame(0X4140F0, 0X20, 4, 0);
+	MakeLocal(0X4140F0, 0X41424F, "[bp-0X8]", "Prevent_Crash");
 	MakeLocal(0X4140F0, 0X41424F, "[bp+0X8]", "str1");
 	MakeFunction    (0X414250,0X414306);
-	SetFunctionFlags(0X414250,0x4010);
+	SetFunctionFlags(0X414250,0x10);
 	SetFunctionCmt(0X414250,	"MNA : Draw HUD room text", 1);
 	MakeFrame(0X414250, 0X20, 4, 0);
 	MakeLocal(0X414250, 0X414306, "[bp-0X20]", "Ptr_Img_Rects");
@@ -145366,14 +145828,14 @@ static Functions_0(void) {
 	SetFunctionFlags(0X414310,0x4010);
 	MakeFrame(0X414310, 0, 4, 0);
 	MakeFunction    (0X414330,0X4143B3);
-	SetFunctionFlags(0X414330,0x4010);
+	SetFunctionFlags(0X414330,0x10);
 	MakeFrame(0X414330, 0X4, 4, 0);
 	MakeFunction    (0X4143C0,0X41463E);
-	SetFunctionFlags(0X4143C0,0x4010);
+	SetFunctionFlags(0X4143C0,0x10);
 	MakeFrame(0X4143C0, 0X48, 4, 0);
 	MakeNameEx(0X41463A, "Return", SN_LOCAL);
 	MakeFunction    (0X414640,0X414AFA);
-	SetFunctionFlags(0X414640,0x4010);
+	SetFunctionFlags(0X414640,0x10);
 	MakeFrame(0X414640, 0X50, 4, 0);
 	MakeLocal(0X414640, 0X414AFA, "[bp-0X44]", "Ptr_Img_Rects");
 	MakeLocal(0X414640, 0X414AFA, "[bp-0X30]", "Src_Rects");
@@ -145392,7 +145854,7 @@ static Functions_0(void) {
 	SetFunctionFlags(0X414B50,0x4010);
 	MakeFrame(0X414B50, 0, 4, 0);
 	MakeFunction    (0X414BF0,0X415211);
-	SetFunctionFlags(0X414BF0,0x4010);
+	SetFunctionFlags(0X414BF0,0x10);
 	MakeFrame(0X414BF0, 0X180, 4, 0);
 	MakeNameEx(0X415014, "Play_Quote_Walk", SN_LOCAL);
 	MakeNameEx(0X4150B1, "Play_Quote_Walk_2", SN_LOCAL);
@@ -145400,16 +145862,25 @@ static Functions_0(void) {
 	SetFunctionFlags(0X415220,0x4010);
 	MakeFrame(0X415220, 0, 4, 0);
 	MakeFunction    (0X415250,0X4156B4);
-	SetFunctionFlags(0X415250,0x4010);
+	SetFunctionFlags(0X415250,0x10);
 	SetType(0X415250, "int __cdecl Draw_Quote_And_Gun(signed int, signed int);");
 	MakeFrame(0X415250, 0X34, 4, 0);
-	MakeLocal(0X415250, 0X4156B4, "[bp-0X10]", "Src_Rects");
+	MakeLocal(0X415250, 0X4156B4, "[bp-0X34]", "Src_Rects");
+	MakeLocal(0X415250, 0X4156B4, "[bp-0X10]", "Rects");
 	MakeNameEx(0X415270, "jmp_Return", SN_LOCAL);
 	MakeNameEx(0X415407, "Render_Gun_Right", SN_LOCAL);
 	MakeNameEx(0X4156B0, "Return", SN_LOCAL);
 	MakeFunction    (0X4156C0,0X41646C);
-	SetFunctionFlags(0X4156C0,0x4010);
+	SetFunctionFlags(0X4156C0,0x10);
 	MakeFrame(0X4156C0, 0X2C, 4, 0);
+	MakeLocal(0X4156C0, 0X41646C, "[bp-0X28]", "Jump_Speed");
+	MakeLocal(0X4156C0, 0X41646C, "[bp-0X24]", "Walk_Speed");
+	MakeLocal(0X4156C0, 0X41646C, "[bp-0X20]", "Friction");
+	MakeLocal(0X4156C0, 0X41646C, "[bp-0X1C]", "Gravity");
+	MakeLocal(0X4156C0, 0X41646C, "[bp-0X18]", "Air_Control");
+	MakeLocal(0X4156C0, 0X41646C, "[bp-0X14]", "Quote_Max_Speed");
+	MakeLocal(0X4156C0, 0X41646C, "[bp-0X10]", "Gravity_When_Pressing_Jump");
+	MakeLocal(0X4156C0, 0X41646C, "[bp-0XC]", "Quote_Max_Fall_Speed");
 	MakeLocal(0X4156C0, 0X41646C, "[bp-0X4]", "X_Position");
 	MakeNameEx(0X4156D7, "Agility_Code", SN_LOCAL);
 	MakeNameEx(0X4156E5, "Underwater_Physics", SN_LOCAL);
@@ -145430,13 +145901,14 @@ static Functions_0(void) {
 	SetFunctionFlags(0X416470,0x4010);
 	MakeFrame(0X416470, 0, 4, 0);
 	MakeFunction    (0X4168C0,0X41698D);
-	SetFunctionFlags(0X4168C0,0x4010);
+	SetFunctionFlags(0X4168C0,0x10);
 	MakeFrame(0X4168C0, 0X4, 4, 0);
 	MakeNameEx(0X416989, "Return", SN_LOCAL);
 	MakeFunction    (0X416990,0X416A97);
 	SetFunctionFlags(0X416990,0x4010);
 	MakeFrame(0X416990, 0, 4, 0);
 	MakeNameEx(0X4169B6, "Check_If_In_Water", SN_LOCAL);
+	MakeNameEx(0X416A95, "Return", SN_LOCAL);
 	MakeFunction    (0X416AA0,0X416ABA);
 	SetFunctionFlags(0X416AA0,0x4010);
 	SetType(0X416AA0, "int __cdecl GetPlayerXY(int *Ptr_Store_X, int *Ptr_Store_Y);");
@@ -145452,7 +145924,7 @@ static Functions_0(void) {
 	SetFunctionCmt(0X416B60,	"Can be optimised to \n   mov eax, InFishBattle\n   retn\n(offset 416B60\nA1 4C E6 49 00 C3 90 90)", 0);
 	MakeFrame(0X416B60, 0, 4, 0);
 	MakeFunction    (0X416B70,0X416C3A);
-	SetFunctionFlags(0X416B70,0x4010);
+	SetFunctionFlags(0X416B70,0x10);
 	MakeFrame(0X416B70, 0X4, 4, 0);
 	MakeFunction    (0X416C40,0X416C4E);
 	SetFunctionFlags(0X416C40,0x4010);
@@ -145463,7 +145935,7 @@ static Functions_0(void) {
 	MakeFrame(0X416C70, 0, 4, 0);
 	MakeNameEx(0X416C99, "Return", SN_LOCAL);
 	MakeFunction    (0X416CC0,0X416D3A);
-	SetFunctionFlags(0X416CC0,0x4010);
+	SetFunctionFlags(0X416CC0,0x10);
 	MakeFrame(0X416CC0, 0X4, 4, 0);
 	MakeNameEx(0X416D2A, "Play_Helicopter_Blades", SN_LOCAL);
 	MakeNameEx(0X416D36, "Return", SN_LOCAL);
@@ -145471,7 +145943,7 @@ static Functions_0(void) {
 	SetFunctionFlags(0X416D40,0x4010);
 	MakeFrame(0X416D40, 0, 4, 0);
 	MakeFunction    (0X416D80,0X416DE9);
-	SetFunctionFlags(0X416D80,0x4010);
+	SetFunctionFlags(0X416D80,0x10);
 	MakeFrame(0X416D80, 0X4, 4, 0);
 	MakeNameEx(0X416DD9, "Play_Helicopter_Blades", SN_LOCAL);
 	MakeNameEx(0X416DE5, "Return", SN_LOCAL);
@@ -145482,7 +145954,7 @@ static Functions_0(void) {
 	SetFunctionFlags(0X416E20,0x54);
 	MakeFrame(0X416E20, 0, 4, 0);
 	MakeFunction    (0X416E30,0X41715B);
-	SetFunctionFlags(0X416E30,0x4010);
+	SetFunctionFlags(0X416E30,0x10);
 	MakeFrame(0X416E30, 0X4, 4, 0);
 	MakeNameEx(0X41714B, "Return_Var_4_OR_8", SN_LOCAL);
 	MakeNameEx(0X417154, "Return_Var_4", SN_LOCAL);
@@ -145490,74 +145962,75 @@ static Functions_0(void) {
 	SetFunctionFlags(0X417160,0x4010);
 	MakeFrame(0X417160, 0, 4, 0);
 	MakeFunction    (0X4171D0,0X4172D4);
-	SetFunctionFlags(0X4171D0,0x4010);
-	MakeFrame(0X4171D0, 0X8, 4, 0);
+	SetFunctionFlags(0X4171D0,0x10);
+	MakeFrame(0X4171D0, 0X4, 4, 0);
 	MakeFunction    (0X4172E0,0X4173E4);
-	SetFunctionFlags(0X4172E0,0x4010);
-	MakeFrame(0X4172E0, 0X8, 4, 0);
+	SetFunctionFlags(0X4172E0,0x10);
+	MakeFrame(0X4172E0, 0X4, 4, 0);
 	MakeFunction    (0X4173F0,0X4174F2);
-	SetFunctionFlags(0X4173F0,0x4010);
-	MakeFrame(0X4173F0, 0X8, 4, 0);
+	SetFunctionFlags(0X4173F0,0x10);
+	MakeFrame(0X4173F0, 0X4, 4, 0);
 	MakeFunction    (0X417500,0X417602);
-	SetFunctionFlags(0X417500,0x4010);
-	MakeFrame(0X417500, 0X8, 4, 0);
+	SetFunctionFlags(0X417500,0x10);
+	MakeFrame(0X417500, 0X4, 4, 0);
 	MakeFunction    (0X417610,0X417718);
-	SetFunctionFlags(0X417610,0x4010);
-	MakeFrame(0X417610, 0X8, 4, 0);
+	SetFunctionFlags(0X417610,0x10);
+	MakeFrame(0X417610, 0X4, 4, 0);
 	MakeFunction    (0X417720,0X417828);
-	SetFunctionFlags(0X417720,0x4010);
-	MakeFrame(0X417720, 0X8, 4, 0);
+	SetFunctionFlags(0X417720,0x10);
+	MakeFrame(0X417720, 0X4, 4, 0);
 	MakeFunction    (0X417830,0X41793A);
-	SetFunctionFlags(0X417830,0x4010);
-	MakeFrame(0X417830, 0X8, 4, 0);
+	SetFunctionFlags(0X417830,0x10);
+	MakeFrame(0X417830, 0X4, 4, 0);
 	MakeFunction    (0X417940,0X417A4A);
-	SetFunctionFlags(0X417940,0x4010);
-	MakeFrame(0X417940, 0X8, 4, 0);
+	SetFunctionFlags(0X417940,0x10);
+	MakeFrame(0X417940, 0X4, 4, 0);
 	MakeFunction    (0X417A50,0X417AD9);
-	SetFunctionFlags(0X417A50,0x4010);
+	SetFunctionFlags(0X417A50,0x10);
 	MakeFrame(0X417A50, 0X4, 4, 0);
 	MakeFunction    (0X417AE0,0X417B6A);
-	SetFunctionFlags(0X417AE0,0x4010);
+	SetFunctionFlags(0X417AE0,0x10);
 	MakeFrame(0X417AE0, 0X4, 4, 0);
 	MakeFunction    (0X417B70,0X417BFA);
-	SetFunctionFlags(0X417B70,0x4010);
+	SetFunctionFlags(0X417B70,0x10);
 	MakeFrame(0X417B70, 0X4, 4, 0);
 	MakeNameEx(0X417BF3, "Return_var_4", SN_LOCAL);
 	MakeFunction    (0X417C00,0X417C8C);
-	SetFunctionFlags(0X417C00,0x4010);
+	SetFunctionFlags(0X417C00,0x10);
 	MakeFrame(0X417C00, 0X4, 4, 0);
 	MakeFunction    (0X417C90,0X417D1C);
-	SetFunctionFlags(0X417C90,0x4010);
+	SetFunctionFlags(0X417C90,0x10);
 	MakeFrame(0X417C90, 0X4, 4, 0);
 	MakeFunction    (0X417D20,0X417DAC);
-	SetFunctionFlags(0X417D20,0x4010);
+	SetFunctionFlags(0X417D20,0x10);
 	MakeFrame(0X417D20, 0X4, 4, 0);
 	MakeFunction    (0X417DB0,0X417E3C);
-	SetFunctionFlags(0X417DB0,0x4010);
+	SetFunctionFlags(0X417DB0,0x10);
 	MakeFrame(0X417DB0, 0X4, 4, 0);
 	MakeFunction    (0X417E40,0X4186C9);
-	SetFunctionFlags(0X417E40,0x4010);
+	SetFunctionFlags(0X417E40,0x10);
 	MakeFrame(0X417E40, 0X34, 4, 0);
 	MakeNameEx(0X4186C5, "Return", SN_LOCAL);
 	MakeFunction    (0X4187F0,0X418B06);
-	SetFunctionFlags(0X4187F0,0x4010);
+	SetFunctionFlags(0X4187F0,0x10);
 	MakeFrame(0X4187F0, 0X4, 4, 0);
 	MakeFunction    (0X418B10,0X418C16);
 	SetFunctionFlags(0X418B10,0x4010);
 	MakeFrame(0X418B10, 0, 4, 0);
 	MakeFunction    (0X418C20,0X419026);
-	SetFunctionFlags(0X418C20,0x4010);
+	SetFunctionFlags(0X418C20,0x10);
 	MakeFrame(0X418C20, 0X24, 4, 0);
 	MakeFunction    (0X419030,0X419445);
-	SetFunctionFlags(0X419030,0x4010);
+	SetFunctionFlags(0X419030,0x10);
 	MakeFrame(0X419030, 0X8, 4, 0);
 	MakeFunction    (0X419450,0X4196E1);
-	SetFunctionFlags(0X419450,0x4010);
+	SetFunctionFlags(0X419450,0x10);
 	MakeFrame(0X419450, 0X8, 4, 0);
 	MakeFunction    (0X4196F0,0X419890);
-	SetFunctionFlags(0X4196F0,0x4010);
+	SetFunctionFlags(0X4196F0,0x10);
 	SetType(0X4196F0, "int __cdecl EXP_Add(int EXP_To_Add);");
 	MakeFrame(0X4196F0, 0X8, 4, 0);
+	MakeLocal(0X4196F0, 0X419890, "[bp+0X8]", "EXP_To_Add");
 	MakeNameEx(0X4197AB, "jmp_419856", SN_LOCAL);
 	MakeNameEx(0X419851, "jmp_4197B2", SN_LOCAL);
 	MakeFunction    (0X419890,0X4198BA);
@@ -145565,22 +146038,23 @@ static Functions_0(void) {
 	SetType(0X419890, "int Reset_Selected_Weapon_Stats(void);");
 	MakeFrame(0X419890, 0, 4, 0);
 	MakeFunction    (0X4198C0,0X419910);
-	SetFunctionFlags(0X4198C0,0x4010);
+	SetFunctionFlags(0X4198C0,0x10);
 	SetType(0X4198C0, "int LevelDownFrom3(void);");
 	MakeFrame(0X4198C0, 0X4, 4, 0);
 	MakeFunction    (0X419910,0X419B4C);
-	SetFunctionFlags(0X419910,0x4010);
+	SetFunctionFlags(0X419910,0x10);
 	SetType(0X419910, "int __cdecl Take_Damage(int Damage);");
 	MakeFrame(0X419910, 0X8, 4, 0);
+	MakeLocal(0X419910, 0X419B4C, "[bp+0X8]", "Damage");
 	MakeNameEx(0X419925, "Check_for_Invincibility", SN_LOCAL);
 	MakeNameEx(0X419935, "Play_Quote_Hurt", SN_LOCAL);
 	MakeNameEx(0X419963, "Knockback", SN_LOCAL);
 	MakeNameEx(0X419B48, "Return", SN_LOCAL);
 	MakeFunction    (0X419B50,0X419B92);
-	SetFunctionFlags(0X419B50,0x4010);
+	SetFunctionFlags(0X419B50,0x10);
 	MakeFrame(0X419B50, 0X4, 4, 0);
 	MakeFunction    (0X419BA0,0X419C51);
-	SetFunctionFlags(0X419BA0,0x4010);
+	SetFunctionFlags(0X419BA0,0x10);
 	MakeFrame(0X419BA0, 0X4, 4, 0);
 	MakeFunction    (0X419C60,0X419CA6);
 	SetFunctionFlags(0X419C60,0x4010);
@@ -145595,45 +146069,46 @@ static Functions_0(void) {
 	MakeFrame(0X419CB0, 0, 4, 0);
 	MakeNameEx(0X419CDF, "Not_exceeded_HP_limit", SN_LOCAL);
 	MakeFunction    (0X419D10,0X41A0AB);
-	SetFunctionFlags(0X419D10,0x4010);
+	SetFunctionFlags(0X419D10,0x10);
 	MakeFrame(0X419D10, 0X90, 4, 0);
 	MakeLocal(0X419D10, 0X41A0AB, "[bp-0X90]", "Dst_Rects");
 	MakeLocal(0X419D10, 0X41A0AB, "[bp-0X80]", "Src_Rects");
 	MakeFunction    (0X41A0B0,0X41A1CC);
-	SetFunctionFlags(0X41A0B0,0x4010);
+	SetFunctionFlags(0X41A0B0,0x10);
 	MakeFrame(0X41A0B0, 0X1C, 4, 0);
 	MakeLocal(0X41A0B0, 0X41A1CC, "[bp-0X18]", "X_Position");
 	MakeLocal(0X41A0B0, 0X41A1CC, "[bp-0X10]", "Src_Rects");
 	MakeFunction    (0X41A1D0,0X41A344);
-	SetFunctionFlags(0X41A1D0,0x4010);
+	SetFunctionFlags(0X41A1D0,0x10);
 	MakeFrame(0X41A1D0, 0X30, 4, 0);
 	MakeLocal(0X41A1D0, 0X41A344, "[bp-0X30]", "Src_Rects");
 	MakeFunction    (0X41A350,0X41A429);
-	SetFunctionFlags(0X41A350,0x4010);
+	SetFunctionFlags(0X41A350,0x10);
 	SetType(0X41A350, "int __cdecl Underwater_Timer(int X_Position, int Y_Position);");
 	MakeFrame(0X41A350, 0X20, 4, 0);
-	MakeLocal(0X41A350, 0X41A429, "[bp-0X20]", "Src_Rects");
+	MakeLocal(0X41A350, 0X41A429, "[bp-0X20]", "Rects");
+	MakeLocal(0X41A350, 0X41A429, "[bp-0X10]", "Src_Rects");
 	MakeLocal(0X41A350, 0X41A429, "[bp+0X8]", "X_Position");
 	MakeLocal(0X41A350, 0X41A429, "[bp+0XC]", "Y_Position");
 	MakeFunction    (0X41A430,0X41A5CB);
-	SetFunctionFlags(0X41A430,0x4010);
+	SetFunctionFlags(0X41A430,0x10);
 	MakeFrame(0X41A430, 0X30, 4, 0);
 	MakeLocal(0X41A430, 0X41A5CB, "[bp-0X30]", "Src_Rects");
 	MakeLocal(0X41A430, 0X41A5CB, "[bp+0X8]", "X_Position");
 	MakeLocal(0X41A430, 0X41A5CB, "[bp+0XC]", "Y_Position");
 	MakeFunction    (0X41A5D0,0X41A7BD);
-	SetFunctionFlags(0X41A5D0,0x4010);
+	SetFunctionFlags(0X41A5D0,0x10);
 	MakeFrame(0X41A5D0, 0X130, 4, 0);
 	MakeLocal(0X41A5D0, 0X41A7BD, "[bp-0X130]", "str");
 	MakeLocal(0X41A5D0, 0X41A7BD, "[bp-0XC]", "stream");
 	MakeFunction    (0X41A7C0,0X41A8E8);
-	SetFunctionFlags(0X41A7C0,0x4010);
+	SetFunctionFlags(0X41A7C0,0x10);
 	SetFunctionCmt(0X41A7C0,	"Returns time", 1);
 	MakeFrame(0X41A7C0, 0X130, 4, 0);
 	MakeLocal(0X41A7C0, 0X41A8E8, "[bp-0X130]", "str");
 	MakeLocal(0X41A7C0, 0X41A8E8, "[bp-0XC]", "stream");
 	MakeFunction    (0X41A8F0,0X41AB9A);
-	SetFunctionFlags(0X41A8F0,0x4010);
+	SetFunctionFlags(0X41A8F0,0x10);
 	MakeFrame(0X41A8F0, 0X60, 4, 0);
 	MakeLocal(0X41A8F0, 0X41AB9A, "[bp-0X58]", "num");
 	MakeLocal(0X41A8F0, 0X41AB9A, "[bp-0X54]", "destination");
@@ -145641,7 +146116,7 @@ static Functions_0(void) {
 	MakeLocal(0X41A8F0, 0X41AB9A, "[bp-0X1C]", "size");
 	MakeLocal(0X41A8F0, 0X41AB9A, "[bp-0X18]", "source");
 	MakeFunction    (0X41ABA0,0X41AC6A);
-	SetFunctionFlags(0X41ABA0,0x4010);
+	SetFunctionFlags(0X41ABA0,0x10);
 	MakeFrame(0X41ABA0, 0X8, 4, 0);
 	MakeFunction    (0X41AC70,0X41AD13);
 	SetFunctionFlags(0X41AC70,0x4010);
@@ -145651,13 +146126,13 @@ static Functions_0(void) {
 	SetFunctionFlags(0X41AD20,0x4010);
 	MakeFrame(0X41AD20, 0X8, 4, 0);
 	MakeFunction    (0X41ADC0,0X41B297);
-	SetFunctionFlags(0X41ADC0,0x4010);
-	MakeFrame(0X41ADC0, 0XC, 4, 0);
+	SetFunctionFlags(0X41ADC0,0x10);
+	MakeFrame(0X41ADC0, 0X4, 4, 0);
 	MakeFunction    (0X41B2A0,0X41B379);
-	SetFunctionFlags(0X41B2A0,0x4010);
+	SetFunctionFlags(0X41B2A0,0x10);
 	MakeFrame(0X41B2A0, 0X4, 4, 0);
 	MakeFunction    (0X41B380,0X41B3E7);
-	SetFunctionFlags(0X41B380,0x4010);
+	SetFunctionFlags(0X41B380,0x10);
 	MakeFrame(0X41B380, 0X8, 4, 0);
 	MakeLocal(0X41B380, 0X41B3E7, "[bp-0X8]", "hResInfo");
 	MakeLocal(0X41B380, 0X41B3E7, "[bp-0X4]", "source");
@@ -145674,68 +146149,75 @@ static Functions_0(void) {
 	SetFunctionFlags(0X41B4D0,0x4010);
 	MakeFrame(0X41B4D0, 0, 4, 0);
 	MakeFunction    (0X41B510,0X41B5F7);
-	SetFunctionFlags(0X41B510,0x4010);
+	SetFunctionFlags(0X41B510,0x10);
 	MakeFrame(0X41B510, 0X4, 4, 0);
 	MakeFunction    (0X41B600,0X41B64C);
-	SetFunctionFlags(0X41B600,0x4010);
+	SetFunctionFlags(0X41B600,0x10);
 	MakeFrame(0X41B600, 0X8, 4, 0);
 	MakeFunction    (0X41B650,0X41B725);
-	SetFunctionFlags(0X41B650,0x4010);
+	SetFunctionFlags(0X41B650,0x10);
 	MakeFrame(0X41B650, 0X8, 4, 0);
 	MakeFunction    (0X41B730,0X41B88F);
-	SetFunctionFlags(0X41B730,0x4010);
-	MakeFrame(0X41B730, 0X30, 4, 0X8);
+	SetFunctionFlags(0X41B730,0x10);
+	MakeFrame(0X41B730, 0X2C, 4, 0X8);
 	MakeLocal(0X41B730, 0X41B88F, "[bp-0X28]", "str");
 	MakeFunction    (0X41B890,0X41BA6E);
-	SetFunctionFlags(0X41B890,0x4010);
+	SetFunctionFlags(0X41B890,0x10);
 	MakeFrame(0X41B890, 0XC, 4, 0X4);
 	MakeFunction    (0X41BA70,0X41BACE);
-	SetFunctionFlags(0X41BA70,0x4010);
+	SetFunctionFlags(0X41BA70,0x10);
 	MakeFrame(0X41BA70, 0X8, 4, 0);
 	MakeFunction    (0X41BAD0,0X41C0A3);
-	SetFunctionFlags(0X41BAD0,0x4010);
+	SetFunctionFlags(0X41BAD0,0x10);
 	SetType(0X41BAD0, "int __stdcall sub_41BAD0(LPCSTR lpName);");
-	MakeFrame(0X41BAD0, 0XA0, 4, 0X4);
-	MakeLocal(0X41BAD0, 0X41C0A3, "[bp-0X1C]", "destination");
+	MakeFrame(0X41BAD0, 0X9C, 4, 0X4);
+	MakeLocal(0X41BAD0, 0X41C0A3, "[bp-0X90]", "destination");
+	MakeLocal(0X41BAD0, 0X41C0A3, "[bp-0X1C]", "ptr1");
 	MakeLocal(0X41BAD0, 0X41C0A3, "[bp-0X10]", "hResInfo");
 	MakeLocal(0X41BAD0, 0X41C0A3, "[bp-0X4]", "source");
 	MakeLocal(0X41BAD0, 0X41C0A3, "[bp+0X8]", "lpName");
 	MakeFunction    (0X41C180,0X41C1D5);
-	SetFunctionFlags(0X41C180,0x4010);
+	SetFunctionFlags(0X41C180,0x10);
 	MakeFrame(0X41C180, 0XC, 4, 0);
 	MakeLocal(0X41C180, 0X41C1D5, "[bp-0XC]", "ptc");
 	MakeFunction    (0X41C1E0,0X41C22A);
-	SetFunctionFlags(0X41C1E0,0x4010);
+	SetFunctionFlags(0X41C1E0,0x10);
 	SetType(0X41C1E0, "int __cdecl Setup_ORG_Playback_Timer(UINT uDelay);");
 	MakeFrame(0X41C1E0, 0X4, 4, 0);
 	MakeLocal(0X41C1E0, 0X41C22A, "[bp+0X8]", "uDelay");
 	MakeFunction    (0X41C230,0X41C24D);
-	SetFunctionFlags(0X41C230,0x4010);
+	SetFunctionFlags(0X41C230,0x10);
 	SetType(0X41C230, "TIMECALLBACK fptc;");
 	MakeFrame(0X41C230, 0X4, 4, 0X14);
 	MakeFunction    (0X41C250,0X41C2B0);
-	SetFunctionFlags(0X41C250,0x4010);
+	SetFunctionFlags(0X41C250,0x10);
 	MakeFrame(0X41C250, 0X4, 4, 0);
 	MakeFunction    (0X41C2B0,0X41C622);
-	SetFunctionFlags(0X41C2B0,0x4010);
+	SetFunctionFlags(0X41C2B0,0x10);
 	MakeFrame(0X41C2B0, 0X8, 4, 0);
 	MakeFunction    (0X41C630,0X41C6B1);
-	SetFunctionFlags(0X41C630,0x4010);
+	SetFunctionFlags(0X41C630,0x10);
 	MakeFrame(0X41C630, 0X8, 4, 0X4);
 	MakeFunction    (0X41C6C0,0X41C6EE);
 	SetFunctionFlags(0X41C6C0,0x4010);
 	MakeFrame(0X41C6C0, 0, 4, 0);
 	MakeFunction    (0X41C6F0,0X41C72E);
 	SetFunctionFlags(0X41C6F0,0x4010);
-	SetType(0X41C6F0, "int __cdecl sub_41C6F0(LPCSTR lpName);");
+	SetType(0X41C6F0, "int __cdecl Load_Org_Music(LPCSTR lpName);");
 	MakeFrame(0X41C6F0, 0, 4, 0);
 	MakeLocal(0X41C6F0, 0X41C72E, "[bp+0X8]", "lpName");
+	MakeNameEx(0X41C6FC, "Return_0_", SN_LOCAL);
+	MakeNameEx(0X41C712, "Return_0", SN_LOCAL);
+	MakeNameEx(0X41C72C, "Return", SN_LOCAL);
 	MakeFunction    (0X41C730,0X41C762);
 	SetFunctionFlags(0X41C730,0x4010);
 	MakeFrame(0X41C730, 0, 4, 0);
 	MakeFunction    (0X41C770,0X41C787);
 	SetFunctionFlags(0X41C770,0x4010);
 	MakeFrame(0X41C770, 0, 4, 0);
+	MakeNameEx(0X41C77C, "Return_0", SN_LOCAL);
+	MakeNameEx(0X41C780, "Return_Song_Current_Beat", SN_LOCAL);
+	MakeNameEx(0X41C785, "Return", SN_LOCAL);
 	MakeFunction    (0X41C790,0X41C7BA);
 	SetFunctionFlags(0X41C790,0x4010);
 	MakeFrame(0X41C790, 0, 4, 0);
@@ -145743,43 +146225,46 @@ static Functions_0(void) {
 	SetFunctionFlags(0X41C7C0,0x4010);
 	MakeFrame(0X41C7C0, 0, 4, 0);
 	MakeFunction    (0X41C7F0,0X41C872);
-	SetFunctionFlags(0X41C7F0,0x4010);
+	SetFunctionFlags(0X41C7F0,0x10);
 	MakeFrame(0X41C7F0, 0X4, 4, 0);
 	MakeFunction    (0X41C880,0X41C88F);
 	SetFunctionFlags(0X41C880,0x14);
 	MakeFrame(0X41C880, 0, 4, 0);
 	MakeFunction    (0X41C890,0X41C8EA);
-	SetFunctionFlags(0X41C890,0x4010);
+	SetFunctionFlags(0X41C890,0x10);
 	MakeFrame(0X41C890, 0X4, 4, 0);
 	MakeFunction    (0X41C8F0,0X41CB0C);
-	SetFunctionFlags(0X41C8F0,0x4010);
+	SetFunctionFlags(0X41C8F0,0x10);
 	MakeFrame(0X41C8F0, 0X10, 4, 0);
 	MakeLocal(0X41C8F0, 0X41CB0C, "[bp-0X10]", "angle_rad");
 	MakeNameEx(0X41CB08, "Return", SN_LOCAL);
 	MakeFunction    (0X41CB10,0X41CFB3);
-	SetFunctionFlags(0X41CB10,0x4010);
+	SetFunctionFlags(0X41CB10,0x10);
 	MakeFrame(0X41CB10, 0X170, 4, 0);
 	MakeLocal(0X41CB10, 0X41CFB3, "[bp-0X118]", "ptr");
 	MakeNameEx(0X41CFA2, "Return", SN_LOCAL);
 	MakeFunction    (0X41CFC0,0X41D034);
-	SetFunctionFlags(0X41CFC0,0x4010);
+	SetFunctionFlags(0X41CFC0,0x10);
 	SetType(0X41CFC0, "BOOL Check_Profile_DAT(void);");
 	SetFunctionCmt(0X41CFC0,	"Returns 1 or 0", 1);
 	MakeFrame(0X41CFC0, 0X110, 4, 0);
 	MakeLocal(0X41CFC0, 0X41D034, "[bp-0X110]", "str");
+	MakeLocal(0X41CFC0, 0X41D034, "[bp-0X8]", "Prevent_Crash");
 	MakeLocal(0X41CFC0, 0X41D034, "[bp-0X4]", "hObject");
 	MakeNameEx(0X41D019, "Close_File", SN_LOCAL);
 	MakeNameEx(0X41D028, "Return", SN_LOCAL);
 	MakeFunction    (0X41D040,0X41D252);
-	SetFunctionFlags(0X41D040,0x4010);
+	SetFunctionFlags(0X41D040,0x10);
 	MakeFrame(0X41D040, 0X720, 4, 0);
 	MakeLocal(0X41D040, 0X41D252, "[bp-0X720]", "str");
 	MakeLocal(0X41D040, 0X41D252, "[bp-0X618]", "ptr");
 	MakeLocal(0X41D040, 0X41D252, "[bp-0X400]", "destination");
+	MakeLocal(0X41D040, 0X41D252, "[bp-0XC]", "Prevent_Crash");
 	MakeLocal(0X41D040, 0X41D252, "[bp-0X8]", "stream");
 	MakeLocal(0X41D040, 0X41D252, "[bp-0X4]", "source");
+	MakeNameEx(0X41D246, "Return", SN_LOCAL);
 	MakeFunction    (0X41D260,0X41D54B);
-	SetFunctionFlags(0X41D260,0x4010);
+	SetFunctionFlags(0X41D260,0x10);
 	MakeFrame(0X41D260, 0X718, 4, 0);
 	MakeLocal(0X41D260, 0X41D54B, "[bp-0X718]", "str");
 	MakeLocal(0X41D260, 0X41D54B, "[bp-0X610]", "ptr1");
@@ -145795,51 +146280,63 @@ static Functions_0(void) {
 	SetFunctionFlags(0X41D610,0x4010);
 	MakeFrame(0X41D610, 0, 4, 0);
 	MakeFunction    (0X41D630,0X41D699);
-	SetFunctionFlags(0X41D630,0x4010);
+	SetFunctionFlags(0X41D630,0x10);
 	MakeFrame(0X41D630, 0X4, 4, 0);
 	MakeFunction    (0X41D740,0X41D83B);
-	SetFunctionFlags(0X41D740,0x4010);
+	SetFunctionFlags(0X41D740,0x10);
 	MakeFrame(0X41D740, 0X8, 4, 0);
 	MakeFunction    (0X41D840,0X41D9FF);
-	SetFunctionFlags(0X41D840,0x4010);
+	SetFunctionFlags(0X41D840,0x10);
 	MakeFrame(0X41D840, 0X5C, 4, 0);
 	MakeLocal(0X41D840, 0X41D9FF, "[bp-0X4C]", "Dst_Rects");
 	MakeLocal(0X41D840, 0X41D9FF, "[bp-0X18]", "Src_Rects");
 	MakeFunction    (0X41DA00,0X41DBC2);
-	SetFunctionFlags(0X41DA00,0x4010);
+	SetFunctionFlags(0X41DA00,0x10);
 	MakeFrame(0X41DA00, 0X128, 4, 0);
 	MakeLocal(0X41DA00, 0X41DBC2, "[bp-0X10]", "Dst_Rects");
 	MakeFunction    (0X41DBD0,0X41DE60);
-	SetFunctionFlags(0X41DBD0,0x4010);
+	SetFunctionFlags(0X41DBD0,0x10);
 	SetType(0X41DBD0, "int __cdecl Snake(int Level);");
 	MakeFrame(0X41DBD0, 0X8, 4, 0);
+	MakeLocal(0X41DBD0, 0X41DE60, "[bp-0X8]", "Snake_Level");
 	MakeLocal(0X41DBD0, 0X41DE60, "[bp-0X4]", "BulletID");
+	MakeLocal(0X41DBD0, 0X41DE60, "[bp+0X8]", "Level");
 	MakeNameEx(0X41DBF0, "Set_Snake_Level_1", SN_LOCAL);
 	MakeNameEx(0X41DBF9, "Set_Snake_Level_2", SN_LOCAL);
 	MakeNameEx(0X41DC02, "Set_Snake_Level_3", SN_LOCAL);
 	MakeFunction    (0X41DE60,0X41E10B);
-	SetFunctionFlags(0X41DE60,0x4010);
+	SetFunctionFlags(0X41DE60,0x10);
 	SetType(0X41DE60, "int __cdecl PolarStar(int Level);");
 	MakeFrame(0X41DE60, 0X8, 4, 0);
+	MakeLocal(0X41DE60, 0X41E10B, "[bp-0X8]", "Polar_Star_Level");
 	MakeLocal(0X41DE60, 0X41E10B, "[bp-0X4]", "BulletID");
+	MakeLocal(0X41DE60, 0X41E10B, "[bp+0X8]", "Level");
 	MakeNameEx(0X41E0FB, "Play_Level_1_2_Shot", SN_LOCAL);
 	MakeNameEx(0X41E107, "Return", SN_LOCAL);
 	MakeFunction    (0X41E110,0X41E3C8);
-	SetFunctionFlags(0X41E110,0x4010);
+	SetFunctionFlags(0X41E110,0x10);
 	SetType(0X41E110, "int __cdecl Fireball(int);");
 	MakeFrame(0X41E110, 0X8, 4, 0);
 	MakeLocal(0X41E110, 0X41E3C8, "[bp-0X4]", "BulletID");
 	MakeFunction    (0X41E3D0,0X41E7A1);
-	SetFunctionFlags(0X41E3D0,0x4010);
+	SetFunctionFlags(0X41E3D0,0x10);
 	SetType(0X41E3D0, "int __cdecl MachineGun(int Level);");
 	MakeFrame(0X41E3D0, 0X8, 4, 0);
+	MakeLocal(0X41E3D0, 0X41E7A1, "[bp-0X8]", "Machine_Gun_Level");
 	MakeLocal(0X41E3D0, 0X41E7A1, "[bp-0X4]", "BulletID");
+	MakeLocal(0X41E3D0, 0X41E7A1, "[bp+0X8]", "Level");
 	MakeNameEx(0X41E79D, "Return", SN_LOCAL);
 	MakeFunction    (0X41E7B0,0X41EFC2);
-	SetFunctionFlags(0X41E7B0,0x4010);
+	SetFunctionFlags(0X41E7B0,0x10);
 	SetType(0X41E7B0, "int __cdecl Missile_Launcher(int Level, int Super_Or_Normal);");
 	MakeFrame(0X41E7B0, 0X14, 4, 0);
+	MakeLocal(0X41E7B0, 0X41EFC2, "[bp-0X14]", "Missile_Laucher_Level_");
+	MakeLocal(0X41E7B0, 0X41EFC2, "[bp-0X10]", "Missile_Laucher_Level");
+	MakeLocal(0X41E7B0, 0X41EFC2, "[bp-0XC]", "Super_Missile_Laucher_Level_");
+	MakeLocal(0X41E7B0, 0X41EFC2, "[bp-0X8]", "Super_Missile_Laucher_Level");
 	MakeLocal(0X41E7B0, 0X41EFC2, "[bp-0X4]", "BulletID");
+	MakeLocal(0X41E7B0, 0X41EFC2, "[bp+0X8]", "Level");
+	MakeLocal(0X41E7B0, 0X41EFC2, "[bp+0XC]", "Super_Or_Normal");
 	MakeNameEx(0X41E887, "jmp_41E953", SN_LOCAL);
 	MakeNameEx(0X41E88C, "Check_Super_Missile_Launcher_Level", SN_LOCAL);
 	MakeNameEx(0X41E8A6, "Set_Missile_Launcher_Level_1", SN_LOCAL);
@@ -145862,14 +146359,16 @@ static Functions_0(void) {
 	MakeNameEx(0X41F331, "jmp_Return", SN_LOCAL);
 	MakeNameEx(0X41F579, "Return", SN_LOCAL);
 	MakeFunction    (0X41F580,0X41F70C);
-	SetFunctionFlags(0X41F580,0x4010);
+	SetFunctionFlags(0X41F580,0x10);
 	MakeFrame(0X41F580, 0X8, 4, 0);
 	MakeLocal(0X41F580, 0X41F70C, "[bp-0X4]", "BulletID");
 	MakeNameEx(0X41F708, "Return", SN_LOCAL);
 	MakeFunction    (0X41F710,0X41F9DD);
-	SetFunctionFlags(0X41F710,0x4010);
+	SetFunctionFlags(0X41F710,0x10);
 	MakeFrame(0X41F710, 0XC, 4, 0);
+	MakeLocal(0X41F710, 0X41F9DD, "[bp-0X8]", "Nemesis_Level");
 	MakeLocal(0X41F710, 0X41F9DD, "[bp-0X4]", "BulletID");
+	MakeLocal(0X41F710, 0X41F9DD, "[bp+0X8]", "Bullet_Level");
 	MakeNameEx(0X41F730, "Set_Nemesis_Level_1", SN_LOCAL);
 	MakeNameEx(0X41F739, "Set_Nemesis_Level_2", SN_LOCAL);
 	MakeNameEx(0X41F742, "Set_Nemesis_Level_3", SN_LOCAL);
@@ -145878,29 +146377,32 @@ static Functions_0(void) {
 	SetFunctionFlags(0X41F9E0,0x4010);
 	MakeFrame(0X41F9E0, 0, 4, 0);
 	MakeFunction    (0X41FA10,0X41FE32);
-	SetFunctionFlags(0X41FA10,0x4010);
+	SetFunctionFlags(0X41FA10,0x10);
 	MakeFrame(0X41FA10, 0X14, 4, 0);
 	MakeLocal(0X41FA10, 0X41FE32, "[bp-0X4]", "BulletID");
 	MakeFunction    (0X41FE70,0X42007E);
-	SetFunctionFlags(0X41FE70,0x4010);
+	SetFunctionFlags(0X41FE70,0x10);
 	MakeFrame(0X41FE70, 0XC, 4, 0);
+	MakeLocal(0X41FE70, 0X42007E, "[bp-0X4]", "Weapon_In_Use");
 	MakeFunction    (0X4200C0,0X420195);
-	SetFunctionFlags(0X4200C0,0x4010);
+	SetFunctionFlags(0X4200C0,0x10);
 	MakeFrame(0X4200C0, 0X18, 4, 0);
 	MakeLocal(0X4200C0, 0X420195, "[bp-0X18]", "ptr");
 	MakeFunction    (0X4201A0,0X42023D);
-	SetFunctionFlags(0X4201A0,0x4010);
+	SetFunctionFlags(0X4201A0,0x10);
 	MakeFrame(0X4201A0, 0X4, 4, 0);
 	MakeNameEx(0X420239, "Return", SN_LOCAL);
 	MakeFunction    (0X420640,0X42071C);
-	SetFunctionFlags(0X420640,0x4010);
+	SetFunctionFlags(0X420640,0x10);
 	SetType(0X420640, "int __cdecl Play_Sound_Effect(int SoundID, int Channel);");
 	MakeFrame(0X420640, 0X4, 4, 0);
+	MakeLocal(0X420640, 0X42071C, "[bp+0X8]", "SoundID");
+	MakeLocal(0X420640, 0X42071C, "[bp+0XC]", "Channel");
 	MakeFunction    (0X420720,0X420754);
 	SetFunctionFlags(0X420720,0x4010);
 	MakeFrame(0X420720, 0, 4, 0);
 	MakeFunction    (0X4207E0,0X420BD7);
-	SetFunctionFlags(0X4207E0,0x4010);
+	SetFunctionFlags(0X4207E0,0x10);
 	SetType(0X4207E0, "size_t __cdecl Sound_Loader(int Ptr_Sound, int Channels, int SoundID);");
 	MakeFrame(0X4207E0, 0X7C, 4, 0);
 	MakeLocal(0X4207E0, 0X420BD7, "[bp-0X7C]", "num");
@@ -145908,9 +146410,12 @@ static Functions_0(void) {
 	MakeLocal(0X4207E0, 0X420BD7, "[bp-0X54]", "source");
 	MakeLocal(0X4207E0, 0X420BD7, "[bp-0X4C]", "size");
 	MakeLocal(0X4207E0, 0X420BD7, "[bp-0X30]", "destination");
+	MakeLocal(0X4207E0, 0X420BD7, "[bp+0X8]", "Ptr_Sound");
+	MakeLocal(0X4207E0, 0X420BD7, "[bp+0XC]", "Channels");
+	MakeLocal(0X4207E0, 0X420BD7, "[bp+0X10]", "SoundID");
 	MakeNameEx(0X420BCB, "Return", SN_LOCAL);
 	MakeFunction    (0X420BE0,0X420ED4);
-	SetFunctionFlags(0X420BE0,0x4010);
+	SetFunctionFlags(0X420BE0,0x10);
 	MakeFrame(0X420BE0, 0X128, 4, 0);
 	MakeLocal(0X420BE0, 0X420ED4, "[bp-0X128]", "str");
 	MakeLocal(0X420BE0, 0X420ED4, "[bp-0X18]", "destination");
@@ -145922,57 +146427,63 @@ static Functions_0(void) {
 	MakeFrame(0X420EE0, 0, 4, 0);
 	MakeFunction    (0X420F50,0X420F97);
 	SetFunctionFlags(0X420F50,0x4010);
+	SetFunctionCmt(0X420F50,	"RMU : Play pRevious MUsic", 1);
 	MakeFrame(0X420F50, 0, 4, 0);
 	MakeFunction    (0X420FA0,0X421039);
 	SetFunctionFlags(0X420FA0,0x4010);
 	MakeFrame(0X420FA0, 0, 4, 0);
 	MakeFunction    (0X421040,0X4213A2);
-	SetFunctionFlags(0X421040,0x4010);
+	SetFunctionFlags(0X421040,0x10);
 	MakeFrame(0X421040, 0X4, 4, 0);
 	MakeFunction    (0X4213B0,0X4214D7);
-	SetFunctionFlags(0X4213B0,0x4010);
+	SetFunctionFlags(0X4213B0,0x10);
 	MakeFrame(0X4213B0, 0X34, 4, 0);
 	MakeLocal(0X4213B0, 0X4214D7, "[bp-0X30]", "Src_Rects");
 	MakeFunction    (0X4214E0,0X42156C);
-	SetFunctionFlags(0X4214E0,0x4010);
+	SetFunctionFlags(0X4214E0,0x10);
+	SetFunctionCmt(0X4214E0,	"Might be related to text box text surfaces ?", 1);
 	MakeFrame(0X4214E0, 0X4, 4, 0);
 	MakeFunction    (0X421570,0X4215B9);
-	SetFunctionFlags(0X421570,0x4010);
+	SetFunctionFlags(0X421570,0x10);
 	MakeFrame(0X421570, 0X4, 4, 0);
 	MakeFunction    (0X4215C0,0X42165C);
-	SetFunctionFlags(0X4215C0,0x4010);
+	SetFunctionFlags(0X4215C0,0x10);
 	MakeFrame(0X4215C0, 0X10, 4, 0);
 	MakeFunction    (0X421660,0X421741);
-	SetFunctionFlags(0X421660,0x4010);
-	SetType(0X421660, "int __cdecl sub_421660(char *);");
+	SetFunctionFlags(0X421660,0x10);
+	SetType(0X421660, "int __cdecl Load_Special_TSC(char *);");
 	MakeFrame(0X421660, 0X110, 4, 0);
 	MakeLocal(0X421660, 0X421741, "[bp-0X110]", "str");
 	MakeLocal(0X421660, 0X421741, "[bp-0X4]", "stream");
 	MakeLocal(0X421660, 0X421741, "[bp+0X8]", "source");
 	MakeFunction    (0X421750,0X4218DE);
-	SetFunctionFlags(0X421750,0x4010);
-	SetType(0X421750, "int __cdecl sub_421750(char *);");
+	SetFunctionFlags(0X421750,0x10);
+	SetType(0X421750, "int __cdecl Process_TSC_File(char *);");
 	MakeFrame(0X421750, 0X118, 4, 0);
 	MakeLocal(0X421750, 0X4218DE, "[bp-0X118]", "str");
+	MakeLocal(0X421750, 0X4218DE, "[bp-0X10]", "Prevent_Crash");
 	MakeLocal(0X421750, 0X4218DE, "[bp-0X8]", "stream");
 	MakeLocal(0X421750, 0X4218DE, "[bp+0X8]", "source");
+	MakeNameEx(0X4218D2, "Return", SN_LOCAL);
 	MakeFunction    (0X4218E0,0X4218F6);
 	SetFunctionFlags(0X4218E0,0x14);
 	SetType(0X4218E0, "int __cdecl _fputchar(int);");
 	MakeFrame(0X4218E0, 0, 4, 0);
 	MakeLocal(0X4218E0, 0X4218F6, "[bp+0X8]", "destination");
 	MakeFunction    (0X421900,0X42198A);
-	SetFunctionFlags(0X421900,0x4010);
+	SetFunctionFlags(0X421900,0x10);
 	SetType(0X421900, "int __cdecl TSC_Dec_to_Hex(int num);");
 	SetFunctionCmt(0X421900,	"Getting 4 decimal digits from a TSC file and converting to hexadecimal number", 1);
 	MakeFrame(0X421900, 0X4, 4, 0);
+	MakeLocal(0X421900, 0X42198A, "[bp+0X8]", "num");
 	MakeFunction    (0X421990,0X421AE8);
-	SetFunctionFlags(0X421990,0x4090);
+	SetFunctionFlags(0X421990,0x90);
 	SetType(0X421990, "signed int __cdecl Call_TSC_Event(int Event);");
 	MakeFrame(0X421990, 0X4, 4, 0);
+	MakeLocal(0X421990, 0X421AE8, "[bp+0X8]", "Event");
 	MakeNameEx(0X421AE4, "Return", SN_LOCAL);
 	MakeFunction    (0X421AF0,0X421C48);
-	SetFunctionFlags(0X421AF0,0x4010);
+	SetFunctionFlags(0X421AF0,0x10);
 	MakeFrame(0X421AF0, 0X8, 4, 0);
 	MakeFunction    (0X421C50,0X421C7F);
 	SetFunctionFlags(0X421C50,0x4010);
@@ -145982,27 +146493,27 @@ static Functions_0(void) {
 	MakeFrame(0X421C80, 0, 4, 0);
 	MakeNameEx(0X421D00, "Return", SN_LOCAL);
 	MakeFunction    (0X421D10,0X421E89);
-	SetFunctionFlags(0X421D10,0x4010);
+	SetFunctionFlags(0X421D10,0x10);
 	MakeFrame(0X421D10, 0X2C, 4, 0);
 	MakeLocal(0X421D10, 0X421E89, "[bp-0X2C]", "Ptr_String");
 	MakeFunction    (0X421E90,0X421F0F);
-	SetFunctionFlags(0X421E90,0x4010);
+	SetFunctionFlags(0X421E90,0x10);
 	MakeFrame(0X421E90, 0X4, 4, 0);
 	MakeFunction    (0X421F10,0X42250A);
-	SetFunctionFlags(0X421F10,0x4010);
+	SetFunctionFlags(0X421F10,0x10);
 	MakeFrame(0X421F10, 0XC8, 4, 0);
 	MakeLocal(0X421F10, 0X42250A, "[bp-0XB8]", "Src_Rects");
 	MakeLocal(0X421F10, 0X42250A, "[bp-0X38]", "Y_Position");
 	MakeLocal(0X421F10, 0X42250A, "[bp-0X24]", "Ptr_Img_Rects");
 	MakeFunction    (0X422510,0X425771);
-	SetFunctionFlags(0X422510,0x4010);
+	SetFunctionFlags(0X422510,0x10);
 	SetType(0X422510, "int Tsc_Parser(void);");
 	MakeFrame(0X422510, 0XC8, 4, 0);
-	MakeLocal(0X422510, 0X425771, "[bp-0XB8]", "str");
-	MakeLocal(0X422510, 0X425771, "[bp-0X78]", "destination");
-	MakeLocal(0X422510, 0X425771, "[bp-0X28]", "Ptr_String");
-	MakeLocal(0X422510, 0X425771, "[bp-0X24]", "Life_To_Add");
-	MakeLocal(0X422510, 0X425771, "[bp-0XC]", "Health_To_Restore");
+	MakeLocal(0X422510, 0X425771, "[bp-0XB8]", "Text");
+	MakeLocal(0X422510, 0X425771, "[bp-0X78]", "format");
+	MakeLocal(0X422510, 0X425771, "[bp-0X28]", "source");
+	MakeLocal(0X422510, 0X425771, "[bp-0X24]", "SoundID");
+	MakeLocal(0X422510, 0X425771, "[bp-0XC]", "Flag_hashtag");
 	MakeLocal(0X422510, 0X425771, "[bp-0X8]", "num");
 	MakeLocal(0X422510, 0X425771, "[bp-0X4]", "NPC_ID");
 	MakeNameEx(0X4225CB, "Tst_Cmdstart", SN_LOCAL);
@@ -146041,10 +146552,11 @@ static Functions_0(void) {
 	MakeNameEx(0X425760, "Return_1", SN_LOCAL);
 	MakeNameEx(0X425765, "Return", SN_LOCAL);
 	MakeFunction    (0X425790,0X4257EC);
-	SetFunctionFlags(0X425790,0x4010);
+	SetFunctionFlags(0X425790,0x10);
 	MakeFrame(0X425790, 0X4, 4, 0);
+	MakeLocal(0X425790, 0X4257EC, "[bp-0X4]", "Loop_Counter");
 	MakeFunction    (0X4257F0,0X4258AC);
-	SetFunctionFlags(0X4257F0,0x4010);
+	SetFunctionFlags(0X4257F0,0x10);
 	MakeFrame(0X4257F0, 0X18, 4, 0);
 	MakeLocal(0X4257F0, 0X4258AC, "[bp-0X18]", "angle_rad");
 	MakeFunction    (0X4258B0,0X4258C0);
@@ -146054,7 +146566,7 @@ static Functions_0(void) {
 	SetFunctionFlags(0X4258C0,0x4010);
 	MakeFrame(0X4258C0, 0, 4, 0);
 	MakeFunction    (0X4258E0,0X425B37);
-	SetFunctionFlags(0X4258E0,0x4010);
+	SetFunctionFlags(0X4258E0,0x10);
 	MakeFrame(0X4258E0, 0X8, 4, 0);
 	MakeFunction    (0X425B40,0X425B51);
 	SetFunctionFlags(0X425B40,0x4010);
@@ -146062,7 +146574,7 @@ static Functions_0(void) {
 	SetFunctionCmt(0X425B40,	"Microsoft VisualC 2-11/net runtime", 1);
 	MakeFrame(0X425B40, 0, 4, 0);
 	MakeFunction    (0X425B60,0X425B7C);
-	SetFunctionFlags(0X425B60,0x4010);
+	SetFunctionFlags(0X425B60,0x10);
 	MakeFrame(0X425B60, 0XC, 4, 0);
 	MakeLocal(0X425B60, 0X425B7C, "[bp-0XC]", "angle_rad");
 	MakeFunction    (0X425B80,0X425B91);
@@ -146071,7 +146583,7 @@ static Functions_0(void) {
 	SetFunctionCmt(0X425B80,	"Mcrosoft VisualC 2-11/net runtime", 1);
 	MakeFrame(0X425B80, 0, 4, 0);
 	MakeFunction    (0X425BA0,0X425BBC);
-	SetFunctionFlags(0X425BA0,0x4010);
+	SetFunctionFlags(0X425BA0,0x10);
 	MakeFrame(0X425BA0, 0XC, 4, 0);
 	MakeLocal(0X425BA0, 0X425BBC, "[bp-0XC]", "angle_rad");
 	MakeFunction    (0X425BC0,0X425BE3);
@@ -146079,1301 +146591,1413 @@ static Functions_0(void) {
 	SetType(0X425BC0, "void Clear_Value_View(void);");
 	MakeFrame(0X425BC0, 0, 4, 0);
 	MakeFunction    (0X425BF0,0X426357);
-	SetFunctionFlags(0X425BF0,0x4010);
+	SetFunctionFlags(0X425BF0,0x10);
 	SetType(0X425BF0, "int __cdecl Set_Value_View(__int32, __int32, __int32);");
 	MakeFrame(0X425BF0, 0X19C, 4, 0);
 	MakeNameEx(0X426353, "Return", SN_LOCAL);
 	MakeFunction    (0X426360,0X42642B);
-	SetFunctionFlags(0X426360,0x4010);
+	SetFunctionFlags(0X426360,0x10);
 	MakeFrame(0X426360, 0X4, 4, 0);
 	MakeFunction    (0X426430,0X426525);
-	SetFunctionFlags(0X426430,0x4010);
+	SetFunctionFlags(0X426430,0x10);
 	SetType(0X426430, "int __cdecl Put_Value_View(int Camera_X_Pos, int Camera_Y_Pos);");
 	MakeFrame(0X426430, 0X8, 4, 0);
+	MakeLocal(0X426430, 0X426525, "[bp+0X8]", "Camera_X_Pos");
+	MakeLocal(0X426430, 0X426525, "[bp+0XC]", "Camera_Y_Pos");
 	MakeNameEx(0X426521, "Return", SN_LOCAL);
 	MakeFunction    (0X426530,0X4265A1);
-	SetFunctionFlags(0X426530,0x4010);
+	SetFunctionFlags(0X426530,0x10);
 	SetFunctionCmt(0X426530,	"NPC 0 : Nothing.\nThis NPC does basically nothing.", 1);
 	MakeFrame(0X426530, 0X10, 4, 0);
+	MakeLocal(0X426530, 0X4265A1, "[bp-0X10]", "Left_Spritebox_Pos");
+	MakeLocal(0X426530, 0X4265A1, "[bp-0XC]", "Top_Spritebox_Pos");
+	MakeLocal(0X426530, 0X4265A1, "[bp-0X8]", "Right_Spritebox_Pos");
+	MakeLocal(0X426530, 0X4265A1, "[bp-0X4]", "Bottom_Spritebox_Pos");
 	MakeNameEx(0X426580, "Return", SN_LOCAL);
 	MakeFunction    (0X4265B0,0X426AE6);
-	SetFunctionFlags(0X4265B0,0x4010);
+	SetFunctionFlags(0X4265B0,0x10);
 	SetFunctionCmt(0X4265B0,	"NPC 1 : Weapon Energy\nGives you EXP", 1);
 	MakeFrame(0X4265B0, 0X74, 4, 0);
 	MakeNameEx(0X42667F, "jmp_42686E", SN_LOCAL);
 	MakeNameEx(0X42680A, "jmp_426816", SN_LOCAL);
 	MakeNameEx(0X426A23, "Medium_Crystal", SN_LOCAL);
 	MakeNameEx(0X426A43, "Large_Crystal", SN_LOCAL);
+	MakeNameEx(0X426AE2, "Return", SN_LOCAL);
 	MakeFunction    (0X426AF0,0X426FCE);
-	SetFunctionFlags(0X426AF0,0x4010);
+	SetFunctionFlags(0X426AF0,0x10);
 	SetFunctionCmt(0X426AF0,	"NPC 2 : Behemoth (Enemy)\nAppears in the Egg Corridor.", 1);
 	MakeFrame(0X426AF0, 0XE4, 4, 0);
 	MakeFunction    (0X426FD0,0X427031);
-	SetFunctionFlags(0X426FD0,0x4010);
+	SetFunctionFlags(0X426FD0,0x10);
 	SetFunctionCmt(0X426FD0,	"NPC 3 : Nothing?\nThis NPC deletes itself", 1);
 	MakeFrame(0X426FD0, 0X10, 4, 0);
 	MakeFunction    (0X427040,0X427476);
-	SetFunctionFlags(0X427040,0x4010);
+	SetFunctionFlags(0X427040,0x10);
 	SetFunctionCmt(0X427040,	"NPC 4 : Smoke\nThis NPC simply is smoke.", 1);
-	MakeFrame(0X427040, 0X10C, 4, 0);
+	MakeFrame(0X427040, 0X108, 4, 0);
+}
+
+static Functions_1(void) {
+
 	MakeFunction    (0X427480,0X427803);
-	SetFunctionFlags(0X427480,0x4010);
+	SetFunctionFlags(0X427480,0x10);
 	SetFunctionCmt(0X427480,	"NPC 5 : Critter (Enemy) (Hopping, Green)\nAppears in the Egg Corridor.", 1);
 	MakeFrame(0X427480, 0X64, 4, 0);
 	MakeFunction    (0X427820,0X427C47);
-	SetFunctionFlags(0X427820,0x4010);
+	SetFunctionFlags(0X427820,0x10);
 	SetFunctionCmt(0X427820,	"NPC 6 : Beetle (Enemy) (Horizontal, Green)\nAppears in the Egg Corridor.", 1);
 	MakeFrame(0X427820, 0XA4, 4, 0);
 	MakeFunction    (0X427C60,0X427EFD);
-	SetFunctionFlags(0X427C60,0x4010);
+	SetFunctionFlags(0X427C60,0x10);
 	SetFunctionCmt(0X427C60,	"NPC 6 : Beetle (Enemy) (Horizontal, Green)\nAppears in the Egg Corridor.", 1);
 	MakeFrame(0X427C60, 0X64, 4, 0);
 	MakeFunction    (0X427F00,0X42825B);
-	SetFunctionFlags(0X427F00,0x4010);
+	SetFunctionFlags(0X427F00,0x10);
 	SetFunctionCmt(0X427F00,	"NPC 8 : Beetle (Enemy) (Follow 1)\nAppears in the Egg Corridor.", 1);
 	MakeFrame(0X427F00, 0X44, 4, 0);
 	MakeFunction    (0X428260,0X428539);
-	SetFunctionFlags(0X428260,0x4010);
+	SetFunctionFlags(0X428260,0x10);
 	SetFunctionCmt(0X428260,	"NPC 9 : Balrog (drops in)", 1);
 	MakeFrame(0X428260, 0X68, 4, 0);
 	MakeFunction    (0X428540,0X428993);
-	SetFunctionFlags(0X428540,0x4010);
+	SetFunctionFlags(0X428540,0x10);
 	SetFunctionCmt(0X428540,	"NPC 10 : Balrog (Boss) (Shooting)\nBalrog when he is shooting an energy shot.", 1);
 	MakeFrame(0X428540, 0X94, 4, 0);
 	MakeLocal(0X428540, 0X428993, "[bp-0X50]", "Y_Velocity");
 	MakeLocal(0X428540, 0X428993, "[bp-0X4C]", "X_Velocity");
 	MakeNameEx(0X4286AB, "jmp_4287D6", SN_LOCAL);
 	MakeFunction    (0X4289B0,0X428B08);
-	SetFunctionFlags(0X4289B0,0x4010);
+	SetFunctionFlags(0X4289B0,0x10);
 	SetFunctionCmt(0X4289B0,	"NPC 11 : Balrog (Projectile) (energy bounce)\nThe projectile Balrog 2 shoots.", 1);
 	MakeFrame(0X4289B0, 0X30, 4, 0);
 	MakeFunction    (0X428B10,0X42986B);
-	SetFunctionFlags(0X428B10,0x4010);
+	SetFunctionFlags(0X428B10,0x10);
 	SetFunctionCmt(0X428B10,	"NPC 12 : Balrog (cutscene)\nBalrog when he is in a cutscene.", 1);
 	MakeFrame(0X428B10, 0X1D4, 4, 0);
 	MakeFunction    (0X429940,0X429A27);
-	SetFunctionFlags(0X429940,0x4010);
+	SetFunctionFlags(0X429940,0x10);
 	SetFunctionCmt(0X429940,	"NPC 13 : Forcefield", 1);
 	MakeFrame(0X429940, 0X40, 4, 0);
 	MakeFunction    (0X429A30,0X429BE3);
-	SetFunctionFlags(0X429A30,0x4010);
+	SetFunctionFlags(0X429A30,0x10);
 	SetFunctionCmt(0X429A30,	"NPC 14 : Santa's Key\nCan be found in Grasstown", 1);
 	MakeFrame(0X429A30, 0X38, 4, 0);
 	MakeFunction    (0X429BF0,0X429DFB);
-	SetFunctionFlags(0X429BF0,0x4010);
+	SetFunctionFlags(0X429BF0,0x10);
 	SetFunctionCmt(0X429BF0,	"NPC 15 : Treasure Chest, closed", 1);
 	MakeFrame(0X429BF0, 0X38, 4, 0);
 	MakeFunction    (0X429E00,0X42A0A6);
-	SetFunctionFlags(0X429E00,0x4010);
+	SetFunctionFlags(0X429E00,0x10);
 	MakeFrame(0X429E00, 0X88, 4, 0);
 	MakeFunction    (0X42A0B0,0X42A349);
-	SetFunctionFlags(0X42A0B0,0x4010);
+	SetFunctionFlags(0X42A0B0,0x10);
 	MakeFrame(0X42A0B0, 0X28, 4, 0);
 	MakeFunction    (0X42A360,0X42A48B);
-	SetFunctionFlags(0X42A360,0x4010);
+	SetFunctionFlags(0X42A360,0x10);
 	MakeFrame(0X42A360, 0X28, 4, 0);
 	MakeFunction    (0X42A490,0X42A817);
-	SetFunctionFlags(0X42A490,0x4010);
+	SetFunctionFlags(0X42A490,0x10);
 	MakeFrame(0X42A490, 0X8C, 4, 0);
 	MakeFunction    (0X42A830,0X42A93F);
-	SetFunctionFlags(0X42A830,0x4010);
+	SetFunctionFlags(0X42A830,0x10);
 	MakeFrame(0X42A830, 0X40, 4, 0);
 	MakeFunction    (0X42A940,0X42A9B1);
-	SetFunctionFlags(0X42A940,0x4010);
+	SetFunctionFlags(0X42A940,0x10);
 	MakeFrame(0X42A940, 0X10, 4, 0);
 	MakeFunction    (0X42A9C0,0X42AA70);
-	SetFunctionFlags(0X42A9C0,0x4010);
+	SetFunctionFlags(0X42A9C0,0x10);
 	MakeFrame(0X42A9C0, 0X24, 4, 0);
 	MakeFunction    (0X42AA70,0X42ABCA);
-	SetFunctionFlags(0X42AA70,0x4010);
+	SetFunctionFlags(0X42AA70,0x10);
 	MakeFrame(0X42AA70, 0X80, 4, 0);
 	MakeFunction    (0X42ABD0,0X42B265);
-	SetFunctionFlags(0X42ABD0,0x4010);
+	SetFunctionFlags(0X42ABD0,0x10);
 	MakeFrame(0X42ABD0, 0XC4, 4, 0);
 	MakeFunction    (0X42B280,0X42B5A0);
-	SetFunctionFlags(0X42B280,0x4010);
+	SetFunctionFlags(0X42B280,0x10);
 	MakeFrame(0X42B280, 0X28, 4, 0);
 	MakeFunction    (0X42B5E0,0X42BA84);
-	SetFunctionFlags(0X42B5E0,0x4010);
+	SetFunctionFlags(0X42B5E0,0x10);
 	MakeFrame(0X42B5E0, 0X8C, 4, 0);
 	MakeFunction    (0X42BA90,0X42BADF);
-	SetFunctionFlags(0X42BA90,0x4010);
+	SetFunctionFlags(0X42BA90,0x10);
 	MakeFrame(0X42BA90, 0X10, 4, 0);
 	MakeFunction    (0X42BAE0,0X42C180);
-	SetFunctionFlags(0X42BAE0,0x4010);
+	SetFunctionFlags(0X42BAE0,0x10);
 	MakeFrame(0X42BAE0, 0XC4, 4, 0);
 	MakeFunction    (0X42C1A0,0X42C313);
-	SetFunctionFlags(0X42C1A0,0x4010);
+	SetFunctionFlags(0X42C1A0,0x10);
 	MakeFrame(0X42C1A0, 0X44, 4, 0);
 	MakeFunction    (0X42C320,0X42C4BD);
-	SetFunctionFlags(0X42C320,0x4010);
+	SetFunctionFlags(0X42C320,0x10);
 	MakeFrame(0X42C320, 0X34, 4, 0);
 	MakeFunction    (0X42C4C0,0X42C9F1);
-	SetFunctionFlags(0X42C4C0,0x4010);
+	SetFunctionFlags(0X42C4C0,0x10);
 	MakeFrame(0X42C4C0, 0XA4, 4, 0);
 	MakeFunction    (0X42CA10,0X42CABF);
-	SetFunctionFlags(0X42CA10,0x4010);
+	SetFunctionFlags(0X42CA10,0x10);
 	MakeFrame(0X42CA10, 0X20, 4, 0);
 	MakeFunction    (0X42CAC0,0X42CC1F);
-	SetFunctionFlags(0X42CAC0,0x4010);
+	SetFunctionFlags(0X42CAC0,0x10);
 	MakeFrame(0X42CAC0, 0X20, 4, 0);
 	MakeFunction    (0X42CC20,0X42CCA7);
-	SetFunctionFlags(0X42CC20,0x4010);
+	SetFunctionFlags(0X42CC20,0x10);
 	MakeFrame(0X42CC20, 0X20, 4, 0);
 	MakeFunction    (0X42CCB0,0X42CFFD);
-	SetFunctionFlags(0X42CCB0,0x4010);
+	SetFunctionFlags(0X42CCB0,0x10);
 	MakeFrame(0X42CCB0, 0X84, 4, 0);
 	MakeFunction    (0X42D010,0X42D734);
-	SetFunctionFlags(0X42D010,0x4010);
+	SetFunctionFlags(0X42D010,0x10);
 	MakeFrame(0X42D010, 0XD4, 4, 0);
 	MakeLocal(0X42D010, 0X42D734, "[bp-0X70]", "Y_Velocity");
 	MakeLocal(0X42D010, 0X42D734, "[bp-0X6C]", "X_Velocity");
 	MakeFunction    (0X42D760,0X42D80F);
-	SetFunctionFlags(0X42D760,0x4010);
+	SetFunctionFlags(0X42D760,0x10);
 	MakeFrame(0X42D760, 0X20, 4, 0);
 	MakeFunction    (0X42D810,0X42D95D);
-	SetFunctionFlags(0X42D810,0x4010);
+	SetFunctionFlags(0X42D810,0x10);
 	MakeFrame(0X42D810, 0X44, 4, 0);
 	MakeFunction    (0X42D960,0X42D9EA);
-	SetFunctionFlags(0X42D960,0x4010);
+	SetFunctionFlags(0X42D960,0x10);
 	MakeFrame(0X42D960, 0X20, 4, 0);
 	MakeFunction    (0X42D9F0,0X42DDE4);
-	SetFunctionFlags(0X42D9F0,0x4010);
+	SetFunctionFlags(0X42D9F0,0x10);
 	MakeFrame(0X42D9F0, 0XE4, 4, 0);
 	MakeFunction    (0X42DE00,0X42DE6D);
-	SetFunctionFlags(0X42DE00,0x4010);
+	SetFunctionFlags(0X42DE00,0x10);
 	MakeFrame(0X42DE00, 0X10, 4, 0);
 	MakeFunction    (0X42DE70,0X42E965);
-	SetFunctionFlags(0X42DE70,0x4010);
+	SetFunctionFlags(0X42DE70,0x10);
 	MakeFrame(0X42DE70, 0X1AC, 4, 0);
 	MakeFunction    (0X42E9F0,0X42EAA4);
-	SetFunctionFlags(0X42E9F0,0x4010);
+	SetFunctionFlags(0X42E9F0,0x10);
 	MakeFrame(0X42E9F0, 0X24, 4, 0);
 	MakeFunction    (0X42EAB0,0X42F037);
-	SetFunctionFlags(0X42EAB0,0x4010);
+	SetFunctionFlags(0X42EAB0,0x10);
 	MakeFrame(0X42EAB0, 0X68, 4, 0);
 	MakeFunction    (0X42F060,0X42F31D);
-	SetFunctionFlags(0X42F060,0x4010);
+	SetFunctionFlags(0X42F060,0x10);
 	MakeFrame(0X42F060, 0X34, 4, 0);
 	MakeFunction    (0X42F320,0X42F3E8);
-	SetFunctionFlags(0X42F320,0x4010);
+	SetFunctionFlags(0X42F320,0x10);
 	MakeFrame(0X42F320, 0X10, 4, 0);
 	MakeFunction    (0X42F3F0,0X42F761);
-	SetFunctionFlags(0X42F3F0,0x4010);
+	SetFunctionFlags(0X42F3F0,0x10);
 	MakeFrame(0X42F3F0, 0X54, 4, 0);
 	MakeFunction    (0X42F780,0X42F9DF);
-	SetFunctionFlags(0X42F780,0x4010);
+	SetFunctionFlags(0X42F780,0x10);
 	SetType(0X42F780, "int __cdecl NPC48(void *);");
 	MakeFrame(0X42F780, 0X40, 4, 0);
 	MakeFunction    (0X42F9E0,0X42FE9B);
-	SetFunctionFlags(0X42F9E0,0x4010);
+	SetFunctionFlags(0X42F9E0,0x10);
 	MakeFrame(0X42F9E0, 0X70, 4, 0);
 	MakeLocal(0X42F9E0, 0X42FE9B, "[bp-0X6C]", "Y_Velocity");
 	MakeLocal(0X42F9E0, 0X42FE9B, "[bp-0X38]", "X_Velocity");
 	MakeFunction    (0X42FEC0,0X4301AD);
-	SetFunctionFlags(0X42FEC0,0x4010);
+	SetFunctionFlags(0X42FEC0,0x10);
 	MakeFrame(0X42FEC0, 0X44, 4, 0);
 	MakeFunction    (0X4301B0,0X43077D);
-	SetFunctionFlags(0X4301B0,0x4010);
+	SetFunctionFlags(0X4301B0,0x10);
 	MakeFrame(0X4301B0, 0XA4, 4, 0);
 	MakeFunction    (0X430780,0X4307C3);
-	SetFunctionFlags(0X430780,0x4010);
+	SetFunctionFlags(0X430780,0x10);
 	SetFunctionCmt(0X430780,	"NPC 52 : Sitting Blue Bot", 1);
 	MakeFrame(0X430780, 0X10, 4, 0);
 	MakeFunction    (0X4307D0,0X430AFC);
-	SetFunctionFlags(0X4307D0,0x4010);
+	SetFunctionFlags(0X4307D0,0x10);
 	SetType(0X4307D0, "int __cdecl NPC53(void *);");
-	MakeFrame(0X4307D0, 0X4C, 4, 0);
+	MakeFrame(0X4307D0, 0X48, 4, 0);
 	MakeFunction    (0X430B00,0X430EAE);
-	SetFunctionFlags(0X430B00,0x4010);
+	SetFunctionFlags(0X430B00,0x10);
 	SetType(0X430B00, "int __cdecl NPC54(void *);");
 	MakeFrame(0X430B00, 0X68, 4, 0);
 	MakeFunction    (0X430EB0,0X4311B8);
-	SetFunctionFlags(0X430EB0,0x4010);
+	SetFunctionFlags(0X430EB0,0x10);
 	MakeFrame(0X430EB0, 0XC4, 4, 0);
 	MakeFunction    (0X4311D0,0X4315BE);
-	SetFunctionFlags(0X4311D0,0x4010);
+	SetFunctionFlags(0X4311D0,0x10);
 	MakeFrame(0X4311D0, 0X64, 4, 0);
 	MakeFunction    (0X4315E0,0X431C1D);
-	SetFunctionFlags(0X4315E0,0x4010);
+	SetFunctionFlags(0X4315E0,0x10);
 	MakeFrame(0X4315E0, 0XAC, 4, 0);
 	MakeFunction    (0X431C20,0X4321EB);
-	SetFunctionFlags(0X431C20,0x4010);
+	SetFunctionFlags(0X431C20,0x10);
 	MakeFrame(0X431C20, 0X70, 4, 0);
 	MakeLocal(0X431C20, 0X4321EB, "[bp-0X6C]", "Y_Velocity");
 	MakeLocal(0X431C20, 0X4321EB, "[bp-0X68]", "X_Velocity");
 	MakeFunction    (0X4321F0,0X432443);
-	SetFunctionFlags(0X4321F0,0x4010);
+	SetFunctionFlags(0X4321F0,0x10);
 	MakeFrame(0X4321F0, 0X44, 4, 0);
 	MakeFunction    (0X432460,0X432B12);
-	SetFunctionFlags(0X432460,0x4010);
+	SetFunctionFlags(0X432460,0x10);
 	MakeFrame(0X432460, 0X104, 4, 0);
 	MakeFunction    (0X432B50,0X433435);
-	SetFunctionFlags(0X432B50,0x4010);
+	SetFunctionFlags(0X432B50,0x10);
 	MakeFrame(0X432B50, 0X16C, 4, 0);
 	MakeFunction    (0X4334C0,0X4336AE);
-	SetFunctionFlags(0X4334C0,0x4010);
+	SetFunctionFlags(0X4334C0,0x10);
 	MakeFrame(0X4334C0, 0X34, 4, 0);
 	MakeFunction    (0X4336C0,0X433BE2);
-	SetFunctionFlags(0X4336C0,0x4010);
+	SetFunctionFlags(0X4336C0,0x10);
 	MakeFrame(0X4336C0, 0XC4, 4, 0);
 	MakeFunction    (0X433C00,0X433FA5);
-	SetFunctionFlags(0X433C00,0x4010);
+	SetFunctionFlags(0X433C00,0x10);
 	MakeFrame(0X433C00, 0X64, 4, 0);
 	MakeFunction    (0X433FC0,0X4342AA);
-	SetFunctionFlags(0X433FC0,0x4010);
+	SetFunctionFlags(0X433FC0,0x10);
 	MakeFrame(0X433FC0, 0X84, 4, 0);
 	MakeFunction    (0X4342B0,0X4345D7);
-	SetFunctionFlags(0X4342B0,0x4010);
+	SetFunctionFlags(0X4342B0,0x10);
 	MakeFrame(0X4342B0, 0X4C, 4, 0);
 	MakeFunction    (0X4345E0,0X434CB1);
-	SetFunctionFlags(0X4345E0,0x4010);
+	SetFunctionFlags(0X4345E0,0x10);
 	MakeFrame(0X4345E0, 0X104, 4, 0);
 	MakeFunction    (0X434D10,0X4355A7);
-	SetFunctionFlags(0X434D10,0x4010);
+	SetFunctionFlags(0X434D10,0x10);
 	MakeFrame(0X434D10, 0X124, 4, 0);
 	MakeFunction    (0X4355F0,0X435A95);
-	SetFunctionFlags(0X4355F0,0x4010);
+	SetFunctionFlags(0X4355F0,0x10);
 	MakeFrame(0X4355F0, 0XC8, 4, 0);
 	MakeFunction    (0X435AB0,0X435B97);
-	SetFunctionFlags(0X435AB0,0x4010);
+	SetFunctionFlags(0X435AB0,0x10);
 	MakeFrame(0X435AB0, 0X40, 4, 0);
 	MakeFunction    (0X435BA0,0X435DDB);
-	SetFunctionFlags(0X435BA0,0x4010);
+	SetFunctionFlags(0X435BA0,0x10);
 	MakeFrame(0X435BA0, 0X64, 4, 0);
 	MakeFunction    (0X435DE0,0X435FBD);
-	SetFunctionFlags(0X435DE0,0x4010);
+	SetFunctionFlags(0X435DE0,0x10);
 	MakeFrame(0X435DE0, 0X20, 4, 0);
 	MakeFunction    (0X435FC0,0X43617A);
-	SetFunctionFlags(0X435FC0,0x4010);
+	SetFunctionFlags(0X435FC0,0x10);
 	MakeFrame(0X435FC0, 0X50, 4, 0);
 	MakeFunction    (0X436180,0X436516);
-	SetFunctionFlags(0X436180,0x4010);
+	SetFunctionFlags(0X436180,0x10);
 	MakeFrame(0X436180, 0XC4, 4, 0);
 	MakeFunction    (0X436540,0X436647);
-	SetFunctionFlags(0X436540,0x4010);
+	SetFunctionFlags(0X436540,0x10);
 	MakeFrame(0X436540, 0X24, 4, 0);
 	MakeFunction    (0X436650,0X436687);
 	SetFunctionFlags(0X436650,0x4010);
 	MakeFrame(0X436650, 0, 4, 0);
 	MakeFunction    (0X436690,0X4367D7);
-	SetFunctionFlags(0X436690,0x4010);
+	SetFunctionFlags(0X436690,0x10);
 	SetFunctionCmt(0X436690,	"NPC 77 : Sandaim the farmer", 1);
 	MakeFrame(0X436690, 0X34, 4, 0);
+	MakeLocal(0X436690, 0X4367D7, "[bp-0X34]", "Script_State");
+	MakeLocal(0X436690, 0X4367D7, "[bp-0X30]", "Rect_1_1");
+	MakeLocal(0X436690, 0X4367D7, "[bp-0X2C]", "Rect_1_2");
+	MakeLocal(0X436690, 0X4367D7, "[bp-0X28]", "Rect_1_3");
+	MakeLocal(0X436690, 0X4367D7, "[bp-0X24]", "Rect_1_4");
+	MakeLocal(0X436690, 0X4367D7, "[bp-0X20]", "Rect_2_1");
+	MakeLocal(0X436690, 0X4367D7, "[bp-0X1C]", "Rect_2_2");
+	MakeLocal(0X436690, 0X4367D7, "[bp-0X18]", "Rect_2_3");
+	MakeLocal(0X436690, 0X4367D7, "[bp-0X14]", "Rect_2_4");
+	MakeLocal(0X436690, 0X4367D7, "[bp-0X10]", "Rect_3_1");
+	MakeLocal(0X436690, 0X4367D7, "[bp-0XC]", "Rect_3_2");
+	MakeLocal(0X436690, 0X4367D7, "[bp-0X8]", "Rect_3_3");
+	MakeLocal(0X436690, 0X4367D7, "[bp-0X4]", "Rect_3_4");
 	MakeNameEx(0X436754, "jmp_436782", SN_LOCAL);
 	MakeNameEx(0X4367B6, "Direction_Not_0", SN_LOCAL);
 	MakeNameEx(0X4367D3, "Return", SN_LOCAL);
 	MakeFunction    (0X4367E0,0X436867);
-	SetFunctionFlags(0X4367E0,0x4010);
+	SetFunctionFlags(0X4367E0,0x10);
 	SetFunctionCmt(0X4367E0,	"NPC 78 : Pot", 1);
 	MakeFrame(0X4367E0, 0X20, 4, 0);
+	MakeLocal(0X4367E0, 0X436867, "[bp-0X20]", "Rect_1_1");
+	MakeLocal(0X4367E0, 0X436867, "[bp-0X1C]", "Rect_1_2");
+	MakeLocal(0X4367E0, 0X436867, "[bp-0X18]", "Rect_1_3");
+	MakeLocal(0X4367E0, 0X436867, "[bp-0X14]", "Rect_1_4");
+	MakeLocal(0X4367E0, 0X436867, "[bp-0X10]", "Rect_2_1");
+	MakeLocal(0X4367E0, 0X436867, "[bp-0XC]", "Rect_2_2");
+	MakeLocal(0X4367E0, 0X436867, "[bp-0X8]", "Rect_2_3");
+	MakeLocal(0X4367E0, 0X436867, "[bp-0X4]", "Rect_2_4");
 	MakeNameEx(0X436846, "Direction_Not_0", SN_LOCAL);
 	MakeNameEx(0X436863, "Return", SN_LOCAL);
 	MakeFunction    (0X436870,0X436AD7);
-	SetFunctionFlags(0X436870,0x4010);
+	SetFunctionFlags(0X436870,0x10);
 	MakeFrame(0X436870, 0X64, 4, 0);
+	MakeLocal(0X436870, 0X436AD7, "[bp-0X60]", "Frame_4_1");
+	MakeLocal(0X436870, 0X436AD7, "[bp-0X5C]", "Frame_4_2");
+	MakeLocal(0X436870, 0X436AD7, "[bp-0X58]", "Frame_4_3");
+	MakeLocal(0X436870, 0X436AD7, "[bp-0X54]", "Frame_4_4");
+	MakeLocal(0X436870, 0X436AD7, "[bp-0X50]", "Frame_5_1");
+	MakeLocal(0X436870, 0X436AD7, "[bp-0X4C]", "Frame_5_2");
+	MakeLocal(0X436870, 0X436AD7, "[bp-0X48]", "Frame_5_3");
+	MakeLocal(0X436870, 0X436AD7, "[bp-0X44]", "Frame_5_4");
+	MakeLocal(0X436870, 0X436AD7, "[bp-0X40]", "Frame_6_1");
+	MakeLocal(0X436870, 0X436AD7, "[bp-0X3C]", "Frame_6_2");
+	MakeLocal(0X436870, 0X436AD7, "[bp-0X38]", "Frame_6_3");
+	MakeLocal(0X436870, 0X436AD7, "[bp-0X34]", "Frame_6_4");
+	MakeLocal(0X436870, 0X436AD7, "[bp-0X30]", "Frame_1_1");
+	MakeLocal(0X436870, 0X436AD7, "[bp-0X2C]", "Frame_1_2");
+	MakeLocal(0X436870, 0X436AD7, "[bp-0X28]", "Frame_1_3");
+	MakeLocal(0X436870, 0X436AD7, "[bp-0X24]", "Frame_1_4");
+	MakeLocal(0X436870, 0X436AD7, "[bp-0X20]", "Frame_2_1");
+	MakeLocal(0X436870, 0X436AD7, "[bp-0X1C]", "Frame_2_2");
+	MakeLocal(0X436870, 0X436AD7, "[bp-0X18]", "Frame_2_3");
+	MakeLocal(0X436870, 0X436AD7, "[bp-0X14]", "Frame_2_4");
+	MakeLocal(0X436870, 0X436AD7, "[bp-0X10]", "Frame_3_1");
+	MakeLocal(0X436870, 0X436AD7, "[bp-0XC]", "Frame_3_2");
+	MakeLocal(0X436870, 0X436AD7, "[bp-0X8]", "Frame_3_3");
+	MakeLocal(0X436870, 0X436AD7, "[bp-0X4]", "Frame_3_4");
 	MakeNameEx(0X436AAA, "Direction_Not_0", SN_LOCAL);
 	MakeNameEx(0X436AD3, "Return", SN_LOCAL);
 	MakeFunction    (0X436AE0,0X4370D0);
-	SetFunctionFlags(0X436AE0,0x4010);
+	SetFunctionFlags(0X436AE0,0x10);
 	MakeFrame(0X436AE0, 0XE4, 4, 0);
 	MakeFunction    (0X4370F0,0X4375B9);
-	SetFunctionFlags(0X4370F0,0x4010);
+	SetFunctionFlags(0X4370F0,0x10);
 	MakeFrame(0X4370F0, 0XC8, 4, 0);
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0XC0]", "Frame_7_1");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0XBC]", "Frame_7_2");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0XB8]", "Frame_7_3");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0XB4]", "Frame_7_4");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0XB0]", "Frame_8_1");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0XAC]", "Frame_8_2");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0XA8]", "Frame_8_3");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0XA4]", "Frame_8_4");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0XA0]", "Frame_9_1");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0X9C]", "Frame_9_2");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0X98]", "Frame_9_3");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0X94]", "Frame_9_4");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0X90]", "Frame_10_1");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0X8C]", "Frame_10_2");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0X88]", "Frame_10_3");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0X84]", "Frame_10_4");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0X80]", "Frame_11_1");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0X7C]", "Frame_11_2");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0X78]", "Frame_11_3");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0X74]", "Frame_11_4");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0X70]", "Frame_12_1");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0X6C]", "Frame_12_2");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0X68]", "Frame_12_3");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0X64]", "Frame_12_4");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0X60]", "Frame_1_1");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0X5C]", "Frame_1_2");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0X58]", "Frame_1_3");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0X54]", "Frame_1_4");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0X50]", "Frame_2_1");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0X4C]", "Frame_2_2");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0X48]", "Frame_2_3");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0X44]", "Frame_2_4");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0X40]", "Frame_3_1");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0X3C]", "Frame_3_2");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0X38]", "Frame_3_3");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0X34]", "Frame_3_4");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0X30]", "Frame_4_1");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0X2C]", "Frame_4_2");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0X28]", "Frame_4_3");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0X24]", "Frame_4_4");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0X20]", "Frame_5_1");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0X1C]", "Frame_5_2");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0X18]", "Frame_5_3");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0X14]", "Frame_5_4");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0X10]", "Frame_6_1");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0XC]", "Frame_6_2");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0X8]", "Frame_6_3");
+	MakeLocal(0X4370F0, 0X4375B9, "[bp-0X4]", "Frame_6_4");
 	MakeNameEx(0X437472, "Direction_Not_0", SN_LOCAL);
 	MakeNameEx(0X437589, "Direction_Not__0", SN_LOCAL);
 	MakeNameEx(0X4375B5, "Return", SN_LOCAL);
 	MakeFunction    (0X4375E0,0X437D19);
-	SetFunctionFlags(0X4375E0,0x4010);
+	SetFunctionFlags(0X4375E0,0x10);
 	MakeFrame(0X4375E0, 0X128, 4, 0);
 	MakeFunction    (0X437D90,0X438227);
-	SetFunctionFlags(0X437D90,0x4010);
+	SetFunctionFlags(0X437D90,0x10);
 	MakeFrame(0X437D90, 0X104, 4, 0);
 	MakeFunction    (0X438250,0X4383C4);
-	SetFunctionFlags(0X438250,0x4010);
+	SetFunctionFlags(0X438250,0x10);
 	MakeFrame(0X438250, 0X40, 4, 0);
 	MakeFunction    (0X4383D0,0X43858C);
-	SetFunctionFlags(0X4383D0,0x4010);
+	SetFunctionFlags(0X4383D0,0x10);
 	MakeFrame(0X4383D0, 0X64, 4, 0);
 	MakeFunction    (0X438590,0X43884C);
-	SetFunctionFlags(0X438590,0x4010);
+	SetFunctionFlags(0X438590,0x10);
 	MakeFrame(0X438590, 0X54, 4, 0);
 	MakeFunction    (0X438850,0X438B0C);
-	SetFunctionFlags(0X438850,0x4010);
+	SetFunctionFlags(0X438850,0x10);
 	MakeFrame(0X438850, 0X54, 4, 0);
 	MakeFunction    (0X438B10,0X439546);
-	SetFunctionFlags(0X438B10,0x4010);
+	SetFunctionFlags(0X438B10,0x10);
 	MakeFrame(0X438B10, 0X198, 4, 0);
 	MakeLocal(0X438B10, 0X439546, "[bp-0X194]", "Y_Velocity");
 	MakeLocal(0X438B10, 0X439546, "[bp-0XD0]", "X_Velocity");
 	MakeFunction    (0X439580,0X439AF0);
-	SetFunctionFlags(0X439580,0x4010);
+	SetFunctionFlags(0X439580,0x10);
 	MakeFrame(0X439580, 0X8C, 4, 0);
 	MakeFunction    (0X439B00,0X439B43);
-	SetFunctionFlags(0X439B00,0x4010);
+	SetFunctionFlags(0X439B00,0x10);
 	MakeFrame(0X439B00, 0X10, 4, 0);
 	MakeFunction    (0X439B50,0X439BBD);
-	SetFunctionFlags(0X439B50,0x4010);
+	SetFunctionFlags(0X439B50,0x10);
 	MakeFrame(0X439B50, 0X10, 4, 0);
 	MakeFunction    (0X439BC0,0X439DAE);
-	SetFunctionFlags(0X439BC0,0x4010);
+	SetFunctionFlags(0X439BC0,0x10);
 	MakeFrame(0X439BC0, 0X34, 4, 0);
 	MakeFunction    (0X439DC0,0X43A1F3);
-	SetFunctionFlags(0X439DC0,0x4010);
+	SetFunctionFlags(0X439DC0,0x10);
 	MakeFrame(0X439DC0, 0XE4, 4, 0);
 	MakeFunction    (0X43A220,0X43A646);
-	SetFunctionFlags(0X43A220,0x4010);
+	SetFunctionFlags(0X43A220,0x10);
 	SetFunctionCmt(0X43A220,	"NPC 94 : Giant Jelly", 1);
 	MakeFrame(0X43A220, 0X54, 4, 0);
 	MakeFunction    (0X43A680,0X43AACA);
-	SetFunctionFlags(0X43A680,0x4010);
+	SetFunctionFlags(0X43A680,0x10);
 	MakeFrame(0X43A680, 0X84, 4, 0);
 	MakeFunction    (0X43AAF0,0X43AD0C);
-	SetFunctionFlags(0X43AAF0,0x4010);
+	SetFunctionFlags(0X43AAF0,0x10);
 	MakeFrame(0X43AAF0, 0X34, 4, 0);
 	MakeFunction    (0X43AD10,0X43AF1F);
-	SetFunctionFlags(0X43AD10,0x4010);
+	SetFunctionFlags(0X43AD10,0x10);
 	MakeFrame(0X43AD10, 0X34, 4, 0);
 	MakeFunction    (0X43AF20,0X43B13C);
-	SetFunctionFlags(0X43AF20,0x4010);
+	SetFunctionFlags(0X43AF20,0x10);
 	MakeFrame(0X43AF20, 0X34, 4, 0);
 	MakeFunction    (0X43B140,0X43B34F);
-	SetFunctionFlags(0X43B140,0x4010);
+	SetFunctionFlags(0X43B140,0x10);
 	MakeFrame(0X43B140, 0X34, 4, 0);
 	MakeFunction    (0X43B350,0X43B403);
-	SetFunctionFlags(0X43B350,0x4010);
+	SetFunctionFlags(0X43B350,0x10);
 	MakeFrame(0X43B350, 0X24, 4, 0);
 	MakeFunction    (0X43B410,0X43B4DB);
-	SetFunctionFlags(0X43B410,0x4010);
+	SetFunctionFlags(0X43B410,0x10);
 	MakeFrame(0X43B410, 0X30, 4, 0);
 	MakeFunction    (0X43B4E0,0X43B5EB);
-	SetFunctionFlags(0X43B4E0,0x4010);
+	SetFunctionFlags(0X43B4E0,0x10);
 	MakeFrame(0X43B4E0, 0X40, 4, 0);
 	MakeFunction    (0X43B5F0,0X43B7E1);
-	SetFunctionFlags(0X43B5F0,0x4010);
+	SetFunctionFlags(0X43B5F0,0x10);
 	MakeFrame(0X43B5F0, 0X64, 4, 0);
 	MakeFunction    (0X43B7F0,0X43BCC9);
-	SetFunctionFlags(0X43B7F0,0x4010);
+	SetFunctionFlags(0X43B7F0,0x10);
 	MakeFrame(0X43B7F0, 0X68, 4, 0);
 	MakeFunction    (0X43BD00,0X43BDA4);
-	SetFunctionFlags(0X43BD00,0x4010);
+	SetFunctionFlags(0X43BD00,0x10);
 	MakeFrame(0X43BD00, 0X20, 4, 0);
 	MakeFunction    (0X43BDB0,0X43BDFD);
-	SetFunctionFlags(0X43BDB0,0x4010);
+	SetFunctionFlags(0X43BDB0,0x10);
 	MakeFrame(0X43BDB0, 0X4, 4, 0);
 	MakeFunction    (0X43BE00,0X43C3F2);
-	SetFunctionFlags(0X43BE00,0x4010);
+	SetFunctionFlags(0X43BE00,0x10);
 	MakeFrame(0X43BE00, 0XAC, 4, 0);
 	MakeFunction    (0X43C4B0,0X43C608);
-	SetFunctionFlags(0X43C4B0,0x4010);
+	SetFunctionFlags(0X43C4B0,0x10);
 	MakeFrame(0X43C4B0, 0X30, 4, 0);
 	MakeFunction    (0X43C610,0X43C8C0);
-	SetFunctionFlags(0X43C610,0x4010);
+	SetFunctionFlags(0X43C610,0x10);
 	MakeFrame(0X43C610, 0X48, 4, 0);
 	MakeFunction    (0X43C8E0,0X43CDAD);
-	SetFunctionFlags(0X43C8E0,0x4010);
+	SetFunctionFlags(0X43C8E0,0x10);
 	MakeFrame(0X43C8E0, 0X68, 4, 0);
 	MakeFunction    (0X43CDE0,0X43D07E);
-	SetFunctionFlags(0X43CDE0,0x4010);
+	SetFunctionFlags(0X43CDE0,0x10);
 	MakeFrame(0X43CDE0, 0X44, 4, 0);
 	MakeFunction    (0X43D0A0,0X43D30C);
-	SetFunctionFlags(0X43D0A0,0x4010);
+	SetFunctionFlags(0X43D0A0,0x10);
 	MakeFrame(0X43D0A0, 0X44, 4, 0);
 	MakeFunction    (0X43D320,0X43D80C);
-	SetFunctionFlags(0X43D320,0x4010);
+	SetFunctionFlags(0X43D320,0x10);
 	MakeFrame(0X43D320, 0XE4, 4, 0);
 	MakeFunction    (0X43D860,0X43DAD8);
-	SetFunctionFlags(0X43D860,0x4010);
+	SetFunctionFlags(0X43D860,0x10);
 	MakeFrame(0X43D860, 0X38, 4, 0);
 	MakeFunction    (0X43DAE0,0X43E137);
-	SetFunctionFlags(0X43DAE0,0x4010);
+	SetFunctionFlags(0X43DAE0,0x10);
 	MakeFrame(0X43DAE0, 0XCC, 4, 0);
 	MakeFunction    (0X43E190,0X43E1D3);
-	SetFunctionFlags(0X43E190,0x4010);
+	SetFunctionFlags(0X43E190,0x10);
 	MakeFrame(0X43E190, 0X10, 4, 0);
 	MakeFunction    (0X43E1E0,0X43E926);
-	SetFunctionFlags(0X43E1E0,0x4010);
+	SetFunctionFlags(0X43E1E0,0x10);
 	MakeFrame(0X43E1E0, 0X144, 4, 0);
 	MakeFunction    (0X43E9B0,0X43F1EC);
-	SetFunctionFlags(0X43E9B0,0x4010);
+	SetFunctionFlags(0X43E9B0,0x10);
 	MakeFrame(0X43E9B0, 0X128, 4, 0);
 	MakeFunction    (0X43F230,0X43F273);
-	SetFunctionFlags(0X43F230,0x4010);
+	SetFunctionFlags(0X43F230,0x10);
 	MakeFrame(0X43F230, 0X10, 4, 0);
 	MakeFunction    (0X43F280,0X43F307);
-	SetFunctionFlags(0X43F280,0x4010);
+	SetFunctionFlags(0X43F280,0x10);
 	MakeFrame(0X43F280, 0X20, 4, 0);
 	MakeFunction    (0X43F310,0X43F497);
-	SetFunctionFlags(0X43F310,0x4010);
+	SetFunctionFlags(0X43F310,0x10);
 	MakeFrame(0X43F310, 0X34, 4, 0);
 	MakeFunction    (0X43F4A0,0X43FC2D);
-	SetFunctionFlags(0X43F4A0,0x4010);
+	SetFunctionFlags(0X43F4A0,0x10);
 	MakeFrame(0X43F4A0, 0X144, 4, 0);
 	MakeFunction    (0X43FC70,0X43FEC9);
-	SetFunctionFlags(0X43FC70,0x4010);
+	SetFunctionFlags(0X43FC70,0x10);
 	MakeFrame(0X43FC70, 0X54, 4, 0);
 	MakeFunction    (0X43FEF0,0X44009D);
-	SetFunctionFlags(0X43FEF0,0x4010);
+	SetFunctionFlags(0X43FEF0,0x10);
 	MakeFrame(0X43FEF0, 0X28, 4, 0);
 	MakeFunction    (0X4400D0,0X4401EA);
-	SetFunctionFlags(0X4400D0,0x4010);
+	SetFunctionFlags(0X4400D0,0x10);
 	MakeFrame(0X4400D0, 0X20, 4, 0);
 	MakeFunction    (0X4401F0,0X440737);
-	SetFunctionFlags(0X4401F0,0x4010);
+	SetFunctionFlags(0X4401F0,0x10);
 	MakeFrame(0X4401F0, 0XC4, 4, 0);
 	MakeFunction    (0X440760,0X4408AF);
-	SetFunctionFlags(0X440760,0x4010);
+	SetFunctionFlags(0X440760,0x10);
 	MakeFrame(0X440760, 0X60, 4, 0);
 	MakeFunction    (0X4408B0,0X440CD2);
-	SetFunctionFlags(0X4408B0,0x4010);
+	SetFunctionFlags(0X4408B0,0x10);
 	MakeFrame(0X4408B0, 0X144, 4, 0);
 	MakeFunction    (0X440CF0,0X440FF4);
-	SetFunctionFlags(0X440CF0,0x4010);
+	SetFunctionFlags(0X440CF0,0x10);
 	MakeFrame(0X440CF0, 0X120, 4, 0);
 	MakeFunction    (0X441000,0X441355);
-	SetFunctionFlags(0X441000,0x4010);
+	SetFunctionFlags(0X441000,0x10);
 	MakeFrame(0X441000, 0X84, 4, 0);
 	MakeFunction    (0X441360,0X44143B);
-	SetFunctionFlags(0X441360,0x4010);
+	SetFunctionFlags(0X441360,0x10);
 	MakeFrame(0X441360, 0X20, 4, 0);
 	MakeFunction    (0X441440,0X441904);
-	SetFunctionFlags(0X441440,0x4010);
+	SetFunctionFlags(0X441440,0x10);
 	MakeFrame(0X441440, 0XA4, 4, 0);
 	MakeFunction    (0X4419B0,0X441B1F);
-	SetFunctionFlags(0X4419B0,0x4010);
+	SetFunctionFlags(0X4419B0,0x10);
 	MakeFrame(0X4419B0, 0X44, 4, 0);
 	MakeFunction    (0X441B20,0X441E97);
-	SetFunctionFlags(0X441B20,0x4010);
+	SetFunctionFlags(0X441B20,0x10);
 	MakeFrame(0X441B20, 0X64, 4, 0);
 	MakeFunction    (0X441EC0,0X44230B);
-	SetFunctionFlags(0X441EC0,0x4010);
+	SetFunctionFlags(0X441EC0,0x10);
 	MakeFrame(0X441EC0, 0X50, 4, 0);
 	MakeLocal(0X441EC0, 0X44230B, "[bp-0X4C]", "Y_Velocity");
 	MakeLocal(0X441EC0, 0X44230B, "[bp-0X28]", "X_Velocity");
 	MakeFunction    (0X442340,0X44253E);
-	SetFunctionFlags(0X442340,0x4010);
+	SetFunctionFlags(0X442340,0x10);
 	MakeFrame(0X442340, 0X44, 4, 0);
 	MakeFunction    (0X442540,0X442583);
-	SetFunctionFlags(0X442540,0x4010);
+	SetFunctionFlags(0X442540,0x10);
 	MakeFrame(0X442540, 0X10, 4, 0);
 	MakeFunction    (0X442590,0X442789);
-	SetFunctionFlags(0X442590,0x4010);
+	SetFunctionFlags(0X442590,0x10);
 	MakeFrame(0X442590, 0X24, 4, 0);
 	MakeFunction    (0X442790,0X442B95);
-	SetFunctionFlags(0X442790,0x4010);
+	SetFunctionFlags(0X442790,0x10);
 	MakeFrame(0X442790, 0X64, 4, 0);
 	MakeFunction    (0X442BF0,0X4439CA);
-	SetFunctionFlags(0X442BF0,0x4010);
+	SetFunctionFlags(0X442BF0,0x10);
 	MakeFrame(0X442BF0, 0X1CC, 4, 0);
 	MakeFunction    (0X443AC0,0X443E8B);
-	SetFunctionFlags(0X443AC0,0x4010);
+	SetFunctionFlags(0X443AC0,0x10);
 	MakeFrame(0X443AC0, 0X2C, 4, 0);
 	MakeFunction    (0X443EC0,0X444166);
-	SetFunctionFlags(0X443EC0,0x4010);
+	SetFunctionFlags(0X443EC0,0x10);
 	MakeFrame(0X443EC0, 0X54, 4, 0);
 	MakeFunction    (0X444190,0X44422F);
-	SetFunctionFlags(0X444190,0x4010);
+	SetFunctionFlags(0X444190,0x10);
 	MakeFrame(0X444190, 0X20, 4, 0);
 	MakeFunction    (0X444230,0X4445F6);
-	SetFunctionFlags(0X444230,0x4010);
+	SetFunctionFlags(0X444230,0x10);
 	MakeFrame(0X444230, 0XA4, 4, 0);
 	MakeFunction    (0X444620,0X44477A);
-	SetFunctionFlags(0X444620,0x4010);
+	SetFunctionFlags(0X444620,0x10);
 	MakeFrame(0X444620, 0X24, 4, 0);
 	MakeFunction    (0X444780,0X444923);
-	SetFunctionFlags(0X444780,0x4010);
+	SetFunctionFlags(0X444780,0x10);
 	MakeFrame(0X444780, 0X54, 4, 0);
 	MakeFunction    (0X444930,0X445035);
-	SetFunctionFlags(0X444930,0x4010);
+	SetFunctionFlags(0X444930,0x10);
 	SetFunctionCmt(0X444930,	"Checks for starblock tile & if bullet can break it\n", 1);
 	MakeFrame(0X444930, 0XD8, 4, 0);
-	MakeLocal(0X444930, 0X445035, "[bp-0XD4]", "Y_Velocity");
+	MakeLocal(0X444930, 0X445035, "[bp-0XD4]", "Sin");
 	MakeLocal(0X444930, 0X445035, "[bp-0X6C]", "X_Velocity");
+	MakeLocal(0X444930, 0X445035, "[bp-0X1]", "Angle");
 	MakeFunction    (0X445050,0X44516A);
-	SetFunctionFlags(0X445050,0x4010);
+	SetFunctionFlags(0X445050,0x10);
 	MakeFrame(0X445050, 0X20, 4, 0);
 	MakeFunction    (0X445170,0X445623);
-	SetFunctionFlags(0X445170,0x4010);
+	SetFunctionFlags(0X445170,0x10);
 	MakeFrame(0X445170, 0X18, 4, 0);
 	MakeFunction    (0X445660,0X445D84);
-	SetFunctionFlags(0X445660,0x4010);
+	SetFunctionFlags(0X445660,0x10);
 	SetFunctionCmt(0X445660,	"Solid tile -> Two stage filter for blocks that bullets are s'posta collide with\n", 1);
 	MakeFrame(0X445660, 0X12C, 4, 0);
 	MakeFunction    (0X445E30,0X445F9E);
-	SetFunctionFlags(0X445E30,0x4010);
+	SetFunctionFlags(0X445E30,0x10);
 	MakeFrame(0X445E30, 0X44, 4, 0);
 	MakeFunction    (0X445FA0,0X446019);
-	SetFunctionFlags(0X445FA0,0x4010);
+	SetFunctionFlags(0X445FA0,0x10);
 	SetFunctionCmt(0X445FA0,	"Backgrounds?\n", 1);
 	MakeFrame(0X445FA0, 0X14, 4, 0);
 	MakeFunction    (0X446020,0X4464C0);
-	SetFunctionFlags(0X446020,0x4010);
+	SetFunctionFlags(0X446020,0x10);
 	MakeFrame(0X446020, 0X4, 4, 0);
 	MakeFunction    (0X446500,0X446710);
-	SetFunctionFlags(0X446500,0x4010);
+	SetFunctionFlags(0X446500,0x10);
 	MakeFrame(0X446500, 0X4, 4, 0);
+	MakeLocal(0X446500, 0X446710, "[bp+0X8]", "NPC_Vars_Pointer");
 	MakeNameEx(0X44670C, "Return", SN_LOCAL);
 	MakeFunction    (0X446710,0X446B58);
-	SetFunctionFlags(0X446710,0x4010);
+	SetFunctionFlags(0X446710,0x10);
 	SetFunctionCmt(0X446710,	"Remove Ammo From Weapon\n", 1);
 	MakeFrame(0X446710, 0X10, 4, 0);
 	MakeLocal(0X446710, 0X446B58, "[bp-0XC]", "Y_Velocity");
 	MakeLocal(0X446710, 0X446B58, "[bp-0X8]", "X_Velocity");
 	MakeFunction    (0X446B60,0X446C96);
-	SetFunctionFlags(0X446B60,0x4010);
+	SetFunctionFlags(0X446B60,0x10);
 	MakeFrame(0X446B60, 0X30, 4, 0);
 	MakeFunction    (0X446CA0,0X447151);
-	SetFunctionFlags(0X446CA0,0x4010);
+	SetFunctionFlags(0X446CA0,0x10);
 	MakeFrame(0X446CA0, 0X18, 4, 0);
 	MakeFunction    (0X447180,0X4474A6);
-	SetFunctionFlags(0X447180,0x4010);
+	SetFunctionFlags(0X447180,0x10);
 	MakeFrame(0X447180, 0X8C, 4, 0);
 	MakeFunction    (0X4474C0,0X4476F3);
-	SetFunctionFlags(0X4474C0,0x4010);
+	SetFunctionFlags(0X4474C0,0x10);
 	MakeFrame(0X4474C0, 0X18, 4, 0);
 	MakeFunction    (0X447700,0X447C74);
-	SetFunctionFlags(0X447700,0x4010);
+	SetFunctionFlags(0X447700,0x10);
 	MakeFrame(0X447700, 0X90, 4, 0);
 	MakeFunction    (0X447CB0,0X447E8B);
-	SetFunctionFlags(0X447CB0,0x4010);
+	SetFunctionFlags(0X447CB0,0x10);
 	MakeFrame(0X447CB0, 0X30, 4, 0);
 	MakeFunction    (0X447E90,0X44828B);
-	SetFunctionFlags(0X447E90,0x4010);
+	SetFunctionFlags(0X447E90,0x10);
 	MakeFrame(0X447E90, 0X38, 4, 0);
 	MakeFunction    (0X4482A0,0X44840F);
-	SetFunctionFlags(0X4482A0,0x4010);
+	SetFunctionFlags(0X4482A0,0x10);
 	MakeFrame(0X4482A0, 0X44, 4, 0);
 	MakeFunction    (0X448410,0X44857F);
-	SetFunctionFlags(0X448410,0x4010);
+	SetFunctionFlags(0X448410,0x10);
 	MakeFrame(0X448410, 0X44, 4, 0);
 	MakeFunction    (0X448580,0X4486D3);
-	SetFunctionFlags(0X448580,0x4010);
+	SetFunctionFlags(0X448580,0x10);
 	MakeFrame(0X448580, 0X34, 4, 0);
 	MakeFunction    (0X4486E0,0X4487E3);
-	SetFunctionFlags(0X4486E0,0x4010);
+	SetFunctionFlags(0X4486E0,0x10);
 	MakeFrame(0X4486E0, 0X24, 4, 0);
 	MakeFunction    (0X4487F0,0X4489E4);
-	SetFunctionFlags(0X4487F0,0x4010);
+	SetFunctionFlags(0X4487F0,0x10);
 	MakeFrame(0X4487F0, 0X38, 4, 0);
 	MakeFunction    (0X448A10,0X448BA8);
-	SetFunctionFlags(0X448A10,0x4010);
+	SetFunctionFlags(0X448A10,0x10);
 	MakeFrame(0X448A10, 0X14, 4, 0);
 	MakeFunction    (0X448BE0,0X44955D);
-	SetFunctionFlags(0X448BE0,0x4010);
+	SetFunctionFlags(0X448BE0,0x10);
 	MakeFrame(0X448BE0, 0X124, 4, 0);
 	MakeFunction    (0X4495A0,0X4498B2);
-	SetFunctionFlags(0X4495A0,0x4010);
+	SetFunctionFlags(0X4495A0,0x10);
 	SetType(0X4495A0, "int __cdecl NPC170(void *Frame_1_A_4);");
 	MakeFrame(0X4495A0, 0X48, 4, 0);
+	MakeLocal(0X4495A0, 0X4498B2, "[bp+0X8]", "Frame_1_A_4");
 	MakeFunction    (0X4498C0,0X449C03);
-	SetFunctionFlags(0X4498C0,0x4010);
+	SetFunctionFlags(0X4498C0,0x10);
 	MakeFrame(0X4498C0, 0X44, 4, 0);
 	MakeFunction    (0X449C10,0X449D6A);
-	SetFunctionFlags(0X449C10,0x4010);
+	SetFunctionFlags(0X449C10,0x10);
 	SetType(0X449C10, "int __cdecl NPC172(void *);");
 	MakeFrame(0X449C10, 0X34, 4, 0);
 	MakeFunction    (0X449D70,0X44A385);
-	SetFunctionFlags(0X449D70,0x4010);
+	SetFunctionFlags(0X449D70,0x10);
 	MakeFrame(0X449D70, 0X98, 4, 0);
 	MakeLocal(0X449D70, 0X44A385, "[bp-0X94]", "Y_Velocity");
 	MakeLocal(0X449D70, 0X44A385, "[bp-0X4C]", "X_Velocity");
 	MakeFunction    (0X44A3C0,0X44A60A);
-	SetFunctionFlags(0X44A3C0,0x4010);
+	SetFunctionFlags(0X44A3C0,0x10);
 	MakeFrame(0X44A3C0, 0X38, 4, 0);
 	MakeFunction    (0X44A610,0X44A7C5);
-	SetFunctionFlags(0X44A610,0x4010);
+	SetFunctionFlags(0X44A610,0x10);
 	SetType(0X44A610, "int __cdecl NPC175(void *);");
 	MakeFrame(0X44A610, 0X44, 4, 0);
 	MakeLocal(0X44A610, 0X44A7C5, "[bp+0X8]", "Is_NPC_Alive");
 	MakeFunction    (0X44A7D0,0X44ABA1);
-	SetFunctionFlags(0X44A7D0,0x4010);
+	SetFunctionFlags(0X44A7D0,0x10);
 	SetType(0X44A7D0, "int __cdecl NPC176(void *);");
 	MakeFrame(0X44A7D0, 0X64, 4, 0);
 	MakeLocal(0X44A7D0, 0X44ABA1, "[bp+0X8]", "Is_NPC_Alive");
 	MakeFunction    (0X44ABB0,0X44AED3);
-	SetFunctionFlags(0X44ABB0,0x4010);
+	SetFunctionFlags(0X44ABB0,0x10);
 	MakeFrame(0X44ABB0, 0X24, 4, 0);
 	MakeFunction    (0X44AEE0,0X44B07C);
-	SetFunctionFlags(0X44AEE0,0x4010);
+	SetFunctionFlags(0X44AEE0,0x10);
 	SetType(0X44AEE0, "int __cdecl NPC178(void *);");
 	MakeFrame(0X44AEE0, 0X30, 4, 0);
 	MakeFunction    (0X44B080,0X44B20D);
-	SetFunctionFlags(0X44B080,0x4010);
+	SetFunctionFlags(0X44B080,0x10);
 	SetType(0X44B080, "int __cdecl NPC179(void *);");
 	MakeFrame(0X44B080, 0X30, 4, 0);
 	MakeFunction    (0X44B210,0X44BDA9);
-	SetFunctionFlags(0X44B210,0x4010);
+	SetFunctionFlags(0X44B210,0x10);
 	MakeFrame(0X44B210, 0X174, 4, 0);
 	MakeNameEx(0X44BDA5, "Return", SN_LOCAL);
 	MakeFunction    (0X44BE10,0X44C211);
-	SetFunctionFlags(0X44BE10,0x4010);
+	SetFunctionFlags(0X44BE10,0x10);
 	MakeFrame(0X44BE10, 0X44, 4, 0);
 	MakeFunction    (0X44C220,0X44C621);
-	SetFunctionFlags(0X44C220,0x4010);
+	SetFunctionFlags(0X44C220,0x10);
 	MakeFrame(0X44C220, 0X44, 4, 0);
 	MakeFunction    (0X44C630,0X44C794);
-	SetFunctionFlags(0X44C630,0x4010);
+	SetFunctionFlags(0X44C630,0x10);
 	MakeFrame(0X44C630, 0X24, 4, 0);
 	MakeFunction    (0X44C7A0,0X44CA27);
-	SetFunctionFlags(0X44C7A0,0x4010);
+	SetFunctionFlags(0X44C7A0,0x10);
 	MakeFrame(0X44C7A0, 0X4C, 4, 0);
 	MakeFunction    (0X44CA60,0X44CBA5);
-	SetFunctionFlags(0X44CA60,0x4010);
+	SetFunctionFlags(0X44CA60,0x10);
 	MakeFrame(0X44CA60, 0X18, 4, 0);
 	MakeFunction    (0X44CBE0,0X44CD9B);
-	SetFunctionFlags(0X44CBE0,0x4010);
+	SetFunctionFlags(0X44CBE0,0x10);
 	MakeFrame(0X44CBE0, 0X48, 4, 0);
 	MakeFunction    (0X44CDB0,0X44D06D);
-	SetFunctionFlags(0X44CDB0,0x4010);
+	SetFunctionFlags(0X44CDB0,0x10);
 	MakeFrame(0X44CDB0, 0X48, 4, 0);
 	MakeFunction    (0X44D070,0X44D391);
-	SetFunctionFlags(0X44D070,0x4010);
-	MakeFrame(0X44D070, 0X4C, 4, 0);
+	SetFunctionFlags(0X44D070,0x10);
+	MakeFrame(0X44D070, 0X48, 4, 0);
 	MakeFunction    (0X44D3A0,0X44D5D7);
-	SetFunctionFlags(0X44D3A0,0x4010);
+	SetFunctionFlags(0X44D3A0,0x10);
 	MakeFrame(0X44D3A0, 0X34, 4, 0);
 	MakeFunction    (0X44D5E0,0X44D740);
-	SetFunctionFlags(0X44D5E0,0x4010);
+	SetFunctionFlags(0X44D5E0,0x10);
 	MakeFrame(0X44D5E0, 0X28, 4, 0);
 	MakeFunction    (0X44D740,0X44D9BF);
-	SetFunctionFlags(0X44D740,0x4010);
+	SetFunctionFlags(0X44D740,0x10);
 	MakeFrame(0X44D740, 0X4, 4, 0);
 	MakeFunction    (0X44DA00,0X44DDC5);
-	SetFunctionFlags(0X44DA00,0x4010);
+	SetFunctionFlags(0X44DA00,0x10);
 	MakeFrame(0X44DA00, 0X44, 4, 0);
 	MakeFunction    (0X44DE20,0X44DE9C);
-	SetFunctionFlags(0X44DE20,0x4010);
+	SetFunctionFlags(0X44DE20,0x10);
 	MakeFrame(0X44DE20, 0X14, 4, 0);
 	MakeFunction    (0X44DEA0,0X44DF07);
-	SetFunctionFlags(0X44DEA0,0x4010);
+	SetFunctionFlags(0X44DEA0,0x10);
 	MakeFrame(0X44DEA0, 0X10, 4, 0);
 	MakeFunction    (0X44DF10,0X44DF53);
-	SetFunctionFlags(0X44DF10,0x4010);
+	SetFunctionFlags(0X44DF10,0x10);
 	MakeFrame(0X44DF10, 0X10, 4, 0);
 	MakeFunction    (0X44DF60,0X44E017);
-	SetFunctionFlags(0X44DF60,0x4010);
+	SetFunctionFlags(0X44DF60,0x10);
 	MakeFrame(0X44DF60, 0X20, 4, 0);
 	MakeFunction    (0X44E020,0X44E255);
-	SetFunctionFlags(0X44E020,0x4010);
+	SetFunctionFlags(0X44E020,0x10);
 	SetType(0X44E020, "int __cdecl NPC197(void *);");
 	MakeFrame(0X44E020, 0X44, 4, 0);
 	MakeLocal(0X44E020, 0X44E255, "[bp+0X8]", "Is_NPC_Alive");
 	MakeFunction    (0X44E260,0X44E3F9);
-	SetFunctionFlags(0X44E260,0x4010);
+	SetFunctionFlags(0X44E260,0x10);
 	MakeFrame(0X44E260, 0X34, 4, 0);
-}
-
-static Functions_1(void) {
-
 	MakeFunction    (0X44E400,0X44E5DC);
-	SetFunctionFlags(0X44E400,0x4010);
+	SetFunctionFlags(0X44E400,0x10);
 	MakeFrame(0X44E400, 0X58, 4, 0);
 	MakeFunction    (0X44E5F0,0X44EBB6);
-	SetFunctionFlags(0X44E5F0,0x4010);
+	SetFunctionFlags(0X44E5F0,0x10);
 	MakeFrame(0X44E5F0, 0XD8, 4, 0);
 	MakeLocal(0X44E5F0, 0X44EBB6, "[bp-0XD4]", "Y_Velocity");
 	MakeLocal(0X44E5F0, 0X44EBB6, "[bp-0X6C]", "X_Velocity");
 	MakeFunction    (0X44EC40,0X44ECDF);
-	SetFunctionFlags(0X44EC40,0x4010);
+	SetFunctionFlags(0X44EC40,0x10);
 	MakeFrame(0X44EC40, 0X20, 4, 0);
 	MakeFunction    (0X44ECE0,0X44EE38);
-	SetFunctionFlags(0X44ECE0,0x4010);
+	SetFunctionFlags(0X44ECE0,0x10);
 	MakeFrame(0X44ECE0, 0X30, 4, 0);
 	MakeFunction    (0X44EE40,0X44F1DB);
-	SetFunctionFlags(0X44EE40,0x4010);
+	SetFunctionFlags(0X44EE40,0x10);
 	MakeFrame(0X44EE40, 0X64, 4, 0);
 	MakeFunction    (0X44F1F0,0X44F3C3);
-	SetFunctionFlags(0X44F1F0,0x4010);
+	SetFunctionFlags(0X44F1F0,0x10);
 	MakeFrame(0X44F1F0, 0X24, 4, 0);
 	MakeFunction    (0X44F3E0,0X44F6BA);
-	SetFunctionFlags(0X44F3E0,0x4010);
+	SetFunctionFlags(0X44F3E0,0x10);
 	MakeFrame(0X44F3E0, 0X24, 4, 0);
 	MakeFunction    (0X44F6D0,0X44FB2A);
-	SetFunctionFlags(0X44F6D0,0x4010);
+	SetFunctionFlags(0X44F6D0,0x10);
 	MakeFrame(0X44F6D0, 0X38, 4, 0);
 	MakeFunction    (0X44FB40,0X44FCA1);
-	SetFunctionFlags(0X44FB40,0x4010);
+	SetFunctionFlags(0X44FB40,0x10);
 	MakeFrame(0X44FB40, 0X54, 4, 0);
 	MakeFunction    (0X44FCB0,0X450280);
-	SetFunctionFlags(0X44FCB0,0x4010);
+	SetFunctionFlags(0X44FCB0,0x10);
 	MakeFrame(0X44FCB0, 0X70, 4, 0);
 	MakeLocal(0X44FCB0, 0X450280, "[bp-0X6C]", "Y_Velocity");
 	MakeLocal(0X44FCB0, 0X450280, "[bp-0X68]", "X_Velocity");
 	MakeFunction    (0X450280,0X4503F4);
-	SetFunctionFlags(0X450280,0x4010);
+	SetFunctionFlags(0X450280,0x10);
 	MakeFrame(0X450280, 0X40, 4, 0);
 	MakeFunction    (0X450400,0X45075B);
-	SetFunctionFlags(0X450400,0x4010);
+	SetFunctionFlags(0X450400,0x10);
 	MakeFrame(0X450400, 0X44, 4, 0);
 	MakeFunction    (0X450760,0X450803);
-	SetFunctionFlags(0X450760,0x4010);
+	SetFunctionFlags(0X450760,0x10);
 	MakeFrame(0X450760, 0X40, 4, 0);
 	MakeFunction    (0X450810,0X450BAB);
-	SetFunctionFlags(0X450810,0x4010);
+	SetFunctionFlags(0X450810,0x10);
 	MakeFrame(0X450810, 0X44, 4, 0);
 	MakeFunction    (0X450BF0,0X451251);
-	SetFunctionFlags(0X450BF0,0x4010);
+	SetFunctionFlags(0X450BF0,0x10);
 	MakeFrame(0X450BF0, 0XA4, 4, 0);
 	MakeFunction    (0X4512A0,0X45142F);
-	SetFunctionFlags(0X4512A0,0x4010);
+	SetFunctionFlags(0X4512A0,0x10);
 	MakeFrame(0X4512A0, 0X34, 4, 0);
 	MakeFunction    (0X451430,0X451791);
-	SetFunctionFlags(0X451430,0x4010);
+	SetFunctionFlags(0X451430,0x10);
 	MakeFrame(0X451430, 0X54, 4, 0);
 	MakeFunction    (0X4517F0,0X451833);
-	SetFunctionFlags(0X4517F0,0x4010);
+	SetFunctionFlags(0X4517F0,0x10);
 	MakeFrame(0X4517F0, 0X10, 4, 0);
 	MakeFunction    (0X451840,0X451C2A);
-	SetFunctionFlags(0X451840,0x4010);
+	SetFunctionFlags(0X451840,0x10);
 	MakeFrame(0X451840, 0X84, 4, 0);
 	MakeFunction    (0X451CA0,0X451D94);
-	SetFunctionFlags(0X451CA0,0x4010);
+	SetFunctionFlags(0X451CA0,0x10);
 	MakeFrame(0X451CA0, 0X20, 4, 0);
 	MakeFunction    (0X451DA0,0X451E85);
-	SetFunctionFlags(0X451DA0,0x4010);
+	SetFunctionFlags(0X451DA0,0x10);
 	MakeFrame(0X451DA0, 0X10, 4, 0);
 	MakeFunction    (0X451E90,0X451FFF);
-	SetFunctionFlags(0X451E90,0x4010);
+	SetFunctionFlags(0X451E90,0x10);
 	MakeFrame(0X451E90, 0X44, 4, 0);
 	MakeFunction    (0X452000,0X452444);
-	SetFunctionFlags(0X452000,0x4010);
+	SetFunctionFlags(0X452000,0x10);
 	MakeFrame(0X452000, 0XC4, 4, 0);
 	MakeFunction    (0X452470,0X4524DD);
-	SetFunctionFlags(0X452470,0x4010);
+	SetFunctionFlags(0X452470,0x10);
 	MakeFrame(0X452470, 0X10, 4, 0);
 	MakeFunction    (0X4524E0,0X4526EA);
-	SetFunctionFlags(0X4524E0,0x4010);
+	SetFunctionFlags(0X4524E0,0x10);
 	MakeFrame(0X4524E0, 0X64, 4, 0);
 	MakeFunction    (0X452700,0X4528C6);
-	SetFunctionFlags(0X452700,0x4010);
+	SetFunctionFlags(0X452700,0x10);
 	MakeFrame(0X452700, 0X44, 4, 0);
 	MakeFunction    (0X4528D0,0X452A42);
-	SetFunctionFlags(0X4528D0,0x4010);
+	SetFunctionFlags(0X4528D0,0x10);
 	MakeFrame(0X4528D0, 0X44, 4, 0);
 	MakeFunction    (0X452A50,0X452CD2);
-	SetFunctionFlags(0X452A50,0x4010);
+	SetFunctionFlags(0X452A50,0x10);
 	MakeFrame(0X452A50, 0X74, 4, 0);
 	MakeFunction    (0X452D10,0X452D53);
-	SetFunctionFlags(0X452D10,0x4010);
+	SetFunctionFlags(0X452D10,0x10);
 	MakeFrame(0X452D10, 0X10, 4, 0);
 	MakeFunction    (0X452D60,0X453099);
-	SetFunctionFlags(0X452D60,0x4010);
+	SetFunctionFlags(0X452D60,0x10);
 	MakeFrame(0X452D60, 0X84, 4, 0);
 	MakeFunction    (0X4530D0,0X453184);
-	SetFunctionFlags(0X4530D0,0x4010);
+	SetFunctionFlags(0X4530D0,0x10);
 	MakeFrame(0X4530D0, 0X24, 4, 0);
 	MakeFunction    (0X453190,0X453256);
-	SetFunctionFlags(0X453190,0x4010);
+	SetFunctionFlags(0X453190,0x10);
 	MakeFrame(0X453190, 0X24, 4, 0);
 	MakeFunction    (0X453260,0X4536B4);
-	SetFunctionFlags(0X453260,0x4010);
+	SetFunctionFlags(0X453260,0x10);
 	MakeFrame(0X453260, 0X28, 4, 0);
 	MakeFunction    (0X4536F0,0X4539AB);
-	SetFunctionFlags(0X4536F0,0x4010);
+	SetFunctionFlags(0X4536F0,0x10);
 	MakeFrame(0X4536F0, 0X68, 4, 0);
 	MakeFunction    (0X4539B0,0X453E54);
-	SetFunctionFlags(0X4539B0,0x4010);
+	SetFunctionFlags(0X4539B0,0x10);
 	MakeFrame(0X4539B0, 0X8C, 4, 0);
 	MakeFunction    (0X453E60,0X453F14);
-	SetFunctionFlags(0X453E60,0x4010);
+	SetFunctionFlags(0X453E60,0x10);
 	MakeFrame(0X453E60, 0X24, 4, 0);
 	MakeFunction    (0X453F20,0X4542E6);
-	SetFunctionFlags(0X453F20,0x4010);
+	SetFunctionFlags(0X453F20,0x10);
 	MakeFrame(0X453F20, 0X84, 4, 0);
 	MakeFunction    (0X454310,0X454874);
-	SetFunctionFlags(0X454310,0x4010);
+	SetFunctionFlags(0X454310,0x10);
 	MakeFrame(0X454310, 0XC4, 4, 0);
 	MakeFunction    (0X4548B0,0X4549F7);
-	SetFunctionFlags(0X4548B0,0x4010);
+	SetFunctionFlags(0X4548B0,0x10);
 	MakeFrame(0X4548B0, 0X1C, 4, 0);
 	MakeFunction    (0X454A00,0X454DAE);
-	SetFunctionFlags(0X454A00,0x4010);
+	SetFunctionFlags(0X454A00,0x10);
 	MakeFrame(0X454A00, 0X38, 4, 0);
 	MakeFunction    (0X454DF0,0X454EF5);
-	SetFunctionFlags(0X454DF0,0x4010);
+	SetFunctionFlags(0X454DF0,0x10);
 	MakeFrame(0X454DF0, 0X24, 4, 0);
 	MakeFunction    (0X454F00,0X455344);
-	SetFunctionFlags(0X454F00,0x4010);
+	SetFunctionFlags(0X454F00,0x10);
 	MakeFrame(0X454F00, 0XC4, 4, 0);
 	MakeFunction    (0X455370,0X4556F3);
-	SetFunctionFlags(0X455370,0x4010);
+	SetFunctionFlags(0X455370,0x10);
 	MakeFrame(0X455370, 0X64, 4, 0);
 	MakeFunction    (0X455710,0X455A07);
-	SetFunctionFlags(0X455710,0x4010);
+	SetFunctionFlags(0X455710,0x10);
 	SetType(0X455710, "int __cdecl NPC242(void *);");
 	MakeFrame(0X455710, 0X84, 4, 0);
 	MakeFunction    (0X455A10,0X455AAE);
-	SetFunctionFlags(0X455A10,0x4010);
+	SetFunctionFlags(0X455A10,0x10);
 	MakeFrame(0X455A10, 0X4, 4, 0);
 	MakeFunction    (0X455AB0,0X455C0A);
-	SetFunctionFlags(0X455AB0,0x4010);
+	SetFunctionFlags(0X455AB0,0x10);
 	MakeFrame(0X455AB0, 0X18, 4, 0);
 	MakeFunction    (0X455C10,0X455DF1);
-	SetFunctionFlags(0X455C10,0x4010);
+	SetFunctionFlags(0X455C10,0x10);
 	MakeFrame(0X455C10, 0X44, 4, 0);
 	MakeFunction    (0X455E00,0X4560ED);
-	SetFunctionFlags(0X455E00,0x4010);
+	SetFunctionFlags(0X455E00,0x10);
 	MakeFrame(0X455E00, 0X38, 4, 0);
 	MakeFunction    (0X456110,0X456E72);
-	SetFunctionFlags(0X456110,0x4010);
+	SetFunctionFlags(0X456110,0x10);
 	MakeFrame(0X456110, 0X138, 4, 0);
 	MakeLocal(0X456110, 0X456E72, "[bp-0X134]", "Y_Velocity");
 	MakeLocal(0X456110, 0X456E72, "[bp-0X9C]", "X_Velocity");
 	MakeFunction    (0X456F50,0X4570A8);
-	SetFunctionFlags(0X456F50,0x4010);
+	SetFunctionFlags(0X456F50,0x10);
 	MakeFrame(0X456F50, 0X30, 4, 0);
 	MakeFunction    (0X4570B0,0X457179);
-	SetFunctionFlags(0X4570B0,0x4010);
+	SetFunctionFlags(0X4570B0,0x10);
 	MakeFrame(0X4570B0, 0X20, 4, 0);
 	MakeFunction    (0X457180,0X45744E);
-	SetFunctionFlags(0X457180,0x4010);
+	SetFunctionFlags(0X457180,0x10);
 	MakeFrame(0X457180, 0X34, 4, 0);
 	MakeFunction    (0X457470,0X457564);
-	SetFunctionFlags(0X457470,0x4010);
+	SetFunctionFlags(0X457470,0x10);
 	MakeFrame(0X457470, 0X24, 4, 0);
 	MakeFunction    (0X457570,0X4579A9);
-	SetFunctionFlags(0X457570,0x4010);
-	MakeFrame(0X457570, 0X90, 4, 0);
+	SetFunctionFlags(0X457570,0x10);
+	MakeFrame(0X457570, 0X8C, 4, 0);
 	MakeFunction    (0X4579D0,0X457AFA);
-	SetFunctionFlags(0X4579D0,0x4010);
+	SetFunctionFlags(0X4579D0,0x10);
 	MakeFrame(0X4579D0, 0X24, 4, 0);
 	MakeFunction    (0X457B00,0X457D28);
-	SetFunctionFlags(0X457B00,0x4010);
+	SetFunctionFlags(0X457B00,0x10);
 	MakeFrame(0X457B00, 0X24, 4, 0);
 	MakeFunction    (0X457D70,0X457FE1);
-	SetFunctionFlags(0X457D70,0x4010);
+	SetFunctionFlags(0X457D70,0x10);
 	MakeFrame(0X457D70, 0X84, 4, 0);
 	MakeFunction    (0X458010,0X4582FD);
-	SetFunctionFlags(0X458010,0x4010);
+	SetFunctionFlags(0X458010,0x10);
 	MakeFrame(0X458010, 0X64, 4, 0);
 	MakeFunction    (0X458360,0X458595);
-	SetFunctionFlags(0X458360,0x4010);
+	SetFunctionFlags(0X458360,0x10);
 	MakeFrame(0X458360, 0X34, 4, 0);
 	MakeFunction    (0X4585A0,0X4585E3);
-	SetFunctionFlags(0X4585A0,0x4010);
+	SetFunctionFlags(0X4585A0,0x10);
 	MakeFrame(0X4585A0, 0X10, 4, 0);
 	MakeFunction    (0X4585F0,0X4587D9);
-	SetFunctionFlags(0X4585F0,0x4010);
+	SetFunctionFlags(0X4585F0,0x10);
 	SetType(0X4585F0, "int __cdecl NPC259(void *);");
 	MakeFrame(0X4585F0, 0X24, 4, 0);
 	MakeFunction    (0X458810,0X458A4A);
-	SetFunctionFlags(0X458810,0x4010);
+	SetFunctionFlags(0X458810,0x10);
 	MakeFrame(0X458810, 0X64, 4, 0);
 	MakeFunction    (0X458A70,0X458C2A);
-	SetFunctionFlags(0X458A70,0x4010);
+	SetFunctionFlags(0X458A70,0x10);
 	MakeFrame(0X458A70, 0X44, 4, 0);
 	MakeFunction    (0X458C30,0X458DEA);
-	SetFunctionFlags(0X458C30,0x4010);
+	SetFunctionFlags(0X458C30,0x10);
 	MakeFrame(0X458C30, 0X44, 4, 0);
 	MakeFunction    (0X458DF0,0X459909);
-	SetFunctionFlags(0X458DF0,0x4010);
+	SetFunctionFlags(0X458DF0,0x10);
 	MakeFrame(0X458DF0, 0X138, 4, 0);
 	MakeLocal(0X458DF0, 0X459909, "[bp-0X134]", "Y_Velocity");
 	MakeLocal(0X458DF0, 0X459909, "[bp-0X9C]", "X_Velocity");
 	MakeFunction    (0X459950,0X459B2F);
-	SetFunctionFlags(0X459950,0x4010);
+	SetFunctionFlags(0X459950,0x10);
 	SetType(0X459950, "int __cdecl NPC264(void *);");
 	MakeFrame(0X459950, 0X18, 4, 0);
 	MakeFunction    (0X459B30,0X459BF9);
-	SetFunctionFlags(0X459B30,0x4010);
+	SetFunctionFlags(0X459B30,0x10);
 	MakeFrame(0X459B30, 0X30, 4, 0);
 	MakeFunction    (0X459C00,0X459D75);
-	SetFunctionFlags(0X459C00,0x4010);
+	SetFunctionFlags(0X459C00,0x10);
 	SetType(0X459C00, "int __cdecl NPC266(void *);");
 	MakeFrame(0X459C00, 0X20, 4, 0);
 	MakeFunction    (0X459D80,0X45B324);
-	SetFunctionFlags(0X459D80,0x4010);
+	SetFunctionFlags(0X459D80,0x10);
 	MakeFrame(0X459D80, 0X158, 4, 0);
 	MakeLocal(0X459D80, 0X45B324, "[bp-0XAC]", "Y_Velocity");
 	MakeLocal(0X459D80, 0X45B324, "[bp-0XA8]", "X_Velocity");
 	MakeFunction    (0X45B3D0,0X45BC48);
-	SetFunctionFlags(0X45B3D0,0x4010);
+	SetFunctionFlags(0X45B3D0,0x10);
 	MakeFrame(0X45B3D0, 0X158, 4, 0);
 	MakeLocal(0X45B3D0, 0X45BC48, "[bp-0X154]", "Y_Velocity");
 	MakeLocal(0X45B3D0, 0X45BC48, "[bp-0XAC]", "X_Velocity");
 	MakeFunction    (0X45BCB0,0X45BF09);
-	SetFunctionFlags(0X45BCB0,0x4010);
+	SetFunctionFlags(0X45BCB0,0x10);
 	MakeFrame(0X45BCB0, 0X64, 4, 0);
 	MakeFunction    (0X45BF10,0X45C22D);
-	SetFunctionFlags(0X45BF10,0x4010);
+	SetFunctionFlags(0X45BF10,0x10);
 	MakeFrame(0X45BF10, 0X24, 4, 0);
 	MakeFunction    (0X45C230,0X45C4F5);
-	SetFunctionFlags(0X45C230,0x4010);
+	SetFunctionFlags(0X45C230,0x10);
 	SetType(0X45C230, "int __cdecl NPC271(void *);");
 	MakeFrame(0X45C230, 0X4, 4, 0);
 	MakeFunction    (0X45C500,0X45C59E);
-	SetFunctionFlags(0X45C500,0x4010);
+	SetFunctionFlags(0X45C500,0x10);
 	MakeFrame(0X45C500, 0X4, 4, 0);
 	MakeFunction    (0X45C5A0,0X45C748);
-	SetFunctionFlags(0X45C5A0,0x4010);
+	SetFunctionFlags(0X45C5A0,0x10);
 	SetType(0X45C5A0, "int __cdecl NPC273(void *);");
 	MakeFrame(0X45C5A0, 0X34, 4, 0);
 	MakeFunction    (0X45C750,0X45CC4D);
-	SetFunctionFlags(0X45C750,0x4010);
+	SetFunctionFlags(0X45C750,0x10);
 	MakeFrame(0X45C750, 0XD4, 4, 0);
 	MakeLocal(0X45C750, 0X45CC4D, "[bp-0X70]", "Y_Velocity");
 	MakeLocal(0X45C750, 0X45CC4D, "[bp-0X6C]", "X_Velocity");
 	MakeFunction    (0X45CC80,0X45CE9D);
-	SetFunctionFlags(0X45CC80,0x4010);
+	SetFunctionFlags(0X45CC80,0x10);
 	MakeFrame(0X45CC80, 0X44, 4, 0);
 	MakeFunction    (0X45CEA0,0X45D6D2);
-	SetFunctionFlags(0X45CEA0,0x4010);
+	SetFunctionFlags(0X45CEA0,0x10);
 	MakeFrame(0X45CEA0, 0X13C, 4, 0);
 	MakeLocal(0X45CEA0, 0X45D6D2, "[bp-0XA0]", "Y_Velocity");
 	MakeLocal(0X45CEA0, 0X45D6D2, "[bp-0X9C]", "X_Velocity");
 	MakeFunction    (0X45D780,0X45D928);
-	SetFunctionFlags(0X45D780,0x4010);
+	SetFunctionFlags(0X45D780,0x10);
 	SetType(0X45D780, "int __cdecl NPC277(void *);");
 	MakeFrame(0X45D780, 0X34, 4, 0);
 	MakeFunction    (0X45D930,0X45DCCC);
-	SetFunctionFlags(0X45D930,0x4010);
+	SetFunctionFlags(0X45D930,0x10);
 	MakeFrame(0X45D930, 0X68, 4, 0);
 	MakeFunction    (0X45DCF0,0X45E07C);
-	SetFunctionFlags(0X45DCF0,0x4010);
+	SetFunctionFlags(0X45DCF0,0x10);
 	MakeFrame(0X45DCF0, 0X2C, 4, 0);
 	MakeFunction    (0X45E110,0X45E35A);
-	SetFunctionFlags(0X45E110,0x4010);
+	SetFunctionFlags(0X45E110,0x10);
 	MakeFrame(0X45E110, 0X44, 4, 0);
 	MakeFunction    (0X45E360,0X45E488);
-	SetFunctionFlags(0X45E360,0x4010);
+	SetFunctionFlags(0X45E360,0x10);
 	MakeFrame(0X45E360, 0X14, 4, 0);
 	MakeFunction    (0X45E4C0,0X45E94E);
-	SetFunctionFlags(0X45E4C0,0x4010);
+	SetFunctionFlags(0X45E4C0,0x10);
 	MakeFrame(0X45E4C0, 0X34, 4, 0);
 	MakeFunction    (0X45E950,0X45F829);
-	SetFunctionFlags(0X45E950,0x4010);
+	SetFunctionFlags(0X45E950,0x10);
 	MakeFrame(0X45E950, 0X180, 4, 0);
 	MakeLocal(0X45E950, 0X45F829, "[bp-0XB8]", "X_Position");
 	MakeLocal(0X45E950, 0X45F829, "[bp-0XB4]", "Y_Position");
 	MakeFunction    (0X45F910,0X46084B);
-	SetFunctionFlags(0X45F910,0x4010);
+	SetFunctionFlags(0X45F910,0x10);
 	MakeFrame(0X45F910, 0X1B0, 4, 0);
 	MakeFunction    (0X460910,0X460AD4);
-	SetFunctionFlags(0X460910,0x4010);
+	SetFunctionFlags(0X460910,0x10);
 	SetType(0X460910, "int __cdecl NPC285(void *);");
 	MakeFrame(0X460910, 0X18, 4, 0);
 	MakeFunction    (0X460AE0,0X460BA9);
-	SetFunctionFlags(0X460AE0,0x4010);
+	SetFunctionFlags(0X460AE0,0x10);
 	MakeFrame(0X460AE0, 0X30, 4, 0);
 	MakeFunction    (0X460BB0,0X460D65);
-	SetFunctionFlags(0X460BB0,0x4010);
+	SetFunctionFlags(0X460BB0,0x10);
 	MakeFrame(0X460BB0, 0X70, 4, 0);
 	MakeFunction    (0X460D70,0X4610BF);
-	SetFunctionFlags(0X460D70,0x4010);
+	SetFunctionFlags(0X460D70,0x10);
 	MakeFrame(0X460D70, 0X54, 4, 0);
 	MakeFunction    (0X4610D0,0X461477);
-	SetFunctionFlags(0X4610D0,0x4010);
+	SetFunctionFlags(0X4610D0,0x10);
 	SetType(0X4610D0, "int __cdecl NPC289(void *);");
 	MakeFrame(0X4610D0, 0X64, 4, 0);
 	MakeFunction    (0X4614A0,0X4617FD);
-	SetFunctionFlags(0X4614A0,0x4010);
+	SetFunctionFlags(0X4614A0,0x10);
 	SetType(0X4614A0, "int __cdecl NPC290(void *);");
 	MakeFrame(0X4614A0, 0X64, 4, 0);
 	MakeFunction    (0X461800,0X4618AA);
-	SetFunctionFlags(0X461800,0x4010);
+	SetFunctionFlags(0X461800,0x10);
 	MakeFrame(0X461800, 0X24, 4, 0);
 	MakeFunction    (0X4618B0,0X4618BF);
 	SetFunctionFlags(0X4618B0,0x4010);
 	MakeFrame(0X4618B0, 0, 4, 0);
 	MakeFunction    (0X4618C0,0X4619D7);
-	SetFunctionFlags(0X4618C0,0x4010);
+	SetFunctionFlags(0X4618C0,0x10);
 	MakeFrame(0X4618C0, 0X24, 4, 0);
 	MakeFunction    (0X4619E0,0X461B8E);
-	SetFunctionFlags(0X4619E0,0x4010);
+	SetFunctionFlags(0X4619E0,0x10);
 	MakeFrame(0X4619E0, 0X10, 4, 0);
 	MakeLocal(0X4619E0, 0X461B8E, "[bp-0X8]", "X_Position");
 	MakeLocal(0X4619E0, 0X461B8E, "[bp-0X4]", "Y_Position");
 	MakeFunction    (0X461B90,0X461E15);
-	SetFunctionFlags(0X461B90,0x4010);
+	SetFunctionFlags(0X461B90,0x10);
 	MakeFrame(0X461B90, 0X48, 4, 0);
 	MakeFunction    (0X461E40,0X461FA6);
-	SetFunctionFlags(0X461E40,0x4010);
+	SetFunctionFlags(0X461E40,0x10);
 	MakeFrame(0X461E40, 0X18, 4, 0);
 	MakeLocal(0X461E40, 0X461FA6, "[bp-0X8]", "X_Position");
 	MakeLocal(0X461E40, 0X461FA6, "[bp-0X4]", "Y_Position");
 	MakeFunction    (0X461FD0,0X462042);
-	SetFunctionFlags(0X461FD0,0x4010);
+	SetFunctionFlags(0X461FD0,0x10);
 	MakeFrame(0X461FD0, 0X10, 4, 0);
 	MakeFunction    (0X462050,0X46237A);
-	SetFunctionFlags(0X462050,0x4010);
+	SetFunctionFlags(0X462050,0x10);
 	MakeFrame(0X462050, 0X84, 4, 0);
 	MakeFunction    (0X4623D0,0X4624DF);
-	SetFunctionFlags(0X4623D0,0x4010);
+	SetFunctionFlags(0X4623D0,0x10);
 	MakeFrame(0X4623D0, 0X20, 4, 0);
 	MakeFunction    (0X4624E0,0X46259C);
-	SetFunctionFlags(0X4624E0,0x4010);
+	SetFunctionFlags(0X4624E0,0x10);
 	MakeFrame(0X4624E0, 0X10, 4, 0);
 	MakeFunction    (0X4625A0,0X462882);
-	SetFunctionFlags(0X4625A0,0x4010);
+	SetFunctionFlags(0X4625A0,0x10);
 	MakeFrame(0X4625A0, 0X88, 4, 0);
 	MakeFunction    (0X462890,0X462A60);
-	SetFunctionFlags(0X462890,0x4010);
+	SetFunctionFlags(0X462890,0x10);
 	MakeFrame(0X462890, 0XC, 4, 0);
 	MakeFunction    (0X462AF0,0X462C78);
-	SetFunctionFlags(0X462AF0,0x4010);
+	SetFunctionFlags(0X462AF0,0x10);
 	MakeFrame(0X462AF0, 0X40, 4, 0);
 	MakeFunction    (0X462C80,0X462DD2);
-	SetFunctionFlags(0X462C80,0x4010);
+	SetFunctionFlags(0X462C80,0x10);
 	MakeFrame(0X462C80, 0X44, 4, 0);
 	MakeFunction    (0X462E00,0X462F60);
-	SetFunctionFlags(0X462E00,0x4010);
+	SetFunctionFlags(0X462E00,0x10);
 	MakeFrame(0X462E00, 0X44, 4, 0);
 	MakeFunction    (0X462F60,0X4630E3);
-	SetFunctionFlags(0X462F60,0x4010);
+	SetFunctionFlags(0X462F60,0x10);
 	MakeFrame(0X462F60, 0X44, 4, 0);
 	MakeFunction    (0X4630F0,0X4632AA);
-	SetFunctionFlags(0X4630F0,0x4010);
+	SetFunctionFlags(0X4630F0,0x10);
 	MakeFrame(0X4630F0, 0X44, 4, 0);
 	MakeFunction    (0X4632B0,0X4636DA);
-	SetFunctionFlags(0X4632B0,0x4010);
+	SetFunctionFlags(0X4632B0,0x10);
 	MakeFrame(0X4632B0, 0X48, 4, 0);
 	MakeFunction    (0X463710,0X463AA0);
-	SetFunctionFlags(0X463710,0x4010);
+	SetFunctionFlags(0X463710,0x10);
 	MakeFrame(0X463710, 0X44, 4, 0);
 	MakeFunction    (0X463AC0,0X46403D);
-	SetFunctionFlags(0X463AC0,0x4010);
+	SetFunctionFlags(0X463AC0,0x10);
 	MakeFrame(0X463AC0, 0XA4, 4, 0);
 	MakeFunction    (0X464090,0X4646E3);
-	SetFunctionFlags(0X464090,0x4010);
+	SetFunctionFlags(0X464090,0x10);
 	MakeFrame(0X464090, 0XE4, 4, 0);
 	MakeFunction    (0X464740,0X464B64);
-	SetFunctionFlags(0X464740,0x4010);
+	SetFunctionFlags(0X464740,0x10);
 	MakeFrame(0X464740, 0XA4, 4, 0);
 	MakeFunction    (0X464BB0,0X465A8B);
-	SetFunctionFlags(0X464BB0,0x4010);
+	SetFunctionFlags(0X464BB0,0x10);
 	MakeFrame(0X464BB0, 0X1C4, 4, 0);
 	MakeFunction    (0X465CC0,0X465F5C);
-	SetFunctionFlags(0X465CC0,0x4010);
+	SetFunctionFlags(0X465CC0,0x10);
 	MakeFrame(0X465CC0, 0X38, 4, 0);
 	MakeFunction    (0X465F60,0X466400);
-	SetFunctionFlags(0X465F60,0x4010);
+	SetFunctionFlags(0X465F60,0x10);
 	SetType(0X465F60, "int __cdecl NPC315(void *);");
 	MakeFrame(0X465F60, 0X84, 4, 0);
 	MakeFunction    (0X4664B0,0X46678D);
-	SetFunctionFlags(0X4664B0,0x4010);
+	SetFunctionFlags(0X4664B0,0x10);
 	MakeFrame(0X4664B0, 0X64, 4, 0);
 	MakeFunction    (0X466790,0X466B4A);
-	SetFunctionFlags(0X466790,0x4010);
+	SetFunctionFlags(0X466790,0x10);
 	MakeFrame(0X466790, 0X84, 4, 0);
 	MakeFunction    (0X466B80,0X466E47);
-	SetFunctionFlags(0X466B80,0x4010);
+	SetFunctionFlags(0X466B80,0x10);
 	MakeFrame(0X466B80, 0X64, 4, 0);
 	MakeFunction    (0X466E50,0X4670BE);
-	SetFunctionFlags(0X466E50,0x4010);
+	SetFunctionFlags(0X466E50,0x10);
 	MakeFrame(0X466E50, 0X34, 4, 0);
 	MakeFunction    (0X4670C0,0X4673E1);
-	SetFunctionFlags(0X4670C0,0x4010);
+	SetFunctionFlags(0X4670C0,0x10);
 	MakeFrame(0X4670C0, 0X60, 4, 0);
 	MakeFunction    (0X4673F0,0X4676CA);
-	SetFunctionFlags(0X4673F0,0x4010);
+	SetFunctionFlags(0X4673F0,0x10);
 	MakeFrame(0X4673F0, 0X68, 4, 0);
 	MakeLocal(0X4673F0, 0X4676CA, "[bp-0X64]", "Direction");
 	MakeFunction    (0X4676D0,0X467B47);
-	SetFunctionFlags(0X4676D0,0x4010);
+	SetFunctionFlags(0X4676D0,0x10);
 	MakeFrame(0X4676D0, 0X38, 4, 0);
 	MakeFunction    (0X467C60,0X467F19);
-	SetFunctionFlags(0X467C60,0x4010);
+	SetFunctionFlags(0X467C60,0x10);
 	MakeFrame(0X467C60, 0X4C, 4, 0);
 	MakeFunction    (0X467F40,0X467FD8);
-	SetFunctionFlags(0X467F40,0x4010);
+	SetFunctionFlags(0X467F40,0x10);
 	MakeFrame(0X467F40, 0X4, 4, 0);
 	MakeFunction    (0X467FE0,0X468221);
-	SetFunctionFlags(0X467FE0,0x4010);
+	SetFunctionFlags(0X467FE0,0x10);
 	MakeFrame(0X467FE0, 0X74, 4, 0);
 	MakeFunction    (0X468230,0X4687D3);
-	SetFunctionFlags(0X468230,0x4010);
+	SetFunctionFlags(0X468230,0x10);
 	MakeFrame(0X468230, 0X104, 4, 0);
 	MakeFunction    (0X468830,0X468984);
-	SetFunctionFlags(0X468830,0x4010);
+	SetFunctionFlags(0X468830,0x10);
 	MakeFrame(0X468830, 0X24, 4, 0);
 	MakeFunction    (0X468990,0X4689D3);
-	SetFunctionFlags(0X468990,0x4010);
+	SetFunctionFlags(0X468990,0x10);
 	MakeFrame(0X468990, 0X10, 4, 0);
 	MakeFunction    (0X4689E0,0X468A88);
-	SetFunctionFlags(0X4689E0,0x4010);
+	SetFunctionFlags(0X4689E0,0x10);
 	MakeFrame(0X4689E0, 0X20, 4, 0);
 	MakeFunction    (0X468A90,0X468D22);
-	SetFunctionFlags(0X468A90,0x4010);
+	SetFunctionFlags(0X468A90,0x10);
 	MakeFrame(0X468A90, 0X34, 4, 0);
 	MakeFunction    (0X468D70,0X468F4A);
-	SetFunctionFlags(0X468D70,0x4010);
+	SetFunctionFlags(0X468D70,0x10);
 	MakeFrame(0X468D70, 0X44, 4, 0);
 	MakeFunction    (0X468F50,0X46913A);
-	SetFunctionFlags(0X468F50,0x4010);
+	SetFunctionFlags(0X468F50,0x10);
 	MakeFrame(0X468F50, 0X38, 4, 0);
 	MakeLocal(0X468F50, 0X46913A, "[bp-0X34]", "X_Velocity");
 	MakeFunction    (0X469140,0X469288);
-	SetFunctionFlags(0X469140,0x4010);
+	SetFunctionFlags(0X469140,0x10);
 	MakeFrame(0X469140, 0X24, 4, 0);
 	MakeFunction    (0X469290,0X46942F);
-	SetFunctionFlags(0X469290,0x4010);
+	SetFunctionFlags(0X469290,0x10);
 	MakeFrame(0X469290, 0X44, 4, 0);
 	MakeFunction    (0X469430,0X4695FE);
-	SetFunctionFlags(0X469430,0x4010);
+	SetFunctionFlags(0X469430,0x10);
 	MakeFrame(0X469430, 0X34, 4, 0);
 	MakeFunction    (0X469610,0X4696A8);
-	SetFunctionFlags(0X469610,0x4010);
+	SetFunctionFlags(0X469610,0x10);
 	MakeFrame(0X469610, 0X8, 4, 0);
 	MakeLocal(0X469610, 0X4696A8, "[bp-0X4]", "Y_Position");
 	MakeFunction    (0X4696B0,0X4697FF);
-	SetFunctionFlags(0X4696B0,0x4010);
+	SetFunctionFlags(0X4696B0,0x10);
 	MakeFrame(0X4696B0, 0X24, 4, 0);
 	MakeFunction    (0X469800,0X469A97);
-	SetFunctionFlags(0X469800,0x4010);
+	SetFunctionFlags(0X469800,0x10);
 	SetType(0X469800, "int __cdecl NPC338(void *);");
 	MakeFrame(0X469800, 0X44, 4, 0);
 	MakeFunction    (0X469AA0,0X469B3B);
-	SetFunctionFlags(0X469AA0,0x4010);
+	SetFunctionFlags(0X469AA0,0x10);
 	MakeFrame(0X469AA0, 0X4, 4, 0);
 	MakeFunction    (0X469B40,0X46B0AC);
-	SetFunctionFlags(0X469B40,0x4010);
+	SetFunctionFlags(0X469B40,0x10);
 	MakeFrame(0X469B40, 0X170, 4, 0);
 	MakeLocal(0X469B40, 0X46B0AC, "[bp-0XB4]", "X_Position");
 	MakeFunction    (0X46B240,0X46B334);
-	SetFunctionFlags(0X46B240,0x4010);
+	SetFunctionFlags(0X46B240,0x10);
 	MakeFrame(0X46B240, 0X30, 4, 0);
 	MakeFunction    (0X46B340,0X46BD31);
-	SetFunctionFlags(0X46B340,0x4010);
+	SetFunctionFlags(0X46B340,0x10);
 	SetType(0X46B340, "int __cdecl NPC342(void *);");
-	MakeFrame(0X46B340, 0X40, 4, 0);
+	MakeFrame(0X46B340, 0X3C, 4, 0);
 	MakeFunction    (0X46BD80,0X46BE05);
-	SetFunctionFlags(0X46BD80,0x4010);
+	SetFunctionFlags(0X46BD80,0x10);
 	MakeFrame(0X46BD80, 0X10, 4, 0);
 	MakeFunction    (0X46BE10,0X46BEFC);
-	SetFunctionFlags(0X46BE10,0x4010);
+	SetFunctionFlags(0X46BE10,0x10);
 	MakeFrame(0X46BE10, 0X20, 4, 0);
 	MakeFunction    (0X46BF00,0X46C1C6);
-	SetFunctionFlags(0X46BF00,0x4010);
+	SetFunctionFlags(0X46BF00,0x10);
 	MakeFrame(0X46BF00, 0X48, 4, 0);
 	MakeFunction    (0X46C1D0,0X46C6D1);
-	SetFunctionFlags(0X46C1D0,0x4010);
-	MakeFrame(0X46C1D0, 0X1C, 4, 0);
+	SetFunctionFlags(0X46C1D0,0x10);
+	MakeFrame(0X46C1D0, 0X18, 4, 0);
 	MakeFunction    (0X46C710,0X46C988);
-	SetFunctionFlags(0X46C710,0x4010);
+	SetFunctionFlags(0X46C710,0x10);
 	MakeFrame(0X46C710, 0X44, 4, 0);
 	MakeFunction    (0X46C9B0,0X46CAC0);
-	SetFunctionFlags(0X46C9B0,0x4010);
+	SetFunctionFlags(0X46C9B0,0x10);
 	MakeFrame(0X46C9B0, 0X24, 4, 0);
 	MakeFunction    (0X46CAC0,0X46CB4C);
-	SetFunctionFlags(0X46CAC0,0x4010);
+	SetFunctionFlags(0X46CAC0,0x10);
 	MakeFrame(0X46CAC0, 0X10, 4, 0);
 	MakeFunction    (0X46CB50,0X46D2E0);
-	SetFunctionFlags(0X46CB50,0x4010);
+	SetFunctionFlags(0X46CB50,0x10);
 	SetType(0X46CB50, "int __cdecl NPC350(void *);");
 	MakeFrame(0X46CB50, 0XE4, 4, 0);
 	MakeFunction    (0X46D340,0X46D5A0);
-	SetFunctionFlags(0X46D340,0x4010);
+	SetFunctionFlags(0X46D340,0x10);
 	MakeFrame(0X46D340, 0X94, 4, 0);
 	MakeFunction    (0X46D5D0,0X46DBBA);
-	SetFunctionFlags(0X46D5D0,0x4010);
+	SetFunctionFlags(0X46D5D0,0x10);
 	MakeFrame(0X46D5D0, 0X1CC, 4, 0);
 	MakeFunction    (0X46DBE0,0X46E0D9);
-	SetFunctionFlags(0X46DBE0,0x4010);
+	SetFunctionFlags(0X46DBE0,0x10);
 	MakeFrame(0X46DBE0, 0X88, 4, 0);
 	MakeFunction    (0X46E110,0X46E271);
-	SetFunctionFlags(0X46E110,0x4010);
+	SetFunctionFlags(0X46E110,0x10);
 	MakeFrame(0X46E110, 0X10, 4, 0);
 	MakeFunction    (0X46E280,0X46E46D);
-	SetFunctionFlags(0X46E280,0x4010);
+	SetFunctionFlags(0X46E280,0x10);
 	MakeFrame(0X46E280, 0X48, 4, 0);
 	MakeFunction    (0X46E480,0X46E6F5);
-	SetFunctionFlags(0X46E480,0x4010);
+	SetFunctionFlags(0X46E480,0x10);
 	MakeFrame(0X46E480, 0X24, 4, 0);
 	MakeFunction    (0X46E730,0X46E870);
-	SetFunctionFlags(0X46E730,0x4010);
+	SetFunctionFlags(0X46E730,0x10);
 	MakeFrame(0X46E730, 0X14, 4, 0);
 	MakeFunction    (0X46E870,0X46E9D3);
-	SetFunctionFlags(0X46E870,0x4010);
+	SetFunctionFlags(0X46E870,0x10);
 	MakeFrame(0X46E870, 0X54, 4, 0);
 	MakeFunction    (0X46E9E0,0X46EA89);
-	SetFunctionFlags(0X46E9E0,0x4010);
+	SetFunctionFlags(0X46E9E0,0x10);
 	MakeFrame(0X46E9E0, 0X4, 4, 0);
 	MakeLocal(0X46E9E0, 0X46EA89, "[bp-0X4]", "X_Position");
 	MakeFunction    (0X46EA90,0X46EB2D);
-	SetFunctionFlags(0X46EA90,0x4010);
+	SetFunctionFlags(0X46EA90,0x10);
 	SetFunctionCmt(0X46EA90,	"NPC 360 : Thank you!\nThe thank you screen.", 1);
 	MakeFrame(0X46EA90, 0X10, 4, 0);
 	MakeFunction    (0X46EB30,0X46EB49);
 	SetFunctionFlags(0X46EB30,0x4010);
 	MakeFrame(0X46EB30, 0, 4, 0);
 	MakeFunction    (0X46EB50,0X46EE48);
-	SetFunctionFlags(0X46EB50,0x4010);
+	SetFunctionFlags(0X46EB50,0x10);
 	MakeFrame(0X46EB50, 0X130, 4, 0);
 	MakeLocal(0X46EB50, 0X46EE48, "[bp-0X130]", "str");
 	MakeLocal(0X46EB50, 0X46EE48, "[bp-0X14]", "ptr1");
 	MakeLocal(0X46EB50, 0X46EE48, "[bp-0X10]", "stream");
 	MakeFunction    (0X46EE50,0X46EFCE);
-	SetFunctionFlags(0X46EE50,0x4010);
+	SetFunctionFlags(0X46EE50,0x10);
 	MakeFrame(0X46EE50, 0X4, 4, 0);
 	MakeFunction    (0X46EFD0,0X46F143);
-	SetFunctionFlags(0X46EFD0,0x4010);
+	SetFunctionFlags(0X46EFD0,0x10);
 	SetType(0X46EFD0, "int __cdecl NPC_Create(int NPC_ID, int X_Position, int Y_Position, int X_Velocity, int Y_Velocity, int, int, int);");
 	MakeFrame(0X46EFD0, 0X4, 4, 0);
+	MakeLocal(0X46EFD0, 0X46F143, "[bp+0X8]", "NPC_ID");
+	MakeLocal(0X46EFD0, 0X46F143, "[bp+0XC]", "X_Position");
+	MakeLocal(0X46EFD0, 0X46F143, "[bp+0X10]", "Y_Position");
+	MakeLocal(0X46EFD0, 0X46F143, "[bp+0X14]", "X_Velocity");
+	MakeLocal(0X46EFD0, 0X46F143, "[bp+0X18]", "Y_Velocity");
 	MakeFunction    (0X46F150,0X46F1F1);
-	SetFunctionFlags(0X46F150,0x4010);
+	SetFunctionFlags(0X46F150,0x10);
 	MakeFrame(0X46F150, 0XC, 4, 0);
 	MakeLocal(0X46F150, 0X46F1F1, "[bp+0X8]", "X_Position");
 	MakeLocal(0X46F150, 0X46F1F1, "[bp+0XC]", "Y_Position");
 	MakeLocal(0X46F150, 0X46F1F1, "[bp+0X10]", "maximum");
 	MakeFunction    (0X46F200,0X46F2A1);
-	SetFunctionFlags(0X46F200,0x4010);
+	SetFunctionFlags(0X46F200,0x10);
 	MakeFrame(0X46F200, 0XC, 4, 0);
 	MakeLocal(0X46F200, 0X46F2A1, "[bp+0X8]", "X_Position");
 	MakeLocal(0X46F200, 0X46F2A1, "[bp+0XC]", "Y_Position");
 	MakeLocal(0X46F200, 0X46F2A1, "[bp+0X10]", "maximum");
 	MakeFunction    (0X46F2B0,0X46F42F);
-	SetFunctionFlags(0X46F2B0,0x4010);
+	SetFunctionFlags(0X46F2B0,0x10);
 	SetType(0X46F2B0, "int __cdecl Spawn_Exp(int X_Position, int Y_Position, signed int XP_Amount);");
 	MakeFrame(0X46F2B0, 0X8, 4, 0);
+	MakeLocal(0X46F2B0, 0X46F42F, "[bp+0X8]", "X_Position");
+	MakeLocal(0X46F2B0, 0X46F42F, "[bp+0XC]", "Y_Position");
+	MakeLocal(0X46F2B0, 0X46F42F, "[bp+0X10]", "XP_Amount");
 	MakeNameEx(0X46F42B, "Return", SN_LOCAL);
 	MakeFunction    (0X46F430,0X46F627);
-	SetFunctionFlags(0X46F430,0x4010);
+	SetFunctionFlags(0X46F430,0x10);
 	MakeFrame(0X46F430, 0X38, 4, 0);
 	MakeLocal(0X46F430, 0X46F627, "[bp-0X30]", "ptr");
 	MakeFunction    (0X46F630,0X46F75F);
-	SetFunctionFlags(0X46F630,0x4010);
+	SetFunctionFlags(0X46F630,0x10);
 	MakeFrame(0X46F630, 0X4, 4, 0);
 	MakeFunction    (0X46F760,0X46F80E);
-	SetFunctionFlags(0X46F760,0x4010);
+	SetFunctionFlags(0X46F760,0x10);
 	SetType(0X46F760, "int __cdecl sub_46F760(void *);");
 	MakeFrame(0X46F760, 0X8, 4, 0);
 	MakeLocal(0X46F760, 0X46F80E, "[bp+0X8]", "ptr");
 	MakeFunction    (0X46F810,0X46F9F1);
-	SetFunctionFlags(0X46F810,0x4010);
+	SetFunctionFlags(0X46F810,0x10);
 	MakeFrame(0X46F810, 0XC, 4, 0);
+	MakeNameEx(0X46F9ED, "Return", SN_LOCAL);
 	MakeFunction    (0X46FA00,0X46FAAA);
-	SetFunctionFlags(0X46FA00,0x4010);
+	SetFunctionFlags(0X46FA00,0x10);
 	MakeFrame(0X46FA00, 0X8, 4, 0);
 	MakeNameEx(0X46FAA1, "jmp_46FA0F", SN_LOCAL);
 	MakeNameEx(0X46FAA6, "Return", SN_LOCAL);
 	MakeFunction    (0X46FAB0,0X46FD02);
-	SetFunctionFlags(0X46FAB0,0x4010);
+	SetFunctionFlags(0X46FAB0,0x10);
 	MakeFrame(0X46FAB0, 0X4, 4, 0);
 	MakeFunction    (0X46FD10,0X46FF88);
-	SetFunctionFlags(0X46FD10,0x4010);
+	SetFunctionFlags(0X46FD10,0x10);
 	MakeFrame(0X46FD10, 0X4, 4, 0);
 	MakeNameEx(0X46FF7F, "jmp_46FD1D", SN_LOCAL);
 	MakeNameEx(0X46FF84, "Return", SN_LOCAL);
 	MakeFunction    (0X46FF90,0X47005F);
-	SetFunctionFlags(0X46FF90,0x4010);
+	SetFunctionFlags(0X46FF90,0x10);
 	MakeFrame(0X46FF90, 0X4, 4, 0);
 	MakeFunction    (0X470060,0X470145);
-	SetFunctionFlags(0X470060,0x4010);
+	SetFunctionFlags(0X470060,0x10);
 	MakeFrame(0X470060, 0X4, 4, 0);
 	MakeFunction    (0X470150,0X470244);
-	SetFunctionFlags(0X470150,0x4010);
+	SetFunctionFlags(0X470150,0x10);
 	MakeFrame(0X470150, 0X4, 4, 0);
 	MakeFunction    (0X470250,0X4702C9);
-	SetFunctionFlags(0X470250,0x4010);
+	SetFunctionFlags(0X470250,0x10);
 	MakeFrame(0X470250, 0X4, 4, 0);
 	MakeFunction    (0X4702D0,0X470459);
-	SetFunctionFlags(0X4702D0,0x4010);
+	SetFunctionFlags(0X4702D0,0x10);
 	MakeFrame(0X4702D0, 0X8, 4, 0);
 	MakeFunction    (0X470490,0X4704EA);
-	SetFunctionFlags(0X470490,0x4010);
+	SetFunctionFlags(0X470490,0x10);
 	MakeFrame(0X470490, 0X4, 4, 0);
 	MakeFunction    (0X4704F0,0X470555);
-	SetFunctionFlags(0X4704F0,0x4010);
+	SetFunctionFlags(0X4704F0,0x10);
 	MakeFrame(0X4704F0, 0X4, 4, 0);
 	MakeNameEx(0X4704FD, "Add_1_Var_4", SN_LOCAL);
 	MakeNameEx(0X47053D, "jmp_Add_1_Var_4", SN_LOCAL);
@@ -147381,53 +148005,55 @@ static Functions_1(void) {
 	MakeNameEx(0X47054F, "Return_0", SN_LOCAL);
 	MakeNameEx(0X470551, "Return", SN_LOCAL);
 	MakeFunction    (0X4705C0,0X47086E);
-	SetFunctionFlags(0X4705C0,0x4010);
+	SetFunctionFlags(0X4705C0,0x10);
 	MakeFrame(0X4705C0, 0X4, 4, 0);
 	MakeFunction    (0X470870,0X47096C);
-	SetFunctionFlags(0X470870,0x4010);
-	MakeFrame(0X470870, 0X8, 4, 0);
+	SetFunctionFlags(0X470870,0x10);
+	MakeFrame(0X470870, 0X4, 4, 0);
 	MakeFunction    (0X470970,0X470A6C);
-	SetFunctionFlags(0X470970,0x4010);
-	MakeFrame(0X470970, 0X8, 4, 0);
+	SetFunctionFlags(0X470970,0x10);
+	MakeFrame(0X470970, 0X4, 4, 0);
 	MakeFunction    (0X470A70,0X470B6B);
-	SetFunctionFlags(0X470A70,0x4010);
-	MakeFrame(0X470A70, 0X8, 4, 0);
+	SetFunctionFlags(0X470A70,0x10);
+	MakeFrame(0X470A70, 0X4, 4, 0);
 	MakeFunction    (0X470B70,0X470C6B);
-	SetFunctionFlags(0X470B70,0x4010);
-	MakeFrame(0X470B70, 0X8, 4, 0);
+	SetFunctionFlags(0X470B70,0x10);
+	MakeFrame(0X470B70, 0X4, 4, 0);
 	MakeFunction    (0X470C70,0X470D76);
-	SetFunctionFlags(0X470C70,0x4010);
-	MakeFrame(0X470C70, 0X8, 4, 0);
+	SetFunctionFlags(0X470C70,0x10);
+	MakeFrame(0X470C70, 0X4, 4, 0);
 	MakeFunction    (0X470D80,0X470E86);
-	SetFunctionFlags(0X470D80,0x4010);
-	MakeFrame(0X470D80, 0X8, 4, 0);
+	SetFunctionFlags(0X470D80,0x10);
+	MakeFrame(0X470D80, 0X4, 4, 0);
 	MakeFunction    (0X470E90,0X470F98);
-	SetFunctionFlags(0X470E90,0x4010);
-	MakeFrame(0X470E90, 0X8, 4, 0);
+	SetFunctionFlags(0X470E90,0x10);
+	MakeFrame(0X470E90, 0X4, 4, 0);
 	MakeFunction    (0X470FA0,0X4710A8);
-	SetFunctionFlags(0X470FA0,0x4010);
-	MakeFrame(0X470FA0, 0X8, 4, 0);
+	SetFunctionFlags(0X470FA0,0x10);
+	MakeFrame(0X470FA0, 0X4, 4, 0);
 	MakeFunction    (0X4710B0,0X471156);
-	SetFunctionFlags(0X4710B0,0x4010);
+	SetFunctionFlags(0X4710B0,0x10);
 	MakeFrame(0X4710B0, 0X4, 4, 0);
 	MakeFunction    (0X471160,0X471A6A);
-	SetFunctionFlags(0X471160,0x4010);
+	SetFunctionFlags(0X471160,0x10);
 	MakeFrame(0X471160, 0X60, 4, 0);
 	MakeFunction    (0X471B80,0X471D4A);
-	SetFunctionFlags(0X471B80,0x4010);
+	SetFunctionFlags(0X471B80,0x10);
 	SetType(0X471B80, "int __cdecl NPC_Death_(void *Is_NPC_Alive, int);");
 	MakeFrame(0X471B80, 0XC, 4, 0);
+	MakeLocal(0X471B80, 0X471D4A, "[bp+0X8]", "Is_NPC_Alive");
 	MakeNameEx(0X471CD3, "jmp_471CD3", SN_LOCAL);
 	MakeFunction    (0X471D50,0X4723FC);
-	SetFunctionFlags(0X471D50,0x4010);
+	SetFunctionFlags(0X471D50,0x10);
 	MakeFrame(0X471D50, 0XC, 4, 0);
 	MakeNameEx(0X4723F8, "Return", SN_LOCAL);
 	MakeFunction    (0X472400,0X472702);
-	SetFunctionFlags(0X472400,0x4010);
-	SetType(0X472400, "int __cdecl sub_472400(LPCSTR lpFileName);");
+	SetFunctionFlags(0X472400,0x10);
+	SetType(0X472400, "int __cdecl Load_NPC_Table(LPCSTR lpFileName);");
 	MakeFrame(0X472400, 0X10, 4, 0);
 	MakeLocal(0X472400, 0X472702, "[bp-0XC]", "stream");
 	MakeLocal(0X472400, 0X472702, "[bp+0X8]", "FileName");
+	MakeNameEx(0X4726FE, "Return", SN_LOCAL);
 	MakeFunction    (0X472710,0X472736);
 	SetFunctionFlags(0X472710,0x4010);
 	MakeFrame(0X472710, 0, 4, 0);
@@ -147435,80 +148061,80 @@ static Functions_1(void) {
 	SetFunctionFlags(0X472740,0x4010);
 	MakeFrame(0X472740, 0, 4, 0);
 	MakeFunction    (0X472770,0X47293E);
-	SetFunctionFlags(0X472770,0x4010);
+	SetFunctionFlags(0X472770,0x10);
 	MakeFrame(0X472770, 0XC, 4, 0);
 	MakeFunction    (0X472940,0X47294D);
 	SetFunctionFlags(0X472940,0x4010);
-	SetType(0X472940, "int __cdecl sub_472940(int);");
+	SetType(0X472940, "int __cdecl Set_Boss_Script_State(int);");
 	SetFunctionCmt(0X472940,	"Can be optimised to\nmov eax, [ebp+arg_0]\nmov dword_4BBACC, eax\nretn\n(offset 472940\n8B 45 08 A3 CC BA 4B 00 C3 90 90)", 0);
 	MakeFrame(0X472940, 0, 4, 0);
 	MakeFunction    (0X472950,0X472FE8);
-	SetFunctionFlags(0X472950,0x4010);
+	SetFunctionFlags(0X472950,0x10);
 	MakeFrame(0X472950, 0X14, 4, 0);
 	MakeFunction    (0X472FF0,0X472FF5);
 	SetFunctionFlags(0X472FF0,0x14);
 	SetFunctionCmt(0X472FF0,	"Boss 0 : No special boss\nDoes nothing", 1);
 	MakeFrame(0X472FF0, 0, 4, 0);
 	MakeFunction    (0X473000,0X47307C);
-	SetFunctionFlags(0X473000,0x4010);
+	SetFunctionFlags(0X473000,0x10);
 	MakeFrame(0X473000, 0X8, 4, 0);
 	MakeFunction    (0X473080,0X4738DE);
-	SetFunctionFlags(0X473080,0x4010);
+	SetFunctionFlags(0X473080,0x10);
 	MakeFrame(0X473080, 0XB0, 4, 0);
 	MakeNameEx(0X4738D2, "Return", SN_LOCAL);
 	MakeFunction    (0X4739B0,0X473B5C);
-	SetFunctionFlags(0X4739B0,0x4010);
+	SetFunctionFlags(0X4739B0,0x10);
 	MakeFrame(0X4739B0, 0X44, 4, 0);
 	MakeFunction    (0X473BD0,0X473D60);
-	SetFunctionFlags(0X473BD0,0x4010);
+	SetFunctionFlags(0X473BD0,0x10);
 	MakeFrame(0X473BD0, 0X34, 4, 0);
 	MakeFunction    (0X473DE0,0X474245);
-	SetFunctionFlags(0X473DE0,0x4010);
+	SetFunctionFlags(0X473DE0,0x10);
 	MakeFrame(0X473DE0, 0X40, 4, 0);
 	MakeLocal(0X473DE0, 0X474245, "[bp-0X3C]", "Y_Velocity");
 	MakeLocal(0X473DE0, 0X474245, "[bp-0X38]", "X_Velocity");
 	MakeFunction    (0X474340,0X4743ED);
-	SetFunctionFlags(0X474340,0x4010);
+	SetFunctionFlags(0X474340,0x10);
 	MakeFrame(0X474340, 0X4, 4, 0);
 	MakeFunction    (0X474400,0X47524B);
-	SetFunctionFlags(0X474400,0x4010);
-	MakeFrame(0X474400, 0X28, 4, 0);
+	SetFunctionFlags(0X474400,0x10);
+	MakeFrame(0X474400, 0X20, 4, 0);
 	MakeLocal(0X474400, 0X47524B, "[bp-0X10]", "Y_Velocity");
 	MakeLocal(0X474400, 0X47524B, "[bp-0XC]", "X_Velocity");
 	MakeNameEx(0X47487D, "jmp_474F7B", SN_LOCAL);
 	MakeFunction    (0X4753D0,0X476659);
-	SetFunctionFlags(0X4753D0,0x4010);
-	MakeFrame(0X4753D0, 0X28, 4, 0);
+	SetFunctionFlags(0X4753D0,0x10);
+	MakeFrame(0X4753D0, 0X20, 4, 0);
 	MakeLocal(0X4753D0, 0X476659, "[bp-0X4]", "Y_Position");
 	MakeNameEx(0X4765A0, "Return", SN_LOCAL);
 	MakeFunction    (0X476790,0X47691E);
-	SetFunctionFlags(0X476790,0x4010);
+	SetFunctionFlags(0X476790,0x10);
 	MakeFrame(0X476790, 0X44, 4, 0);
 	MakeFunction    (0X4769A0,0X476B12);
-	SetFunctionFlags(0X4769A0,0x4010);
+	SetFunctionFlags(0X4769A0,0x10);
 	MakeFrame(0X4769A0, 0X34, 4, 0);
 	MakeFunction    (0X476B90,0X476E0E);
-	SetFunctionFlags(0X476B90,0x4010);
+	SetFunctionFlags(0X476B90,0x10);
 	MakeFrame(0X476B90, 0X54, 4, 0);
 	MakeFunction    (0X476E50,0X477142);
-	SetFunctionFlags(0X476E50,0x4010);
-	MakeFrame(0X476E50, 0X3C, 4, 0);
+	SetFunctionFlags(0X476E50,0x10);
+	MakeFrame(0X476E50, 0X38, 4, 0);
 	MakeFunction    (0X477230,0X4772DD);
-	SetFunctionFlags(0X477230,0x4010);
+	SetFunctionFlags(0X477230,0x10);
 	MakeFrame(0X477230, 0X4, 4, 0);
 	MakeFunction    (0X4772F0,0X4788F1);
-	SetFunctionFlags(0X4772F0,0x4010);
-	MakeFrame(0X4772F0, 0X1C, 4, 0);
+	SetFunctionFlags(0X4772F0,0x10);
+	MakeFrame(0X4772F0, 0X14, 4, 0);
 	MakeLocal(0X4772F0, 0X4788F1, "[bp-0X8]", "X_Position");
 	MakeLocal(0X4772F0, 0X4788F1, "[bp-0X4]", "Y_Position");
 	MakeNameEx(0X477ED5, "jmp_478547_1", SN_LOCAL);
 	MakeNameEx(0X477F2A, "jmp_478547", SN_LOCAL);
 	MakeNameEx(0X4788AA, "Return", SN_LOCAL);
 	MakeFunction    (0X478AA0,0X478E3B);
-	SetFunctionFlags(0X478AA0,0x4010);
+	SetFunctionFlags(0X478AA0,0x10);
 	MakeFrame(0X478AA0, 0XA4, 4, 0);
 	MakeFunction    (0X478F20,0X478FDA);
-	SetFunctionFlags(0X478F20,0x4010);
+	SetFunctionFlags(0X478F20,0x10);
 	MakeFrame(0X478F20, 0X40, 4, 0);
 	MakeFunction    (0X478FE0,0X479003);
 	SetFunctionFlags(0X478FE0,0x4010);
@@ -147517,54 +148143,54 @@ static Functions_1(void) {
 	SetFunctionFlags(0X479010,0x4010);
 	MakeFrame(0X479010, 0, 4, 0);
 	MakeFunction    (0X479030,0X47A596);
-	SetFunctionFlags(0X479030,0x4010);
+	SetFunctionFlags(0X479030,0x10);
 	MakeFrame(0X479030, 0X140, 4, 0);
 	MakeLocal(0X479030, 0X47A596, "[bp-0X13C]", "Y_Velocity");
 	MakeLocal(0X479030, 0X47A596, "[bp-0XA4]", "X_Velocity");
 	MakeFunction    (0X47A6A0,0X47A7D9);
-	SetFunctionFlags(0X47A6A0,0x4010);
+	SetFunctionFlags(0X47A6A0,0x10);
 	MakeFrame(0X47A6A0, 0XC, 4, 0);
 	MakeFunction    (0X47A800,0X47A894);
-	SetFunctionFlags(0X47A800,0x4010);
+	SetFunctionFlags(0X47A800,0x10);
 	MakeFrame(0X47A800, 0X8, 4, 0);
 	MakeFunction    (0X47A8A0,0X47B441);
-	SetFunctionFlags(0X47A8A0,0x4010);
+	SetFunctionFlags(0X47A8A0,0x10);
 	MakeFrame(0X47A8A0, 0X12C, 4, 0);
 	MakeFunction    (0X47B450,0X47B45F);
 	SetFunctionFlags(0X47B450,0x14);
 	MakeFrame(0X47B450, 0, 4, 0);
 	MakeFunction    (0X47B460,0X47B4F1);
-	SetFunctionFlags(0X47B460,0x4010);
+	SetFunctionFlags(0X47B460,0x10);
 	MakeFrame(0X47B460, 0X4, 4, 0);
 	MakeFunction    (0X47B500,0X47B534);
 	SetFunctionFlags(0X47B500,0x4010);
 	MakeFrame(0X47B500, 0, 4, 0);
 	MakeFunction    (0X47B540,0X47B6EE);
-	SetFunctionFlags(0X47B540,0x4010);
+	SetFunctionFlags(0X47B540,0x10);
 	MakeFrame(0X47B540, 0X50, 4, 0);
 	MakeLocal(0X47B540, 0X47B6EE, "[bp-0X50]", "Src_Rects");
 	MakeFunction    (0X47B6F0,0X47C29B);
-	SetFunctionFlags(0X47B6F0,0x4010);
+	SetFunctionFlags(0X47B6F0,0x10);
 	SetFunctionCmt(0X47B6F0,	"Boss 1 : Omega\nOmega's AI.", 1);
-	MakeFrame(0X47B6F0, 0X4C, 4, 0);
+	MakeFrame(0X47B6F0, 0X44, 4, 0);
 	MakeFunction    (0X47C380,0X47C4D3);
-	SetFunctionFlags(0X47C380,0x4010);
+	SetFunctionFlags(0X47C380,0x10);
 	MakeFrame(0X47C380, 0X24, 4, 0);
 	MakeFunction    (0X47C4E0,0X47C795);
-	SetFunctionFlags(0X47C4E0,0x4010);
+	SetFunctionFlags(0X47C4E0,0x10);
 	MakeFrame(0X47C4E0, 0X48, 4, 0);
 	MakeFunction    (0X47C7A0,0X47C817);
-	SetFunctionFlags(0X47C7A0,0x4010);
+	SetFunctionFlags(0X47C7A0,0x10);
 	MakeFrame(0X47C7A0, 0X4, 4, 0);
 	MakeFunction    (0X47C820,0X47D12A);
-	SetFunctionFlags(0X47C820,0x4010);
-	MakeFrame(0X47C820, 0X78, 4, 0);
+	SetFunctionFlags(0X47C820,0x10);
+	MakeFrame(0X47C820, 0X70, 4, 0);
 	MakeLocal(0X47C820, 0X47D12A, "[bp-0X64]", "X_Position");
 	MakeNameEx(0X47D0F9, "jmp_Return", SN_LOCAL);
 	MakeNameEx(0X47D124, "Return", SN_LOCAL);
 	MakeFunction    (0X47D170,0X47DA6D);
-	SetFunctionFlags(0X47D170,0x4010);
-	MakeFrame(0X47D170, 0X20, 4, 0);
+	SetFunctionFlags(0X47D170,0x10);
+	MakeFrame(0X47D170, 0X18, 4, 0);
 	MakeNameEx(0X47D4A7, "jmp_Return7", SN_LOCAL);
 	MakeNameEx(0X47D5A7, "jmp_Return", SN_LOCAL);
 	MakeNameEx(0X47D6C0, "jmp_Return2", SN_LOCAL);
@@ -147573,35 +148199,35 @@ static Functions_1(void) {
 	MakeNameEx(0X47D800, "jmp_Return4", SN_LOCAL);
 	MakeNameEx(0X47D99D, "jmp_Return5", SN_LOCAL);
 	MakeFunction    (0X47DAA0,0X47DF05);
-	SetFunctionFlags(0X47DAA0,0x4010);
-	MakeFrame(0X47DAA0, 0X6C, 4, 0);
+	SetFunctionFlags(0X47DAA0,0x10);
+	MakeFrame(0X47DAA0, 0X68, 4, 0);
 	MakeFunction    (0X47DF10,0X47E605);
-	SetFunctionFlags(0X47DF10,0x4010);
+	SetFunctionFlags(0X47DF10,0x10);
 	MakeFrame(0X47DF10, 0X98, 4, 0);
 	MakeLocal(0X47DF10, 0X47E605, "[bp-0X94]", "Y_Velocity");
 	MakeLocal(0X47DF10, 0X47E605, "[bp-0X4C]", "X_Velocity");
 	MakeFunction    (0X47E6F0,0X47F528);
-	SetFunctionFlags(0X47E6F0,0x4010);
+	SetFunctionFlags(0X47E6F0,0x10);
 	SetFunctionCmt(0X47E6F0,	"Boss 3: Monster X\nMonster X's AI.", 1);
-	MakeFrame(0X47E6F0, 0X14, 4, 0);
+	MakeFrame(0X47E6F0, 0XC, 4, 0);
 	MakeNameEx(0X47EE1D, "jmp_47F39D", SN_LOCAL);
 	MakeNameEx(0X47F522, "Return", SN_LOCAL);
 	MakeFunction    (0X47F710,0X47FED0);
-	SetFunctionFlags(0X47F710,0x4010);
+	SetFunctionFlags(0X47F710,0x10);
 	MakeFrame(0X47F710, 0XC4, 4, 0);
 	MakeFunction    (0X480090,0X480286);
-	SetFunctionFlags(0X480090,0x4010);
+	SetFunctionFlags(0X480090,0x10);
 	MakeFrame(0X480090, 0X54, 4, 0);
 	MakeFunction    (0X4802A0,0X480519);
-	SetFunctionFlags(0X4802A0,0x4010);
+	SetFunctionFlags(0X4802A0,0x10);
 	MakeFrame(0X4802A0, 0X24, 4, 0);
 	MakeFunction    (0X480550,0X4808AD);
-	SetFunctionFlags(0X480550,0x4010);
+	SetFunctionFlags(0X480550,0x10);
 	MakeFrame(0X480550, 0X98, 4, 0);
 	MakeLocal(0X480550, 0X4808AD, "[bp-0X90]", "Y_Velocity");
 	MakeLocal(0X480550, 0X4808AD, "[bp-0X8C]", "X_Velocity");
 	MakeFunction    (0X4808C0,0X480A35);
-	SetFunctionFlags(0X4808C0,0x4010);
+	SetFunctionFlags(0X4808C0,0x10);
 	MakeFrame(0X4808C0, 0X34, 4, 0);
 	MakeFunction    (0X480A36,0X480A3C);
 	SetFunctionFlags(0X480A36,0x80);
@@ -147654,7 +148280,7 @@ static Functions_1(void) {
 	MakeLocal(0X480E6C, 0X480F55, "[bp+0X14]", "stream");
 	MakeFunction    (0X480F55,0X480FA1);
 	SetFunctionFlags(0X480F55,0x4010);
-	SetType(0X480F55, "int __cdecl sub_480F55(void *, size_t, size_t, FILE *);");
+	SetType(0X480F55, "int __cdecl fread_wrapper(void *, size_t, size_t, FILE *);");
 	MakeFrame(0X480F55, 0X28, 4, 0);
 	MakeLocal(0X480F55, 0X480FA1, "[bp-0X18]", "ms_exc");
 	MakeLocal(0X480F55, 0X480FA1, "[bp+0X8]", "ptr");
@@ -147814,7 +148440,7 @@ static Functions_1(void) {
 	MakeLocal(0X48187A, 0X481981, "[bp+0X14]", "stream");
 	MakeFunction    (0X481981,0X4819CD);
 	SetFunctionFlags(0X481981,0x4010);
-	SetType(0X481981, "int __cdecl sub_481981(void *, size_t, size_t, FILE *);");
+	SetType(0X481981, "int __cdecl fwrite_wrapper(void *, size_t, size_t, FILE *);");
 	MakeFrame(0X481981, 0X28, 4, 0);
 	MakeLocal(0X481981, 0X4819CD, "[bp-0X18]", "ms_exc");
 	MakeLocal(0X481981, 0X4819CD, "[bp+0X8]", "ptr");
@@ -147874,7 +148500,7 @@ static Functions_1(void) {
 	MakeFrame(0X481D03, 0, 0, 0);
 	MakeLocal(0X481D03, 0X481D24, "[bp+0X4]", "NumberOfBytesWritten");
 	MakeFunction    (0X481D27,0X481EFC);
-	SetFunctionFlags(0X481D27,0x4014);
+	SetFunctionFlags(0X481D27,0x14);
 	SetFunctionCmt(0X481D27,	"Entry point of executable (startup)", 1);
 	MakeFrame(0X481D27, 0X7C, 4, 0);
 	MakeLocal(0X481D27, 0X481EFC, "[bp-0X70]", "StartupInfo");
@@ -148661,6 +149287,10 @@ static Functions_1(void) {
 	MakeLocal(0X48886E, 0X4888DA, "[bp+0XC]", "stream");
 	MakeNameEx(0X4888BA, "Return_minus1", SN_LOCAL);
 	MakeNameEx(0X4888BD, "Return", SN_LOCAL);
+}
+
+static Functions_2(void) {
+
 	MakeFunction    (0X4888DA,0X48899A);
 	SetFunctionFlags(0X4888DA,0x14);
 	SetType(0X4888DA, "int __cdecl __mbtowc_mt(int, LPWSTR lpWideCharStr, int lpMultiByteStr, int);");
@@ -148758,10 +149388,10 @@ static Functions_1(void) {
 	SetFunctionFlags(0X488F5F,0x4000);
 	MakeFrame(0X488F5F, 0, 0, 0);
 	MakeFunction    (0X488F75,0X488FB2);
-	SetFunctionFlags(0X488F75,0x4010);
+	SetFunctionFlags(0X488F75,0x10);
 	MakeFrame(0X488F75, 0X14, 4, 0);
 	MakeFunction    (0X488FB2,0X488FEF);
-	SetFunctionFlags(0X488FB2,0x4010);
+	SetFunctionFlags(0X488FB2,0x10);
 	MakeFrame(0X488FB2, 0X14, 4, 0);
 	MakeFunction    (0X488FEF,0X489066);
 	SetFunctionFlags(0X488FEF,0x14);
@@ -149089,6 +149719,7 @@ static Functions(void) {
 
 	Functions_0();
 	Functions_1();
+	Functions_2();
 }
 
 //------------------------------------------------------------------------
@@ -149099,27 +149730,22 @@ static SegRegs(void) {
 	SetRegEx(0X48C000,"es",0,3);
 	SetRegEx(0X48C268,"es",0,3);
 	SetRegEx(0X48F000,"es",0,3);
-	SetRegEx(0X4BF000,"es",0XFFFFFFFF,3);
 	SetRegEx(0X401000,"ss",0,3);
 	SetRegEx(0X48C000,"ss",0,3);
 	SetRegEx(0X48C268,"ss",0,3);
 	SetRegEx(0X48F000,"ss",0,3);
-	SetRegEx(0X4BF000,"ss",0XFFFFFFFF,3);
 	SetRegEx(0X401000,"ds",0X3,3);
 	SetRegEx(0X48C000,"ds",0X3,3);
 	SetRegEx(0X48C268,"ds",0X3,3);
 	SetRegEx(0X48F000,"ds",0X3,3);
-	SetRegEx(0X4BF000,"ds",0XFFFFFFFF,3);
 	SetRegEx(0X401000,"fs",0XFFFFFFFF,3);
 	SetRegEx(0X48C000,"fs",0XFFFFFFFF,3);
 	SetRegEx(0X48C268,"fs",0XFFFFFFFF,3);
 	SetRegEx(0X48F000,"fs",0XFFFFFFFF,3);
-	SetRegEx(0X4BF000,"fs",0XFFFFFFFF,3);
 	SetRegEx(0X401000,"gs",0XFFFFFFFF,3);
 	SetRegEx(0X48C000,"gs",0XFFFFFFFF,3);
 	SetRegEx(0X48C268,"gs",0XFFFFFFFF,3);
 	SetRegEx(0X48F000,"gs",0XFFFFFFFF,3);
-	SetRegEx(0X4BF000,"gs",0XFFFFFFFF,3);
 }
 
 //------------------------------------------------------------------------

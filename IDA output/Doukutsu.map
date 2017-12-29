@@ -212,7 +212,7 @@
  0001:000065B8       jmp_407263_table
  0001:000065C8       jmp_4074E2_table
  0001:000065E0       Bullet_17_BladeSlash
- 0001:000068A0       Bullet_18__Unused_
+ 0001:000068A0       Bullet_18_[Unused]
  0001:00006910       Bullet_1C_1D_1E_Sup_Mis_Launcher
  0001:00006AE1       jmp_407ADA_case_0_2
  0001:00006B03       jmp_407ADA_case_1_3
@@ -327,7 +327,7 @@
  0001:00008880       Rising_Disc_And_Exploding_Diamond
  0001:00008B80       Star
  0001:00008C70       Fireball_Impact
- 0001:00008E00       ZzZ___
+ 0001:00008E00       ZzZ...
  0001:00008F60       Booster_Smoke
  0001:000090AF       jmp_40A0A8_case_0
  0001:000090C3       jmp_40A0A8_case_1
@@ -342,13 +342,13 @@
  0001:00009650       Headbump_Sparks
  0001:000097E0       Unknown_Unused_Effect
  0001:000098F0       Small_White_Explosion_Disc
- 0001:000099E0       Empty__Effect_
+ 0001:000099E0       Empty_(Effect)
  0001:00009AA0       Push_Jump_Key_Effect
  0001:00009B50       Update_All_Effects
  0001:00009BC0       Draw_All_Effect_Obj
  0001:00009C90       Create_Animated_Effect
- 0001:00009D60       Load_Config_dat
- 0001:00009E30       Set_Default_Config_dat
+ 0001:00009D60       Load_Config.dat
+ 0001:00009E30       Set_Default_Config.dat
  0001:00009EC0       Version_Button
  0001:00009FC0       Mute_Button
  0001:0000A1D0       Debug_Save_Button
@@ -447,7 +447,7 @@
  0001:0000F5F6       Do_Credits_Stuff
  0001:0000F8B0       Get_Build_Data
  0001:0000F990       Get_Version_Number
- 0001:0000FAB0       Check_For_SndVol32_exe
+ 0001:0000FAB0       Check_For_SndVol32.exe
  0001:0000FBC0       Delete_Debug_Unused
  0001:0000FC10       Print_Debug_Unused
  0001:0000FCA0       Param_Time_Check
@@ -469,7 +469,7 @@
  0001:000112E0       Update_Keys
  0001:00011370       Display_FPS_Counter
  0001:000113A0       Calculate_FPS
- 0001:00011420       WinMain(x,x,x,x)
+ 0001:00011420       _WinMain@16
  0001:0001166A       Switch_412663_case_0
  0001:0001167C       Switch_412663_case_1
  0001:0001168D       Switch_412663_case_2
@@ -512,6 +512,7 @@
  0001:00014250       Draw_Quote_And_Gun
  0001:00014395       Render_Gun_Left
  0001:000146C0       Physics
+ 0001:00014C5D       Decrease_Booster_Fuel
  0001:00015990       Quote_Air
  0001:00015AA0       GetPlayerXY
  0001:00015AC0       Move_Quote
@@ -549,10 +550,19 @@
  0001:0001B0B0       Unused_ORG_Thing
  0001:0001B1E0       Setup_ORG_Playback_Timer
  0001:0001B230       fptc
- 0001:0001B880       ___setargv_0
+ 0001:0001B250       Stop_Previous_Org_Song
+ 0001:0001B6F0       Load_Org_Music
+ 0001:0001B730       Set_Org_Music_Position
+ 0001:0001B770       Get_Org_Music_Position
+ 0001:0001B790       Start_Org_Playback
+ 0001:0001B7C0       Set_Org_Volume
+ 0001:0001B880       Fade_Music
  0001:0001BB10       Sound_Thingy
- 0001:0001BFC0       Check_Profile_DAT
+ 0001:0001BFC0       Check_Profile.DAT
+ 0001:0001C040       Save_Profile
  0001:0001C738       Return____
+ 0001:0001C840       Draw_Teleporter_Menu
+ 0001:0001CA00       Game_Loop_Stage_Select
  0001:0001CBD0       Snake
  0001:0001CE60       PolarStar
  0001:0001D110       Fireball
@@ -563,14 +573,24 @@
  0001:0001E580       Blade
  0001:0001E710       Nemesis
  0001:0001EA10       Spur
+ 0001:0001F0C0       Init_Direct_Sound
+ 0001:0001F1A0       Kill_Direct_Sound?
  0001:0001F62F       Return___
  0001:0001F640       Play_Sound_Effect
  0001:0001F7E0       Sound_Loader
+ 0001:0001FBE0       Load_Room
  0001:0001FEE0       Tsc_CMU
  0001:0001FF50       Tsc_RMU
+ 0001:000203B0       Draw_Whimsical_Star
+ 0001:000204E0       Initiate_TSC_Buffer?
+ 0001:000205C0       Decode_TSC
+ 0001:00020660       Load_Special_TSC
+ 0001:00020750       Process_TSC_File
  0001:000208E0       __fputchar
  0001:00020900       TSC_Dec_to_Hex
  0001:00020990       Call_TSC_Event
+ 0001:00020D10       Print_NUM
+ 0001:00020F10       Draw_Text_Box
  0001:00021510       Tsc_Parser
  0001:00021573       jmp_42256C_case_0
  0001:000215ED       Tst_END
@@ -580,6 +600,7 @@
  0001:0002464D       jmp_42256C_case_4
  0001:0002466E       jmp_42256C_case_6
  0001:00024690       jmp_42256C_case_5
+ 0001:00024790       Draw_Text_To_Text_Box_Surfaces
  0001:000248B0       SIN_function
  0001:000248C0       COS_function
  0001:000248E0       Angle_Calculator
@@ -600,7 +621,6 @@
  0001:00026F00       NPC8_Enemy_Beetle_follow1
  0001:00027260       NPC9_Balrog_DropIn
  0001:00027540       NPC10_Boss_Balrog_shooting
- 0001:000275BE       aLeLhxg
  0001:000279B0       NPC11_Projectile_Balrog_energy_bounce
  0001:00027B10       NPC12_Balrog_cutscene
  0001:00028940       NPC13_Forcefield
@@ -952,17 +972,31 @@
  0001:0006D870       NPC358
  0001:0006D9E0       NPC359
  0001:0006DA90       NPC360_Thank_You
+ 0001:0006DB30       Kill_NPC_RAM
+ 0001:0006DB50       Process_PXE_File
+ 0001:0006DE50       Load_NPC_Table_Values_To_Object
  0001:0006DFD0       NPC_Create
+ 0001:0006E150       Create_Dust_Clouds
  0001:0006E2B0       Spawn_Exp
  0001:0006E430       Spawn_Missiles
  0001:0006E630       Spawn_HP
+ 0001:0006E810       Draw_NPCs
+ 0001:0006EA00       Update_NPCs
+ 0001:0006EAB0       Spawn_NPC
+ 0001:0006ED10       Spawn_NPC_2
+ 0001:0006F2D0       Kill_Objects
  0001:0006F576       Add_1_ebp_8
  0001:0006F5A9       jmp_470576
  0001:0006F5AB       Return_ebpminus4
- 0001:00070160       Entity_Tile_Collision_Algorithms
+ 0001:00070160       Do_NPC_Level_Collision
  0001:00070B80       NPC_Death?
  0001:00070D50       Entity_Bullet_Collision
+ 0001:00071400       Load_NPC_Table
+ 0001:00071740       Set_Room_Boss_ID
+ 0001:00071770       Draw_Boss?
+ 0001:00071940       Set_Boss_Script_State
  0001:00071FF0       Boss0_NoSpecialBoss
+ 0001:00072000       Update_Boss
  0001:00072080       Tile_Collision_Algorithm_For_Larger_Entities
  0001:00073400       Boss_4_Core
  0001:000743D0       Boss_7_Undead_Core
@@ -970,7 +1004,7 @@
  0001:00078030       Boss_2_Balfrog
  0001:000798A0       Boss_5_Ironhead
  0001:0007A450       __crt_debugger_hook_2
- 0001:0007A540       Boss_HP_Bar_Render?
+ 0001:0007A540       Draw_Boss_Health
  0001:0007A6F0       Boss_1_Omega
  0001:0007B820       Boss_8_Heavy_Press
  0001:0007C170       Boss_6_Dragon_Sisters
@@ -978,6 +1012,11 @@
  0001:0007C1DA       jmp_Return8
  0001:0007C9FA       Return
  0001:0007D6F0       Boss_3_Monster_X
+ 0001:0007E710       Spawn_Part_Of_Monster_X_3
+ 0001:0007F090       Create_Fish_Missiles
+ 0001:0007F2A0       Spawn_Part_Of_Monster_X
+ 0001:0007F550       Create_Enemy_Projectiles
+ 0001:0007F8C0       Spawn_Part_Of_Monster_X_2
  0001:0007FA36       DirectDrawCreate
  0001:0007FA3C       DirectInputCreateA
  0001:0007FA58       aAHAHAAHARHAAHAPHAPH
@@ -997,6 +1036,7 @@
  0001:0007FDCF       __fclose_lk
  0001:0007FE1B       _fclose
  0001:0007FE6C       _fread
+ 0001:0007FF55       fread_wrapper
  0001:0007FFA1       __fsopen
  0001:0007FFF3       _fsopen_sub_480FF3
  0001:0007FFFD       _fopen
@@ -1083,6 +1123,7 @@
  0001:0008081C       _fprintf
  0001:00080870       _fprintf_sub_481870
  0001:0008087A       _fwrite
+ 0001:00080981       fwrite_wrapper
  0001:000809CD       __fseek_lk
  0001:00080A5C       _fseek
  0001:00080A9B       _fseek_sub_481A9B
@@ -1131,7 +1172,7 @@
  0001:000811C2       _lh_bagit
  0001:000811C9       _lh_unwinding
  0001:000811DE       _lh_return
- 0001:000811E6       _seh_longjmp_unwind(x)
+ 0001:000811E6       __seh_longjmp_unwind@4
  0001:00081201       __close_lk
  0001:00081284       __close
  0001:000812F8       _close_sub_4822F8
@@ -1191,10 +1232,10 @@
  0001:00082D62       ___sbh_resize_block
  0001:00083041       ___sbh_alloc_block
  0001:0008333D       __callnewh
- 0001:00083358       __crtTlsAlloc(x)
+ 0001:00083358       ___crtTlsAlloc@4
  0001:00083361       __mtterm
  0001:0008337E       __getptd
- 0001:000833EF       _freefls(x)
+ 0001:000833EF       __freefls@4
  0001:0008351C       _freefls@4_sub_48451C
  0001:00083521       _freefls@4_sub_484521
  0001:0008352D       _freefls@4_sub_48452D
@@ -1236,7 +1277,7 @@
  0001:00084EDC       __rttosnpop
  0001:00084EDD       __rtnospopde
  0001:00084EE4       __rtzeropop
- 0001:00084EE6       __rtzeronpo
+ 0001:00084EE6       __rtzeronpop
  0001:00084EEB       __rtonepop
  0001:00084EED       __rtonenpop
  0001:00084EF2       __tosnan1
@@ -1293,6 +1334,7 @@
  0001:000858FE       __setargv
  0001:000859A0       ___crtGetEnvironmentStringsA
  0001:00085AC2       __ioinit
+ 0001:00085D04       func
  0001:00085D50       __alloca_probe
  0001:00085D65       probesetup
  0001:00085D6A       probepages
@@ -1348,7 +1390,7 @@
  0001:0008689B       __tsopen_lk
  0001:00086B82       __sopen
  0001:00086BC7       __sopen_sub_487BC7
- 0001:00086BD7       __crtInitCritSecNoSpinCount(x,x)
+ 0001:00086BD7       ___crtInitCritSecNoSpinCount@8
  0001:00086BE7       ___crtInitCritSecAndSpinCount
  0001:00086C72       __isatty
  0001:00086C9C       ___wctomb_mt
@@ -1518,8 +1560,8 @@
  0001:0008A8DC       ImmGetContext
  0001:0008A8E2       RtlUnwind
  0002:00000270       aArmsitem_tsc
- 0002:00000280       aSS_pbm
- 0002:0000028C       aRb
+ 0002:00000280       format
+ 0002:0000028C       mode
  0002:00000290       aDoukutsu200412
  0002:000002A4       aConfig_dat
  0002:000002B0       aSS
@@ -1560,7 +1602,7 @@
  0002:0000040C       aNov
  0002:00000410       aDec
  0002:00000414       aSDD
- 0002:00000420       aJun122005
+ 0002:00000420       str
  0002:0000042C       SubBlock
  0002:00000430       aSSndvol32_exe
  0002:00000440       aSSndvol32_ex_0
@@ -1580,9 +1622,9 @@
  0002:000004C8       aRb_3
  0002:000004CC       aSS_4
  0002:000004D4       aWb
- 0002:000004D8       ROM_ImageTag
+ 0002:000004D8       Pixel_Copyright_String
  0002:000004E4       aRb_15
- 0002:000004E8       aPixel
+ 0002:000004E8       aPIXEL
  0002:000004F0       aMychar
  0002:000004F8       aTitle
  0002:00000500       aArmsimage
@@ -1596,7 +1638,7 @@
  0002:00000554       aBullet
  0002:0000055C       aFace
  0002:00000564       aFade
- 0002:0000056C       aCredit01
+ 0002:0000056C       Ptr_Graphic
  0002:00000578       aPixtoneDByte
  0002:0000058C       aDeviceguidX
  0002:000005A0       aUMaxim
@@ -1633,8 +1675,8 @@
  0002:000006C0       aRb_7
  0002:000006C4       Type
  0002:000006CC       Name
- 0002:00000700       aProfile_dat
- 0002:0000070C       aDo041220
+ 0002:00000700       Profile.dat
+ 0002:0000070C       Profile.dat_Check
  0002:00000718       aSS_7
  0002:00000720       aFlag
  0002:00000728       aSS_8
@@ -2254,6 +2296,7 @@
  0003:000001AC       aD_1
  0003:000001D8       aD_2
  0003:000008C0       ROM_PEffects
+ 0003:00000908       str2
  0003:00000914       GraphicScale
  0003:0000091C       FullscreenRect
  0003:00000924       RenderWidth
@@ -2276,6 +2319,7 @@
  0003:0000463C       Key_For_Down
  0003:00004640       ROM_PClassName
  0003:00004648       lpName
+ 0003:0000464C       ptr2
  0003:00004660       ROM_WeaponExpTables
  0003:00004790       aOrg01
  0003:00004798       aOrg02
@@ -2778,15 +2822,16 @@
  0003:000091E8       Ptr_Songs
  0003:00009548       ROM_Ptr_NPC_Code
  0003:00009AEC       ROM_Ptr_Boss_Code
- 0003:00009B20       Prevent_Crash_Report_Failure
+ 0003:00009B20       Crash_Report_Failure_Check
  0003:00009B64       Offset__exit
  0003:00009F68       lpCriticalSection
+ 0003:0000A4E0       max
  0003:0000A748       aPst
  0003:0000A788       aPdt
  0003:0000AB40       Quote_Inventory
  0003:0000ABC0       InventoryViewType
  0003:0000ABC4       InventoryLabelPos
- 0003:0000ABC8       WeaponData_ID
+ 0003:0000ABC8       WeaponData.ID
  0003:0000ABCA       WeaponData_IDpart
  0003:0000ABCB       WeaponData_ShotID
  0003:0000ABCC       WeaponData_Level
@@ -2796,8 +2841,8 @@
  0003:0000AC68       SelectedWeaponID
  0003:0000AC6C       SelectedItemID
  0003:0000AC70       MenuRectFlash
- 0003:0000AC78       BackgroundSizeX
- 0003:0000AC7C       BackgroundSizeY
+ 0003:0000AC78       Background_Tile_Width
+ 0003:0000AC7C       Background_Tile_Height
  0003:0000AC88       BackgroundMode
  0003:0000AC90       GlobalWaterDepth
  0003:0000AC98       WeaponObj_Collision
@@ -2838,34 +2883,56 @@
  0003:0000DDA8       Screen_Offset_X
  0003:0000DDAC       Screen_Offset_Y
  0003:0000DDB0       Fullscreen_Rect
- 0003:0000E368       Handle_Font_Object
- 0003:0000E374       Fullscreen_Width
- 0003:0000E378       Fullscreen_Height
+ 0003:0000DDC8       ptr
+ 0003:0000E368       Font_Handle
+ 0003:0000E374       Fullscreen_Surface_Height
+ 0003:0000E378       Window_Surface_Width
  0003:0000E37C       Direct_Draw_Obj
- 0003:0000E380       DD7_SurfaceA
- 0003:0000E384       DD7_SurfaceB
+ 0003:0000E380       DD7_Final_Screen_Surface
+ 0003:0000E384       DD7_Screen_Surface
  0003:0000E388       Image_Res_Surface
  0003:0000E398       DD7_SurfaceB_Blt
  0003:0000E3C8       DD7_SurfaceB_GetDC
  0003:0000E3E8       DD7_SurfaceB_Lock
  0003:0000E3EC       DD7_SurfaceB_ReleaseDC
- 0003:0000E428       Window_Rect
- 0003:0000E438       Last_Tick_Count
+ 0003:0000E428       Final_Screen_Dist_Rects
+ 0003:0000E438       Previous_Tick_Count
  0003:0000E43C       Current_Tick_Count
  0003:0000E440       RECT_ScreenCopy
  0003:0000E450       DDBLTFX_ScreenCopy
- 0003:0000E4B4       Blit_Rect_4B4
- 0003:0000E4C4       Blit_Rect_4C4
- 0003:0000E4D4       Blit_Rect_4D4
- 0003:0000E4E4       Blit_Rect_4E4
- 0003:0000E514       Rect_Clear
- 0003:0000E528       DDBLTFX_Clear
+ 0003:0000E4B4       Final_Dst_Rect_1
+ 0003:0000E4C4       Final_Src_Rect_1
+ 0003:0000E4D4       Final_Dst_Rect_2
+ 0003:0000E4E4       Final_Src_Rect_2
+ 0003:0000E4F4       Final_Dst_Rect_3
+ 0003:0000E504       Final_Src_Rect_3
+ 0003:0000E514       Final_Dest_Rect_4
+ 0003:0000E528       Draw_Colour_Fill_DDBLTFX
+ 0003:0000E578       Draw_Colour_Fill_DDBLTFX_dxFillColor
+ 0003:0000E58C       Final_Dst_Rect_5
+ 0003:0000E5A0       Draw_Colour_Fill_Onto_Surface_DDBLTFX
+ 0003:0000E5F0       Draw_Colour_Fill_Onto_Surface_DDBLTFX_dxFillColor
+ 0003:0000E60C       Credits_Picture_X
+ 0003:0000E610       TSC_Length
+ 0003:0000E614       TSC_Buffer
+ 0003:0000E628       Text_Object_Array?
  0003:0000EB28       Mask_Color
  0003:0000EB30       Fade_Status
+ 0003:0000EB34       Fade_Complete
+ 0003:0000EB38       Fade_Counter
+ 0003:0000EB3C       Fade_Buffer_Int
+ 0003:0000EC68       Fade_Buffer_Bool
+ 0003:0000ED94       Fade_Type
+ 0003:0000EDA0       Event_Flags
  0003:0000F190       Occasional_Flash
+ 0003:0000F1A4       Draw_Sprite_Mask_6
+ 0003:0000F1B4       Draw_Sprite_Mask_7
  0003:0000F1C4       FlashColor
- 0003:0000F1C8       Related_To_Camera
- 0003:0000F1CC       Related_To_Camera_2
+ 0003:0000F1C8       Camera_X_Position_2
+ 0003:0000F1CC       Camera_Y_Position_2
+ 0003:0000F1D0       Camera_X_Destination
+ 0003:0000F1D4       Camera_Y_Destination
+ 0003:0000F1D8       Camera_Move_Ticks
  0003:0000F1DC       SoftQuakeDuration
  0003:0000F1E0       HardQuakeDuration
  0003:0000F1E4       CursorPosition
@@ -2875,17 +2942,26 @@
  0003:0000F210       Key_Held
  0003:0000F214       Key_Pressed
  0003:0000F218       LastKeyHeld
- 0003:0000F220       FullExePath_data
+ 0003:0000F220       Data_Folder_Full_Path
  0003:0000F328       FullExePath
+ 0003:0000F42C       Controller_Button_IDs
  0003:0000F44C       AppInstance
+ 0003:0000F450       Window_Width
+ 0003:0000F454       Window_Height
  0003:0000F458       AppWinHandle
- 0003:0000F464       ShowFPS
+ 0003:0000F45C       Gamepad_Enabled
+ 0003:0000F460       Is_Fullscreen
+ 0003:0000F464       FPS_Counter_Enabled
  0003:0000F468       CanAcceptInput
  0003:0000F46C       Timer1000Time
  0003:0000F470       Timer1000Elapsed
  0003:0000F474       Timer1000Ticks
  0003:0000F478       hMutex
  0003:0000F47C       hObject
+ 0003:0000F480       Level_Layout_Buffer
+ 0003:0000F586       Level_Width
+ 0003:0000F588       Level_Height
+ 0003:0000F598       Room_Name
  0003:0000F638       Player_Flags
  0003:0000F63C       Tile_On_Which_Quote_Is
  0003:0000F640       Quote_Direction_Faced
@@ -2926,65 +3002,71 @@
  0003:0000F6DC       Air
  0003:0000F6E8       Booster_Fuel
  0003:0000F6F4       NikumaruTime
+ 0003:0000F700       destination
  0003:00015B00       Song_Current_Beat
+ 0003:00015B48       Direct_Sound_Secondary_Buffer_Array?
  0003:00015DA8       TimerHandle
  0003:00015DAC       IsTimerActive
+ 0003:00015E10       Music_Fade_Flag?
+ 0003:00015E18       Music_Object?
  0003:00016540       Y_Position
  0003:0001654C       Empty_Effect_Timer
  0003:00016554       Machine_Gun_Reload_Timer
  0003:00016568       SoundBufferArray
- 0003:000167E8       DirectSoundObj
- 0003:000167F0       CurrentMapID
- 0003:000167F4       CurrentSongID
- 0003:000167F8       PreviousSongBeat
- 0003:000167FC       PreviousSongID
- 0003:00016800       WhimsicalStar
- 0003:0001680C       WhimsicalStar_X_Position
- 0003:00016810       WhimsicalStar_Y_Position
- 0003:00016814       WhimsicalStar_X_Velocity
- 0003:00016818       WhimsicalStar_Y_Velocity
+ 0003:000167E8       Direct_Sound_Object
+ 0003:000167EC       Direct_Sound_Primary_Buffer
+ 0003:000167F0       Current_Map_ID
+ 0003:000167F4       Current_Song_ID
+ 0003:000167F8       Previous_Song_Beat
+ 0003:000167FC       Previous_Song_ID
+ 0003:00016800       Whimsical_Star
+ 0003:0001680C       Whimsical_Star_X_Position
+ 0003:00016810       Whimsical_Star_Y_Position
+ 0003:00016814       Whimsical_Star_X_Velocity
+ 0003:00016818       Whimsical_Star_Y_Velocity
  0003:000168CC       CurrentStarID
  0003:00016AD8       Current_Script
  0003:00016AE0       Script_Position
  0003:00016AE4       TextColumn
  0003:00016B0C       FaceID
- 0003:00016F98       Event_InUse
- 0003:00016F9C       Event_Collision
- 0003:00016FA0       Event_X_Position
- 0003:00016FA4       Event_Y_Position
+ 0003:00016B1C       Draw_Sprite_Mask_2
+ 0003:00016F98       Event.InUse
+ 0003:00016F9C       Event.Collision
+ 0003:00016FA0       Event.X_Position
+ 0003:00016FA4       Event.Y_Position
  0003:00016FA8       Event_X_Velocity
- 0003:00016FAC       Event_Y_Velocity
- 0003:00016FB0       Event_AltVel_X
- 0003:00016FB4       Event_AltVel_Y
- 0003:00016FB8       Event_Unknown1
- 0003:00016FBC       Event_Unknown2
- 0003:00016FC0       Event_NPCID
- 0003:00016FC4       Event_EntityID
- 0003:00016FC8       Event_EventNum
- 0003:00016FCC       Event_Tileset
- 0003:00016FD0       Event_HurtSound
- 0003:00016FD4       Event_DeathSound
- 0003:00016FD8       Event_Health
- 0003:00016FDC       Event_EXP
- 0003:00016FE0       Event_DeathGraphic
- 0003:00016FE4       Event_Direction
- 0003:00016FE8       Event_Flags
+ 0003:00016FAC       Event.Y_Velocity
+ 0003:00016FB0       Event.AltVel_X
+ 0003:00016FB4       Event.AltVel_Y
+ 0003:00016FB8       Event.Unknown1
+ 0003:00016FBC       Event.Unknown2
+ 0003:00016FC0       Event.NPCID
+ 0003:00016FC4       Event.EntityID
+ 0003:00016FC8       Event.EventNum
+ 0003:00016FCC       Event.Tileset
+ 0003:00016FD0       Event.HurtSound
+ 0003:00016FD4       Event.DeathSound
+ 0003:00016FD8       Event.Health
+ 0003:00016FDC       Event.EXP
+ 0003:00016FE0       Event.DeathGraphic
+ 0003:00016FE4       Event.Direction
+ 0003:00016FE8       Event.Flags
  0003:00016FEC       Event_Rects
- 0003:00016FFC       Event_FrameTimer
- 0003:00017000       Event_FrameNum
- 0003:00017004       Event_ObjectTimer
- 0003:00017008       Event_Directive
- 0003:0001700C       Event_ScriptState
- 0003:00017010       Event_ScriptTimer
+ 0003:00016FFC       Event.FrameTimer
+ 0003:00017000       Event.FrameNum
+ 0003:00017004       Event.ObjectTimer
+ 0003:00017008       Event.Directive
+ 0003:0001700C       Event.ScriptState
+ 0003:00017010       Event.ScriptTimer
  0003:00017014       Event_Hitbox
  0003:00017024       ???
  0003:00017028       ??
  0003:0001702C       ?
  0003:00017030       ????
- 0003:00017034       Event_HitTrue
+ 0003:00017034       Event.HitTrue
  0003:00017038       ?????
- 0003:0001703C       Event_Damage
- 0003:00017040       Event_Parent
+ 0003:0001703C       Event.Damage
+ 0003:00017040       Event.Parent
  0003:00017220       Is_NPC_Alive
  0003:00017224       Collision_Flag
  0003:00017228       NPC_X_Position
@@ -3034,8 +3116,10 @@
  0003:0002D9A8       Filename
  0003:0002DB10       Target
  0003:0002DB68       Locale
+ 0003:0002DC98       Locale_
  0003:0002DDC4       CodePage
  0003:0002DEE0       uNumber
+ 0003:0002E008       memblock
  0003:0002E018       lpMem
  0003:0002E02C       HeapHandle
  0003:0002F044       PcommandLine

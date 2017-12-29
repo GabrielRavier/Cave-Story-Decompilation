@@ -12,6 +12,33 @@
 struct _SCOPETABLE_ENTRY;
 
 /* 1 */
+enum _MEDIA_TYPE
+{
+  F5_1Pt2_512 = 0x1,
+  F3_1Pt44_512 = 0x2,
+  F3_2Pt88_512 = 0x3,
+  F3_20Pt8_512 = 0x4,
+  F3_720_512 = 0x5,
+  F5_360_512 = 0x6,
+  F5_320_512 = 0x7,
+  F5_320_1024 = 0x8,
+  F5_180_512 = 0x9,
+  F5_160_512 = 0xA,
+  RemovableMedia = 0xB,
+  FixedMedia = 0xC,
+  F3_120M_512 = 0xD,
+  F3_640_512 = 0xE,
+  F5_640_512 = 0xF,
+  F5_720_512 = 0x10,
+  F3_1Pt2_512 = 0x11,
+  F3_1Pt23_1024 = 0x12,
+  F5_1Pt23_1024 = 0x13,
+  F3_128Mb_512 = 0x14,
+  F3_230Mb_512 = 0x15,
+  F8_256_128 = 0x16,
+};
+
+/* 2 */
 #pragma pack(push, 8)
 struct struct_0
 {
@@ -19,7 +46,7 @@ struct struct_0
 };
 #pragma pack(pop)
 
-/* 2 */
+/* 3 */
 #pragma pack(push, 8)
 struct _msEH
 {
@@ -29,10 +56,10 @@ struct _msEH
 };
 #pragma pack(pop)
 
-/* 22 */
+/* 26 */
 typedef struct _SCOPETABLE_ENTRY *PSCOPETABLE_ENTRY;
 
-/* 23 */
+/* 27 */
 struct _EH3_EXCEPTION_REGISTRATION
 {
   struct _EH3_EXCEPTION_REGISTRATION *Next;
@@ -41,7 +68,7 @@ struct _EH3_EXCEPTION_REGISTRATION
   DWORD TryLevel;
 };
 
-/* 3 */
+/* 4 */
 struct CPPEH_RECORD
 {
   DWORD old_esp;
@@ -49,7 +76,7 @@ struct CPPEH_RECORD
   struct _EH3_EXCEPTION_REGISTRATION registration;
 };
 
-/* 4 */
+/* 5 */
 #pragma pack(push, 8)
 struct tagRECT
 {
@@ -60,7 +87,7 @@ struct tagRECT
 };
 #pragma pack(pop)
 
-/* 6 */
+/* 7 */
 #pragma pack(push, 8)
 struct POINT
 {
@@ -69,7 +96,7 @@ struct POINT
 };
 #pragma pack(pop)
 
-/* 7 */
+/* 8 */
 #pragma pack(push, 8)
 struct RECT
 {
@@ -80,7 +107,7 @@ struct RECT
 };
 #pragma pack(pop)
 
-/* 5 */
+/* 6 */
 #pragma pack(push, 8)
 struct WINDOWPLACEMENT
 {
@@ -93,7 +120,7 @@ struct WINDOWPLACEMENT
 };
 #pragma pack(pop)
 
-/* 8 */
+/* 9 */
 #pragma pack(push, 8)
 struct WNDCLASSEXA
 {
@@ -112,7 +139,7 @@ struct WNDCLASSEXA
 };
 #pragma pack(pop)
 
-/* 9 */
+/* 10 */
 #pragma pack(push, 8)
 struct tagMSG
 {
@@ -125,7 +152,7 @@ struct tagMSG
 };
 #pragma pack(pop)
 
-/* 10 */
+/* 11 */
 #pragma pack(push, 8)
 struct MSG
 {
@@ -138,7 +165,7 @@ struct MSG
 };
 #pragma pack(pop)
 
-/* 11 */
+/* 12 */
 #pragma pack(push, 8)
 struct timecaps_tag
 {
@@ -147,7 +174,7 @@ struct timecaps_tag
 };
 #pragma pack(pop)
 
-/* 12 */
+/* 13 */
 #pragma pack(push, 8)
 struct _STARTUPINFOA
 {
@@ -172,7 +199,7 @@ struct _STARTUPINFOA
 };
 #pragma pack(pop)
 
-/* 13 */
+/* 14 */
 #pragma pack(push, 8)
 struct _MEMORY_BASIC_INFORMATION
 {
@@ -186,7 +213,7 @@ struct _MEMORY_BASIC_INFORMATION
 };
 #pragma pack(pop)
 
-/* 14 */
+/* 15 */
 #pragma pack(push, 8)
 struct _SECURITY_ATTRIBUTES
 {
@@ -196,7 +223,7 @@ struct _SECURITY_ATTRIBUTES
 };
 #pragma pack(pop)
 
-/* 15 */
+/* 16 */
 #pragma pack(push, 8)
 struct _cpinfo
 {
@@ -207,7 +234,7 @@ struct _cpinfo
 };
 #pragma pack(pop)
 
-/* 16 */
+/* 17 */
 #pragma pack(push, 8)
 struct _FILETIME
 {
@@ -216,7 +243,7 @@ struct _FILETIME
 };
 #pragma pack(pop)
 
-/* 18 */
+/* 19 */
 #pragma pack(push, 8)
 struct _LARGE_INTEGER::$837407842DC9087486FDFA5FEB63B74E
 {
@@ -225,7 +252,7 @@ struct _LARGE_INTEGER::$837407842DC9087486FDFA5FEB63B74E
 };
 #pragma pack(pop)
 
-/* 17 */
+/* 18 */
 #pragma pack(push, 8)
 union LARGE_INTEGER
 {
@@ -235,7 +262,7 @@ union LARGE_INTEGER
 };
 #pragma pack(pop)
 
-/* 19 */
+/* 20 */
 #pragma pack(push, 8)
 struct FILE
 {
@@ -250,7 +277,7 @@ struct FILE
 };
 #pragma pack(pop)
 
-/* 20 */
+/* 21 */
 #pragma pack(push, 8)
 struct _SYSTEM_INFO::$41710344DA04EC56A327D4EA11DEF6D2::$AA04DEB0C6383F89F13D312A174572A9
 {
@@ -259,21 +286,7 @@ struct _SYSTEM_INFO::$41710344DA04EC56A327D4EA11DEF6D2::$AA04DEB0C6383F89F13D312
 };
 #pragma pack(pop)
 
-/* 21 */
-struct _SCOPETABLE_ENTRY
-{
-  int EnclosingLevel;
-  void *FilterFunc;
-  void *HandlerFunc;
-};
-
-/* 24 */
-typedef struct _EH3_EXCEPTION_REGISTRATION EH3_EXCEPTION_REGISTRATION;
-
-/* 25 */
-typedef struct _EH3_EXCEPTION_REGISTRATION *PEH3_EXCEPTION_REGISTRATION;
-
-/* 26 */
+/* 22 */
 union __declspec(align(8)) __m64
 {
   unsigned __int64 m64_u64;
@@ -287,7 +300,7 @@ union __declspec(align(8)) __m64
   unsigned __int32 m64_u32[2];
 };
 
-/* 27 */
+/* 23 */
 union __declspec(align(16)) __m128
 {
   float m128_f32[4];
@@ -301,13 +314,13 @@ union __declspec(align(16)) __m128
   unsigned __int32 m128_u32[4];
 };
 
-/* 28 */
+/* 24 */
 struct __m128d
 {
   double m128d_f64[2];
 };
 
-/* 29 */
+/* 25 */
 union __declspec(align(16)) __m128i
 {
   __int8 m128i_i8[16];
@@ -318,5 +331,19 @@ union __declspec(align(16)) __m128i
   unsigned __int16 m128i_u16[8];
   unsigned __int32 m128i_u32[4];
   unsigned __int64 m128i_u64[2];
+};
+
+/* 28 */
+typedef struct _EH3_EXCEPTION_REGISTRATION EH3_EXCEPTION_REGISTRATION;
+
+/* 29 */
+typedef struct _EH3_EXCEPTION_REGISTRATION *PEH3_EXCEPTION_REGISTRATION;
+
+/* 30 */
+struct _SCOPETABLE_ENTRY
+{
+  int EnclosingLevel;
+  void *FilterFunc;
+  void *HandlerFunc;
 };
 
