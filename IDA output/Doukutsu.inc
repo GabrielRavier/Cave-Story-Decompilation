@@ -1,24 +1,55 @@
 ; ---------------------------------------------------------------------------
 
-_SYSTEM_INFO::$41710344DA04EC56A327D4EA11DEF6D2::$AA04DEB0C6383F89F13D312A174572A9 struc ; (sizeof=0x4,	mappedto_21)
-					; XREF:	_SYSTEM_INFO::$41710344DA04EC56A327D4EA11DEF6D2/r
+FILETIME	struc ;	(sizeof=0x8, mappedto_26) ; XREF: ...
+dwLowDateTime	dd ?
+dwHighDateTime	dd ?
+FILETIME	ends
+
+; ---------------------------------------------------------------------------
+
+SYSTEMTIME	struc ;	(sizeof=0x10, mappedto_25) ; XREF: ...
+wYear		dw ?
+wMonth		dw ?
+wDayOfWeek	dw ?
+wDay		dw ?
+wHour		dw ?
+wMinute		dw ?
+wSecond		dw ?
+wMilliseconds	dw ?
+SYSTEMTIME	ends
+
+; ---------------------------------------------------------------------------
+
+_SYSTEMTIME	struc ;	(sizeof=0x10, mappedto_24)
+wYear		dw ?
+wMonth		dw ?
+wDayOfWeek	dw ?
+wDay		dw ?
+wHour		dw ?
+wMinute		dw ?
+wSecond		dw ?
+wMilliseconds	dw ?
+_SYSTEMTIME	ends
+
+; ---------------------------------------------------------------------------
+
+_SYSTEM_INFO::$41710344DA04EC56A327D4EA11DEF6D2::$AA04DEB0C6383F89F13D312A174572A9 struc ; (sizeof=0x4,	mappedto_23) ; XREF: ...
 wProcessorArchitecture dw ?
 wReserved	dw ?
 _SYSTEM_INFO::$41710344DA04EC56A327D4EA11DEF6D2::$AA04DEB0C6383F89F13D312A174572A9 ends
 
 ; ---------------------------------------------------------------------------
 
-_SYSTEM_INFO::$41710344DA04EC56A327D4EA11DEF6D2	union ;	(sizeof=0x4)
-					; XREF:	_SYSTEM_INFO/r
+_SYSTEM_INFO::$41710344DA04EC56A327D4EA11DEF6D2	union ;	(sizeof=0x4) ; XREF: ...
 dwOemId		dd ?
 anonymous_0	_SYSTEM_INFO::$41710344DA04EC56A327D4EA11DEF6D2::$AA04DEB0C6383F89F13D312A174572A9 ?
 _SYSTEM_INFO::$41710344DA04EC56A327D4EA11DEF6D2	ends
 
 ; ---------------------------------------------------------------------------
 
-_SYSTEM_INFO	struc ;	(sizeof=0x24)	; XREF:	FF004224/r
+_SYSTEM_INFO	struc ;	(sizeof=0x24)	; XREF:	...
 anonymous_0	_SYSTEM_INFO::$41710344DA04EC56A327D4EA11DEF6D2	?
-dwPageSize	dd ?			; XREF:	__resetstkoflw+31/r
+dwPageSize	dd ?			; XREF:	...
 lpMinimumApplicationAddress dd ?	; offset
 lpMaximumApplicationAddress dd ?	; offset
 dwActiveProcessorMask dd ?
@@ -31,11 +62,11 @@ _SYSTEM_INFO	ends
 
 ; ---------------------------------------------------------------------------
 
-FILE		struc ;	(sizeof=0x20, mappedto_20) ; XREF: FF003DA7/r FF003DC9/r
-_ptr		dd ?			; XREF:	_sprintf+27/w _sprintf+3D/r ...	; offset
-_cnt		dd ?			; XREF:	_sprintf+16/w _sprintf+38/w ...
-_base		dd ?			; XREF:	_sprintf+24/w _sscanf+11/w ; offset
-_flag		dd ?			; XREF:	_sprintf+1D/w _sscanf+A/w
+FILE		struc ;	(sizeof=0x20, mappedto_22) ; XREF: ...
+_ptr		dd ?			; XREF:	... ; offset
+_cnt		dd ?			; XREF:	...
+_base		dd ?			; XREF:	... ; offset
+_flag		dd ?			; XREF:	...
 _file		dd ?
 _charbuf	dd ?
 _bufsiz		dd ?
@@ -44,16 +75,14 @@ FILE		ends
 
 ; ---------------------------------------------------------------------------
 
-_LARGE_INTEGER::$837407842DC9087486FDFA5FEB63B74E struc	; (sizeof=0x8, mappedto_19)
-					; XREF:	LARGE_INTEGER/r	LARGE_INTEGER/r
+_LARGE_INTEGER::$837407842DC9087486FDFA5FEB63B74E struc	; (sizeof=0x8, mappedto_21) ; XREF: ...
 LowPart		dd ?
 HighPart	dd ?
 _LARGE_INTEGER::$837407842DC9087486FDFA5FEB63B74E ends
 
 ; ---------------------------------------------------------------------------
 
-LARGE_INTEGER	union ;	(sizeof=0x8, mappedto_18) ; XREF: ___security_init_cookie+49/r
-					; ___security_init_cookie+4C/r ...
+LARGE_INTEGER	union ;	(sizeof=0x8, mappedto_20) ; XREF: ...
 anonymous_0	_LARGE_INTEGER::$837407842DC9087486FDFA5FEB63B74E ?
 u		_LARGE_INTEGER::$837407842DC9087486FDFA5FEB63B74E ?
 QuadPart	dq ?
@@ -61,49 +90,43 @@ LARGE_INTEGER	ends
 
 ; ---------------------------------------------------------------------------
 
-_FILETIME	struc ;	(sizeof=0x8, mappedto_17) ; XREF: FF004091/r
-dwLowDateTime	dd ?			; XREF:	___security_init_cookie+24/r
-dwHighDateTime	dd ?			; XREF:	___security_init_cookie+21/r
+_FILETIME	struc ;	(sizeof=0x8, mappedto_19) ; XREF: ...
+dwLowDateTime	dd ?			; XREF:	...
+dwHighDateTime	dd ?			; XREF:	...
 _FILETIME	ends
 
 ; ---------------------------------------------------------------------------
 
-_cpinfo		struc ;	(sizeof=0x14, mappedto_16) ; XREF: FF003F18/r FF003F21/r ...
-MaxCharSize	dd ?			; XREF:	__setmbcp_lk+4D/r
-					; ___convertcp+44/r ...
+_cpinfo		struc ;	(sizeof=0x14, mappedto_18) ; XREF: ...
+MaxCharSize	dd ?			; XREF:	...
 DefaultChar	db 2 dup(?)
-LeadByte	db 12 dup(?)		; XREF:	_setSBUpLow+3E/r
-					; _setSBUpLow+4D/o ...
+LeadByte	db 12 dup(?)		; XREF:	...
 _padding	db 2 dup(?)
 _cpinfo		ends
 
 ; ---------------------------------------------------------------------------
 
-_SECURITY_ATTRIBUTES struc ; (sizeof=0xC, mappedto_15) ; XREF: FF003EFB/r
-nLength		dd ?			; XREF:	__tsopen_lk+F/w
-lpSecurityDescriptor dd	?		; XREF:	__tsopen_lk+16/w ; offset
-bInheritHandle	dd ?			; XREF:	__tsopen_lk+1B/w
-					; __tsopen_lk:loc_4878BF/w
+_SECURITY_ATTRIBUTES struc ; (sizeof=0xC, mappedto_17) ; XREF: ...
+nLength		dd ?			; XREF:	...
+lpSecurityDescriptor dd	?		; XREF:	... ; offset
+bInheritHandle	dd ?			; XREF:	...
 _SECURITY_ATTRIBUTES ends
 
 ; ---------------------------------------------------------------------------
 
-_MEMORY_BASIC_INFORMATION struc	; (sizeof=0x1C,	mappedto_14) ; XREF: FF003EE6/r
-					; FF004222/r
-BaseAddress	dd ?			; XREF:	__resetstkoflw+8A/r ; offset
-AllocationBase	dd ?			; XREF:	__ValidateEH3RN+D4/r
-					; __resetstkoflw+24/r ;	offset
+_MEMORY_BASIC_INFORMATION struc	; (sizeof=0x1C,	mappedto_16) ; XREF: ...
+BaseAddress	dd ?			; XREF:	... ; offset
+AllocationBase	dd ?			; XREF:	... ; offset
 AllocationProtect dd ?
-RegionSize	dd ?			; XREF:	__resetstkoflw+7B/r
-State		dd ?			; XREF:	__resetstkoflw+81/r
-Protect		dd ?			; XREF:	__ValidateEH3RN+CE/r
-					; __resetstkoflw+86/r
-Type		dd ?			; XREF:	__ValidateEH3RN+C1/r
+RegionSize	dd ?			; XREF:	...
+State		dd ?			; XREF:	...
+Protect		dd ?			; XREF:	...
+Type		dd ?			; XREF:	...
 _MEMORY_BASIC_INFORMATION ends
 
 ; ---------------------------------------------------------------------------
 
-_STARTUPINFOA	struc ;	(sizeof=0x44, mappedto_13) ; XREF: FF003EC8/r FF0040F2/r
+_STARTUPINFOA	struc ;	(sizeof=0x44, mappedto_15) ; XREF: ...
 cb		dd ?
 lpReserved	dd ?			; offset
 lpDesktop	dd ?			; offset
@@ -115,11 +138,10 @@ dwYSize		dd ?
 dwXCountChars	dd ?
 dwYCountChars	dd ?
 dwFillAttribute	dd ?
-dwFlags		dd ?			; XREF:	Startup:loc_481E79/w
-					; Startup+167/r
-wShowWindow	dw ?			; XREF:	Startup+16D/r
-cbReserved2	dw ?			; XREF:	__ioinit+63/r
-lpReserved2	dd ?			; XREF:	__ioinit+6F/r ;	offset
+dwFlags		dd ?			; XREF:	...
+wShowWindow	dw ?			; XREF:	...
+cbReserved2	dw ?			; XREF:	...
+lpReserved2	dd ?			; XREF:	... ; offset
 hStdInput	dd ?			; offset
 hStdOutput	dd ?			; offset
 hStdError	dd ?			; offset
@@ -127,14 +149,14 @@ _STARTUPINFOA	ends
 
 ; ---------------------------------------------------------------------------
 
-timecaps_tag	struc ;	(sizeof=0x8, mappedto_12) ; XREF: FF001510/r
-wPeriodMin	dd ?			; XREF:	sub_41C180+25/r	sub_41C180+2A/r
+timecaps_tag	struc ;	(sizeof=0x8, mappedto_14) ; XREF: ...
+wPeriodMin	dd ?			; XREF:	...
 wPeriodMax	dd ?
 timecaps_tag	ends
 
 ; ---------------------------------------------------------------------------
 
-MSG		struc ;	(sizeof=0x1C, mappedto_11) ; XREF: FF0012D8/r
+MSG		struc ;	(sizeof=0x1C, mappedto_13) ; XREF: ...
 hwnd		dd ?			; offset
 message		dd ?
 wParam		dd ?
@@ -145,7 +167,7 @@ MSG		ends
 
 ; ---------------------------------------------------------------------------
 
-tagMSG		struc ;	(sizeof=0x1C, mappedto_10)
+tagMSG		struc ;	(sizeof=0x1C, mappedto_12)
 hwnd		dd ?			; offset
 message		dd ?
 wParam		dd ?
@@ -156,102 +178,95 @@ tagMSG		ends
 
 ; ---------------------------------------------------------------------------
 
-WNDCLASSEXA	struc ;	(sizeof=0x30, mappedto_9) ; XREF: FF0012A8/r
-cbSize		dd ?			; XREF:	WinMain(x,x,x,x)+2E3/w
+WNDCLASSEXA	struc ;	(sizeof=0x30, mappedto_11) ; XREF: ...
+cbSize		dd ?			; XREF:	...
 style		dd ?
-lpfnWndProc	dd ?			; XREF:	WinMain(x,x,x,x)+2EA/w ; offset
+lpfnWndProc	dd ?			; XREF:	... ; offset
 cbClsExtra	dd ?
 cbWndExtra	dd ?
-hInstance	dd ?			; XREF:	WinMain(x,x,x,x)+2F4/w ; offset
-hIcon		dd ?			; XREF:	WinMain(x,x,x,x)+32C/w ; offset
-hCursor		dd ?			; XREF:	WinMain(x,x,x,x)+31A/w ; offset
-hbrBackground	dd ?			; XREF:	WinMain(x,x,x,x)+2FF/w ; offset
-lpszMenuName	dd ?			; XREF:	WinMain(x,x,x,x):Switch_412780_case_1_2/w ; offset
-lpszClassName	dd ?			; XREF:	WinMain(x,x,x,x)+308/w ; offset
-hIconSm		dd ?			; XREF:	WinMain(x,x,x,x)+33E/w ; offset
+hInstance	dd ?			; XREF:	... ; offset
+hIcon		dd ?			; XREF:	... ; offset
+hCursor		dd ?			; XREF:	... ; offset
+hbrBackground	dd ?			; XREF:	... ; offset
+lpszMenuName	dd ?			; XREF:	... ; offset
+lpszClassName	dd ?			; XREF:	... ; offset
+hIconSm		dd ?			; XREF:	... ; offset
 WNDCLASSEXA	ends
 
 ; ---------------------------------------------------------------------------
 
-RECT		struc ;	(sizeof=0x10, mappedto_8) ; XREF: WINDOWPLACEMENT/r
-left		dd ?			; XREF:	Save_Window_Rect_File+4C/w
-top		dd ?			; XREF:	Save_Window_Rect_File+52/w
-right		dd ?			; XREF:	Save_Window_Rect_File+58/w
-bottom		dd ?			; XREF:	Save_Window_Rect_File+5E/w
+RECT		struc ;	(sizeof=0x10, mappedto_10) ; XREF: ...
+left		dd ?			; XREF:	...
+top		dd ?			; XREF:	...
+right		dd ?			; XREF:	...
+bottom		dd ?			; XREF:	...
 RECT		ends
 
 ; ---------------------------------------------------------------------------
 
-POINT		struc ;	(sizeof=0x8, mappedto_7) ; XREF: WINDOWPLACEMENT/r
-					; WINDOWPLACEMENT/r ...
+POINT		struc ;	(sizeof=0x8, mappedto_9) ; XREF: ...
 x		dd ?
 y		dd ?
 POINT		ends
 
 ; ---------------------------------------------------------------------------
 
-WINDOWPLACEMENT	struc ;	(sizeof=0x2C, mappedto_6) ; XREF: FF001267/r
+WINDOWPLACEMENT	struc ;	(sizeof=0x2C, mappedto_8) ; XREF: ...
 length		dd ?
 flags		dd ?
-showCmd		dd ?			; XREF:	Save_Window_Rect_File:loc_41121A/r
-					; Save_Window_Rect_File+BB/o
+showCmd		dd ?			; XREF:	...
 ptMinPosition	POINT ?
 ptMaxPosition	POINT ?
-rcNormalPosition RECT ?			; XREF:	Save_Window_Rect_File+4C/w
-					; Save_Window_Rect_File+52/w ...
+rcNormalPosition RECT ?			; XREF:	...
 WINDOWPLACEMENT	ends
 
 ; ---------------------------------------------------------------------------
 
-tagRECT		struc ;	(sizeof=0x10, mappedto_5) ; XREF: .data:WeaponObj_Rects/r
-					; .data:EffectObj_Rect/r ...
-left		dd ?			; XREF:	Draw_Window+7F/r
-					; Draw_Window+8A/w ...
-top		dd ?			; XREF:	Draw_Window+8F/r
-					; Draw_Window+9B/w ...
-right		dd ?			; XREF:	Draw_Window+AD/w
-					; Init_Direct_Draw+127/w ...
-bottom		dd ?			; XREF:	Draw_Window+BE/w
-					; Init_Direct_Draw+139/w ...
+tagRECT		struc ;	(sizeof=0x10, mappedto_7) ; XREF: ...
+left		dd ?			; XREF:	...
+top		dd ?			; XREF:	...
+right		dd ?			; XREF:	...
+bottom		dd ?			; XREF:	...
 tagRECT		ends
 
 ; ---------------------------------------------------------------------------
 
-CPPEH_RECORD	struc ;	(sizeof=0x18, align=0x4, copyof_4) ; XREF: FF005A28/r
-					; FF005A29/r ...
-old_esp		dd ?			; XREF:	Startup+18/w
-					; Startup:loc_481ED6/r ...
-exc_ptr		dd ?			; XREF:	Startup:loc_481EC2/r
-					; ___crtInitCritSecAndSpinCount:loc_487C44/r ; offset
-registration	_EH3_EXCEPTION_REGISTRATION ? ;	XREF: _report_failure-25/w
-					; _report_failure:Int3/w ...
+CPPEH_RECORD	struc ;	(sizeof=0x18, align=0x4, copyof_6) ; XREF: ...
+old_esp		dd ?			; XREF:	...
+exc_ptr		dd ?			; XREF:	... ; offset
+registration	_EH3_EXCEPTION_REGISTRATION ? ;	XREF: ...
 CPPEH_RECORD	ends
 
 ; ---------------------------------------------------------------------------
 
-_msEH		struc ;	(sizeof=0xC, mappedto_3) ; XREF: .rdata:stru_48CA58/r
-					; .rdata:stru_48CA68/r ...
-_unk		dd ?			; XREF:	__output+5E/r ;	base 16
+_msEH		struc ;	(sizeof=0xC, mappedto_5) ; XREF: ...
+_unk		dd ?			; base 16 signed
 FilterProc	dd ?			; offset
 ExitProc	dd ?			; offset
 _msEH		ends
 
 ; ---------------------------------------------------------------------------
 
-struct_0	struc ;	(sizeof=0x478, mappedto_2)
+struct_0	struc ;	(sizeof=0x478, mappedto_4)
 anonymous_0	db 1144	dup(?)		; string(C)
 struct_0	ends
 
 ; ---------------------------------------------------------------------------
 
-_EH3_EXCEPTION_REGISTRATION struc ; (sizeof=0x10, align=0x4, copyof_27)
-					; XREF:	CPPEH_RECORD/r
+_EH3_EXCEPTION_REGISTRATION struc ; (sizeof=0x10, align=0x4, copyof_28)	; XREF:	...
 Next		dd ?			; offset
 ExceptionHandler dd ?			; offset
 ScopeTable	dd ?			; offset
-TryLevel	dd ?			; XREF:	_report_failure-25/w
-					; _report_failure:Int3/w ...
+TryLevel	dd ?			; XREF:	...
 _EH3_EXCEPTION_REGISTRATION ends
+
+; ---------------------------------------------------------------------------
+
+_SCOPETABLE_ENTRY struc	; (sizeof=0xC, align=0x4, copyof_31) ; XREF: ...
+EnclosingLevel	dd ?			; XREF:	...
+FilterFunc	dd ?			; offset
+HandlerFunc	dd ?			; offset
+_SCOPETABLE_ENTRY ends
 
 ; ---------------------------------------------------------------------------
 
@@ -278,4 +293,29 @@ F5_1Pt23_1024	 = 13h
 F3_128Mb_512	 = 14h
 F3_230Mb_512	 = 15h
 F8_256_128	 = 16h
+
+; ---------------------------------------------------------------------------
+
+; enum MACRO_TVGN, mappedto_2
+TVGN_ROOT	 = 0
+TVGN_NEXT	 = 1
+TVGN_PREVIOUS	 = 2
+TVGN_PARENT	 = 3
+TVGN_CHILD	 = 4
+TVGN_FIRSTVISIBLE  = 5
+TVGN_NEXTVISIBLE  = 6
+TVGN_PREVIOUSVISIBLE  =	7
+TVGN_DROPHILITE	 = 8
+TVGN_CARET	 = 9
+TVGN_LASTVISIBLE  = 0Ah
+
+; ---------------------------------------------------------------------------
+
+; enum NPC_Vars, mappedto_3
+Is_Alive	 = 0
+Collision_Flag	 = 4
+X_Position	 = 8
+Y_Position	 = 0Ch
+X_Velocity	 = 10h
+Y_Velocity	 = 14h
 

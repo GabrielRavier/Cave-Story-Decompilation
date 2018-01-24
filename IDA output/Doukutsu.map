@@ -64,9 +64,6 @@
  0001:00002C00       Clear_All_Weapons_Object_Slots
  0001:00002C40       Count_Weapon_Shot_Occurences
  0001:00002CB0       Count_All_Slots_Using_Shot
- 0001:00002D26       Add_1_ebp_8_
- 0001:00002D75       jmp_Add_1_ebp_8_
- 0001:00002D77       Return__
  0001:00002D80       Clear_All_Weapons_Obj_Slots
  0001:00002DC0       Render_Bullets
  0001:00002E1E       jmp_403E17_case_0
@@ -385,7 +382,8 @@
  0001:0000C3A0       Load_Credits_Image
  0001:0000C410       If_Not_49D614_0_Deallocate
  0001:0000C440       Initialise_Credits
- 0001:0000C620       TSC_Interpreter?
+ 0001:0000C5C0       Credits_Related?
+ 0001:0000C620       Credits_Related_2?
  0001:0000C684       jmp_40D67D_case_58
  0001:0000C769       jmp_40D67D_case_12
  0001:0000C7AE       jmp_40D67D_case_10
@@ -397,11 +395,14 @@
  0001:0000CA56       jmp_40D67D_default
  0001:0000CA76       jmp_40D67D_table
  0001:0000CA9A       jmp_40D67D_indirect_table
+ 0001:0000CB00       Credits_Related_3?
  0001:0000CB40       TSC_SIL
  0001:0000CB60       TSC_CIL
  0001:0000CB70       TSC_XX1_Game_Loop_Island_Crash
  0001:0000CD70       Game_Loop_Exit_Menu
+ 0001:0000CE60       Erase_Fade_Data
  0001:0000CE90       ___setargv
+ 0001:0000CEA0       Reset_Fade_Vars
  0001:0000CEC0       TSC_FAO_Begin_Fade_Out
  0001:0000CF50       TSC_FAI_Begin_Fade_In
  0001:0000CFE0       Process_Fade
@@ -429,7 +430,7 @@
  0001:0000DE60       Occasional_Flash_0
  0001:0000DE70       Update_Camera
  0001:0000E020       Get_Camera_Position
- 0001:0000E040       Unused_Camera_Update_Function
+ 0001:0000E040       Camera_Update
  0001:0000E130       Set_Camera_Upon_Enter_Room
  0001:0000E220       TSC_FOM
  0001:0000E250       TSC_FON
@@ -448,11 +449,9 @@
  0001:0000F8B0       Get_Build_Data
  0001:0000F990       Get_Version_Number
  0001:0000FAB0       Check_For_SndVol32.exe
- 0001:0000FBC0       Delete_Debug_Unused
- 0001:0000FC10       Print_Debug_Unused
+ 0001:0000FBC0       Delete_Debug.txt
+ 0001:0000FC10       Print_Debug
  0001:0000FCA0       Param_Time_Check
- 0001:0000FD0A       Return_0_
- 0001:0000FD0C       Return______
  0001:0000FD10       Check_File_Exists
  0001:0000FD80       Get_File_Size
  0001:0000FDE0       Print_Load_BMP_Error
@@ -486,68 +485,119 @@
  0001:0001200E       jmp_Return_1_6
  0001:000121B6       jmp_Return_1_4
  0001:000122A6       jmp_Return_1_3
- 0001:0001234F       Input_Table
+ 0001:0001234F       Key_Input_Table
+ 0001:00012453       Key_Release_Table
  0001:00012570       MessageQueue
  0001:000125E0       Direct_Input_Handler?
- 0001:00012770       Process_PXM_file
+ 0001:00012750       Reserve_Memory_For_PXM_Data
+ 0001:00012770       Load_PXM_File
  0001:000128A0       Process_PXA_file
  0001:00012930       Kill_Level_Layout
- 0001:00012950       __fptrap
+ 0001:00012950       Destroy_Bitmap_Object_02
  0001:00012960       Get_Room_Size
  0001:000129A0       Get_Tile_ID
  0001:00012A00       Delete_Tile
- 0001:00012A20       Decrement_Tile
- 0001:00012AF0       Draw_Foreground_BG
- 0001:00012C60       Draw_Foreground_FG
+ 0001:00012A20       TSC_SMP
+ 0001:00012A60       TSC_CMP
+ 0001:00012AF0       Draw_Background_Layer_Maptiles
+ 0001:00012C60       Render_Foreground_Layer_Maptiles
  0001:00012E40       Draw_Rushing_Water_Particles
  0001:000130F0       Draw_Room_Text_To_Surface
  0001:00013250       TSC_MNA
  0001:000132C5       MNA_Render_Graphics_On_Title_Screen?
+ 0001:00013310       Map_Related?
  0001:00013330       Redraw_Room_Text_To_Surface
+ 0001:000133C0       Render_Map_System_Green_Stuff
  0001:00013640       Game_Loop_Map
- 0001:00013B20       memset_init_maps
- 0001:00013B50       Create_Quote?
+ 0001:00013B00       Check_Map_Flag
+ 0001:00013B20       Memset_Map_Flags_0
+ 0001:00013B40       TSC_MPplus
+ 0001:00013B50       Set_Quote_Initial_Values
+ 0001:00013BF0       Animate_Quote?
  0001:000140FA       Play_Quote_Walk_3
  0001:0001412E       Play_Quote_Walk_4
+ 0001:00014220       TSC_HMC_SMC
+ 0001:00014229       TSC_SMC
  0001:00014250       Draw_Quote_And_Gun
  0001:00014395       Render_Gun_Left
  0001:000146C0       Physics
  0001:00014C5D       Decrease_Booster_Fuel
+ 0001:00015470       Quote_Movement
+ 0001:000158C0       Player_Related?
  0001:00015990       Quote_Air
- 0001:00015AA0       GetPlayerXY
- 0001:00015AC0       Move_Quote
- 0001:00015B50       __crt_debugger_hook_0
- 0001:00015B60       Return_InFishBattle
- 0001:00015C70       TSC_EQplus
- 0001:00015CC0       TSC_SSS_SPS?
+ 0001:00015AA0       Get_Quote_XY
+ 0001:00015AC0       Tsc_MOV
+ 0001:00015B30       Instantly_Set_X_Y_Pos
+ 0001:00015B50       Mov_Quote_X_Velocity_0
+ 0001:00015B60       Tsc_UNJ
+ 0001:00015B70       Tsc_MYD
+ 0001:00015C40       Tsc_UNI
+ 0001:00015C50       Add_Quote_Y_Pos_4000h
+ 0001:00015C70       TSC_EQplus_EQminus
+ 0001:00015C79       EQ_minus
+ 0001:00015CA0       AND_Player_Flags_minus2
+ 0001:00015CC0       TSC_SSS_SPS
  0001:00015D40       TSC_SSS_SPS?_2
- 0001:00015D80       TSC_SSS_SPS?_3
- 0001:00015DF0       TSC_SSS_SPS?_4
- 0001:00015E20       __crt_debugger_hook_1
+ 0001:00015D80       Play_Environmental_Sounds
+ 0001:00015DF0       Play_Sound_40_41_58
+ 0001:00015E20       Clear_Quote_Tiles
+ 0001:00015E30       Quote_Tile_Collision_Solid_Tiles
  0001:0001612C       Play_Quote_Hit_Ground
+ 0001:00016160       Quote_Bump_Against_Ceiling
+ 0001:000161D0       Quote_Tile_Collision_Roof_Slope_1
+ 0001:000162E0       Quote_Tile_Collision_Roof_Slope_2
+ 0001:000163F0       Quote_Tile_Collision_Roof_Slope_3
+ 0001:00016500       Quote_Tile_Collision_Roof_Slope_4
+ 0001:00016610       Quote_Tile_Collision_Floor_Slope_1
  0001:000166E8       Play_Quote_Hit_Ground_0
+ 0001:00016720       Quote_Tile_Collision_Floor_Slope_2
  0001:000167F8       Play_Quote_Hit_Ground_1
+ 0001:00016830       Quote_Tile_Collision_Floor_Slope_3
  0001:0001690A       Play_Quote_Hit_Ground_2
+ 0001:00016940       Quote_Tile_Collision_Floor_Slope_4
  0001:00016A1A       Play_Quote_Hit_Ground_3
- 0001:00016E40       Tile_Code
+ 0001:00016A50       Quote_Tile_Collision_Water
+ 0001:00016AE0       Quote_Tile_Collision_Spike
+ 0001:00016B70       Quote_Tile_Collision_Spike_(Water)
+ 0001:00016C00       Quote_Tile_Collision_Wind_Left
+ 0001:00016C90       Quote_Tile_Collision_Wind_Up
+ 0001:00016D20       Quote_Tile_Collision_Wind_Right
+ 0001:00016DB0       Quote_Tile_Collision_Wind_Down
+ 0001:00016E40       Quote_Tile_Checking_Algorithm
  0001:000170F7       No_NPC_Tile
  0001:0001769C       jmp_417EC1
+ 0001:000177F0       Entity_Collision_Solid
+ 0001:00017B10       Entity_Collision_NonSolid
+ 0001:00017C20       Entity_Collision_SpecialSolid
  0001:00017E2A       Play_Quote_Hit_Ground_4
- 0001:00018030       Something_Objects?
- 0001:000186F0       EXP_Add
- 0001:0001882B       Play_Level_Up_AND_Create_Level_Up_Effect
- 0001:00018890       Reset_Selected_Weapon_Stats
- 0001:000188C0       LevelDownFrom3
+ 0001:00018030       Do_Collision_Check_Entities
+ 0001:00018450       Do_Collision_Check_Bosses
+ 0001:000186F0       Add_Weapon_EXP
+ 0001:0001882B       Play_Level_Up
+ 0001:00018837       Create_Level_Up_Effect
+ 0001:00018890       Reset_Selected_Weapon_Level
+ 0001:000188C0       Check_Weapon_MAX
  0001:00018910       Take_Damage
  0001:00018951       Add_Invincibility
+ 0001:00018B50       Tsc_ZAM
+ 0001:00018BA0       Add_Rocket_Ammo
  0001:00018C60       TSC_LIplus
  0001:00018CB0       TSC_MLplus
  0001:00018D10       Draw_XP_Bar_And_Misc
  0001:000190B0       Draw_HUD_Weapon_Icons
  0001:000191D0       Draw_Health_Bar
  0001:00019350       Underwater_Timer
+ 0001:00019430       Render_Nikamaru_Counter_Timer
+ 0001:000195D0       Write_290.rec
  0001:000197C0       Get_Hell_Time
- 0001:0001B0B0       Unused_ORG_Thing
+ 0001:000198F0       Sound_Procedure?
+ 0001:00019BA0       Sound_Thingy?
+ 0001:00019C70       Sound_Thingy??
+ 0001:00019D20       Volume_Regulator?
+ 0001:00019DC0       Play_Organ_Object
+ 0001:0001A380       Error_Checking?
+ 0001:0001A3F0       Related_To_Loading_The_ORG_File
+ 0001:0001B0B0       ORG_Thing
  0001:0001B1E0       Setup_ORG_Playback_Timer
  0001:0001B230       fptc
  0001:0001B250       Stop_Previous_Org_Song
@@ -558,9 +608,9 @@
  0001:0001B7C0       Set_Org_Volume
  0001:0001B880       Fade_Music
  0001:0001BB10       Sound_Thingy
- 0001:0001BFC0       Check_Profile.DAT
+ 0001:0001BFC0       Check_Profile.dat
  0001:0001C040       Save_Profile
- 0001:0001C738       Return____
+ 0001:0001C260       Load_Profile_dat?
  0001:0001C840       Draw_Teleporter_Menu
  0001:0001CA00       Game_Loop_Stage_Select
  0001:0001CBD0       Snake
@@ -575,12 +625,15 @@
  0001:0001EA10       Spur
  0001:0001F0C0       Init_Direct_Sound
  0001:0001F1A0       Kill_Direct_Sound?
- 0001:0001F62F       Return___
+ 0001:0001F240       Load_Resource_WAVE?
+ 0001:0001F390       Sound_Related?
  0001:0001F640       Play_Sound_Effect
+ 0001:0001F760       Sound_Related?_0
  0001:0001F7E0       Sound_Loader
  0001:0001FBE0       Load_Room
  0001:0001FEE0       Tsc_CMU
  0001:0001FF50       Tsc_RMU
+ 0001:0001FFA0       Whimsical_Star_Init
  0001:000203B0       Draw_Whimsical_Star
  0001:000204E0       Initiate_TSC_Buffer?
  0001:000205C0       Decode_TSC
@@ -589,6 +642,7 @@
  0001:000208E0       __fputchar
  0001:00020900       TSC_Dec_to_Hex
  0001:00020990       Call_TSC_Event
+ 0001:00020AF0       Script_Jump
  0001:00020D10       Print_NUM
  0001:00020F10       Draw_Text_Box
  0001:00021510       Tsc_Parser
@@ -601,8 +655,8 @@
  0001:0002466E       jmp_42256C_case_6
  0001:00024690       jmp_42256C_case_5
  0001:00024790       Draw_Text_To_Text_Box_Surfaces
- 0001:000248B0       SIN_function
- 0001:000248C0       COS_function
+ 0001:000248B0       SIN
+ 0001:000248C0       COS
  0001:000248E0       Angle_Calculator
  0001:00024B40       Unknown_Library_1
  0001:00024B80       Unknown_Library_2
@@ -870,7 +924,7 @@
  0001:00057360       NPC257
  0001:000575A0       NPC258
  0001:000575F0       NPC259
- 0001:000577D5       Return_3
+ 0001:000577D5       Return
  0001:00057810       NPC260
  0001:00057A70       NPC261
  0001:00057C30       NPC262
@@ -985,9 +1039,7 @@
  0001:0006EAB0       Spawn_NPC
  0001:0006ED10       Spawn_NPC_2
  0001:0006F2D0       Kill_Objects
- 0001:0006F576       Add_1_ebp_8
- 0001:0006F5A9       jmp_470576
- 0001:0006F5AB       Return_ebpminus4
+ 0001:0006F560       Count_Live_NPCs
  0001:00070160       Do_NPC_Level_Collision
  0001:00070B80       NPC_Death?
  0001:00070D50       Entity_Bullet_Collision
@@ -1009,8 +1061,7 @@
  0001:0007B820       Boss_8_Heavy_Press
  0001:0007C170       Boss_6_Dragon_Sisters
  0001:0007C1BE       jmp_Return6
- 0001:0007C1DA       jmp_Return8
- 0001:0007C9FA       Return
+ 0001:0007C9FA       glb_47D9FA
  0001:0007D6F0       Boss_3_Monster_X
  0001:0007E710       Spawn_Part_Of_Monster_X_3
  0001:0007F090       Create_Fish_Missiles
@@ -1076,8 +1127,8 @@
  0001:0008041C       CopyUnwindUp
  0001:00080430       LeadUp1
  0001:0008045C       LeadUp2
+ 0001:0008047F       Just_nop
  0001:00080480       LeadUp3
- 0001:000804C0       UnwindUp7
  0001:000804C8       UnwindUp6
  0001:000804D0       UnwindUp5
  0001:000804D8       UnwindUp4
@@ -1146,6 +1197,7 @@
  0001:00080C0F       integer_QnaN_or_zero
  0001:00080C23       localexit
  0001:00080C30       __CIcos
+ 0001:00080C40       Why_Is_This_Seperated_From___CIcos?
  0001:00080C44       _cos
  0001:00080C4D       start_1
  0001:00080C62       CW_is_set_to_default_0
@@ -1186,7 +1238,6 @@
  0001:000814AA       Return_flsall_1
  0001:000814B3       ___initstdio
  0001:0008155C       ___endstdio
- 0001:0008156F       Return_
  0001:00081570       __lock_file
  0001:0008159F       __lock_file2
  0001:000815C2       __unlock_file
@@ -1307,7 +1358,6 @@
  0001:000850AD       _check_overflow_start
  0001:000850D2       have_error
  0001:000850DE       have_error_in_pow
- 0001:000850E8       Return_____
  0001:000850EA       haveunderflow
  0001:00085113       haveoverflow
  0001:00085140       __startTwoArgErrorHandling
@@ -1319,7 +1369,7 @@
  0001:000851D5       __initterm
  0001:000851ED       __cinit
  0001:00085257       _doexit
- 0001:00085301       Return_2
+ 0001:00085301       mov_edi_0_esi_1
  0001:00085306       _doexit_sub_486306
  0001:0008531A       _exit
  0001:0008532B       __exit
@@ -1334,6 +1384,7 @@
  0001:000858FE       __setargv
  0001:000859A0       ___crtGetEnvironmentStringsA
  0001:00085AC2       __ioinit
+ 0001:00085CED       Random_Return_1_In_The_Middle_Of_A_Function
  0001:00085D04       func
  0001:00085D50       __alloca_probe
  0001:00085D65       probesetup
@@ -1376,6 +1427,7 @@
  0001:0008649E       __lock_fhandle_sub_48749E
  0001:000864A7       __unlock_fhandle
  0001:000864C9       __alloc_osfhnd
+ 0001:0008659C       Very_Strange_Shit
  0001:000865A2       __alloc_osfhnd_sub_4875A2
  0001:0008663C       __alloc_osfhnd_sub_48763C
  0001:00086645       __commit
@@ -1452,7 +1504,6 @@
  0001:000878DA       ___mbtowc_mt
  0001:0008799A       _mbtowc
  0001:000879C5       __resetstkoflw
- 0001:00087A57       Return_1
  0001:00087AB0       __allmul
  0001:00087AE4       __lseeki64_lk
  0001:00087B67       ___tolower_mt
@@ -1464,6 +1515,7 @@
  0001:00087D5D       __IsZeroMan
  0001:00087D76       __ShrMan
  0001:00087DF1       __ld12cvt
+ 0001:00087F49       __ld12cvt_wrapper
  0001:00087FEF       __fptostr
  0001:00088066       ___dtold
  0001:00088120       __fltout2
@@ -1560,8 +1612,8 @@
  0001:0008A8DC       ImmGetContext
  0001:0008A8E2       RtlUnwind
  0002:00000270       aArmsitem_tsc
- 0002:00000280       format
- 0002:0000028C       mode
+ 0002:00000280       aSS_pbm
+ 0002:0000028C       aRb
  0002:00000290       aDoukutsu200412
  0002:000002A4       aConfig_dat
  0002:000002B0       aSS
@@ -1608,9 +1660,9 @@
  0002:00000440       aSSndvol32_ex_0
  0002:00000450       Operation
  0002:00000458       aOpen_0
- 0002:00000460       aSDebug_txt
- 0002:00000470       aSDebug_txt_0
- 0002:00000480       aAT
+ 0002:00000460       debug.txt
+ 0002:00000470       format
+ 0002:00000480       mode
  0002:00000484       aSDDD
  0002:00000494       aSS_1
  0002:0000049C       aRb_2
@@ -1772,10 +1824,8 @@
  0002:00000BE8       aBufferOverrunD
  0002:00000C08       aASecurityError
  0002:00000CBC       aUnknownSecurit
- 0002:00000D14       aPH
  0002:00000D94       aNull_1
  0002:00000DA4       aNull_0
- 0002:00000DCC       aEh
  0002:00000DD8       aFlsfree
  0002:00000DE0       aFlssetvalue
  0002:00000DEC       aFlsgetvalue
@@ -1786,6 +1836,7 @@
  0002:00000E84       aKernel32
  0002:00000ED4       aCorexitprocess
  0002:00000EE4       aMscoree_dll
+ 0002:00000EF0       offset_reg_changing
  0002:00000EFC       aRuntimeError
  0002:00000F10       aTlossError
  0002:00000F20       aSingError
@@ -1807,7 +1858,6 @@
  0002:00001324       aGetactivewindo
  0002:00001334       aMessageboxa
  0002:00001340       LibFileName
- 0002:0000136C       aUh
  0002:000013B4       aInitializecrit
  0002:00001550       aDddddddddd
  0002:00001572       aBbbbbb
@@ -1856,8 +1906,6 @@
  0002:00001BC4       aTue
  0002:00001BC8       aMon
  0002:00001BCC       aSun
- 0002:00001BFC       aDah
- 0002:00001C00       aIah
  0002:00001C04       a1Qnan
  0002:00001C0C       a1Inf
  0002:00001C14       a1Ind
@@ -2303,7 +2351,24 @@
  0003:00000928       RenderHeight
  0003:0000093C       ROM_PImageTag
  0003:00000940       ROM_SoundData
+ 0003:00000B10       aSssss?
  0003:00000D58       aFfffffc?5
+ 0003:00000DC8       aFfffffc?5_0
+ 0003:00001298       aSsssss??
+ 0003:00001308       aSsssss??_0
+ 0003:000014E0       aSssss?_0
+ 0003:000014F0       a?
+ 0003:000014F4       a@_0
+ 0003:000014F8       a?_0
+ 0003:000014FC       aA_6
+ 0003:00001500       a?_1
+ 0003:00001538       a333333?
+ 0003:000015A8       aSsssss??_1
+ 0003:00001618       aSsssss??_2
+ 0003:00001A08       aSssss?_1
+ 0003:00002568       aFfffffc?
+ 0003:00003EC8       aFfffffc?5_1
+ 0003:00003F38       aFfffffc?5_2
  0003:00004464       Timer1000Init
  0003:00004610       Key_For_Jump_Duplicate
  0003:00004614       Key_For_Shoot_Duplicate
@@ -2324,6 +2389,8 @@
  0003:00004790       aOrg01
  0003:00004798       aOrg02
  0003:000047A0       uPeriod
+ 0003:000047A8       Pointer_Profile.dat
+ 0003:000047AC       offset_Profile_dat_check
  0003:000047B0       ROM_MapHeaders_Tileset_Name
  0003:000047D0       ROM_MapHeaders_Map_File_Name
  0003:000047F0       ROM_MapHeaders_BGType
@@ -2825,6 +2892,7 @@
  0003:00009B20       Crash_Report_Failure_Check
  0003:00009B64       Offset__exit
  0003:00009F68       lpCriticalSection
+ 0003:0000A088       Minus_1
  0003:0000A4E0       max
  0003:0000A748       aPst
  0003:0000A788       aPdt
@@ -2959,15 +3027,17 @@
  0003:0000F478       hMutex
  0003:0000F47C       hObject
  0003:0000F480       Level_Layout_Buffer
+ 0003:0000F484       Level_Layout_Buffer_PXA
  0003:0000F586       Level_Width
  0003:0000F588       Level_Height
  0003:0000F598       Room_Name
+ 0003:0000F5B8       Map_Flag_Array
  0003:0000F638       Player_Flags
  0003:0000F63C       Tile_On_Which_Quote_Is
  0003:0000F640       Quote_Direction_Faced
  0003:0000F644       Quote_IsFacingUp
  0003:0000F648       Quote_IsFacingDown
- 0003:0000F64C       InFishBattle
+ 0003:0000F64C       In_Fish_Battle
  0003:0000F650       EquippedItems
  0003:0000F654       Quote_X_Position
  0003:0000F658       Quote_Y_Position
@@ -3001,6 +3071,7 @@
  0003:0000F6D8       YellowHealthBarTimer
  0003:0000F6DC       Air
  0003:0000F6E8       Booster_Fuel
+ 0003:0000F6EC       Environment_Sound
  0003:0000F6F4       NikumaruTime
  0003:0000F700       destination
  0003:00015B00       Song_Current_Beat
@@ -3009,7 +3080,7 @@
  0003:00015DAC       IsTimerActive
  0003:00015E10       Music_Fade_Flag?
  0003:00015E18       Music_Object?
- 0003:00016540       Y_Position
+ 0003:00016540       Y_Position_Teleporter
  0003:0001654C       Empty_Effect_Timer
  0003:00016554       Machine_Gun_Reload_Timer
  0003:00016568       SoundBufferArray
@@ -3068,7 +3139,7 @@
  0003:0001703C       Event.Damage
  0003:00017040       Event.Parent
  0003:00017220       Is_NPC_Alive
- 0003:00017224       Collision_Flag
+ 0003:00017224       NPC_Collision_Flag
  0003:00017228       NPC_X_Position
  0003:0001722C       NPC_Y_Position
  0003:00017230       NPC_X_Velocity
@@ -3100,7 +3171,6 @@
  0003:000172C0       NPC_Damage_Taken
  0003:000172C4       NPC_Damage_On_Contact
  0003:000172C8       NPC_Parent_Variable
- 0003:0002CA00       Unused_RAM
  0003:0002CA34       NPCStruct_Flags
  0003:0002CA36       NPCStruct_Health
  0003:0002CA38       NPCStruct_Tileset
@@ -3111,8 +3181,9 @@
  0003:0002CA40       NPCStruct_Damage
  0003:0002CA44       NPCStruct_Hitbox
  0003:0002CA48       NPCStruct_Rects
+ 0003:0002CA58       Boss_Data?
  0003:0002CA98       Omega_Health
- 0003:0002CC64       X_Position
+ 0003:0002CC64       Boss_X_Position
  0003:0002D9A8       Filename
  0003:0002DB10       Target
  0003:0002DB68       Locale
@@ -3122,6 +3193,7 @@
  0003:0002E008       memblock
  0003:0002E018       lpMem
  0003:0002E02C       HeapHandle
+ 0003:0002F040       num
  0003:0002F044       PcommandLine
 
 Program entry point at 0001:00080D27

@@ -39,6 +39,33 @@ enum _MEDIA_TYPE
 };
 
 /* 2 */
+enum MACRO_TVGN
+{
+  TVGN_ROOT = 0x0,
+  TVGN_NEXT = 0x1,
+  TVGN_PREVIOUS = 0x2,
+  TVGN_PARENT = 0x3,
+  TVGN_CHILD = 0x4,
+  TVGN_FIRSTVISIBLE = 0x5,
+  TVGN_NEXTVISIBLE = 0x6,
+  TVGN_PREVIOUSVISIBLE = 0x7,
+  TVGN_DROPHILITE = 0x8,
+  TVGN_CARET = 0x9,
+  TVGN_LASTVISIBLE = 0xA,
+};
+
+/* 3 */
+enum NPC_Vars
+{
+  Is_Alive = 0x0,
+  Collision_Flag = 0x4,
+  X_Position = 0x8,
+  Y_Position = 0xC,
+  X_Velocity = 0x10,
+  Y_Velocity = 0x14,
+};
+
+/* 4 */
 #pragma pack(push, 8)
 struct struct_0
 {
@@ -46,7 +73,7 @@ struct struct_0
 };
 #pragma pack(pop)
 
-/* 3 */
+/* 5 */
 #pragma pack(push, 8)
 struct _msEH
 {
@@ -56,10 +83,10 @@ struct _msEH
 };
 #pragma pack(pop)
 
-/* 26 */
+/* 27 */
 typedef struct _SCOPETABLE_ENTRY *PSCOPETABLE_ENTRY;
 
-/* 27 */
+/* 28 */
 struct _EH3_EXCEPTION_REGISTRATION
 {
   struct _EH3_EXCEPTION_REGISTRATION *Next;
@@ -68,7 +95,7 @@ struct _EH3_EXCEPTION_REGISTRATION
   DWORD TryLevel;
 };
 
-/* 4 */
+/* 6 */
 struct CPPEH_RECORD
 {
   DWORD old_esp;
@@ -76,7 +103,7 @@ struct CPPEH_RECORD
   struct _EH3_EXCEPTION_REGISTRATION registration;
 };
 
-/* 5 */
+/* 7 */
 #pragma pack(push, 8)
 struct tagRECT
 {
@@ -87,7 +114,7 @@ struct tagRECT
 };
 #pragma pack(pop)
 
-/* 7 */
+/* 9 */
 #pragma pack(push, 8)
 struct POINT
 {
@@ -96,7 +123,7 @@ struct POINT
 };
 #pragma pack(pop)
 
-/* 8 */
+/* 10 */
 #pragma pack(push, 8)
 struct RECT
 {
@@ -107,7 +134,7 @@ struct RECT
 };
 #pragma pack(pop)
 
-/* 6 */
+/* 8 */
 #pragma pack(push, 8)
 struct WINDOWPLACEMENT
 {
@@ -120,7 +147,7 @@ struct WINDOWPLACEMENT
 };
 #pragma pack(pop)
 
-/* 9 */
+/* 11 */
 #pragma pack(push, 8)
 struct WNDCLASSEXA
 {
@@ -139,7 +166,7 @@ struct WNDCLASSEXA
 };
 #pragma pack(pop)
 
-/* 10 */
+/* 12 */
 #pragma pack(push, 8)
 struct tagMSG
 {
@@ -152,7 +179,7 @@ struct tagMSG
 };
 #pragma pack(pop)
 
-/* 11 */
+/* 13 */
 #pragma pack(push, 8)
 struct MSG
 {
@@ -165,7 +192,7 @@ struct MSG
 };
 #pragma pack(pop)
 
-/* 12 */
+/* 14 */
 #pragma pack(push, 8)
 struct timecaps_tag
 {
@@ -174,7 +201,7 @@ struct timecaps_tag
 };
 #pragma pack(pop)
 
-/* 13 */
+/* 15 */
 #pragma pack(push, 8)
 struct _STARTUPINFOA
 {
@@ -199,7 +226,7 @@ struct _STARTUPINFOA
 };
 #pragma pack(pop)
 
-/* 14 */
+/* 16 */
 #pragma pack(push, 8)
 struct _MEMORY_BASIC_INFORMATION
 {
@@ -213,7 +240,7 @@ struct _MEMORY_BASIC_INFORMATION
 };
 #pragma pack(pop)
 
-/* 15 */
+/* 17 */
 #pragma pack(push, 8)
 struct _SECURITY_ATTRIBUTES
 {
@@ -223,7 +250,7 @@ struct _SECURITY_ATTRIBUTES
 };
 #pragma pack(pop)
 
-/* 16 */
+/* 18 */
 #pragma pack(push, 8)
 struct _cpinfo
 {
@@ -234,7 +261,7 @@ struct _cpinfo
 };
 #pragma pack(pop)
 
-/* 17 */
+/* 19 */
 #pragma pack(push, 8)
 struct _FILETIME
 {
@@ -243,7 +270,7 @@ struct _FILETIME
 };
 #pragma pack(pop)
 
-/* 19 */
+/* 21 */
 #pragma pack(push, 8)
 struct _LARGE_INTEGER::$837407842DC9087486FDFA5FEB63B74E
 {
@@ -252,7 +279,7 @@ struct _LARGE_INTEGER::$837407842DC9087486FDFA5FEB63B74E
 };
 #pragma pack(pop)
 
-/* 18 */
+/* 20 */
 #pragma pack(push, 8)
 union LARGE_INTEGER
 {
@@ -262,7 +289,7 @@ union LARGE_INTEGER
 };
 #pragma pack(pop)
 
-/* 20 */
+/* 22 */
 #pragma pack(push, 8)
 struct FILE
 {
@@ -277,7 +304,7 @@ struct FILE
 };
 #pragma pack(pop)
 
-/* 21 */
+/* 23 */
 #pragma pack(push, 8)
 struct _SYSTEM_INFO::$41710344DA04EC56A327D4EA11DEF6D2::$AA04DEB0C6383F89F13D312A174572A9
 {
@@ -286,60 +313,52 @@ struct _SYSTEM_INFO::$41710344DA04EC56A327D4EA11DEF6D2::$AA04DEB0C6383F89F13D312
 };
 #pragma pack(pop)
 
-/* 22 */
-union __declspec(align(8)) __m64
-{
-  unsigned __int64 m64_u64;
-  float m64_f32[2];
-  __int8 m64_i8[8];
-  __int16 m64_i16[4];
-  __int32 m64_i32[2];
-  __int64 m64_i64;
-  unsigned __int8 m64_u8[8];
-  unsigned __int16 m64_u16[4];
-  unsigned __int32 m64_u32[2];
-};
-
-/* 23 */
-union __declspec(align(16)) __m128
-{
-  float m128_f32[4];
-  unsigned __int64 m128_u64[2];
-  __int8 m128_i8[16];
-  __int16 m128_i16[8];
-  __int32 m128_i32[4];
-  __int64 m128_i64[2];
-  unsigned __int8 m128_u8[16];
-  unsigned __int16 m128_u16[8];
-  unsigned __int32 m128_u32[4];
-};
-
 /* 24 */
-struct __m128d
+#pragma pack(push, 8)
+struct _SYSTEMTIME
 {
-  double m128d_f64[2];
+  WORD wYear;
+  WORD wMonth;
+  WORD wDayOfWeek;
+  WORD wDay;
+  WORD wHour;
+  WORD wMinute;
+  WORD wSecond;
+  WORD wMilliseconds;
 };
+#pragma pack(pop)
 
 /* 25 */
-union __declspec(align(16)) __m128i
+#pragma pack(push, 8)
+struct SYSTEMTIME
 {
-  __int8 m128i_i8[16];
-  __int16 m128i_i16[8];
-  __int32 m128i_i32[4];
-  __int64 m128i_i64[2];
-  unsigned __int8 m128i_u8[16];
-  unsigned __int16 m128i_u16[8];
-  unsigned __int32 m128i_u32[4];
-  unsigned __int64 m128i_u64[2];
+  WORD wYear;
+  WORD wMonth;
+  WORD wDayOfWeek;
+  WORD wDay;
+  WORD wHour;
+  WORD wMinute;
+  WORD wSecond;
+  WORD wMilliseconds;
 };
+#pragma pack(pop)
 
-/* 28 */
-typedef struct _EH3_EXCEPTION_REGISTRATION EH3_EXCEPTION_REGISTRATION;
+/* 26 */
+#pragma pack(push, 8)
+struct FILETIME
+{
+  DWORD dwLowDateTime;
+  DWORD dwHighDateTime;
+};
+#pragma pack(pop)
 
 /* 29 */
-typedef struct _EH3_EXCEPTION_REGISTRATION *PEH3_EXCEPTION_REGISTRATION;
+typedef struct _EH3_EXCEPTION_REGISTRATION EH3_EXCEPTION_REGISTRATION;
 
 /* 30 */
+typedef struct _EH3_EXCEPTION_REGISTRATION *PEH3_EXCEPTION_REGISTRATION;
+
+/* 31 */
 struct _SCOPETABLE_ENTRY
 {
   int EnclosingLevel;
