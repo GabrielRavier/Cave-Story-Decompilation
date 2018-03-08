@@ -11,7 +11,9 @@ PS : You do not need the original .exe file to open the .i64 file.
 
 File details :
 
-Doukustu.i64 : This file is the IDA database to open using IDA 7.0 freeware
+Doukutsu.i64 : This file is the IDA database to open using IDA 7.0 freeware.
+
+Doukutsu.idb : This file is the IDA database to open using the 32-bit version of IDA.
 
 All further files were produced by IDA :
 
