@@ -11,61 +11,19 @@
 
 struct _SCOPETABLE_ENTRY;
 
+/* 25 */
+typedef struct _SCOPETABLE_ENTRY *PSCOPETABLE_ENTRY;
+
 /* 1 */
-enum _MEDIA_TYPE
+struct _EH3_EXCEPTION_REGISTRATION
 {
-  F5_1Pt2_512 = 0x1,
-  F3_1Pt44_512 = 0x2,
-  F3_2Pt88_512 = 0x3,
-  F3_20Pt8_512 = 0x4,
-  F3_720_512 = 0x5,
-  F5_360_512 = 0x6,
-  F5_320_512 = 0x7,
-  F5_320_1024 = 0x8,
-  F5_180_512 = 0x9,
-  F5_160_512 = 0xA,
-  RemovableMedia = 0xB,
-  FixedMedia = 0xC,
-  F3_120M_512 = 0xD,
-  F3_640_512 = 0xE,
-  F5_640_512 = 0xF,
-  F5_720_512 = 0x10,
-  F3_1Pt2_512 = 0x11,
-  F3_1Pt23_1024 = 0x12,
-  F5_1Pt23_1024 = 0x13,
-  F3_128Mb_512 = 0x14,
-  F3_230Mb_512 = 0x15,
-  F8_256_128 = 0x16,
+  struct _EH3_EXCEPTION_REGISTRATION *Next;
+  PVOID ExceptionHandler;
+  PSCOPETABLE_ENTRY ScopeTable;
+  DWORD TryLevel;
 };
 
 /* 2 */
-enum MACRO_TVGN
-{
-  TVGN_ROOT = 0x0,
-  TVGN_NEXT = 0x1,
-  TVGN_PREVIOUS = 0x2,
-  TVGN_PARENT = 0x3,
-  TVGN_CHILD = 0x4,
-  TVGN_FIRSTVISIBLE = 0x5,
-  TVGN_NEXTVISIBLE = 0x6,
-  TVGN_PREVIOUSVISIBLE = 0x7,
-  TVGN_DROPHILITE = 0x8,
-  TVGN_CARET = 0x9,
-  TVGN_LASTVISIBLE = 0xA,
-};
-
-/* 3 */
-enum NPC_Vars
-{
-  Is_Alive = 0x0,
-  Collision_Flag = 0x4,
-  X_Position = 0x8,
-  Y_Position = 0xC,
-  X_Velocity = 0x10,
-  Y_Velocity = 0x14,
-};
-
-/* 4 */
 #pragma pack(push, 8)
 struct struct_0
 {
@@ -73,7 +31,7 @@ struct struct_0
 };
 #pragma pack(pop)
 
-/* 5 */
+/* 3 */
 #pragma pack(push, 8)
 struct _msEH
 {
@@ -83,19 +41,7 @@ struct _msEH
 };
 #pragma pack(pop)
 
-/* 27 */
-typedef struct _SCOPETABLE_ENTRY *PSCOPETABLE_ENTRY;
-
-/* 28 */
-struct _EH3_EXCEPTION_REGISTRATION
-{
-  struct _EH3_EXCEPTION_REGISTRATION *Next;
-  PVOID ExceptionHandler;
-  PSCOPETABLE_ENTRY ScopeTable;
-  DWORD TryLevel;
-};
-
-/* 6 */
+/* 4 */
 struct CPPEH_RECORD
 {
   DWORD old_esp;
@@ -103,7 +49,7 @@ struct CPPEH_RECORD
   struct _EH3_EXCEPTION_REGISTRATION registration;
 };
 
-/* 7 */
+/* 5 */
 #pragma pack(push, 8)
 struct tagRECT
 {
@@ -114,7 +60,7 @@ struct tagRECT
 };
 #pragma pack(pop)
 
-/* 9 */
+/* 7 */
 #pragma pack(push, 8)
 struct POINT
 {
@@ -123,7 +69,7 @@ struct POINT
 };
 #pragma pack(pop)
 
-/* 10 */
+/* 8 */
 #pragma pack(push, 8)
 struct RECT
 {
@@ -134,7 +80,7 @@ struct RECT
 };
 #pragma pack(pop)
 
-/* 8 */
+/* 6 */
 #pragma pack(push, 8)
 struct WINDOWPLACEMENT
 {
@@ -147,7 +93,7 @@ struct WINDOWPLACEMENT
 };
 #pragma pack(pop)
 
-/* 11 */
+/* 9 */
 #pragma pack(push, 8)
 struct WNDCLASSEXA
 {
@@ -166,7 +112,7 @@ struct WNDCLASSEXA
 };
 #pragma pack(pop)
 
-/* 12 */
+/* 10 */
 #pragma pack(push, 8)
 struct tagMSG
 {
@@ -179,7 +125,7 @@ struct tagMSG
 };
 #pragma pack(pop)
 
-/* 13 */
+/* 11 */
 #pragma pack(push, 8)
 struct MSG
 {
@@ -192,7 +138,7 @@ struct MSG
 };
 #pragma pack(pop)
 
-/* 14 */
+/* 12 */
 #pragma pack(push, 8)
 struct timecaps_tag
 {
@@ -201,7 +147,7 @@ struct timecaps_tag
 };
 #pragma pack(pop)
 
-/* 15 */
+/* 13 */
 #pragma pack(push, 8)
 struct _STARTUPINFOA
 {
@@ -226,7 +172,7 @@ struct _STARTUPINFOA
 };
 #pragma pack(pop)
 
-/* 16 */
+/* 14 */
 #pragma pack(push, 8)
 struct _MEMORY_BASIC_INFORMATION
 {
@@ -240,7 +186,7 @@ struct _MEMORY_BASIC_INFORMATION
 };
 #pragma pack(pop)
 
-/* 17 */
+/* 15 */
 #pragma pack(push, 8)
 struct _SECURITY_ATTRIBUTES
 {
@@ -250,7 +196,7 @@ struct _SECURITY_ATTRIBUTES
 };
 #pragma pack(pop)
 
-/* 18 */
+/* 16 */
 #pragma pack(push, 8)
 struct _cpinfo
 {
@@ -261,7 +207,7 @@ struct _cpinfo
 };
 #pragma pack(pop)
 
-/* 19 */
+/* 17 */
 #pragma pack(push, 8)
 struct _FILETIME
 {
@@ -270,7 +216,7 @@ struct _FILETIME
 };
 #pragma pack(pop)
 
-/* 21 */
+/* 19 */
 #pragma pack(push, 8)
 struct _LARGE_INTEGER::$837407842DC9087486FDFA5FEB63B74E
 {
@@ -279,7 +225,7 @@ struct _LARGE_INTEGER::$837407842DC9087486FDFA5FEB63B74E
 };
 #pragma pack(pop)
 
-/* 20 */
+/* 18 */
 #pragma pack(push, 8)
 union LARGE_INTEGER
 {
@@ -289,7 +235,7 @@ union LARGE_INTEGER
 };
 #pragma pack(pop)
 
-/* 22 */
+/* 20 */
 #pragma pack(push, 8)
 struct FILE
 {
@@ -304,7 +250,7 @@ struct FILE
 };
 #pragma pack(pop)
 
-/* 23 */
+/* 21 */
 #pragma pack(push, 8)
 struct _SYSTEM_INFO::$41710344DA04EC56A327D4EA11DEF6D2::$AA04DEB0C6383F89F13D312A174572A9
 {
@@ -313,7 +259,7 @@ struct _SYSTEM_INFO::$41710344DA04EC56A327D4EA11DEF6D2::$AA04DEB0C6383F89F13D312
 };
 #pragma pack(pop)
 
-/* 24 */
+/* 22 */
 #pragma pack(push, 8)
 struct _SYSTEMTIME
 {
@@ -328,7 +274,7 @@ struct _SYSTEMTIME
 };
 #pragma pack(pop)
 
-/* 25 */
+/* 23 */
 #pragma pack(push, 8)
 struct SYSTEMTIME
 {
@@ -343,7 +289,7 @@ struct SYSTEMTIME
 };
 #pragma pack(pop)
 
-/* 26 */
+/* 24 */
 #pragma pack(push, 8)
 struct FILETIME
 {
@@ -352,17 +298,249 @@ struct FILETIME
 };
 #pragma pack(pop)
 
-/* 29 */
+/* 26 */
 typedef struct _EH3_EXCEPTION_REGISTRATION EH3_EXCEPTION_REGISTRATION;
 
-/* 30 */
+/* 27 */
 typedef struct _EH3_EXCEPTION_REGISTRATION *PEH3_EXCEPTION_REGISTRATION;
 
-/* 31 */
+/* 28 */
 struct _SCOPETABLE_ENTRY
 {
   int EnclosingLevel;
   void *FilterFunc;
   void *HandlerFunc;
+};
+
+/* 29 */
+struct Config_Data_File
+{
+  char proof[32];
+  char font_name[64];
+  int move_button_mode;
+  int attack_button_mode;
+  int ok_button_mode;
+  int display_mode;
+  int joystick_mode;
+  int joystick_button[8];
+};
+
+/* 30 */
+union __declspec(align(8)) __m64
+{
+  unsigned __int64 m64_u64;
+  float m64_f32[2];
+  __int8 m64_i8[8];
+  __int16 m64_i16[4];
+  __int32 m64_i32[2];
+  __int64 m64_i64;
+  unsigned __int8 m64_u8[8];
+  unsigned __int16 m64_u16[4];
+  unsigned __int32 m64_u32[2];
+};
+
+/* 31 */
+union __declspec(align(16)) __m128
+{
+  float m128_f32[4];
+  unsigned __int64 m128_u64[2];
+  __int8 m128_i8[16];
+  __int16 m128_i16[8];
+  __int32 m128_i32[4];
+  __int64 m128_i64[2];
+  unsigned __int8 m128_u8[16];
+  unsigned __int16 m128_u16[8];
+  unsigned __int32 m128_u32[4];
+};
+
+/* 32 */
+struct __m128d
+{
+  double m128d_f64[2];
+};
+
+/* 33 */
+union __declspec(align(16)) __m128i
+{
+  __int8 m128i_i8[16];
+  __int16 m128i_i16[8];
+  __int32 m128i_i32[4];
+  __int64 m128i_i64[2];
+  unsigned __int8 m128i_u8[16];
+  unsigned __int16 m128i_u16[8];
+  unsigned __int32 m128i_u32[4];
+  unsigned __int64 m128i_u64[2];
+};
+
+/* 34 */
+struct IDirectDraw
+{
+  struct IDirectDraw::IDirectDrawVtbl *lpVtbl;
+};
+
+/* 35 */
+struct Some_Rect_Thing
+{
+  char front;
+  char top;
+  char back;
+  char bottom;
+};
+
+/* 36 */
+struct NPC_Info
+{
+  __int16 bits;
+  __int16 life;
+  __int8 surf;
+  __int8 hit_voice;
+  __int8 destroy_voice;
+  __int8 size;
+  int exp;
+  int damage;
+  Some_Rect_Thing hit;
+  Some_Rect_Thing view;
+};
+
+/* 37 */
+struct __declspec(align(4)) Map_Data
+{
+  unsigned __int8 *data;
+  unsigned __int8 atrb[257];
+  __int16 width;
+  __int16 length;
+};
+
+/* 38 */
+struct NPC_Collision_Flags
+{
+  int front;
+  int top;
+  int back;
+  int bottom;
+};
+
+/* 39 */
+#pragma pack(push, 8)
+struct __declspec(align(4)) NPC_vars
+{
+  unsigned __int8 Is_alive;
+  int collision_flags;
+  int X_pos;
+  int Y_pos;
+  int X_vel;
+  int Y_vel;
+  int X_vel2;
+  int Y_vel2;
+  int Curly_Target_X;
+  int Curly_Target_Y;
+  int Entity_Type;
+  int code_flag;
+  int Entity_Eve_Num;
+  int Eniity_Spritesheet;
+  int Sound_Hit;
+  int Sound_Death;
+  int Life;
+  int Exp_Amount;
+  int Explosion_Size;
+  int Direction;
+  unsigned __int16 Entity_Flags;
+  RECT Rect;
+  int ani_wait;
+  int Ani_Num;
+  int count1;
+  int count2;
+  int Current_State;
+  int act_wait;
+  NPC_Collision_Flags Nitbox;
+  NPC_Collision_Flags view;
+  unsigned __int8 Is_Being_Hit;
+  int damage_view;
+  int damage;
+  NPC_vars *Parent_NPC;
+};
+#pragma pack(pop)
+
+/* 40 */
+struct Effect_vars
+{
+  int cond;
+  int code;
+  int direct;
+  int x;
+  int y;
+  int xm;
+  int ym;
+  int act_no;
+  int act_wait;
+  int ani_no;
+  int ani_wait;
+  int view_left;
+  int view_top;
+  RECT rect;
+};
+
+/* 41 */
+struct __declspec(align(4)) Fade_vars
+{
+  int mode;
+  bool bMask;
+  int count;
+  char ani_no[15][20];
+  char flag[15][20];
+  char dir;
+};
+
+/* 42 */
+struct __declspec(align(4)) Map_Headers
+{
+  char parts[32];
+  char map[32];
+  int bkType;
+  char back[32];
+  char npc[32];
+  char boss[32];
+  char boss_no;
+  char name[32];
+};
+
+/* 43 */
+struct Bullet_vars
+{
+  int flag;
+  int code_bullet;
+  int bbits;
+  int cond;
+  int x;
+  int y;
+  int xm;
+  int ym;
+  int tgt_x;
+  int tgt_y;
+  int act_no;
+  int act_wait;
+  int ani_wait;
+  int ani_no;
+  unsigned __int8 direct;
+  RECT rect;
+  int count1;
+  int count2;
+  int life_count;
+  int damage;
+  int life;
+  int enemyXL;
+  int enemyYL;
+  int blockXL;
+  int blockYL;
+  NPC_Collision_Flags view;
+};
+
+/* 44 */
+enum Directions
+{
+  Left = 0x0,
+  Up = 0x1,
+  Right = 0x2,
+  Down = 0x3,
 };
 

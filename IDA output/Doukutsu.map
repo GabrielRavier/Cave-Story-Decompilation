@@ -26,7 +26,7 @@
  0001:000010E0       Switch_to_Next_Weap
  0001:00001190       Switch_to_Prev_Weap
  0001:00001240       Unequ_Weap
- 0001:00001270       Load_Background_Sprite
+ 0001:00001270       Init_Background
  0001:00001370       Background_Modes?_Increase_Background_Scroll?
  0001:000013D0       Draw_Background
  0001:00001412       jmp_402809_case_0
@@ -64,7 +64,7 @@
  0001:00002C00       Clear_All_Weapons_Object_Slots
  0001:00002C40       Count_Weapon_Shot_Occurences
  0001:00002CB0       Count_All_Slots_Using_Shot
- 0001:00002D80       Clear_All_Weapons_Obj_Slots
+ 0001:00002D80       Clear_Bullets
  0001:00002DC0       Render_Bullets
  0001:00002E1E       jmp_403E17_case_0
  0001:00002E59       jmp_403E17_case_2
@@ -317,7 +317,7 @@
  0001:00008628       jmp_40961A_default_jmp_For_Loop_Restart
  0001:00008630       jmp_40961A_table
  0001:00008638       jmp_40961A_indirect_table
- 0001:00008650       Clear_All_Effects
+ 0001:00008650       Init_Effects
  0001:00008670       No_Effect
  0001:00008680       Random_Fountain_Pulsing_Disc_Particles
  0001:00008772       Initiate_Disk
@@ -344,8 +344,8 @@
  0001:00009B50       Update_All_Effects
  0001:00009BC0       Draw_All_Effect_Obj
  0001:00009C90       Create_Animated_Effect
- 0001:00009D60       Load_Config.dat
- 0001:00009E30       Set_Default_Config.dat
+ 0001:00009D60       Load_Config_Data
+ 0001:00009E30       Set_Default_Config_Data
  0001:00009EC0       Version_Button
  0001:00009FC0       Mute_Button
  0001:0000A1D0       Debug_Save_Button
@@ -353,26 +353,26 @@
  0001:0000A320       Change_Screen_Offsets
  0001:0000A340       Draw_Window
  0001:0000A450       Init_Direct_Draw
- 0001:0000A6C0       Kill_Direct_Draw
+ 0001:0000A6C0       End_Direct_Draw
  0001:0000A7A0       Destroy_Bitmap_Obj?
- 0001:0000A800       Load_BMP_From_Resource_And_Create_Surface
- 0001:0000AAC0       Load_BMP_From_File_And_Create_Surface
+ 0001:0000A800       MakeSurface_From_Resource
+ 0001:0000AAC0       MakeSurface_From_File
  0001:0000AE10       Load_BMP_From_Resource_Onto_Existing_Surface
- 0001:0000AFD0       Load_BMP_From_File_Onto_Existing_Surface
- 0001:0000B1D0       Create_Blank_Surface
+ 0001:0000AFD0       ReloadBitmap_From_File
+ 0001:0000B1D0       MakeSurface_Blank
  0001:0000B320       Capture_Screen_To_Surface
- 0001:0000B3C0       Draw_Sprite_With_Transparency
+ 0001:0000B3C0       Draw_Bitmap_With_Transparency
  0001:0000B5B0       Draw_Sprite_No_Tranparency
  0001:0000B7A0       Draw_Sprite_Onto_Surface
- 0001:0000B8B0       Make_Native_Color
+ 0001:0000B8B0       Make_RGB
  0001:0000B9E0       Draw_Color_Fill
  0001:0000BA80       Draw_Color_Fill_Onto_Surface
  0001:0000BB30       Security_Function?
  0001:0000BB60       Regenerate_Surfaces
- 0001:0000BD50       Load_Font
+ 0001:0000BD50       Init_Font_Object
  0001:0000BE00       Draw_String
  0001:0000BEB0       Draw_String_Onto_Surface
- 0001:0000BF70       Unload_Font
+ 0001:0000BF70       End_Font_Object
  0001:0000BF90       Scroll_Credits_Text
  0001:0000C010       Draw_From_Slot_0x25_Credits_Text?
  0001:0000C150       Print_Text?
@@ -380,6 +380,7 @@
  0001:0000C2D0       Slide_Credits_Picture
  0001:0000C350       Draw_Credits_Image
  0001:0000C3A0       Load_Credits_Image
+ 0001:0000C3E0       InitCreditScript
  0001:0000C410       If_Not_49D614_0_Deallocate
  0001:0000C440       Initialise_Credits
  0001:0000C5C0       Credits_Related?
@@ -399,9 +400,9 @@
  0001:0000CB40       TSC_SIL
  0001:0000CB60       TSC_CIL
  0001:0000CB70       TSC_XX1_Game_Loop_Island_Crash
- 0001:0000CD70       Game_Loop_Exit_Menu
- 0001:0000CE60       Erase_Fade_Data
- 0001:0000CE90       ___setargv
+ 0001:0000CD70       Call_Escape
+ 0001:0000CE60       Init_Fade
+ 0001:0000CE90       Set_Fade_Mask_
  0001:0000CEA0       Reset_Fade_Vars
  0001:0000CEC0       TSC_FAO_Begin_Fade_Out
  0001:0000CF50       TSC_FAI_Begin_Fade_In
@@ -415,33 +416,33 @@
  0001:0000D770       Render_Fade_Out_In
  0001:0000D830       Is_Fade_Happening
  0001:0000D850       Clear_Event_Flags
- 0001:0000D870       Clear_Skipflags?
+ 0001:0000D870       InitSkipFlags
  0001:0000D890       TSC_FLplus
  0001:0000D8E0       TSC_FLminues
- 0001:0000D930       Check_Flag
+ 0001:0000D930       Get_NPC_Flag
  0001:0000D970       TSC_SKplus
  0001:0000D9C0       TSC_SKminus
- 0001:0000DA50       TSC_FLA
+ 0001:0000DA50       Init_Flash
  0001:0000DA70       Explosion?
  0001:0000DAC0       Update_Boss_Explosion
  0001:0000DD20       TSC_FLA_Handler
  0001:0000DDE0       Main_WhiteScreen_Handler
  0001:0000DE20       Draw_Boss_Explosion
- 0001:0000DE60       Occasional_Flash_0
+ 0001:0000DE60       Reset_Flash
  0001:0000DE70       Update_Camera
  0001:0000E020       Get_Camera_Position
  0001:0000E040       Camera_Update
  0001:0000E130       Set_Camera_Upon_Enter_Room
- 0001:0000E220       TSC_FOM
+ 0001:0000E220       Set_Camera_Target_Quote
  0001:0000E250       TSC_FON
  0001:0000E2D0       TSC_FOB
- 0001:0000E310       TSC_QUA
+ 0001:0000E310       Set_Quake
  0001:0000E320       Set_Hard_Quake_Duration
- 0001:0000E330       Stop_All_Quake_Effects
- 0001:0000E350       RNG_Range
+ 0001:0000E330       Reset_Quake
+ 0001:0000E350       Random
  0001:0000E380       Draw_Numbers
  0001:0000E5F0       Game_Loop_Selector
- 0001:0000E730       Game_Loop_Opening_Cutscene
+ 0001:0000E730       Game_Mode_Opening_Cutscene
  0001:0000E9B0       Game_Loop_Title_Screen
  0001:0000F304       Call_Render_Graphics_Mychar_Top_Selection
  0001:0000F400       Game_Loop_Main_Game
@@ -454,18 +455,18 @@
  0001:0000FCA0       Param_Time_Check
  0001:0000FD10       Check_File_Exists
  0001:0000FD80       Get_File_Size
- 0001:0000FDE0       Print_Load_BMP_Error
+ 0001:0000FDE0       Log_Error
  0001:0000FEE0       Center_Game_Window
  0001:0000FFE0       Load_Window_Rects
  0001:000101F0       Save_Window_Rect_File
- 0001:000102E0       Is_PBM_Protected
+ 0001:000102E0       IsEnableBitmap
  0001:00010390       Load_Initial_Resources
  0001:00010EB0       Init_Direct_Input
  0001:00010EF0       Direct_Input_Something
  0001:00010FC0       Enum_Devices_Callback
  0001:000110F0       Read_Controller
- 0001:00011250       Init_Gamepad?
- 0001:000112E0       Update_Keys
+ 0001:00011250       ResetJoystickStatus
+ 0001:000112E0       Get_Keys
  0001:00011370       Display_FPS_Counter
  0001:000113A0       Calculate_FPS
  0001:00011420       _WinMain@16
@@ -489,12 +490,12 @@
  0001:00012453       Key_Release_Table
  0001:00012570       MessageQueue
  0001:000125E0       Direct_Input_Handler?
- 0001:00012750       Reserve_Memory_For_PXM_Data
+ 0001:00012750       Init_Map_Data
  0001:00012770       Load_PXM_File
- 0001:000128A0       Process_PXA_file
+ 0001:000128A0       Load_PXA_File
  0001:00012930       Kill_Level_Layout
  0001:00012950       Destroy_Bitmap_Object_02
- 0001:00012960       Get_Room_Size
+ 0001:00012960       Get_Map_Data
  0001:000129A0       Get_Tile_ID
  0001:00012A00       Delete_Tile
  0001:00012A20       TSC_SMP
@@ -502,7 +503,7 @@
  0001:00012AF0       Draw_Background_Layer_Maptiles
  0001:00012C60       Render_Foreground_Layer_Maptiles
  0001:00012E40       Draw_Rushing_Water_Particles
- 0001:000130F0       Draw_Room_Text_To_Surface
+ 0001:000130F0       Ready_Map_Name
  0001:00013250       TSC_MNA
  0001:000132C5       MNA_Render_Graphics_On_Title_Screen?
  0001:00013310       Map_Related?
@@ -525,8 +526,8 @@
  0001:00015470       Quote_Movement
  0001:000158C0       Player_Related?
  0001:00015990       Quote_Air
- 0001:00015AA0       Get_Quote_XY
- 0001:00015AC0       Tsc_MOV
+ 0001:00015AA0       Get_Quote_Pos
+ 0001:00015AC0       Set_Quote_Position
  0001:00015B30       Instantly_Set_X_Y_Pos
  0001:00015B50       Mov_Quote_X_Velocity_0
  0001:00015B60       Tsc_UNJ
@@ -537,7 +538,7 @@
  0001:00015C79       EQ_minus
  0001:00015CA0       AND_Player_Flags_minus2
  0001:00015CC0       TSC_SSS_SPS
- 0001:00015D40       TSC_SSS_SPS?_2
+ 0001:00015D40       Cut_Noise
  0001:00015D80       Play_Environmental_Sounds
  0001:00015DF0       Play_Sound_40_41_58
  0001:00015E20       Clear_Quote_Tiles
@@ -591,21 +592,28 @@
  0001:000195D0       Write_290.rec
  0001:000197C0       Get_Hell_Time
  0001:000198F0       Sound_Procedure?
- 0001:00019BA0       Sound_Thingy?
+ 0001:00019BA0       Direct_Sound_Buffer_Thingy
  0001:00019C70       Sound_Thingy??
  0001:00019D20       Volume_Regulator?
  0001:00019DC0       Play_Organ_Object
+ 0001:0001A2A0       Direct_Sound_Buffer_Related?
  0001:0001A380       Error_Checking?
  0001:0001A3F0       Related_To_Loading_The_ORG_File
+ 0001:0001A440       Direct_Sound_Related?
+ 0001:0001A480       Direct_Sound_Thingy?
+ 0001:0001A4D0       Direct_Sound_Thing?
+ 0001:0001A510       Play_Drum_Sound_ORG_File
+ 0001:0001A600       Music_Obj_Thingy?
  0001:0001B0B0       ORG_Thing
  0001:0001B1E0       Setup_ORG_Playback_Timer
  0001:0001B230       fptc
  0001:0001B250       Stop_Previous_Org_Song
- 0001:0001B6F0       Load_Org_Music
- 0001:0001B730       Set_Org_Music_Position
- 0001:0001B770       Get_Org_Music_Position
+ 0001:0001B6F0       Load_Organya
+ 0001:0001B730       Set_Organya_Position
+ 0001:0001B770       Get_Organya_Position
  0001:0001B790       Start_Org_Playback
- 0001:0001B7C0       Set_Org_Volume
+ 0001:0001B7C0       Change_Organya_Volume
+ 0001:0001B7F0       Stop_Organya_Music
  0001:0001B880       Fade_Music
  0001:0001BB10       Sound_Thingy
  0001:0001BFC0       Check_Profile.dat
@@ -624,24 +632,24 @@
  0001:0001E710       Nemesis
  0001:0001EA10       Spur
  0001:0001F0C0       Init_Direct_Sound
- 0001:0001F1A0       Kill_Direct_Sound?
+ 0001:0001F1A0       End_Direct_Sound
  0001:0001F240       Load_Resource_WAVE?
  0001:0001F390       Sound_Related?
- 0001:0001F640       Play_Sound_Effect
+ 0001:0001F640       Play_Sound_Object
  0001:0001F760       Sound_Related?_0
- 0001:0001F7E0       Sound_Loader
- 0001:0001FBE0       Load_Room
- 0001:0001FEE0       Tsc_CMU
+ 0001:0001F7E0       Make_PixTone_Object
+ 0001:0001FBE0       Load_Stage
+ 0001:0001FEE0       Change_Music
  0001:0001FF50       Tsc_RMU
- 0001:0001FFA0       Whimsical_Star_Init
+ 0001:0001FFA0       Init_Whimsical_Star
  0001:000203B0       Draw_Whimsical_Star
- 0001:000204E0       Initiate_TSC_Buffer?
+ 0001:000204E0       Init_TSC
  0001:000205C0       Decode_TSC
  0001:00020660       Load_Special_TSC
  0001:00020750       Process_TSC_File
  0001:000208E0       __fputchar
  0001:00020900       TSC_Dec_to_Hex
- 0001:00020990       Call_TSC_Event
+ 0001:00020990       Start_TSC_Event
  0001:00020AF0       Script_Jump
  0001:00020D10       Print_NUM
  0001:00020F10       Draw_Text_Box
@@ -655,9 +663,10 @@
  0001:0002466E       jmp_42256C_case_6
  0001:00024690       jmp_42256C_case_5
  0001:00024790       Draw_Text_To_Text_Box_Surfaces
- 0001:000248B0       SIN
- 0001:000248C0       COS
- 0001:000248E0       Angle_Calculator
+ 0001:000247F0       Init_Triangle_Table
+ 0001:000248B0       GetSin
+ 0001:000248C0       GetCos
+ 0001:000248E0       GetArcTan
  0001:00024B40       Unknown_Library_1
  0001:00024B80       Unknown_Library_2
  0001:00024BC0       Clear_Value_View
@@ -1026,9 +1035,9 @@
  0001:0006D870       NPC358
  0001:0006D9E0       NPC359
  0001:0006DA90       NPC360_Thank_You
- 0001:0006DB30       Kill_NPC_RAM
- 0001:0006DB50       Process_PXE_File
- 0001:0006DE50       Load_NPC_Table_Values_To_Object
+ 0001:0006DB30       Init_NPCs
+ 0001:0006DB50       Load_Event
+ 0001:0006DE50       Set_Unique_Parameter
  0001:0006DFD0       NPC_Create
  0001:0006E150       Create_Dust_Clouds
  0001:0006E2B0       Spawn_Exp
@@ -1043,8 +1052,8 @@
  0001:00070160       Do_NPC_Level_Collision
  0001:00070B80       NPC_Death?
  0001:00070D50       Entity_Bullet_Collision
- 0001:00071400       Load_NPC_Table
- 0001:00071740       Set_Room_Boss_ID
+ 0001:00071400       LoadNPCTable
+ 0001:00071740       Init_Room_Boss
  0001:00071770       Draw_Boss?
  0001:00071940       Set_Boss_Script_State
  0001:00071FF0       Boss0_NoSpecialBoss
@@ -1055,7 +1064,7 @@
  0001:000762F0       Boss_9_Ballos_Ball
  0001:00078030       Boss_2_Balfrog
  0001:000798A0       Boss_5_Ironhead
- 0001:0007A450       __crt_debugger_hook_2
+ 0001:0007A450       Init_Boss_Life
  0001:0007A540       Draw_Boss_Health
  0001:0007A6F0       Boss_1_Omega
  0001:0007B820       Boss_8_Heavy_Press
@@ -1129,6 +1138,7 @@
  0001:0008045C       LeadUp2
  0001:0008047F       Just_nop
  0001:00080480       LeadUp3
+ 0001:000804C0       UnwindUp7
  0001:000804C8       UnwindUp6
  0001:000804D0       UnwindUp5
  0001:000804D8       UnwindUp4
@@ -1197,7 +1207,6 @@
  0001:00080C0F       integer_QnaN_or_zero
  0001:00080C23       localexit
  0001:00080C30       __CIcos
- 0001:00080C40       Why_Is_This_Seperated_From___CIcos?
  0001:00080C44       _cos
  0001:00080C4D       start_1
  0001:00080C62       CW_is_set_to_default_0
@@ -1384,8 +1393,9 @@
  0001:000858FE       __setargv
  0001:000859A0       ___crtGetEnvironmentStringsA
  0001:00085AC2       __ioinit
+ 0001:00085CC0       Startup_Related?
  0001:00085CED       Random_Return_1_In_The_Middle_Of_A_Function
- 0001:00085D04       func
+ 0001:00085D04       On_Exit_Function
  0001:00085D50       __alloca_probe
  0001:00085D65       probesetup
  0001:00085D6A       probepages
@@ -1612,7 +1622,7 @@
  0001:0008A8DC       ImmGetContext
  0001:0008A8E2       RtlUnwind
  0002:00000270       aArmsitem_tsc
- 0002:00000280       aSS_pbm
+ 0002:00000280       format
  0002:0000028C       aRb
  0002:00000290       aDoukutsu200412
  0002:000002A4       aConfig_dat
@@ -1661,7 +1671,7 @@
  0002:00000450       Operation
  0002:00000458       aOpen_0
  0002:00000460       debug.txt
- 0002:00000470       format
+ 0002:00000470       debug_txt
  0002:00000480       mode
  0002:00000484       aSDDD
  0002:00000494       aSS_1
@@ -1702,7 +1712,7 @@
  0002:000005E0       IconName
  0002:000005E4       aIcon_mini
  0002:000005F0       aMenu_main
- 0002:000005FC       aLoading
+ 0002:000005FC       name
  0002:00000604       aMute
  0002:0000060C       aFps
  0002:00000610       aWindow_rect_0
@@ -1824,8 +1834,10 @@
  0002:00000BE8       aBufferOverrunD
  0002:00000C08       aASecurityError
  0002:00000CBC       aUnknownSecurit
+ 0002:00000D14       aPH
  0002:00000D94       aNull_1
  0002:00000DA4       aNull_0
+ 0002:00000DCC       aEh
  0002:00000DD8       aFlsfree
  0002:00000DE0       aFlssetvalue
  0002:00000DEC       aFlsgetvalue
@@ -1858,6 +1870,7 @@
  0002:00001324       aGetactivewindo
  0002:00001334       aMessageboxa
  0002:00001340       LibFileName
+ 0002:0000136C       aUh
  0002:000013B4       aInitializecrit
  0002:00001550       aDddddddddd
  0002:00001572       aBbbbbb
@@ -1906,6 +1919,8 @@
  0002:00001BC4       aTue
  0002:00001BC8       aMon
  0002:00001BCC       aSun
+ 0002:00001BFC       aDah
+ 0002:00001C00       aIah
  0002:00001C04       a1Qnan
  0002:00001C0C       a1Inf
  0002:00001C14       a1Ind
@@ -2344,556 +2359,49 @@
  0003:000001AC       aD_1
  0003:000001D8       aD_2
  0003:000008C0       ROM_PEffects
- 0003:00000908       str2
+ 0003:00000908       DOUKUTSU20041206
+ 0003:0000090C       Config.dat
  0003:00000914       GraphicScale
  0003:0000091C       FullscreenRect
  0003:00000924       RenderWidth
  0003:00000928       RenderHeight
- 0003:0000093C       ROM_PImageTag
- 0003:00000940       ROM_SoundData
- 0003:00000B10       aSssss?
+ 0003:0000092C       rect
+ 0003:0000093C       Image_Tag
+ 0003:00000940       Snd_Data_Table
+ 0003:00000A20       Ptr_Sound
  0003:00000D58       aFfffffc?5
- 0003:00000DC8       aFfffffc?5_0
- 0003:00001298       aSsssss??
- 0003:00001308       aSsssss??_0
- 0003:000014E0       aSssss?_0
- 0003:000014F0       a?
- 0003:000014F4       a@_0
- 0003:000014F8       a?_0
- 0003:000014FC       aA_6
- 0003:00001500       a?_1
- 0003:00001538       a333333?
- 0003:000015A8       aSsssss??_1
- 0003:00001618       aSsssss??_2
- 0003:00001A08       aSssss?_1
- 0003:00002568       aFfffffc?
- 0003:00003EC8       aFfffffc?5_1
- 0003:00003F38       aFfffffc?5_2
  0003:00004464       Timer1000Init
- 0003:00004610       Key_For_Jump_Duplicate
- 0003:00004614       Key_For_Shoot_Duplicate
+ 0003:00004610       Key_Jump
+ 0003:00004614       Key_Shoot
  0003:00004618       Key_For_Next_Weapon
  0003:0000461C       Key_For_Prev_Weapon
  0003:00004620       Key_For_Menu
  0003:00004624       Key_For_Minimap
- 0003:00004628       Key_For_Jump
- 0003:0000462C       Key_For_Shoot
- 0003:00004630       Key_For_Left
- 0003:00004634       Key_For_Up
- 0003:00004638       Key_For_Right
- 0003:0000463C       Key_For_Down
+ 0003:00004628       Key_Ok
+ 0003:0000462C       Key_Cancel
+ 0003:00004630       Key_Left
+ 0003:00004634       Key_Up
+ 0003:00004638       Key_Right
+ 0003:0000463C       Key_Down
  0003:00004640       ROM_PClassName
  0003:00004648       lpName
- 0003:0000464C       ptr2
+ 0003:0000464C       PXM
  0003:00004660       ROM_WeaponExpTables
  0003:00004790       aOrg01
  0003:00004798       aOrg02
  0003:000047A0       uPeriod
  0003:000047A8       Pointer_Profile.dat
  0003:000047AC       offset_Profile_dat_check
- 0003:000047B0       ROM_MapHeaders_Tileset_Name
- 0003:000047D0       ROM_MapHeaders_Map_File_Name
- 0003:000047F0       ROM_MapHeaders_BGType
- 0003:000047F4       ROM_MapHeaders_BGImage_File
- 0003:00004814       ROM_MapHeaders_Sprite_File_A
- 0003:00004834       ROM_MapHeaders_Sprite_File_B
- 0003:00004854       ROM_MapHeaders_Boss_ID
- 0003:00004855       ROM_MapHeaders_Name
- 0003:00004878       aPens
- 0003:00004898       aPens1
- 0003:000048BC       aBkblue
- 0003:000048DC       aGuest
- 0003:000048FC       a0
- 0003:0000491D       aArthurSHouse
- 0003:00004940       aEggs
- 0003:00004960       aEggs_0
- 0003:00004984       aBkgreen
- 0003:000049A4       aEggs1
- 0003:000049C4       aRavil
- 0003:000049E5       aEggCorridor
- 0003:00004A08       aEggx
- 0003:00004A28       aEggx_0
- 0003:00004A4C       aBk0
- 0003:00004A6C       aEggs1_0
- 0003:00004AAD       aEggNo_00
- 0003:00004AD0       aEggin
- 0003:00004AF0       aEgg6
- 0003:00004B14       aBk0_0
- 0003:00004B34       aEggs1_1
- 0003:00004B75       aEggNo_06
- 0003:00004B98       aStore
- 0003:00004BB8       aEggr
- 0003:00004BDC       aBk0_1
- 0003:00004BFC       aEggs1_2
- 0003:00004C3D       aEggObservationRoom
- 0003:00004C60       aWeed_0
- 0003:00004C80       aWeed_1
- 0003:00004CA4       aBkblue_0
- 0003:00004CC4       aWeed_2
- 0003:00004D05       aGrasstown
- 0003:00004D28       aBarr_0
- 0003:00004D48       aSanta
- 0003:00004D6C       aBk0_2
- 0003:00004D8C       aWeed_3
- 0003:00004DCD       aSantaSHouse
- 0003:00004DF0       aBarr_1
- 0003:00004E10       aChako
- 0003:00004E34       aBkblue_1
- 0003:00004E54       aGuest_0
- 0003:00004E95       aChacoSHouse
- 0003:00004EB8       aMaze_0
- 0003:00004ED8       aMazei
- 0003:00004EFC       aBk0_3
- 0003:00004F1C       aMaze_1
- 0003:00004F5D       aLabyrinthI
- 0003:00004F80       aSand
- 0003:00004FA0       aSand_0
- 0003:00004FC4       aBkgreen_0
- 0003:00004FE4       aSand_1
- 0003:00005004       aOmg
- 0003:00005025       aSandZone
- 0003:00005048       aMimi
- 0003:00005068       aMimi_0
- 0003:0000508C       aBkblue_2
- 0003:000050AC       aGuest_1
- 0003:000050ED       aMimigaVillage
- 0003:00005110       aCave
- 0003:00005130       aCave_0
- 0003:00005154       aBk0_4
- 0003:00005174       aCemet
- 0003:000051B5       aFirstCave
- 0003:000051D8       aCave_1
- 0003:000051F8       aStart
- 0003:0000521C       aBk0_5
- 0003:0000523C       aCemet_0
- 0003:0000527D       aStartPoint
- 0003:000052A0       aMimi_1
- 0003:000052C0       aBarr_2
- 0003:000052E4       aBk0_6
- 0003:00005304       aCemet_1
- 0003:00005324       aBllg
- 0003:00005345       aShack
- 0003:00005368       aMimi_2
- 0003:00005388       aPool
- 0003:000053AC       aBkblue_3
- 0003:000053CC       aGuest_2
- 0003:0000540D       aReservoir
- 0003:00005430       aMimi_3
- 0003:00005450       aCemet_2
- 0003:00005474       aBk0_7
- 0003:00005494       aCemet_3
- 0003:000054D5       aGraveyard
- 0003:000054F8       aMimi_4
- 0003:00005518       aPlant_0
- 0003:0000553C       aBkgreen_1
- 0003:0000555C       aPlant_1
- 0003:0000559D       aYamashitaFarm
- 0003:000055C0       aStore_0
- 0003:000055E0       aShelt
- 0003:00005604       aBk0_8
- 0003:00005624       aEggs1_3
- 0003:00005665       aShelter
- 0003:00005688       aPens_0
- 0003:000056A8       aComu
- 0003:000056CC       aBkblue_4
- 0003:000056EC       aGuest_3
- 0003:0000572D       aAssemblyHall
- 0003:00005750       aMimi_5
- 0003:00005770       aMibox
- 0003:00005794       aBk0_9
- 0003:000057F5       aSavePoint
- 0003:00005818       aStore_1
- 0003:00005838       aEgend1
- 0003:0000585C       aBk0_10
- 0003:000058BD       aSideRoom
- 0003:000058E0       aStore_2
- 0003:00005900       aCthu
- 0003:00005924       aBk0_11
- 0003:00005985       aCthulhuSAbode
- 0003:000059A8       aEggin_0
- 0003:000059C8       aEgg1
- 0003:000059EC       aBk0_12
- 0003:00005A0C       aEggs1_4
- 0003:00005A4D       aEggNo_01
- 0003:00005A70       aPens_1
- 0003:00005A90       aPens2
- 0003:00005AB4       aBkblue_5
- 0003:00005AD4       aGuest_4
- 0003:00005B15       aArthurSHouse_0
- 0003:00005B38       aBarr
- 0003:00005B58       aMalco
- 0003:00005B7C       aBkblue_6
- 0003:00005B9C       aWeed_4
- 0003:00005BBC       aBllg_0
- 0003:00005BDD       aPowerRoom
- 0003:00005C00       aBarr_3
- 0003:00005C20       aWeeds
- 0003:00005C44       aBkblue_7
- 0003:00005CA5       aSavePoint_0
- 0003:00005CC8       aStore_3
- 0003:00005CE8       aWeedd
- 0003:00005D0C       aBkblue_8
- 0003:00005D6D       aExecutionChamber
- 0003:00005D90       aWeed_5
- 0003:00005DB0       aFrog
- 0003:00005DD4       aBkgreen_2
- 0003:00005DF4       aWeed_6
- 0003:00005E14       aFrog_0
- 0003:00005E35       aGum
- 0003:00005E58       aSand_2
- 0003:00005E78       aCurly_0
- 0003:00005E9C       aBk0_13
- 0003:00005EBC       aSand_3
- 0003:00005EDC       aCurly_1
- 0003:00005EFD       aSandZoneResidence
- 0003:00005F20       aPens_2
- 0003:00005F40       aWeedb
- 0003:00005F64       aBkblue_9
- 0003:00005F84       aRavil_0
- 0003:00005FC5       aGrasstownHut
- 0003:00005FE8       aRiver
- 0003:00006008       aStream
- 0003:0000602C       aBkblue_10
- 0003:0000604C       aStream_0
- 0003:0000606C       aIronh_0
- 0003:0000608D       aMainArtery
- 0003:000060B0       aPens_3
- 0003:000060D0       aCurlys
- 0003:000060F4       aBk0_14
- 0003:00006114       aSand_4
- 0003:00006134       aCurly_2
- 0003:00006155       aSmallRoom
- 0003:00006178       aBarr_4
- 0003:00006198       aJenka1
- 0003:000061BC       aBk0_15
- 0003:000061DC       aSand_5
- 0003:000061FC       aBllg_1
- 0003:0000621D       aJenkaSHouse
- 0003:00006240       aSand_6
- 0003:00006260       aDark
- 0003:00006284       aBkblack
- 0003:000062A4       aSand_7
- 0003:000062E5       aDesertedHouse
- 0003:00006308       aGard
- 0003:00006328       aGard_0
- 0003:0000634C       aBkgard
- 0003:0000636C       aToro
- 0003:0000638C       aBllg_2
- 0003:000063AD       aSandZoneStorehouse
- 0003:000063D0       aBarr_5
- 0003:000063F0       aJenka2_0
- 0003:00006414       aBk0_16
- 0003:00006434       aSand_8
- 0003:00006454       aBllg_3
- 0003:00006475       aJenkaSHouse_0
- 0003:00006498       aSand_9
- 0003:000064B8       aSande
- 0003:000064DC       aBkgreen_3
- 0003:000064FC       aSand_10
- 0003:0000651C       aBllg_4
- 0003:0000653D       aSandZone_0
- 0003:00006560       aMaze_2
- 0003:00006580       aMazeh
- 0003:000065A4       aBk0_17
- 0003:000065C4       aMaze_3
- 0003:00006605       aLabyrinthH
- 0003:00006628       aMaze_4
- 0003:00006648       aMazew
- 0003:0000666C       aBkmaze
- 0003:0000668C       aMaze_5
- 0003:000066CD       aLabyrinthW
- 0003:000066F0       aMaze_6
- 0003:00006710       aMazeo
- 0003:00006734       aBk0_18
- 0003:00006754       aGuest_5
- 0003:00006795       aCamp
- 0003:000067B8       aMaze_7
- 0003:000067D8       aMazed
- 0003:000067FC       aBk0_19
- 0003:0000681C       aGuest_6
- 0003:0000683C       aDark_0
- 0003:0000685D       aClinicRuins
- 0003:00006880       aStore_4
- 0003:000068A0       aMazea
- 0003:000068C4       aBk0_20
- 0003:000068E4       aMaze_8
- 0003:00006925       aLabyrinthShop
- 0003:00006948       aMaze_9
- 0003:00006968       aMazeb
- 0003:0000698C       aBkblue_11
- 0003:000069AC       aMaze_10
- 0003:000069ED       aLabyrinthB
- 0003:00006A10       aMaze_11
- 0003:00006A30       aMazes
- 0003:00006A54       aBkgray
- 0003:00006A74       aMaze_12
- 0003:00006A94       aBllg_5
- 0003:00006AB5       aBoulderChamber
- 0003:00006AD8       aMaze_13
- 0003:00006AF8       aMazem
- 0003:00006B1C       aBkred_0
- 0003:00006B3C       aMaze_14
- 0003:00006B7D       aLabyrinthM
- 0003:00006BA0       aCave_2
- 0003:00006BC0       aDrain
- 0003:00006BE4       aBkwater
- 0003:00006C04       aCemet_4
- 0003:00006C45       aDarkPlace
- 0003:00006C68       aAlmond
- 0003:00006C88       aAlmond_0
- 0003:00006CAC       aBkwater_0
- 0003:00006CCC       aCemet_5
- 0003:00006CEC       aAlmo1
- 0003:00006D0D       aCore
- 0003:00006D30       aRiver_0
- 0003:00006D50       aRiver_1
- 0003:00006D74       aBkgreen_4
- 0003:00006D94       aWeed_7
- 0003:00006DD5       aWaterway
- 0003:00006DF8       aEggs_1
- 0003:00006E18       aEggs2
- 0003:00006E3C       aBkgreen_5
- 0003:00006E5C       aEggs2_0
- 0003:00006E9D       aEggCorridor?
- 0003:00006EC0       aStore_5
- 0003:00006EE0       aCthu2
- 0003:00006F04       aBk0_21
- 0003:00006F24       aEggs1_5
- 0003:00006F65       aCthulhuSAbode?
- 0003:00006F88       aStore_6
- 0003:00006FA8       aEggr2
- 0003:00006FCC       aBk0_22
- 0003:00006FEC       aEggs1_6
- 0003:0000700C       aTwind
- 0003:0000702D       aEggObservationRoom?
- 0003:00007050       aEggx_1
- 0003:00007070       aEggx2
- 0003:00007094       aBk0_23
- 0003:000070B4       aEggs1_7
- 0003:000070F5       aEggNo_00_0
- 0003:00007118       aOside_0
- 0003:00007138       aOside_1
- 0003:0000715C       aBkmoon
- 0003:0000717C       aMoon
- 0003:000071BD       aOuterWall
- 0003:000071E0       aStore_7
- 0003:00007200       aEgend2
- 0003:00007224       aBk0_24
- 0003:00007244       aEggs1_8
- 0003:00007285       aSideRoom_0
- 0003:000072A8       aStore_8
- 0003:000072C8       aItoh
- 0003:000072EC       aBkblue_12
- 0003:0000730C       aGuest_7
- 0003:0000734D       aStorehouse
- 0003:00007370       aCent
- 0003:00007390       aCent_0
- 0003:000073B4       aBkgreen_6
- 0003:000073D4       aGuest_8
- 0003:000073F4       aCent_1
- 0003:00007415       aPlantation
- 0003:00007438       aJail
- 0003:00007458       aJail1
- 0003:0000747C       aBk0_25
- 0003:0000749C       aGuest_9
- 0003:000074BC       aCent_2
- 0003:000074DD       aJailNo_1
- 0003:00007500       aJail_0
- 0003:00007520       aMomo
- 0003:00007544       aBk0_26
- 0003:00007564       aGuest_10
- 0003:000075A5       aHideout
- 0003:000075C8       aJail_1
- 0003:000075E8       aLounge
- 0003:0000760C       aBk0_27
- 0003:0000762C       aGuest_11
- 0003:0000766D       aRestArea
- 0003:00007690       aStore_9
- 0003:000076B0       aCentw
- 0003:000076D4       aBk0_28
- 0003:000076F4       aGuest_12
- 0003:00007714       aCent_3
- 0003:00007735       aTeleporter
- 0003:00007758       aStore_10
- 0003:00007778       aJail2
- 0003:0000779C       aBk0_29
- 0003:000077BC       aGuest_13
- 0003:000077DC       aCent_4
- 0003:000077FD       aJailNo_2
- 0003:00007820       aWhite_0
- 0003:00007840       aBlcny1
- 0003:00007864       aBkfog
- 0003:00007884       aRavil_1
- 0003:000078A4       aHeri
- 0003:000078C5       aBalcony_0
- 0003:000078E8       aJail_2
- 0003:00007908       aPriso1
- 0003:0000792C       aBkgray_0
- 0003:0000794C       aRed
- 0003:0000798D       aFinalCave
- 0003:000079B0       aWhite_1
- 0003:000079D0       aRing1
- 0003:000079F4       aBkfog_0
- 0003:00007A14       aGuest_14
- 0003:00007A34       aMiza
- 0003:00007A55       aThroneRoom
- 0003:00007A78       aWhite_2
- 0003:00007A98       aRing2
- 0003:00007ABC       aBkfog_1
- 0003:00007ADC       aGuest_15
- 0003:00007AFC       aDr_0
- 0003:00007B1D       aTheKingSTable
- 0003:00007B40       aPens_4
- 0003:00007B60       aPrefa1
- 0003:00007B84       aBk0_30
- 0003:00007BE5       aPrefabBuilding
- 0003:00007C08       aJail_3
- 0003:00007C28       aPriso2
- 0003:00007C4C       aBkgray_1
- 0003:00007C6C       aRed_0
- 0003:00007CAD       aLastCaveHidden
- 0003:00007CD0       aWhite_3
- 0003:00007CF0       aRing3
- 0003:00007D14       aBk0_31
- 0003:00007D34       aMiza_0
- 0003:00007D54       aAlmo2
- 0003:00007D75       aBlackSpace
- 0003:00007D98       aPens_5
- 0003:00007DB8       aLittle
- 0003:00007DDC       aBkblue_13
- 0003:00007DFC       aGuest_16
- 0003:00007E3D       aLittleHouse
- 0003:00007E60       aWhite_4
- 0003:00007E80       aBlcny2
- 0003:00007EA4       aBkfog_2
- 0003:00007EC4       aRavil_2
- 0003:00007EE4       aHeri_0
- 0003:00007F05       aBalcony_1
- 0003:00007F28       aFall
- 0003:00007F48       aFall_0
- 0003:00007F6C       aBkfall
- 0003:00007F8C       aGuest_17
- 0003:00007FAC       aHeri_1
- 0003:00007FCD       aFall_1
- 0003:00007FF0       aWhite_5
- 0003:00008010       aKings
- 0003:00008034       aBk0_32
- 0003:00008054       aKings_0
- 0003:000080B8       aPens_6
- 0003:000080D8       aPixel_0
- 0003:000080FC       aBkblue_14
- 0003:0000811C       aGuest_18
- 0003:0000815D       aWaterwayCabin
- 0003:00008180       aMaze_15
- 0003:000081A0       aE_maze
- 0003:000081C4       aBkmaze_0
- 0003:000081E4       aGuest_19
- 0003:00008204       aMaze_16
- 0003:00008248       aBarr_6
- 0003:00008268       aE_jenk
- 0003:0000828C       aBk0_33
- 0003:000082AC       aSand_11
- 0003:000082CC       aBllg_6
- 0003:00008310       aBarr_7
- 0003:00008330       aE_malc
- 0003:00008354       aBkblue_15
- 0003:00008374       aWeed_8
- 0003:00008394       aBllg_7
- 0003:000083D8       aMimi_6
- 0003:000083F8       aE_ceme
- 0003:0000841C       aBk0_34
- 0003:0000843C       aPlant_2
- 0003:000084A0       aFall_2
- 0003:000084C0       aE_sky
- 0003:000084E4       aBkfall_0
- 0003:00008504       aGuest_20
- 0003:00008524       aHeri_2
- 0003:00008568       aPens_7
- 0003:00008588       aPrefa2
- 0003:000085AC       aBk0_35
- 0003:0000860D       aPrefabHouse
- 0003:00008630       aHell_0
- 0003:00008650       aHell1
- 0003:00008674       aBkred
- 0003:00008694       aHell_1
- 0003:000086D5       aSacredGroundB1
- 0003:000086F8       aHell_2
- 0003:00008718       aHell2
- 0003:0000873C       aBkred_1
- 0003:0000875C       aHell_3
- 0003:0000879D       aSacredGroundB2
- 0003:000087C0       aHell_4
- 0003:000087E0       aHell3
- 0003:00008804       aBkred_2
- 0003:00008824       aHell_5
- 0003:00008844       aPress
- 0003:00008865       aSacredGroundB3
- 0003:00008888       aCave_3
- 0003:000088A8       aMapi
- 0003:000088CC       aBk0_36
- 0003:000088EC       aCemet_6
- 0003:0000892D       aStorage
- 0003:00008950       aHell_6
- 0003:00008970       aHell4
- 0003:00008994       aBk0_37
- 0003:000089B4       aHell_7
- 0003:000089F5       aPassage?
- 0003:00008A18       aHell_8
- 0003:00008A38       aHell42
- 0003:00008A5C       aBk0_38
- 0003:00008A7C       aHell_9
- 0003:00008A9C       aPress_0
- 0003:00008ABD       aPassage?_0
- 0003:00008AE0       aHell_10
- 0003:00008B00       aStatue
- 0003:00008B24       aBkblue_16
- 0003:00008B64       aCent_5
- 0003:00008B85       aStatueChamber
- 0003:00008BA8       aHell_11
- 0003:00008BC8       aBallo1
- 0003:00008BEC       aBkblue_17
- 0003:00008C0C       aPriest
- 0003:00008C2C       aBallos_0
- 0003:00008C4D       aSealChamber
- 0003:00008C70       aWhite_6
- 0003:00008C90       aOstep
- 0003:00008CB4       aBkfog_3
- 0003:00008D15       aCorridor
- 0003:00008D38       aLabo
- 0003:00008D58       aE_labo
- 0003:00008D7C       aBk0_39
- 0003:00008D9C       aGuest_21
- 0003:00008E00       aCave_4
- 0003:00008E20       aPole
- 0003:00008E44       aBk0_40
- 0003:00008E64       aGuest_22
- 0003:00008EA5       aHermitGunsmith
- 0003:00008EE8       aIsland
- 0003:00008F0C       aBk0_41
- 0003:00008F2C       aIsland_0
- 0003:00008F90       aHell_12
- 0003:00008FB0       aBallo2
- 0003:00008FD4       aBkblue_18
- 0003:00008FF4       aPriest_0
- 0003:00009014       aBllg_8
- 0003:00009035       aSealChamber_0
- 0003:00009058       aWhite_7
- 0003:00009078       aE_blcn
- 0003:0000909C       aBkfog_4
- 0003:000090BC       aMiza_1
- 0003:00009120       aOside_2
- 0003:00009140       aClock
- 0003:00009164       aBkmoon_0
- 0003:00009184       aMoon_0
- 0003:000091C5       aClockRoom
- 0003:000091E8       Ptr_Songs
- 0003:00009548       ROM_Ptr_NPC_Code
- 0003:00009AEC       ROM_Ptr_Boss_Code
- 0003:00009B20       Crash_Report_Failure_Check
- 0003:00009B64       Offset__exit
+ 0003:000047B0       All_Map_Headers
+ 0003:000047D0       Map_Header.map
+ 0003:000047F0       Map_Header_bkType
+ 0003:00004854       Map_Header.boss_flag
+ 0003:00004855       Map_Header.name
+ 0003:00009540       ptr2
+ 0003:00009548       NPC_Function_Table
+ 0003:00009B20       Prevent_Report_Failure_Crash
  0003:00009F68       lpCriticalSection
  0003:0000A088       Minus_1
- 0003:0000A4E0       max
  0003:0000A748       aPst
  0003:0000A788       aPdt
  0003:0000AB40       Quote_Inventory
@@ -2913,45 +2421,9 @@
  0003:0000AC7C       Background_Tile_Height
  0003:0000AC88       BackgroundMode
  0003:0000AC90       GlobalWaterDepth
- 0003:0000AC98       WeaponObj_Collision
- 0003:0000AC9C       WeaponObj_ShotID
- 0003:0000ACA0       WeaponObj_Flags
- 0003:0000ACA4       WeaponObj_In_Use
- 0003:0000ACA8       WeaponObj_X_Position
- 0003:0000ACAC       WeaponObj_Y_Position
- 0003:0000ACB0       WeaponObj_X_Velocity
- 0003:0000ACB4       WeaponObj_Y_Velocity
- 0003:0000ACB8       WeaponObj_???
- 0003:0000ACBC       WeaponObj_??
- 0003:0000ACC0       WeaponObj_Was_Setup
- 0003:0000ACC4       WeaponObj_????
- 0003:0000ACC8       WeaponObj_?
- 0003:0000ACCC       WeaponObj_FrameID
- 0003:0000ACD0       WeaponObj_Direction
- 0003:0000ACD4       WeaponObj_Rects
- 0003:0000ACE4       WeaponObj_Distance
- 0003:0000ACE8       WeaponObj_?????
- 0003:0000ACEC       WeaponObj_Max_Distance
- 0003:0000ACF0       WeaponObj_Damage
- 0003:0000ACF4       WeaponObj_Num_Impacts
- 0003:0000CCA8       EffectObj_InUse
- 0003:0000CCAC       EffectObj_ID
- 0003:0000CCB0       EffectObj_Mode
- 0003:0000CCB4       EffectObj_X_Position
- 0003:0000CCB8       EffectObj_Y_Position
- 0003:0000CCBC       EffectObj_X_Velocity
- 0003:0000CCC0       EffectObj_Y_Velocity
- 0003:0000CCC4       EffectObj_Was_Init
- 0003:0000CCC8       EffectObj_???
- 0003:0000CCCC       EffectObj_FrameID
- 0003:0000CCD0       EffectObj_Frame_Timer
- 0003:0000CCD4       EffectObj_X_Offset
- 0003:0000CCD8       EffectObj_Y_Offset
- 0003:0000CCDC       EffectObj_Rect
- 0003:0000DDA8       Screen_Offset_X
- 0003:0000DDAC       Screen_Offset_Y
- 0003:0000DDB0       Fullscreen_Rect
- 0003:0000DDC8       ptr
+ 0003:0000AC94       _color_black
+ 0003:0000AC98       Bullet_Objects
+ 0003:0000CCA8       Effect_Objects
  0003:0000E368       Font_Handle
  0003:0000E374       Fullscreen_Surface_Height
  0003:0000E378       Window_Surface_Width
@@ -2969,12 +2441,12 @@
  0003:0000E440       RECT_ScreenCopy
  0003:0000E450       DDBLTFX_ScreenCopy
  0003:0000E4B4       Final_Dst_Rect_1
- 0003:0000E4C4       Final_Src_Rect_1
+ 0003:0000E4C4       rcWork
  0003:0000E4D4       Final_Dst_Rect_2
  0003:0000E4E4       Final_Src_Rect_2
  0003:0000E4F4       Final_Dst_Rect_3
  0003:0000E504       Final_Src_Rect_3
- 0003:0000E514       Final_Dest_Rect_4
+ 0003:0000E514       Dest_Rect
  0003:0000E528       Draw_Colour_Fill_DDBLTFX
  0003:0000E578       Draw_Colour_Fill_DDBLTFX_dxFillColor
  0003:0000E58C       Final_Dst_Rect_5
@@ -2985,12 +2457,8 @@
  0003:0000E614       TSC_Buffer
  0003:0000E628       Text_Object_Array?
  0003:0000EB28       Mask_Color
- 0003:0000EB30       Fade_Status
- 0003:0000EB34       Fade_Complete
- 0003:0000EB38       Fade_Counter
- 0003:0000EB3C       Fade_Buffer_Int
- 0003:0000EC68       Fade_Buffer_Bool
- 0003:0000ED94       Fade_Type
+ 0003:0000EB30       Fade_Object
+ 0003:0000ED98       SkipFlags
  0003:0000EDA0       Event_Flags
  0003:0000F190       Occasional_Flash
  0003:0000F1A4       Draw_Sprite_Mask_6
@@ -3004,20 +2472,20 @@
  0003:0000F1DC       SoftQuakeDuration
  0003:0000F1E0       HardQuakeDuration
  0003:0000F1E4       CursorPosition
- 0003:0000F1E8       Game_State
+ 0003:0000F1E8       Game_Flags
  0003:0000F1EC       GameTime
  0003:0000F1F0       DirectInputObj
  0003:0000F210       Key_Held
  0003:0000F214       Key_Pressed
  0003:0000F218       LastKeyHeld
- 0003:0000F220       Data_Folder_Full_Path
- 0003:0000F328       FullExePath
- 0003:0000F42C       Controller_Button_IDs
+ 0003:0000F220       Data_Path
+ 0003:0000F328       ExePath
+ 0003:0000F42C       Joystick_Button_Table
  0003:0000F44C       AppInstance
  0003:0000F450       Window_Width
  0003:0000F454       Window_Height
  0003:0000F458       AppWinHandle
- 0003:0000F45C       Gamepad_Enabled
+ 0003:0000F45C       Use_Joystick
  0003:0000F460       Is_Fullscreen
  0003:0000F464       FPS_Counter_Enabled
  0003:0000F468       CanAcceptInput
@@ -3026,10 +2494,10 @@
  0003:0000F474       Timer1000Ticks
  0003:0000F478       hMutex
  0003:0000F47C       hObject
- 0003:0000F480       Level_Layout_Buffer
+ 0003:0000F480       Map_Data_Buffer
  0003:0000F484       Level_Layout_Buffer_PXA
- 0003:0000F586       Level_Width
- 0003:0000F588       Level_Height
+ 0003:0000F586       Map_Width
+ 0003:0000F588       Map_Height
  0003:0000F598       Room_Name
  0003:0000F5B8       Map_Flag_Array
  0003:0000F638       Player_Flags
@@ -3039,8 +2507,8 @@
  0003:0000F648       Quote_IsFacingDown
  0003:0000F64C       In_Fish_Battle
  0003:0000F650       EquippedItems
- 0003:0000F654       Quote_X_Position
- 0003:0000F658       Quote_Y_Position
+ 0003:0000F654       Quote_X_Pos
+ 0003:0000F658       Quote_Y_Pos
  0003:0000F65C       Camera_X_Position
  0003:0000F660       Camera_Y_Position
  0003:0000F664       Camera_X_Velocity
@@ -3073,7 +2541,6 @@
  0003:0000F6E8       Booster_Fuel
  0003:0000F6EC       Environment_Sound
  0003:0000F6F4       NikumaruTime
- 0003:0000F700       destination
  0003:00015B00       Song_Current_Beat
  0003:00015B48       Direct_Sound_Secondary_Buffer_Array?
  0003:00015DA8       TimerHandle
@@ -3086,21 +2553,22 @@
  0003:00016568       SoundBufferArray
  0003:000167E8       Direct_Sound_Object
  0003:000167EC       Direct_Sound_Primary_Buffer
- 0003:000167F0       Current_Map_ID
- 0003:000167F4       Current_Song_ID
- 0003:000167F8       Previous_Song_Beat
- 0003:000167FC       Previous_Song_ID
+ 0003:000167F0       Current_Stage_Number
+ 0003:000167F4       Current_Song_Number
+ 0003:000167F8       Old_Song_Pos
+ 0003:000167FC       Old_Song_Number
  0003:00016800       Whimsical_Star
- 0003:0001680C       Whimsical_Star_X_Position
- 0003:00016810       Whimsical_Star_Y_Position
- 0003:00016814       Whimsical_Star_X_Velocity
- 0003:00016818       Whimsical_Star_Y_Velocity
  0003:000168CC       CurrentStarID
+ 0003:000168D0       text_buffer
+ 0003:000169D0       path
+ 0003:00016AD4       size
  0003:00016AD8       Current_Script
  0003:00016AE0       Script_Position
  0003:00016AE4       TextColumn
  0003:00016B0C       FaceID
- 0003:00016B1C       Draw_Sprite_Mask_2
+ 0003:00016B1C       rcView
+ 0003:00016F48       gTan
+ 0003:00016F90       Event_Index
  0003:00016F98       Event.InUse
  0003:00016F9C       Event.Collision
  0003:00016FA0       Event.X_Position
@@ -3138,40 +2606,13 @@
  0003:00017038       ?????
  0003:0001703C       Event.Damage
  0003:00017040       Event.Parent
- 0003:00017220       Is_NPC_Alive
- 0003:00017224       NPC_Collision_Flag
- 0003:00017228       NPC_X_Position
- 0003:0001722C       NPC_Y_Position
- 0003:00017230       NPC_X_Velocity
- 0003:00017234       NPC_Y_Velocity
- 0003:00017238       NPC_Generic?_X_Acceleration?
- 0003:0001723C       NPC_Generic?_Y_Acceleration?
- 0003:00017240       NPC_X_Position_Curly_AI
- 0003:00017244       NPC_Y_Position_Curly_AI
- 0003:00017248       NPC_Type
- 0003:0001724C       NPC_Unknown
- 0003:00017250       NPC_Event_Number
- 0003:00017254       NPC_Spritesheet
- 0003:00017258       NPC_Sound_When_Hit
- 0003:0001725C       NPC_Death_Sound
- 0003:00017260       NPC_Current_Health
- 0003:00017264       NPC_EXP_Health_Missiles_Dropped
- 0003:00017268       NPC_Explosion_Size
- 0003:0001726C       NPC_Direction
- 0003:00017270       NPC_Flags
- 0003:00017274       NPC_Rects
- 0003:00017284       NPC_Generic?_Counter?
- 0003:00017288       NPC_Generic
- 0003:0001728C       NPC_Generic_2
- 0003:00017290       NPC_Generic_3
- 0003:00017294       NPC_Generic_4
- 0003:00017298       NPC_Generic_5
- 0003:0001729C       NPC_Hitbox
- 0003:000172BC       NPC_Touching_Bullet_Flag
- 0003:000172C0       NPC_Damage_Taken
- 0003:000172C4       NPC_Damage_On_Contact
- 0003:000172C8       NPC_Parent_Variable
- 0003:0002CA34       NPCStruct_Flags
+ 0003:00017220       NPC_Objects
+ 0003:0002CA20       Curly_Shoot_Wait
+ 0003:0002CA24       Curly_Shoot_X
+ 0003:0002CA28       Curly_Shoot_Y
+ 0003:0002CA2C       Super_X_Pos
+ 0003:0002CA30       Super_Y_Pos
+ 0003:0002CA34       NPC_Table
  0003:0002CA36       NPCStruct_Health
  0003:0002CA38       NPCStruct_Tileset
  0003:0002CA39       NPCStruct_DeathSnd
@@ -3190,10 +2631,8 @@
  0003:0002DC98       Locale_
  0003:0002DDC4       CodePage
  0003:0002DEE0       uNumber
- 0003:0002E008       memblock
  0003:0002E018       lpMem
  0003:0002E02C       HeapHandle
- 0003:0002F040       num
  0003:0002F044       PcommandLine
 
 Program entry point at 0001:00080D27

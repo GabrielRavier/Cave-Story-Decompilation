@@ -165,7 +165,7 @@
  0001:0000120E       Play_Switch_Weapon
  0001:00001233       Return
  0001:00001240       Unequ_Weap
- 0001:00001270       Load_Background_Sprite
+ 0001:00001270       Init_Background
  0001:000012D4       loc_4022D4
  0001:000012F8       loc_4022F8
  0001:00001349       loc_402349
@@ -342,7 +342,7 @@
  0001:00002D2F       Loop_Check
  0001:00002D75       jmp_Loop_Counter_Inc
  0001:00002D77       Return
- 0001:00002D80       Clear_All_Weapons_Obj_Slots
+ 0001:00002D80       Clear_Bullets
  0001:00002D8D       loc_403D8D
  0001:00002D96       loc_403D96
  0001:00002DAE       loc_403DAE
@@ -957,7 +957,7 @@
  0001:0000862C       Return
  0001:00008630       jmp_40961A_table
  0001:00008638       jmp_40961A_indirect_table
- 0001:00008650       Clear_All_Effects
+ 0001:00008650       Init_Effects
  0001:00008670       No_Effect
  0001:00008680       Random_Fountain_Pulsing_Disc_Particles
  0001:00008772       Initiate_Disk
@@ -1050,13 +1050,13 @@
  0001:00009CBF       Break
  0001:00009CCA       Clear_Found_Slot
  0001:00009D5B       Return
- 0001:00009D60       Load_Config_dat
+ 0001:00009D60       Load_Config_Data
  0001:00009DC1       Return_0
  0001:00009DC5       loc_40ADC5
  0001:00009E08       loc_40AE08
  0001:00009E1F       Return_1
  0001:00009E24       Return
- 0001:00009E30       Set_Default_Config_dat
+ 0001:00009E30       Set_Default_Config_Data
  0001:00009EC0       Version_Button
  0001:00009EFB       loc_40AEFB
  0001:00009F81       loc_40AF81
@@ -1104,7 +1104,7 @@
  0001:0000A604       loc_40B604
  0001:0000A66B       loc_40B66B
  0001:0000A6B9       loc_40B6B9
- 0001:0000A6C0       Kill_Direct_Draw
+ 0001:0000A6C0       End_Direct_Draw
  0001:0000A6CD       loc_40B6CD
  0001:0000A6D6       loc_40B6D6
  0001:0000A711       loc_40B711
@@ -1114,13 +1114,13 @@
  0001:0000A786       loc_40B786
  0001:0000A7A0       Destroy_Bitmap_Obj?
  0001:0000A7D8       loc_40B7D8
- 0001:0000A800       Load_BMP_From_Resource_And_Create_Surface
+ 0001:0000A800       MakeSurface_From_Resource
  0001:0000A816       loc_40B816
  0001:0000A82A       loc_40B82A
  0001:0000A858       loc_40B858
  0001:0000A8EF       loc_40B8EF
  0001:0000AAB7       loc_40BAB7
- 0001:0000AAC0       Load_BMP_From_File_And_Create_Surface
+ 0001:0000AAC0       MakeSurface_From_File
  0001:0000AB1C       loc_40BB1C
  0001:0000AB3A       loc_40BB3A
  0001:0000AB5F       loc_40BB5F
@@ -1130,12 +1130,12 @@
  0001:0000AE23       loc_40BE23
  0001:0000AE51       loc_40BE51
  0001:0000AFC2       loc_40BFC2
- 0001:0000AFD0       Load_BMP_From_File_Onto_Existing_Surface
+ 0001:0000AFD0       ReloadBitmap_From_File
  0001:0000B029       loc_40C029
  0001:0000B047       loc_40C047
  0001:0000B089       loc_40C089
  0001:0000B1B6       loc_40C1B6
- 0001:0000B1D0       Create_Blank_Surface
+ 0001:0000B1D0       MakeSurface_Blank
  0001:0000B1E3       loc_40C1E3
  0001:0000B1F7       loc_40C1F7
  0001:0000B224       loc_40C224
@@ -1144,7 +1144,7 @@
  0001:0000B2FB       loc_40C2FB
  0001:0000B31A       loc_40C31A
  0001:0000B320       Capture_Screen_To_Surface
- 0001:0000B3C0       Draw_Sprite_With_Transparency
+ 0001:0000B3C0       Draw_Bitmap_With_Transparency
  0001:0000B41F       loc_40C41F
  0001:0000B445       loc_40C445
  0001:0000B47F       loc_40C47F
@@ -1155,7 +1155,7 @@
  0001:0000B66F       loc_40C66F
  0001:0000B698       loc_40C698
  0001:0000B7A0       Draw_Sprite_Onto_Surface
- 0001:0000B8B0       Make_Native_Color
+ 0001:0000B8B0       Make_RGB
  0001:0000B8D7       loc_40C8D7
  0001:0000B94E       loc_40C94E
  0001:0000B96F       loc_40C96F
@@ -1177,14 +1177,14 @@
  0001:0000BD36       loc_40CD36
  0001:0000BD3B       loc_40CD3B
  0001:0000BD3E       loc_40CD3E
- 0001:0000BD50       Load_Font
+ 0001:0000BD50       Init_Font_Object
  0001:0000BD6C       loc_40CD6C
  0001:0000BD7C       loc_40CD7C
  0001:0000BD8A       loc_40CD8A
  0001:0000BDF1       loc_40CDF1
  0001:0000BE00       Draw_String
  0001:0000BEB0       Draw_String_Onto_Surface
- 0001:0000BF70       Unload_Font
+ 0001:0000BF70       End_Font_Object
  0001:0000BF90       Scroll_Credits_Text
  0001:0000BF9D       Loop_Restart
  0001:0000BFA6       For_Loop_Check
@@ -1216,7 +1216,7 @@
  0001:0000C34B       Return
  0001:0000C350       Draw_Credits_Image
  0001:0000C3A0       Load_Credits_Image
- 0001:0000C3E0       sub_40D3E0
+ 0001:0000C3E0       InitCreditScript
  0001:0000C410       If_Not_49D614_0_Deallocate
  0001:0000C434       loc_40D434
  0001:0000C440       Initialise_Credits
@@ -1280,7 +1280,7 @@
  0001:0000CD5A       loc_40DD5A
  0001:0000CD5F       loc_40DD5F
  0001:0000CD64       loc_40DD64
- 0001:0000CD70       Game_Loop_Exit_Menu
+ 0001:0000CD70       Call_Escape
  0001:0000CD92       loc_40DD92
  0001:0000CDC3       loc_40DDC3
  0001:0000CDE2       loc_40DDE2
@@ -1288,8 +1288,8 @@
  0001:0000CE48       loc_40DE48
  0001:0000CE4D       loc_40DE4D
  0001:0000CE4F       Return
- 0001:0000CE60       Erase_Fade_Data
- 0001:0000CE90       ___setargv
+ 0001:0000CE60       Init_Fade
+ 0001:0000CE90       Set_Fade_Mask_
  0001:0000CEA0       Reset_Fade_Vars
  0001:0000CEC0       TSC_FAO_Begin_Fade_Out
  0001:0000CEF5       loc_40DEF5
@@ -1462,12 +1462,12 @@
  0001:0000D840       Return_1
  0001:0000D845       Return
  0001:0000D850       Clear_Event_Flags
- 0001:0000D870       Clear_Skipflags?
+ 0001:0000D870       InitSkipFlags
  0001:0000D890       TSC_FLplus
  0001:0000D8AF       loc_40E8AF
  0001:0000D8E0       TSC_FLminues
  0001:0000D8FF       loc_40E8FF
- 0001:0000D930       Check_Flag
+ 0001:0000D930       Get_NPC_Flag
  0001:0000D956       loc_40E956
  0001:0000D968       Return_0
  0001:0000D96A       Return_1
@@ -1479,7 +1479,7 @@
  0001:0000DA36       loc_40EA36
  0001:0000DA48       loc_40EA48
  0001:0000DA4A       loc_40EA4A
- 0001:0000DA50       TSC_FLA
+ 0001:0000DA50       Init_Flash
  0001:0000DA70       Explosion?
  0001:0000DAC0       Update_Boss_Explosion
  0001:0000DAE3       loc_40EAE3
@@ -1506,7 +1506,7 @@
  0001:0000DE20       Draw_Boss_Explosion
  0001:0000DE2E       loc_40EE2E
  0001:0000DE55       Return
- 0001:0000DE60       Occasional_Flash_0
+ 0001:0000DE60       Reset_Flash
  0001:0000DE70       Update_Camera
  0001:0000DEF0       loc_40EEF0
  0001:0000DF0F       loc_40EF0F
@@ -1525,7 +1525,7 @@
  0001:0000E1B4       loc_40F1B4
  0001:0000E1E7       loc_40F1E7
  0001:0000E219       Return
- 0001:0000E220       TSC_FOM
+ 0001:0000E220       Set_Camera_Target_Quote
  0001:0000E250       TSC_FON
  0001:0000E25D       Loop_Restart
  0001:0000E266       Loop_Check
@@ -1534,10 +1534,10 @@
  0001:0000E292       loc_40F292
  0001:0000E2C3       Return
  0001:0000E2D0       TSC_FOB
- 0001:0000E310       TSC_QUA
+ 0001:0000E310       Set_Quake
  0001:0000E320       Set_Hard_Quake_Duration
- 0001:0000E330       Stop_All_Quake_Effects
- 0001:0000E350       RNG_Range
+ 0001:0000E330       Reset_Quake
+ 0001:0000E350       Random
  0001:0000E380       Draw_Numbers
  0001:0000E51F       For_Loop_Start
  0001:0000E533       For_Loop_Check
@@ -1557,7 +1557,7 @@
  0001:0000E6DE       loc_40F6DE
  0001:0000E718       Return_1
  0001:0000E71D       Return
- 0001:0000E730       Game_Loop_Opening_Cutscene
+ 0001:0000E730       Game_Mode_Opening_Cutscene
  0001:0000E79D       loc_40F79D
  0001:0000E7E6       loc_40F7E6
  0001:0000E7ED       loc_40F7ED
@@ -1685,7 +1685,7 @@
  0001:0000FD80       Get_File_Size
  0001:0000FDB4       loc_410DB4
  0001:0000FDD0       Return
- 0001:0000FDE0       Print_Load_BMP_Error
+ 0001:0000FDE0       Log_Error
  0001:0000FE32       loc_410E32
  0001:0000FE4F       Return_0
  0001:0000FE53       loc_410E53
@@ -1723,7 +1723,7 @@
  0001:00010251       loc_411251
  0001:0001028F       loc_41128F
  0001:000102C8       loc_4112C8
- 0001:000102E0       Is_PBM_Protected
+ 0001:000102E0       IsEnableBitmap
  0001:00010319       Return_0
  0001:0001031D       loc_41131D
  0001:0001036E       Return_0_
@@ -1783,13 +1783,13 @@
  0001:00011226       loc_412226
  0001:0001123F       loc_41223F
  0001:00011244       Return
- 0001:00011250       Init_Gamepad?
+ 0001:00011250       ResetJoystickStatus
  0001:0001126B       loc_41226B
  0001:00011284       loc_412284
  0001:000112B9       loc_4122B9
  0001:000112BD       loc_4122BD
  0001:000112D4       loc_4122D4
- 0001:000112E0       Update_Keys
+ 0001:000112E0       Get_Keys
  0001:00011320       sub_412320
  0001:00011370       Display_FPS_Counter
  0001:0001139A       Return
@@ -1954,18 +1954,18 @@
  0001:00012714       loc_413714
  0001:0001273D       loc_41373D
  0001:0001273F       loc_41373F
- 0001:00012750       Reserve_Memory_For_PXM_Data
+ 0001:00012750       Init_Map_Data
  0001:00012770       Load_PXM_File
  0001:000127C2       loc_4137C2
  0001:00012802       loc_413802
  0001:00012859       loc_413859
  0001:00012891       loc_413891
- 0001:000128A0       Process_PXA_file
+ 0001:000128A0       Load_PXA_File
  0001:000128EF       loc_4138EF
  0001:00012918       loc_413918
  0001:00012930       Kill_Level_Layout
  0001:00012950       Destroy_Bitmap_Object_02
- 0001:00012960       Get_Room_Size
+ 0001:00012960       Get_Map_Data
  0001:00012974       loc_413974
  0001:00012986       loc_413986
  0001:00012999       loc_413999
@@ -2020,7 +2020,7 @@
  0001:000130AF       Return
  0001:000130B3       off_4140B3
  0001:000130C7       byte_4140C7
- 0001:000130F0       Draw_Room_Text_To_Surface
+ 0001:000130F0       Ready_Map_Name
  0001:00013190       loc_414190
  0001:00013199       loc_414199
  0001:000131B3       loc_4141B3
@@ -2288,8 +2288,8 @@
  0001:00015A65       loc_416A65
  0001:00015A7F       loc_416A7F
  0001:00015A95       Return
- 0001:00015AA0       Get_Quote_XY
- 0001:00015AC0       Tsc_MOV
+ 0001:00015AA0       Get_Quote_Pos
+ 0001:00015AC0       Set_Quote_Position
  0001:00015B30       Instantly_Set_X_Y_Pos
  0001:00015B50       Mov_Quote_X_Velocity_0
  0001:00015B60       Tsc_UNJ
@@ -2315,7 +2315,7 @@
  0001:00015CEC       loc_416CEC
  0001:00015D2A       Play_Helicopter_Blades
  0001:00015D36       Return
- 0001:00015D40       TSC_SSS_SPS?_2
+ 0001:00015D40       Cut_Noise
  0001:00015D80       Play_Environmental_Sounds
  0001:00015D9A       loc_416D9A
  0001:00015DD9       Play_Helicopter_Blades
@@ -2624,14 +2624,14 @@
  0001:00019B84       loc_41AB84
  0001:00019B89       loc_41AB89
  0001:00019B8E       loc_41AB8E
- 0001:00019BA0       Sound_Thingy?
+ 0001:00019BA0       Direct_Sound_Buffer_Thingy
  0001:00019BB4       loc_41ABB4
  0001:00019BBD       loc_41ABBD
  0001:00019BC6       loc_41ABC6
  0001:00019BD9       loc_41ABD9
  0001:00019BE2       loc_41ABE2
  0001:00019C61       loc_41AC61
- 0001:00019C66       loc_41AC66
+ 0001:00019C66       Return
  0001:00019C70       Sound_Thingy??
  0001:00019C83       loc_41AC83
  0001:00019D0F       Return
@@ -2650,7 +2650,7 @@
  0001:0001A16F       loc_41B16F
  0001:0001A20B       loc_41B20B
  0001:0001A291       Return
- 0001:0001A2A0       sub_41B2A0
+ 0001:0001A2A0       Direct_Sound_Buffer_Related?
  0001:0001A2B2       loc_41B2B2
  0001:0001A2BB       loc_41B2BB
  0001:0001A2C4       loc_41B2C4
@@ -2665,24 +2665,24 @@
  0001:0001A400       loc_41B400
  0001:0001A40D       loc_41B40D
  0001:0001A43C       loc_41B43C
- 0001:0001A440       sub_41B440
+ 0001:0001A440       Direct_Sound_Related?
  0001:0001A44E       loc_41B44E
  0001:0001A478       loc_41B478
- 0001:0001A480       sub_41B480
+ 0001:0001A480       Direct_Sound_Thingy?
  0001:0001A48E       loc_41B48E
  0001:0001A4C0       loc_41B4C0
- 0001:0001A4D0       sub_41B4D0
+ 0001:0001A4D0       Direct_Sound_Thing?
  0001:0001A4DE       loc_41B4DE
  0001:0001A505       loc_41B505
- 0001:0001A510       sub_41B510
+ 0001:0001A510       Play_Drum_Sound_ORG_File
  0001:0001A522       loc_41B522
  0001:0001A54B       loc_41B54B
  0001:0001A587       loc_41B587
- 0001:0001A5F3       loc_41B5F3
- 0001:0001A600       sub_41B600
- 0001:0001A612       loc_41B612
+ 0001:0001A5F3       Return
+ 0001:0001A600       Music_Obj_Thingy?
+ 0001:0001A612       Loop_Counter_Inc
  0001:0001A61B       loc_41B61B
- 0001:0001A645       loc_41B645
+ 0001:0001A645       Return
  0001:0001A650       sub_41B650
  0001:0001A6B2       loc_41B6B2
  0001:0001A6BB       loc_41B6BB
@@ -2761,7 +2761,7 @@
  0001:0001B082       loc_41C082
  0001:0001B094       loc_41C094
  0001:0001B0B0       ORG_Thing
- 0001:0001B10D       loc_41C10D
+ 0001:0001B10D       Loop_Counter_Inc
  0001:0001B116       loc_41C116
  0001:0001B16E       loc_41C16E
  0001:0001B180       sub_41C180
@@ -2812,28 +2812,28 @@
  0001:0001B6D9       Return_0_
  0001:0001B6DD       loc_41C6DD
  0001:0001B6EC       loc_41C6EC
- 0001:0001B6F0       Load_Org_Music
+ 0001:0001B6F0       Load_Organya
  0001:0001B6FC       Return_0_
  0001:0001B700       loc_41C700
  0001:0001B712       Return_0
  0001:0001B716       loc_41C716
  0001:0001B72C       Return
- 0001:0001B730       Set_Org_Music_Position
+ 0001:0001B730       Set_Organya_Position
  0001:0001B73E       loc_41C73E
  0001:0001B760       loc_41C760
- 0001:0001B770       Get_Org_Music_Position
+ 0001:0001B770       Get_Organya_Position
  0001:0001B77C       Return_0
  0001:0001B780       Return_Song_Current_Beat
  0001:0001B785       Return
  0001:0001B790       Start_Org_Playback
  0001:0001B79E       loc_41C79E
  0001:0001B7B8       loc_41C7B8
- 0001:0001B7C0       Set_Org_Volume
+ 0001:0001B7C0       Change_Organya_Volume
  0001:0001B7D0       loc_41C7D0
  0001:0001B7DC       loc_41C7DC
  0001:0001B7E0       loc_41C7E0
  0001:0001B7ED       loc_41C7ED
- 0001:0001B7F0       sub_41C7F0
+ 0001:0001B7F0       Stop_Organya_Music
  0001:0001B7FF       loc_41C7FF
  0001:0001B80D       loc_41C80D
  0001:0001B816       loc_41C816
@@ -3229,7 +3229,7 @@
  0001:0001F160       loc_420160
  0001:0001F179       loc_420179
  0001:0001F191       loc_420191
- 0001:0001F1A0       Kill_Direct_Sound?
+ 0001:0001F1A0       End_Direct_Sound
  0001:0001F1B2       loc_4201B2
  0001:0001F1C0       loc_4201C0
  0001:0001F1C9       loc_4201C9
@@ -3262,7 +3262,7 @@
  0001:0001F5B6       loc_4205B6
  0001:0001F5F1       loc_4205F1
  0001:0001F62F       Return
- 0001:0001F640       Play_Sound_Effect
+ 0001:0001F640       Play_Sound_Object
  0001:0001F652       loc_420652
  0001:0001F684       loc_420684
  0001:0001F6A0       loc_4206A0
@@ -3277,7 +3277,7 @@
  0001:0001F7A0       sub_4207A0
  0001:0001F7AE       loc_4207AE
  0001:0001F7D4       Return
- 0001:0001F7E0       Sound_Loader
+ 0001:0001F7E0       Make_PixTone_Object
  0001:0001F7FE       loc_4207FE
  0001:0001F8E2       loc_4208E2
  0001:0001F8EB       loc_4208EB
@@ -3304,7 +3304,7 @@
  0001:0001FBB6       loc_420BB6
  0001:0001FBC8       loc_420BC8
  0001:0001FBCB       Return
- 0001:0001FBE0       Load_Room
+ 0001:0001FBE0       Load_Stage
  0001:0001FC68       loc_420C68
  0001:0001FCAA       loc_420CAA
  0001:0001FCEC       loc_420CEC
@@ -3315,11 +3315,11 @@
  0001:0001FE55       loc_420E55
  0001:0001FE5F       loc_420E5F
  0001:0001FEC8       loc_420EC8
- 0001:0001FEE0       Tsc_CMU
+ 0001:0001FEE0       Change_Music
  0001:0001FEF6       loc_420EF6
  0001:0001FF46       loc_420F46
  0001:0001FF50       Tsc_RMU
- 0001:0001FFA0       Whimsical_Star_Init
+ 0001:0001FFA0       Init_Whimsical_Star
  0001:00020040       sub_421040
  0001:0002006D       Loop_Counter_Inc
  0001:00020076       loc_421076
@@ -3349,7 +3349,7 @@
  0001:00020440       loc_421440
  0001:000204CE       loc_4214CE
  0001:000204D3       loc_4214D3
- 0001:000204E0       Initiate_TSC_Buffer?
+ 0001:000204E0       Init_TSC
  0001:00020501       loc_421501
  0001:0002050A       loc_42150A
  0001:00020530       loc_421530
@@ -3380,7 +3380,7 @@
  0001:000208D2       Return
  0001:000208E0       __fputchar
  0001:00020900       TSC_Dec_to_Hex
- 0001:00020990       Call_TSC_Event
+ 0001:00020990       Start_TSC_Event
  0001:00020A30       loc_421A30
  0001:00020A52       loc_421A52
  0001:00020A91       loc_421A91
@@ -3629,16 +3629,16 @@
  0001:0002479D       loc_42579D
  0001:000247A6       loc_4257A6
  0001:000247E8       loc_4257E8
- 0001:000247F0       sub_4257F0
+ 0001:000247F0       Init_Triangle_Table
  0001:000247FF       loc_4257FF
  0001:00024808       loc_425808
  0001:00024845       loc_425845
- 0001:0002484E       loc_42584E
+ 0001:0002484E       Loop_Counter_Inc
  0001:00024857       loc_425857
- 0001:000248A8       loc_4258A8
- 0001:000248B0       SIN
- 0001:000248C0       COS
- 0001:000248E0       Angle_Calculator
+ 0001:000248A8       Return
+ 0001:000248B0       GetSin
+ 0001:000248C0       GetCos
+ 0001:000248E0       GetArcTan
  0001:00024922       loc_425922
  0001:00024940       loc_425940
  0001:00024942       loc_425942
@@ -6290,7 +6290,7 @@
  0001:00043707       loc_444707
  0001:00043719       loc_444719
  0001:0004374D       loc_44474D
- 0001:00043776       loc_444776
+ 0001:00043776       Return
  0001:00043780       NPC146
  0001:00043832       loc_444832
  0001:00043853       loc_444853
@@ -10076,8 +10076,8 @@
  0001:0006DA90       NPC360_Thank_You
  0001:0006DAEE       loc_46EAEE
  0001:0006DB29       loc_46EB29
- 0001:0006DB30       Kill_NPC_RAM
- 0001:0006DB50       Process_PXE_File
+ 0001:0006DB30       Init_NPCs
+ 0001:0006DB50       Load_Event
  0001:0006DBA2       loc_46EBA2
  0001:0006DBD6       loc_46EBD6
  0001:0006DC0E       loc_46EC0E
@@ -10089,7 +10089,7 @@
  0001:0006DE1D       loc_46EE1D
  0001:0006DE2B       loc_46EE2B
  0001:0006DE3C       loc_46EE3C
- 0001:0006DE50       Load_NPC_Table_Values_To_Object
+ 0001:0006DE50       Set_Unique_Parameter
  0001:0006DFD0       NPC_Create
  0001:0006DFDA       loc_46EFDA
  0001:0006E002       loc_46F002
@@ -10207,6 +10207,7 @@
  0001:0006F416       loc_470416
  0001:0006F450       loc_470450
  0001:0006F455       loc_470455
+ 0001:0006F460       sub_470460
  0001:0006F490       sub_470490
  0001:0006F49D       loc_47049D
  0001:0006F4A6       loc_4704A6
@@ -10343,7 +10344,7 @@
  0001:000713C4       loc_4723C4
  0001:000713F3       loc_4723F3
  0001:000713F8       Return
- 0001:00071400       Load_NPC_Table
+ 0001:00071400       LoadNPCTable
  0001:00071422       loc_472422
  0001:00071455       loc_472455
  0001:0007148F       loc_47248F
@@ -10380,7 +10381,7 @@
  0001:000716FE       Return
  0001:00071710       sub_472710
  0001:00071734       loc_472734
- 0001:00071740       Set_Room_Boss_ID
+ 0001:00071740       Init_Room_Boss
  0001:00071770       Draw_Boss?
  0001:00071783       loc_472783
  0001:0007178C       loc_47278C
@@ -10580,6 +10581,7 @@
  0001:0007417F       loc_47517F
  0001:00074192       loc_475192
  0001:0007424B       off_47524B
+ 0001:0007424F       off_47524F
  0001:00074263       byte_475263
  0001:00074337       off_475337
  0001:0007434F       byte_47534F
@@ -11027,7 +11029,7 @@
  0001:0007A409       loc_47B409
  0001:0007A40B       loc_47B40B
  0001:0007A43D       loc_47B43D
- 0001:0007A450       __crt_debugger_hook_2
+ 0001:0007A450       Init_Boss_Life
  0001:0007A460       sub_47B460
  0001:0007A46B       loc_47B46B
  0001:0007A493       loc_47B493
@@ -11455,10 +11457,11 @@
  0001:0007FA08       loc_480A08
  0001:0007FA36       DirectDrawCreate
  0001:0007FA3C       DirectInputCreateA
+ 0001:0007FA50       off_480A50
  0001:0007FA58       aAHAHAAHARHAAHAPHAPH
  0001:0007FAE4       aA
  0001:0007FAF4       aA_0
- 0001:0007FD10       dword_480D10
+ 0001:0007FD10       byte_480D10
  0001:0007FD28       DirectSoundCreate
  0001:0007FD30       _memset
  0001:0007FD53       adjust_loop
@@ -11477,11 +11480,10 @@
  0001:0007FE00       loc_480E00
  0001:0007FE12       loc_480E12
  0001:0007FE1B       _fclose
- 0001:0007FE38       loc_480E38
+ 0001:0007FE38       Return
  0001:0007FE41       loc_480E41
- 0001:0007FE5F       loc_480E5F
- 0001:0007FE61       loc_480E61
- 0001:0007FE64       loc_480E64
+ 0001:0007FE61       sub_480E61
+ 0001:0007FE64       sub_480E64
  0001:0007FE6C       _fread
  0001:0007FE90       loc_480E90
  0001:0007FEA4       loc_480EA4
@@ -11498,11 +11500,9 @@
  0001:0007FF43       loc_480F43
  0001:0007FF4F       loc_480F4F
  0001:0007FF55       fread_wrapper
- 0001:0007FF8E       loc_480F8E
- 0001:0007FF97       loc_480F97
+ 0001:0007FF97       sub_480F97
  0001:0007FFA1       __fsopen
  0001:0007FFC8       loc_480FC8
- 0001:0007FFEA       loc_480FEA
  0001:0007FFED       loc_480FED
  0001:0007FFF3       _fsopen_sub_480FF3
  0001:0007FFFD       _fopen
@@ -11540,13 +11540,11 @@
  0001:00080281       loc_481281
  0001:0008028B       _free
  0001:000802CA       loc_4812CA
- 0001:000802D3       loc_4812D3
  0001:000802DE       _free_sub_4812DE
  0001:000802E7       loc_4812E7
  0001:000802E8       loc_4812E8
  0001:000802F6       loc_4812F6
  0001:000802FC       __heap_alloc
- 0001:0008033B       loc_48133B
  0001:00080342       loc_481342
  0001:00080347       loc_481347
  0001:00080356       loc_481356
@@ -11568,6 +11566,7 @@
  0001:0008047F       Just_nop
  0001:00080480       LeadUp3
  0001:000804A0       off_4814A0
+ 0001:000804C0       UnwindUp7
  0001:000804C8       UnwindUp6
  0001:000804D0       UnwindUp5
  0001:000804D8       UnwindUp4
@@ -11614,7 +11613,6 @@
  0001:000807E5       tail_done
  0001:000807E8       _sscanf
  0001:0008081C       _fprintf
- 0001:00080867       loc_481867
  0001:00080870       _fprintf_sub_481870
  0001:0008087A       _fwrite
  0001:0008089E       loc_48189E
@@ -11633,8 +11631,7 @@
  0001:0008096F       loc_48196F
  0001:00080978       loc_481978
  0001:00080981       fwrite_wrapper
- 0001:000809BA       loc_4819BA
- 0001:000809C3       loc_4819C3
+ 0001:000809C3       sub_4819C3
  0001:000809CD       __fseek_lk
  0001:000809EC       loc_4819EC
  0001:00080A04       loc_481A04
@@ -11643,7 +11640,6 @@
  0001:00080A4B       loc_481A4B
  0001:00080A59       loc_481A59
  0001:00080A5C       _fseek
- 0001:00080A92       loc_481A92
  0001:00080A9B       _fseek_sub_481A9B
  0001:00080AA5       Just_Return
  0001:00080AA6       __cfltcvt_init
@@ -11665,7 +11661,6 @@
  0001:00080C0F       integer_QnaN_or_zero
  0001:00080C23       localexit
  0001:00080C30       __CIcos
- 0001:00080C40       Why_Is_This_Seperated_From___CIcos?
  0001:00080C44       _cos
  0001:00080C4D       start_1
  0001:00080C62       CW_is_set_to_default_0
@@ -11734,7 +11729,6 @@
  0001:00081284       __close
  0001:000812DB       loc_4822DB
  0001:000812EA       loc_4822EA
- 0001:000812F3       loc_4822F3
  0001:000812F8       _close_sub_4822F8
  0001:000812FB       _close_call___unlock_fhandle
  0001:00081303       loc_482303
@@ -11753,10 +11747,8 @@
  0001:0008144C       loc_48244C
  0001:00081465       loc_482465
  0001:0008146D       loc_48246D
- 0001:00081470       loc_482470
  0001:00081475       _flsall_sub_482475
  0001:00081486       loc_482486
- 0001:0008148F       loc_48248F
  0001:0008149B       loc_48249B
  0001:000814A1       _flsall_sub_4824A1
  0001:000814AA       Return_flsall_1
@@ -11818,7 +11810,6 @@
  0001:000818D0       __read
  0001:0008192F       loc_48292F
  0001:00081946       loc_482946
- 0001:0008194F       loc_48294F
  0001:00081954       _read_sub_482954
  0001:00081957       _read_call___unlock_fhandle
  0001:0008195F       loc_48295F
@@ -11861,7 +11852,6 @@
  0001:00081C54       loc_482C54
  0001:00081C57       loc_482C57
  0001:00081C6D       loc_482C6D
- 0001:00081C76       loc_482C76
  0001:00081C7E       _getstream_sub_482C7E
  0001:00081C81       _getstream_sub_482C81
  0001:00081C8A       __flsbuf
@@ -12146,17 +12136,14 @@
  0001:0008345C       loc_48445C
  0001:0008346D       loc_48446D
  0001:00083495       loc_484495
- 0001:0008349E       loc_48449E
  0001:000834C3       loc_4844C3
  0001:000834CD       loc_4844CD
  0001:000834D7       loc_4844D7
  0001:000834E1       loc_4844E1
  0001:00083504       loc_484504
- 0001:0008350D       loc_48450D
  0001:00083514       Return
  0001:0008351C       _freefls@4_sub_48451C
  0001:00083521       _freefls@4_sub_484521
- 0001:0008352A       loc_48452A
  0001:0008352D       _freefls@4_sub_48452D
  0001:00083536       __mtinit
  0001:00083547       loc_484547
@@ -12329,7 +12316,6 @@
  0001:00084637       __write
  0001:00084696       loc_485696
  0001:000846AD       Return
- 0001:000846B6       loc_4856B6
  0001:000846BB       _write_sub_4856BB
  0001:000846BE       _write_call___unlock_fhandle
  0001:000846C6       loc_4856C6
@@ -12343,7 +12329,6 @@
  0001:00084756       __lseek
  0001:000847B5       loc_4857B5
  0001:000847CC       Return
- 0001:000847D5       loc_4857D5
  0001:000847DA       _lseek_sub_4857DA
  0001:000847DD       _lseek_call___unlock_fhandle
  0001:000847E5       loc_4857E5
@@ -12499,10 +12484,9 @@
  0001:000852A6       loc_4862A6
  0001:000852C5       loc_4862C5
  0001:000852D5       loc_4862D5
- 0001:000852EE       loc_4862EE
  0001:00085301       mov_edi_0_esi_1
  0001:00085306       _doexit_sub_486306
- 0001:00085313       loc_486313
+ 0001:00085313       Return
  0001:00085314       loc_486314
  0001:0008531A       _exit
  0001:0008532B       __exit
@@ -12645,13 +12629,13 @@
  0001:00085CA0       loc_486CA0
  0001:00085CB8       loc_486CB8
  0001:00085CBB       Return
- 0001:00085CC0       sub_486CC0
+ 0001:00085CC0       Startup_Related?
  0001:00085CD3       loc_486CD3
  0001:00085CED       Random_Return_1_In_The_Middle_Of_A_Function
  0001:00085CF1       loc_486CF1
  0001:00085CF4       loc_486CF4
  0001:00085CFE       Return
- 0001:00085D04       func
+ 0001:00085D04       On_Exit_Function
  0001:00085D17       loc_486D17
  0001:00085D31       loc_486D31
  0001:00085D35       loc_486D35
@@ -12775,7 +12759,6 @@
  0001:000865F6       loc_4875F6
  0001:00086615       loc_487615
  0001:0008662A       loc_48762A
- 0001:00086633       loc_487633
  0001:00086636       Return
  0001:0008663C       __alloc_osfhnd_sub_48763C
  0001:00086645       __commit
@@ -12783,14 +12766,12 @@
  0001:000866B5       loc_4876B5
  0001:000866C5       loc_4876C5
  0001:000866D4       loc_4876D4
- 0001:000866DD       loc_4876DD
  0001:000866E2       _commit_sub_4876E2
  0001:000866E5       _commit_call___unlock_fhandle
  0001:000866ED       loc_4876ED
  0001:000866FB       Return
  0001:00086701       _calloc
  0001:0008671C       loc_48771C
- 0001:00086761       loc_487761
  0001:00086776       loc_487776
  0001:0008677A       loc_48777A
  0001:0008678B       loc_48778B
@@ -12803,7 +12784,6 @@
  0001:0008680C       loc_48780C
  0001:00086839       loc_487839
  0001:0008683C       loc_48783C
- 0001:00086845       loc_487845
  0001:0008684E       __fcloseall_sub_48784E
  0001:00086857       __getbuf
  0001:00086880       loc_487880
@@ -12849,9 +12829,8 @@
  0001:00086B64       loc_487B64
  0001:00086B76       loc_487B76
  0001:00086B82       __sopen
- 0001:00086BBE       loc_487BBE
  0001:00086BC7       __sopen_sub_487BC7
- 0001:00086BD6       loc_487BD6
+ 0001:00086BD6       Return
  0001:00086BD7       __crtInitCritSecNoSpinCount(x,x)
  0001:00086BE7       ___crtInitCritSecAndSpinCount
  0001:00086C29       loc_487C29
@@ -12938,7 +12917,6 @@
  0001:00087279       loc_488279
  0001:00087299       Return
  0001:0008729E       ___updatetlocinfo
- 0001:000872C7       loc_4882C7
  0001:000872D0       ___updatetlocinfo_call__unlock
  0001:000872D9       _CPtoLCID
  0001:000872F0       Return_1028
@@ -12999,7 +12977,6 @@
  0001:00087768       loc_488768
  0001:0008777F       loc_48877F
  0001:00087782       loc_488782
- 0001:0008778B       loc_48878B
  0001:00087794       __setmbcp_sub_488794
  0001:0008779D       ___initmbctable
  0001:000877B8       Return_0
@@ -13167,7 +13144,6 @@
  0001:00088475       ___onexitinit
  0001:0008848D       loc_48948D
  0001:0008849D       __onexit
- 0001:000884C6       loc_4894C6
  0001:000884CF       __onexit_call___unlockexit
  0001:000884D5       _atexit
  0001:000884E7       _x_ismbbtype
@@ -13239,13 +13215,9 @@
  0001:00088C26       loc_489C26
  0001:00088C2E       loc_489C2E
  0001:00088C65       loc_489C65
- 0001:00088CB6       loc_489CB6
- 0001:00088CBA       loc_489CBA
  0001:00088CD1       loc_489CD1
  0001:00088CF2       loc_489CF2
  0001:00088D61       loc_489D61
- 0001:00088D84       loc_489D84
- 0001:00088D88       loc_489D88
  0001:00088D9F       loc_489D9F
  0001:00088DBC       loc_489DBC
  0001:00088DDF       loc_489DDF
@@ -13485,7 +13457,6 @@
  0001:00089EC1       loc_48AEC1
  0001:00089EEC       loc_48AEEC
  0001:00089F02       loc_48AF02
- 0001:00089F0B       loc_48AF0B
  0001:00089F17       loc_48AF17
  0001:00089F32       loc_48AF32
  0001:00089F52       _realloc_sub_48AF52
@@ -13498,7 +13469,6 @@
  0001:00089F9F       __msize
  0001:00089FDC       loc_48AFDC
  0001:00089FDF       loc_48AFDF
- 0001:00089FE8       loc_48AFE8
  0001:00089FEE       loc_48AFEE
  0001:0008A001       Return
  0001:0008A009       __msize_sub_48B009
@@ -13626,7 +13596,7 @@
  0001:0008A8E2       RtlUnwind
  0001:0008A8F0       sub_48B8F0
  0002:00000270       aArmsitem_tsc
- 0002:00000280       aSS_pbm
+ 0002:00000280       format
  0002:0000028C       aRb
  0002:00000290       aDoukutsu200412
  0002:000002A4       aConfig_dat
@@ -13675,7 +13645,7 @@
  0002:00000450       Operation
  0002:00000458       aOpen_0
  0002:00000460       debug_txt
- 0002:00000470       format
+ 0002:00000470       debug_txt
  0002:00000480       mode
  0002:00000484       aSDDD
  0002:00000494       aSS_1
@@ -13716,7 +13686,7 @@
  0002:000005E0       IconName
  0002:000005E4       aIcon_mini
  0002:000005F0       aMenu_main
- 0002:000005FC       aLoading
+ 0002:000005FC       name
  0002:00000604       aMute
  0002:0000060C       aFps
  0002:00000610       aWindow_rect_0
@@ -13864,6 +13834,7 @@
  0002:00000CE0       stru_48CCE0
  0002:00000CF0       stru_48CCF0
  0002:00000D00       stru_48CD00
+ 0002:00000D14       aPH
  0002:00000D18       stru_48CD18
  0002:00000D28       stru_48CD28
  0002:00000D38       byte_48CD38
@@ -13871,6 +13842,7 @@
  0002:00000DA4       aNull_0
  0002:00000DB0       stru_48CDB0
  0002:00000DC0       stru_48CDC0
+ 0002:00000DCC       aEh
  0002:00000DD8       aFlsfree
  0002:00000DE0       aFlssetvalue
  0002:00000DEC       aFlsgetvalue
@@ -13923,6 +13895,7 @@
  0002:00001340       LibFileName
  0002:00001350       stru_48D350
  0002:00001360       stru_48D360
+ 0002:0000136C       aUh
  0002:00001378       stru_48D378
  0002:00001388       stru_48D388
  0002:00001398       stru_48D398
@@ -13982,6 +13955,8 @@
  0002:00001BCC       aSun
  0002:00001BD0       stru_48DBD0
  0002:00001BE0       stru_48DBE0
+ 0002:00001BFC       aDah
+ 0002:00001C00       aIah
  0002:00001C04       a1Qnan
  0002:00001C0C       a1Inf
  0002:00001C14       a1Ind
@@ -14020,7 +13995,7 @@
  0002:00001D0C       aSunmontuewedthufrisat
  0002:00001D24       aJanfebmaraprmayjunjulaugsepoctnovdec
  0002:00001D50       stru_48DD50
- 0002:00001D60       byte_48DD60
+ 0002:00001D60       unk_48DD60
  0002:00001D62       aMg
  0002:00001D68       aDest
  0002:00001D70       aF
@@ -14436,45 +14411,32 @@
  0003:00000830       dword_48F830
  0003:00000834       dword_48F834
  0003:000008C0       ROM_PEffects
- 0003:00000908       str2
- 0003:0000090C       off_48F90C
+ 0003:00000908       DOUKUTSU20041206
+ 0003:0000090C       Config_dat
  0003:00000910       off_48F910
  0003:00000914       GraphicScale
  0003:00000918       off_48F918
  0003:0000091C       FullscreenRect
  0003:00000924       RenderWidth
  0003:00000928       RenderHeight
- 0003:0000092C       dword_48F92C
- 0003:0000093C       ROM_PImageTag
- 0003:00000940       ROM_SoundData
- 0003:00000A20       dword_48FA20
+ 0003:0000092C       rect
+ 0003:0000093C       Image_Tag
+ 0003:00000940       Snd_Data_Table
+ 0003:00000A20       Ptr_Sound
  0003:00000B00       dword_48FB00
- 0003:00000B10       aSssss?
  0003:00000BE0       dword_48FBE0
  0003:00000C50       dword_48FC50
  0003:00000CC0       dword_48FCC0
  0003:00000D30       dword_48FD30
  0003:00000D58       aFfffffc?5
- 0003:00000DC8       aFfffffc?5_0
  0003:00000E10       dword_48FE10
  0003:00000EF0       dword_48FEF0
  0003:00000FD0       dword_48FFD0
  0003:000010B0       dword_4900B0
  0003:00001190       dword_490190
- 0003:00001298       aSsssss??
- 0003:00001308       aSsssss??_0
  0003:00001350       dword_490350
  0003:00001430       dword_490430
- 0003:000014E0       aSssss?_0
- 0003:000014F0       a?
- 0003:000014F4       a@_0
- 0003:000014F8       a?_0
- 0003:000014FC       aA_6
- 0003:00001500       a?_1
- 0003:00001538       a333333?
  0003:00001580       dword_490580
- 0003:000015A8       aSsssss??_1
- 0003:00001618       aSsssss??_2
  0003:00001660       dword_490660
  0003:000016D0       dword_4906D0
  0003:00001740       dword_490740
@@ -14483,7 +14445,6 @@
  0003:00001890       dword_490890
  0003:00001900       dword_490900
  0003:000019E0       dword_4909E0
- 0003:00001A08       aSssss?_1
  0003:00001A50       dword_490A50
  0003:00001B30       dword_490B30
  0003:00001C10       dword_490C10
@@ -14499,12 +14460,11 @@
  0003:00002380       dword_491380
  0003:000023F0       dword_4913F0
  0003:00002460       dword_491460
- 0003:00002568       aFfffffc?
  0003:000025B0       dword_4915B0
  0003:00002620       dword_491620
  0003:00002700       dword_491700
  0003:00002770       dword_491770
- 0003:000027E0       byte_4917E0
+ 0003:000027E0       unk_4917E0
  0003:000028C0       dword_4918C0
  0003:00002930       dword_491930
  0003:00002A80       dword_491A80
@@ -14530,15 +14490,13 @@
  0003:00003650       dword_492650
  0003:00003730       dword_492730
  0003:00003810       dword_492810
- 0003:000038F0       byte_4928F0
+ 0003:000038F0       unk_4928F0
  0003:000039D0       dword_4929D0
  0003:00003AB0       dword_492AB0
  0003:00003C00       dword_492C00
  0003:00003C70       dword_492C70
  0003:00003DC0       dword_492DC0
  0003:00003EA0       dword_492EA0
- 0003:00003EC8       aFfffffc?5_1
- 0003:00003F38       aFfffffc?5_2
  0003:00003F80       dword_492F80
  0003:00004060       dword_493060
  0003:000040D0       dword_4930D0
@@ -14551,29 +14509,29 @@
  0003:000044C0       dword_4934C0
  0003:00004530       dword_493530
  0003:000045A0       dword_4935A0
- 0003:00004610       Key_For_Jump_Duplicate
- 0003:00004614       Key_For_Shoot_Duplicate
+ 0003:00004610       Key_Jump
+ 0003:00004614       Key_Shoot
  0003:00004618       Key_For_Next_Weapon
  0003:0000461C       Key_For_Prev_Weapon
  0003:00004620       Key_For_Menu
  0003:00004624       Key_For_Minimap
- 0003:00004628       Key_For_Jump
- 0003:0000462C       Key_For_Shoot
- 0003:00004630       Key_For_Left
- 0003:00004634       Key_For_Up
- 0003:00004638       Key_For_Right
- 0003:0000463C       Key_For_Down
+ 0003:00004628       Key_Ok
+ 0003:0000462C       Key_Cancel
+ 0003:00004630       Key_Left
+ 0003:00004634       Key_Up
+ 0003:00004638       Key_Right
+ 0003:0000463C       Key_Down
  0003:00004640       ROM_PClassName
  0003:00004644       dword_493644
  0003:00004648       lpName
- 0003:0000464C       ptr2
- 0003:00004650       dword_493650
+ 0003:0000464C       PXM
+ 0003:00004650       unk_493650
  0003:00004660       ROM_WeaponExpTables
  0003:00004668       dword_493668
  0003:00004708       word_493708
  0003:0000470A       word_49370A
  0003:0000470C       word_49370C
- 0003:00004738       dword_493738
+ 0003:00004738       unk_493738
  0003:0000474C       word_49374C
  0003:00004764       word_493764
  0003:00004780       byte_493780
@@ -14583,521 +14541,27 @@
  0003:000047A4       dword_4937A4
  0003:000047A8       Pointer_Profile_dat
  0003:000047AC       offset_Profile_dat_check
- 0003:000047B0       ROM_MapHeaders_Tileset_Name
- 0003:000047D0       ROM_MapHeaders_Map_File_Name
- 0003:000047F0       ROM_MapHeaders_BGType
- 0003:000047F4       ROM_MapHeaders_BGImage_File
- 0003:00004814       ROM_MapHeaders_Sprite_File_A
- 0003:00004834       ROM_MapHeaders_Sprite_File_B
- 0003:00004854       ROM_MapHeaders_Boss_ID
- 0003:00004855       ROM_MapHeaders_Name
- 0003:00004878       aPens
- 0003:00004898       aPens1
- 0003:000048BC       aBkblue
- 0003:000048DC       aGuest
- 0003:000048FC       a0
- 0003:0000491D       aArthurSHouse
- 0003:00004940       aEggs
- 0003:00004960       aEggs_0
- 0003:00004984       aBkgreen
- 0003:000049A4       aEggs1
- 0003:000049C4       aRavil
- 0003:000049E5       aEggCorridor
- 0003:00004A08       aEggx
- 0003:00004A28       aEggx_0
- 0003:00004A4C       aBk0
- 0003:00004A6C       aEggs1_0
- 0003:00004AAD       aEggNo_00
- 0003:00004AD0       aEggin
- 0003:00004AF0       aEgg6
- 0003:00004B14       aBk0_0
- 0003:00004B34       aEggs1_1
- 0003:00004B75       aEggNo_06
- 0003:00004B98       aStore
- 0003:00004BB8       aEggr
- 0003:00004BDC       aBk0_1
- 0003:00004BFC       aEggs1_2
- 0003:00004C3D       aEggObservationRoom
- 0003:00004C60       aWeed_0
- 0003:00004C80       aWeed_1
- 0003:00004CA4       aBkblue_0
- 0003:00004CC4       aWeed_2
- 0003:00004D05       aGrasstown
- 0003:00004D28       aBarr_0
- 0003:00004D48       aSanta
- 0003:00004D6C       aBk0_2
- 0003:00004D8C       aWeed_3
- 0003:00004DCD       aSantaSHouse
- 0003:00004DF0       aBarr_1
- 0003:00004E10       aChako
- 0003:00004E34       aBkblue_1
- 0003:00004E54       aGuest_0
- 0003:00004E95       aChacoSHouse
- 0003:00004EB8       aMaze_0
- 0003:00004ED8       aMazei
- 0003:00004EFC       aBk0_3
- 0003:00004F1C       aMaze_1
- 0003:00004F5D       aLabyrinthI
- 0003:00004F80       aSand
- 0003:00004FA0       aSand_0
- 0003:00004FC4       aBkgreen_0
- 0003:00004FE4       aSand_1
- 0003:00005004       aOmg
- 0003:00005025       aSandZone
- 0003:00005048       aMimi
- 0003:00005068       aMimi_0
- 0003:0000508C       aBkblue_2
- 0003:000050AC       aGuest_1
- 0003:000050ED       aMimigaVillage
- 0003:00005110       aCave
- 0003:00005130       aCave_0
- 0003:00005154       aBk0_4
- 0003:00005174       aCemet
- 0003:000051B5       aFirstCave
- 0003:000051D8       aCave_1
- 0003:000051F8       aStart
- 0003:0000521C       aBk0_5
- 0003:0000523C       aCemet_0
- 0003:0000527D       aStartPoint
- 0003:000052A0       aMimi_1
- 0003:000052C0       aBarr_2
- 0003:000052E4       aBk0_6
- 0003:00005304       aCemet_1
- 0003:00005324       aBllg
- 0003:00005345       aShack
- 0003:00005368       aMimi_2
- 0003:00005388       aPool
- 0003:000053AC       aBkblue_3
- 0003:000053CC       aGuest_2
- 0003:0000540D       aReservoir
- 0003:00005430       aMimi_3
- 0003:00005450       aCemet_2
- 0003:00005474       aBk0_7
- 0003:00005494       aCemet_3
- 0003:000054D5       aGraveyard
- 0003:000054F8       aMimi_4
- 0003:00005518       aPlant_0
- 0003:0000553C       aBkgreen_1
- 0003:0000555C       aPlant_1
- 0003:0000559D       aYamashitaFarm
- 0003:000055C0       aStore_0
- 0003:000055E0       aShelt
- 0003:00005604       aBk0_8
- 0003:00005624       aEggs1_3
- 0003:00005665       aShelter
- 0003:00005688       aPens_0
- 0003:000056A8       aComu
- 0003:000056CC       aBkblue_4
- 0003:000056EC       aGuest_3
- 0003:0000572D       aAssemblyHall
- 0003:00005750       aMimi_5
- 0003:00005770       aMibox
- 0003:00005794       aBk0_9
- 0003:000057F5       aSavePoint
- 0003:00005818       aStore_1
- 0003:00005838       aEgend1
- 0003:0000585C       aBk0_10
- 0003:000058BD       aSideRoom
- 0003:000058E0       aStore_2
- 0003:00005900       aCthu
- 0003:00005924       aBk0_11
- 0003:00005985       aCthulhuSAbode
- 0003:000059A8       aEggin_0
- 0003:000059C8       aEgg1
- 0003:000059EC       aBk0_12
- 0003:00005A0C       aEggs1_4
- 0003:00005A4D       aEggNo_01
- 0003:00005A70       aPens_1
- 0003:00005A90       aPens2
- 0003:00005AB4       aBkblue_5
- 0003:00005AD4       aGuest_4
- 0003:00005B15       aArthurSHouse_0
- 0003:00005B38       aBarr
- 0003:00005B58       aMalco
- 0003:00005B7C       aBkblue_6
- 0003:00005B9C       aWeed_4
- 0003:00005BBC       aBllg_0
- 0003:00005BDD       aPowerRoom
- 0003:00005C00       aBarr_3
- 0003:00005C20       aWeeds
- 0003:00005C44       aBkblue_7
- 0003:00005CA5       aSavePoint_0
- 0003:00005CC8       aStore_3
- 0003:00005CE8       aWeedd
- 0003:00005D0C       aBkblue_8
- 0003:00005D6D       aExecutionChamber
- 0003:00005D90       aWeed_5
- 0003:00005DB0       aFrog
- 0003:00005DD4       aBkgreen_2
- 0003:00005DF4       aWeed_6
- 0003:00005E14       aFrog_0
- 0003:00005E35       aGum
- 0003:00005E58       aSand_2
- 0003:00005E78       aCurly_0
- 0003:00005E9C       aBk0_13
- 0003:00005EBC       aSand_3
- 0003:00005EDC       aCurly_1
- 0003:00005EFD       aSandZoneResidence
- 0003:00005F20       aPens_2
- 0003:00005F40       aWeedb
- 0003:00005F64       aBkblue_9
- 0003:00005F84       aRavil_0
- 0003:00005FC5       aGrasstownHut
- 0003:00005FE8       aRiver
- 0003:00006008       aStream
- 0003:0000602C       aBkblue_10
- 0003:0000604C       aStream_0
- 0003:0000606C       aIronh_0
- 0003:0000608D       aMainArtery
- 0003:000060B0       aPens_3
- 0003:000060D0       aCurlys
- 0003:000060F4       aBk0_14
- 0003:00006114       aSand_4
- 0003:00006134       aCurly_2
- 0003:00006155       aSmallRoom
- 0003:00006178       aBarr_4
- 0003:00006198       aJenka1
- 0003:000061BC       aBk0_15
- 0003:000061DC       aSand_5
- 0003:000061FC       aBllg_1
- 0003:0000621D       aJenkaSHouse
- 0003:00006240       aSand_6
- 0003:00006260       aDark
- 0003:00006284       aBkblack
- 0003:000062A4       aSand_7
- 0003:000062E5       aDesertedHouse
- 0003:00006308       aGard
- 0003:00006328       aGard_0
- 0003:0000634C       aBkgard
- 0003:0000636C       aToro
- 0003:0000638C       aBllg_2
- 0003:000063AD       aSandZoneStorehouse
- 0003:000063D0       aBarr_5
- 0003:000063F0       aJenka2_0
- 0003:00006414       aBk0_16
- 0003:00006434       aSand_8
- 0003:00006454       aBllg_3
- 0003:00006475       aJenkaSHouse_0
- 0003:00006498       aSand_9
- 0003:000064B8       aSande
- 0003:000064DC       aBkgreen_3
- 0003:000064FC       aSand_10
- 0003:0000651C       aBllg_4
- 0003:0000653D       aSandZone_0
- 0003:00006560       aMaze_2
- 0003:00006580       aMazeh
- 0003:000065A4       aBk0_17
- 0003:000065C4       aMaze_3
- 0003:00006605       aLabyrinthH
- 0003:00006628       aMaze_4
- 0003:00006648       aMazew
- 0003:0000666C       aBkmaze
- 0003:0000668C       aMaze_5
- 0003:000066CD       aLabyrinthW
- 0003:000066F0       aMaze_6
- 0003:00006710       aMazeo
- 0003:00006734       aBk0_18
- 0003:00006754       aGuest_5
- 0003:00006795       aCamp
- 0003:000067B8       aMaze_7
- 0003:000067D8       aMazed
- 0003:000067FC       aBk0_19
- 0003:0000681C       aGuest_6
- 0003:0000683C       aDark_0
- 0003:0000685D       aClinicRuins
- 0003:00006880       aStore_4
- 0003:000068A0       aMazea
- 0003:000068C4       aBk0_20
- 0003:000068E4       aMaze_8
- 0003:00006925       aLabyrinthShop
- 0003:00006948       aMaze_9
- 0003:00006968       aMazeb
- 0003:0000698C       aBkblue_11
- 0003:000069AC       aMaze_10
- 0003:000069ED       aLabyrinthB
- 0003:00006A10       aMaze_11
- 0003:00006A30       aMazes
- 0003:00006A54       aBkgray
- 0003:00006A74       aMaze_12
- 0003:00006A94       aBllg_5
- 0003:00006AB5       aBoulderChamber
- 0003:00006AD8       aMaze_13
- 0003:00006AF8       aMazem
- 0003:00006B1C       aBkred_0
- 0003:00006B3C       aMaze_14
- 0003:00006B7D       aLabyrinthM
- 0003:00006BA0       aCave_2
- 0003:00006BC0       aDrain
- 0003:00006BE4       aBkwater
- 0003:00006C04       aCemet_4
- 0003:00006C45       aDarkPlace
- 0003:00006C68       aAlmond
- 0003:00006C88       aAlmond_0
- 0003:00006CAC       aBkwater_0
- 0003:00006CCC       aCemet_5
- 0003:00006CEC       aAlmo1
- 0003:00006D0D       aCore
- 0003:00006D30       aRiver_0
- 0003:00006D50       aRiver_1
- 0003:00006D74       aBkgreen_4
- 0003:00006D94       aWeed_7
- 0003:00006DD5       aWaterway
- 0003:00006DF8       aEggs_1
- 0003:00006E18       aEggs2
- 0003:00006E3C       aBkgreen_5
- 0003:00006E5C       aEggs2_0
- 0003:00006E9D       aEggCorridor?
- 0003:00006EC0       aStore_5
- 0003:00006EE0       aCthu2
- 0003:00006F04       aBk0_21
- 0003:00006F24       aEggs1_5
- 0003:00006F65       aCthulhuSAbode?
- 0003:00006F88       aStore_6
- 0003:00006FA8       aEggr2
- 0003:00006FCC       aBk0_22
- 0003:00006FEC       aEggs1_6
- 0003:0000700C       aTwind
- 0003:0000702D       aEggObservationRoom?
- 0003:00007050       aEggx_1
- 0003:00007070       aEggx2
- 0003:00007094       aBk0_23
- 0003:000070B4       aEggs1_7
- 0003:000070F5       aEggNo_00_0
- 0003:00007118       aOside_0
- 0003:00007138       aOside_1
- 0003:0000715C       aBkmoon
- 0003:0000717C       aMoon
- 0003:000071BD       aOuterWall
- 0003:000071E0       aStore_7
- 0003:00007200       aEgend2
- 0003:00007224       aBk0_24
- 0003:00007244       aEggs1_8
- 0003:00007285       aSideRoom_0
- 0003:000072A8       aStore_8
- 0003:000072C8       aItoh
- 0003:000072EC       aBkblue_12
- 0003:0000730C       aGuest_7
- 0003:0000734D       aStorehouse
- 0003:00007370       aCent
- 0003:00007390       aCent_0
- 0003:000073B4       aBkgreen_6
- 0003:000073D4       aGuest_8
- 0003:000073F4       aCent_1
- 0003:00007415       aPlantation
- 0003:00007438       aJail
- 0003:00007458       aJail1
- 0003:0000747C       aBk0_25
- 0003:0000749C       aGuest_9
- 0003:000074BC       aCent_2
- 0003:000074DD       aJailNo_1
- 0003:00007500       aJail_0
- 0003:00007520       aMomo
- 0003:00007544       aBk0_26
- 0003:00007564       aGuest_10
- 0003:000075A5       aHideout
- 0003:000075C8       aJail_1
- 0003:000075E8       aLounge
- 0003:0000760C       aBk0_27
- 0003:0000762C       aGuest_11
- 0003:0000766D       aRestArea
- 0003:00007690       aStore_9
- 0003:000076B0       aCentw
- 0003:000076D4       aBk0_28
- 0003:000076F4       aGuest_12
- 0003:00007714       aCent_3
- 0003:00007735       aTeleporter
- 0003:00007758       aStore_10
- 0003:00007778       aJail2
- 0003:0000779C       aBk0_29
- 0003:000077BC       aGuest_13
- 0003:000077DC       aCent_4
- 0003:000077FD       aJailNo_2
- 0003:00007820       aWhite_0
- 0003:00007840       aBlcny1
- 0003:00007864       aBkfog
- 0003:00007884       aRavil_1
- 0003:000078A4       aHeri
- 0003:000078C5       aBalcony_0
- 0003:000078E8       aJail_2
- 0003:00007908       aPriso1
- 0003:0000792C       aBkgray_0
- 0003:0000794C       aRed
- 0003:0000798D       aFinalCave
- 0003:000079B0       aWhite_1
- 0003:000079D0       aRing1
- 0003:000079F4       aBkfog_0
- 0003:00007A14       aGuest_14
- 0003:00007A34       aMiza
- 0003:00007A55       aThroneRoom
- 0003:00007A78       aWhite_2
- 0003:00007A98       aRing2
- 0003:00007ABC       aBkfog_1
- 0003:00007ADC       aGuest_15
- 0003:00007AFC       aDr_0
- 0003:00007B1D       aTheKingSTable
- 0003:00007B40       aPens_4
- 0003:00007B60       aPrefa1
- 0003:00007B84       aBk0_30
- 0003:00007BE5       aPrefabBuilding
- 0003:00007C08       aJail_3
- 0003:00007C28       aPriso2
- 0003:00007C4C       aBkgray_1
- 0003:00007C6C       aRed_0
- 0003:00007CAD       aLastCaveHidden
- 0003:00007CD0       aWhite_3
- 0003:00007CF0       aRing3
- 0003:00007D14       aBk0_31
- 0003:00007D34       aMiza_0
- 0003:00007D54       aAlmo2
- 0003:00007D75       aBlackSpace
- 0003:00007D98       aPens_5
- 0003:00007DB8       aLittle
- 0003:00007DDC       aBkblue_13
- 0003:00007DFC       aGuest_16
- 0003:00007E3D       aLittleHouse
- 0003:00007E60       aWhite_4
- 0003:00007E80       aBlcny2
- 0003:00007EA4       aBkfog_2
- 0003:00007EC4       aRavil_2
- 0003:00007EE4       aHeri_0
- 0003:00007F05       aBalcony_1
- 0003:00007F28       aFall
- 0003:00007F48       aFall_0
- 0003:00007F6C       aBkfall
- 0003:00007F8C       aGuest_17
- 0003:00007FAC       aHeri_1
- 0003:00007FCD       aFall_1
- 0003:00007FF0       aWhite_5
- 0003:00008010       aKings
- 0003:00008034       aBk0_32
- 0003:00008054       aKings_0
- 0003:000080B8       aPens_6
- 0003:000080D8       aPixel_0
- 0003:000080FC       aBkblue_14
- 0003:0000811C       aGuest_18
- 0003:0000815D       aWaterwayCabin
- 0003:00008180       aMaze_15
- 0003:000081A0       aE_maze
- 0003:000081C4       aBkmaze_0
- 0003:000081E4       aGuest_19
- 0003:00008204       aMaze_16
- 0003:00008248       aBarr_6
- 0003:00008268       aE_jenk
- 0003:0000828C       aBk0_33
- 0003:000082AC       aSand_11
- 0003:000082CC       aBllg_6
- 0003:00008310       aBarr_7
- 0003:00008330       aE_malc
- 0003:00008354       aBkblue_15
- 0003:00008374       aWeed_8
- 0003:00008394       aBllg_7
- 0003:000083D8       aMimi_6
- 0003:000083F8       aE_ceme
- 0003:0000841C       aBk0_34
- 0003:0000843C       aPlant_2
- 0003:000084A0       aFall_2
- 0003:000084C0       aE_sky
- 0003:000084E4       aBkfall_0
- 0003:00008504       aGuest_20
- 0003:00008524       aHeri_2
- 0003:00008568       aPens_7
- 0003:00008588       aPrefa2
- 0003:000085AC       aBk0_35
- 0003:0000860D       aPrefabHouse
- 0003:00008630       aHell_0
- 0003:00008650       aHell1
- 0003:00008674       aBkred
- 0003:00008694       aHell_1
- 0003:000086D5       aSacredGroundB1
- 0003:000086F8       aHell_2
- 0003:00008718       aHell2
- 0003:0000873C       aBkred_1
- 0003:0000875C       aHell_3
- 0003:0000879D       aSacredGroundB2
- 0003:000087C0       aHell_4
- 0003:000087E0       aHell3
- 0003:00008804       aBkred_2
- 0003:00008824       aHell_5
- 0003:00008844       aPress
- 0003:00008865       aSacredGroundB3
- 0003:00008888       aCave_3
- 0003:000088A8       aMapi
- 0003:000088CC       aBk0_36
- 0003:000088EC       aCemet_6
- 0003:0000892D       aStorage
- 0003:00008950       aHell_6
- 0003:00008970       aHell4
- 0003:00008994       aBk0_37
- 0003:000089B4       aHell_7
- 0003:000089F5       aPassage?
- 0003:00008A18       aHell_8
- 0003:00008A38       aHell42
- 0003:00008A5C       aBk0_38
- 0003:00008A7C       aHell_9
- 0003:00008A9C       aPress_0
- 0003:00008ABD       aPassage?_0
- 0003:00008AE0       aHell_10
- 0003:00008B00       aStatue
- 0003:00008B24       aBkblue_16
- 0003:00008B64       aCent_5
- 0003:00008B85       aStatueChamber
- 0003:00008BA8       aHell_11
- 0003:00008BC8       aBallo1
- 0003:00008BEC       aBkblue_17
- 0003:00008C0C       aPriest
- 0003:00008C2C       aBallos_0
- 0003:00008C4D       aSealChamber
- 0003:00008C70       aWhite_6
- 0003:00008C90       aOstep
- 0003:00008CB4       aBkfog_3
- 0003:00008D15       aCorridor
- 0003:00008D38       aLabo
- 0003:00008D58       aE_labo
- 0003:00008D7C       aBk0_39
- 0003:00008D9C       aGuest_21
- 0003:00008E00       aCave_4
- 0003:00008E20       aPole
- 0003:00008E44       aBk0_40
- 0003:00008E64       aGuest_22
- 0003:00008EA5       aHermitGunsmith
- 0003:00008EE8       aIsland
- 0003:00008F0C       aBk0_41
- 0003:00008F2C       aIsland_0
- 0003:00008F90       aHell_12
- 0003:00008FB0       aBallo2
- 0003:00008FD4       aBkblue_18
- 0003:00008FF4       aPriest_0
- 0003:00009014       aBllg_8
- 0003:00009035       aSealChamber_0
- 0003:00009058       aWhite_7
- 0003:00009078       aE_blcn
- 0003:0000909C       aBkfog_4
- 0003:000090BC       aMiza_1
- 0003:00009120       aOside_2
- 0003:00009140       aClock
- 0003:00009164       aBkmoon_0
- 0003:00009184       aMoon_0
- 0003:000091C5       aClockRoom
- 0003:000091E8       Ptr_Songs
- 0003:00009290       asc_498290
- 0003:00009298       dword_498298
- 0003:0000929C       dword_49829C
- 0003:000092A0       dword_4982A0
- 0003:000093F0       dword_4983F0
- 0003:00009540       off_498540
- 0003:00009548       ROM_Ptr_NPC_Code
- 0003:00009AEC       ROM_Ptr_Boss_Code
- 0003:00009B20       Crash_Report_Failure_Check
- 0003:00009B38       off_498B38
- 0003:00009B50       dword_498B50
- 0003:00009B60       dword_498B60
- 0003:00009B64       Offset__exit
- 0003:00009B68       dword_498B68
- 0003:00009B70       off_498B70
- 0003:00009B80       dword_498B80
- 0003:00009B90       dword_498B90
- 0003:00009BB0       dword_498BB0
- 0003:00009BE0       asc_498BE0
+ 0003:000047B0       All_Map_Headers
+ 0003:000047D0       Map_Header_map
+ 0003:000047F0       Map_Header_bkType
+ 0003:000047F4       unk_4937F4
+ 0003:00004814       unk_493814
+ 0003:00004834       unk_493834
+ 0003:00004854       Map_Header_boss_flag
+ 0003:00004855       Map_Header_name
+ 0003:00009540       ptr2
+ 0003:00009548       NPC_Function_Table
+ 0003:00009B20       Prevent_Report_Failure_Crash
+ 0003:00009B38       unk_498B38
+ 0003:00009B50       unk_498B50
+ 0003:00009B60       unk_498B60
+ 0003:00009B64       unk_498B64
+ 0003:00009B68       unk_498B68
+ 0003:00009B70       unk_498B70
+ 0003:00009B80       unk_498B80
+ 0003:00009B90       unk_498B90
+ 0003:00009BB0       unk_498BB0
+ 0003:00009BE0       unk_498BE0
  0003:00009DD0       asc_498DD0
  0003:00009DF0       dword_498DF0
  0003:00009DF4       dword_498DF4
@@ -15114,27 +14578,27 @@
  0003:0000A0A0       off_4990A0
  0003:0000A0B0       tbyte_4990B0
  0003:0000A0C4       dbl_4990C4
- 0003:0000A0CC       dword_4990CC
+ 0003:0000A0CC       unk_4990CC
  0003:0000A0E0       dword_4990E0
  0003:0000A0E4       off_4990E4
- 0003:0000A178       dword_499178
+ 0003:0000A178       unk_499178
  0003:0000A1F0       dword_4991F0
  0003:0000A1F4       dword_4991F4
  0003:0000A1FC       dword_4991FC
- 0003:0000A200       dword_499200
- 0003:0000A230       dword_499230
+ 0003:0000A200       unk_499200
+ 0003:0000A230       unk_499230
  0003:0000A240       off_499240
- 0003:0000A258       byte_499258
+ 0003:0000A258       unk_499258
  0003:0000A2AC       off_4992AC
  0003:0000A3E8       byte_4993E8
  0003:0000A3F0       dword_4993F0
  0003:0000A3F4       dword_4993F4
  0003:0000A400       dword_499400
- 0003:0000A4E0       max
+ 0003:0000A4E0       dword_4994E0
  0003:0000A4E4       byte_4994E4
  0003:0000A4F0       dword_4994F0
- 0003:0000A508       dword_499508
- 0003:0000A5E0       dword_4995E0
+ 0003:0000A508       unk_499508
+ 0003:0000A5E0       unk_4995E0
  0003:0000A5E4       off_4995E4
  0003:0000A5E8       off_4995E8
  0003:0000A5EC       off_4995EC
@@ -15154,7 +14618,7 @@
  0003:0000A7F0       dbl_4997F0
  0003:0000A800       dbl_499800
  0003:0000A880       asc_499880
- 0003:0000A9E0       dword_4999E0
+ 0003:0000A9E0       unk_4999E0
  0003:0000AB3C       dword_499B3C
  0003:0000AB40       Quote_Inventory
  0003:0000ABC0       InventoryViewType
@@ -15175,63 +14639,12 @@
  0003:0000AC88       BackgroundMode
  0003:0000AC8C       dword_499C8C
  0003:0000AC90       GlobalWaterDepth
- 0003:0000AC94       dword_499C94
- 0003:0000AC98       WeaponObj_Collision
- 0003:0000AC9C       WeaponObj_ShotID
- 0003:0000ACA0       WeaponObj_Flags
- 0003:0000ACA4       WeaponObj_In_Use
- 0003:0000ACA8       WeaponObj_X_Position
- 0003:0000ACAC       WeaponObj_Y_Position
- 0003:0000ACB0       WeaponObj_X_Velocity
- 0003:0000ACB4       WeaponObj_Y_Velocity
- 0003:0000ACB8       WeaponObj_???
- 0003:0000ACBC       WeaponObj_??
- 0003:0000ACC0       WeaponObj_Was_Setup
- 0003:0000ACC4       WeaponObj_????
- 0003:0000ACC8       WeaponObj_?
- 0003:0000ACCC       WeaponObj_FrameID
- 0003:0000ACD0       WeaponObj_Direction
- 0003:0000ACD4       WeaponObj_Rects
- 0003:0000ACE4       WeaponObj_Distance
- 0003:0000ACE8       WeaponObj_?????
- 0003:0000ACEC       WeaponObj_Max_Distance
- 0003:0000ACF0       WeaponObj_Damage
- 0003:0000ACF4       WeaponObj_Num_Impacts
- 0003:0000ACF8       dword_499CF8
- 0003:0000ACFC       dword_499CFC
- 0003:0000AD00       dword_499D00
- 0003:0000AD04       dword_499D04
- 0003:0000AD08       dword_499D08
- 0003:0000AD0C       dword_499D0C
- 0003:0000AD10       dword_499D10
- 0003:0000AD14       dword_499D14
+ 0003:0000AC94       _color_black
+ 0003:0000AC98       Bullet_Objects
  0003:0000CC98       dword_49BC98
  0003:0000CC9C       dword_49BC9C
  0003:0000CCA0       dword_49BCA0
- 0003:0000CCA8       EffectObj_InUse
- 0003:0000CCAC       EffectObj_ID
- 0003:0000CCB0       EffectObj_Mode
- 0003:0000CCB4       EffectObj_X_Position
- 0003:0000CCB8       EffectObj_Y_Position
- 0003:0000CCBC       EffectObj_X_Velocity
- 0003:0000CCC0       EffectObj_Y_Velocity
- 0003:0000CCC4       EffectObj_Was_Init
- 0003:0000CCC8       EffectObj_???
- 0003:0000CCCC       EffectObj_FrameID
- 0003:0000CCD0       EffectObj_Frame_Timer
- 0003:0000CCD4       EffectObj_X_Offset
- 0003:0000CCD8       EffectObj_Y_Offset
- 0003:0000CCDC       EffectObj_Rect
- 0003:0000DDA8       Screen_Offset_X
- 0003:0000DDAC       Screen_Offset_Y
- 0003:0000DDB0       Fullscreen_Rect
- 0003:0000DDC0       dword_49CDC0
- 0003:0000DDC4       dword_49CDC4
- 0003:0000DDC8       ptr
- 0003:0000DDDC       dword_49CDDC
- 0003:0000DDE0       dword_49CDE0
- 0003:0000DDE4       dword_49CDE4
- 0003:0000DDE8       dword_49CDE8
+ 0003:0000CCA8       Effect_Objects
  0003:0000E368       Font_Handle
  0003:0000E374       Fullscreen_Surface_Height
  0003:0000E378       Window_Surface_Width
@@ -15252,12 +14665,12 @@
  0003:0000E44C       dword_49D44C
  0003:0000E450       DDBLTFX_ScreenCopy
  0003:0000E4B4       Final_Dst_Rect_1
- 0003:0000E4C4       Final_Src_Rect_1
+ 0003:0000E4C4       rcWork
  0003:0000E4D4       Final_Dst_Rect_2
  0003:0000E4E4       Final_Src_Rect_2
  0003:0000E4F4       Final_Dst_Rect_3
  0003:0000E504       Final_Src_Rect_3
- 0003:0000E514       Final_Dest_Rect_4
+ 0003:0000E514       Dest_Rect
  0003:0000E528       Draw_Colour_Fill_DDBLTFX
  0003:0000E578       Draw_Colour_Fill_DDBLTFX_dxFillColor
  0003:0000E58C       Final_Dst_Rect_5
@@ -15277,13 +14690,8 @@
  0003:0000E634       dword_49D634
  0003:0000E638       asc_49D638
  0003:0000EB28       Mask_Color
- 0003:0000EB30       Fade_Status
- 0003:0000EB34       Fade_Complete
- 0003:0000EB38       Fade_Counter
- 0003:0000EB3C       Fade_Buffer_Int
- 0003:0000EC68       Fade_Buffer_Bool
- 0003:0000ED94       Fade_Type
- 0003:0000ED98       byte_49DD98
+ 0003:0000EB30       Fade_Object
+ 0003:0000ED98       SkipFlags
  0003:0000EDA0       Event_Flags
  0003:0000F188       dword_49E188
  0003:0000F18C       dword_49E18C
@@ -15293,13 +14701,7 @@
  0003:0000F19C       dword_49E19C
  0003:0000F1A0       dword_49E1A0
  0003:0000F1A4       Draw_Sprite_Mask_6
- 0003:0000F1A8       dword_49E1A8
- 0003:0000F1AC       dword_49E1AC
- 0003:0000F1B0       dword_49E1B0
  0003:0000F1B4       Draw_Sprite_Mask_7
- 0003:0000F1B8       dword_49E1B8
- 0003:0000F1BC       dword_49E1BC
- 0003:0000F1C0       dword_49E1C0
  0003:0000F1C4       FlashColor
  0003:0000F1C8       Camera_X_Position_2
  0003:0000F1CC       Camera_Y_Position_2
@@ -15309,7 +14711,7 @@
  0003:0000F1DC       SoftQuakeDuration
  0003:0000F1E0       HardQuakeDuration
  0003:0000F1E4       CursorPosition
- 0003:0000F1E8       Game_State
+ 0003:0000F1E8       Game_Flags
  0003:0000F1EC       GameTime
  0003:0000F1F0       DirectInputObj
  0003:0000F1F4       dword_49E1F4
@@ -15322,14 +14724,14 @@
  0003:0000F210       Key_Held
  0003:0000F214       Key_Pressed
  0003:0000F218       LastKeyHeld
- 0003:0000F220       Data_Folder_Full_Path
- 0003:0000F328       FullExePath
- 0003:0000F42C       Controller_Button_IDs
+ 0003:0000F220       Data_Path
+ 0003:0000F328       ExePath
+ 0003:0000F42C       Joystick_Button_Table
  0003:0000F44C       AppInstance
  0003:0000F450       Window_Width
  0003:0000F454       Window_Height
  0003:0000F458       AppWinHandle
- 0003:0000F45C       Gamepad_Enabled
+ 0003:0000F45C       Use_Joystick
  0003:0000F460       Is_Fullscreen
  0003:0000F464       FPS_Counter_Enabled
  0003:0000F468       CanAcceptInput
@@ -15338,10 +14740,10 @@
  0003:0000F474       Timer1000Ticks
  0003:0000F478       hMutex
  0003:0000F47C       hObject
- 0003:0000F480       Level_Layout_Buffer
+ 0003:0000F480       Map_Data_Buffer
  0003:0000F484       Level_Layout_Buffer_PXA
- 0003:0000F586       Level_Width
- 0003:0000F588       Level_Height
+ 0003:0000F586       Map_Width
+ 0003:0000F588       Map_Height
  0003:0000F58C       byte_49E58C
  0003:0000F590       dword_49E590
  0003:0000F594       dword_49E594
@@ -15354,8 +14756,8 @@
  0003:0000F648       Quote_IsFacingDown
  0003:0000F64C       In_Fish_Battle
  0003:0000F650       EquippedItems
- 0003:0000F654       Quote_X_Position
- 0003:0000F658       Quote_Y_Position
+ 0003:0000F654       Quote_X_Pos
+ 0003:0000F658       Quote_Y_Pos
  0003:0000F65C       Camera_X_Position
  0003:0000F660       Camera_Y_Position
  0003:0000F664       Camera_X_Velocity
@@ -15400,7 +14802,7 @@
  0003:0000F6F0       dword_49E6F0
  0003:0000F6F4       NikumaruTime
  0003:0000F6F8       byte_49E6F8
- 0003:0000F700       destination
+ 0003:0000F700       unk_49E700
  0003:00015B00       Song_Current_Beat
  0003:00015B08       dword_4A4B08
  0003:00015B48       Direct_Sound_Secondary_Buffer_Array?
@@ -15445,27 +14847,15 @@
  0003:000167C0       dword_4A57C0
  0003:000167E8       Direct_Sound_Object
  0003:000167EC       Direct_Sound_Primary_Buffer
- 0003:000167F0       Current_Map_ID
- 0003:000167F4       Current_Song_ID
- 0003:000167F8       Previous_Song_Beat
- 0003:000167FC       Previous_Song_ID
+ 0003:000167F0       Current_Stage_Number
+ 0003:000167F4       Current_Song_Number
+ 0003:000167F8       Old_Song_Pos
+ 0003:000167FC       Old_Song_Number
  0003:00016800       Whimsical_Star
- 0003:0001680C       Whimsical_Star_X_Position
- 0003:00016810       Whimsical_Star_Y_Position
- 0003:00016814       Whimsical_Star_X_Velocity
- 0003:00016818       Whimsical_Star_Y_Velocity
- 0003:00016850       dword_4A5850
- 0003:00016854       dword_4A5854
- 0003:00016858       dword_4A5858
- 0003:0001685C       dword_4A585C
- 0003:00016894       dword_4A5894
- 0003:00016898       dword_4A5898
- 0003:0001689C       dword_4A589C
- 0003:000168A0       dword_4A58A0
  0003:000168CC       CurrentStarID
- 0003:000168D0       byte_4A58D0
- 0003:000169D0       byte_4A59D0
- 0003:00016AD4       dword_4A5AD4
+ 0003:000168D0       text_buffer
+ 0003:000169D0       path
+ 0003:00016AD4       size
  0003:00016AD8       Current_Script
  0003:00016ADC       byte_4A5ADC
  0003:00016ADD       byte_4A5ADD
@@ -15481,17 +14871,14 @@
  0003:00016B10       dword_4A5B10
  0003:00016B14       dword_4A5B14
  0003:00016B18       dword_4A5B18
- 0003:00016B1C       Draw_Sprite_Mask_2
- 0003:00016B20       dword_4A5B20
- 0003:00016B24       dword_4A5B24
- 0003:00016B28       dword_4A5B28
+ 0003:00016B1C       rcView
  0003:00016B2C       dword_4A5B2C
  0003:00016B30       byte_4A5B30
  0003:00016B34       dword_4A5B34
  0003:00016B38       dword_4A5B38
  0003:00016B48       dword_4A5B48
- 0003:00016F48       word_4A5F48
- 0003:00016F90       dword_4A5F90
+ 0003:00016F48       gTan
+ 0003:00016F90       Event_Index
  0003:00016F98       Event_InUse
  0003:00016F9C       Event_Collision
  0003:00016FA0       Event_X_Position
@@ -15530,48 +14917,13 @@
  0003:0001703C       Event_Damage
  0003:00017040       Event_Parent
  0003:00017218       dword_4A6218
- 0003:00017220       Is_NPC_Alive
- 0003:00017224       NPC_Collision_Flag
- 0003:00017228       NPC_X_Position
- 0003:0001722C       NPC_Y_Position
- 0003:00017230       NPC_X_Velocity
- 0003:00017234       NPC_Y_Velocity
- 0003:00017238       NPC_Generic?_X_Acceleration?
- 0003:0001723C       NPC_Generic?_Y_Acceleration?
- 0003:00017240       NPC_X_Position_Curly_AI
- 0003:00017244       NPC_Y_Position_Curly_AI
- 0003:00017248       NPC_Type
- 0003:0001724C       NPC_Unknown
- 0003:00017250       NPC_Event_Number
- 0003:00017254       NPC_Spritesheet
- 0003:00017258       NPC_Sound_When_Hit
- 0003:0001725C       NPC_Death_Sound
- 0003:00017260       NPC_Current_Health
- 0003:00017264       NPC_EXP_Health_Missiles_Dropped
- 0003:00017268       NPC_Explosion_Size
- 0003:0001726C       NPC_Direction
- 0003:00017270       NPC_Flags
- 0003:00017274       NPC_Rects
- 0003:00017284       NPC_Generic?_Counter?
- 0003:00017288       NPC_Generic
- 0003:0001728C       NPC_Generic_2
- 0003:00017290       NPC_Generic_3
- 0003:00017294       NPC_Generic_4
- 0003:00017298       NPC_Generic_5
- 0003:0001729C       NPC_Hitbox
- 0003:000172AC       dword_4A62AC
- 0003:000172B0       dword_4A62B0
- 0003:000172B4       dword_4A62B4
- 0003:000172BC       NPC_Touching_Bullet_Flag
- 0003:000172C0       NPC_Damage_Taken
- 0003:000172C4       NPC_Damage_On_Contact
- 0003:000172C8       NPC_Parent_Variable
- 0003:0002CA20       dword_4BBA20
- 0003:0002CA24       dword_4BBA24
- 0003:0002CA28       dword_4BBA28
- 0003:0002CA2C       dword_4BBA2C
- 0003:0002CA30       dword_4BBA30
- 0003:0002CA34       NPCStruct_Flags
+ 0003:00017220       NPC_Objects
+ 0003:0002CA20       Curly_Shoot_Wait
+ 0003:0002CA24       Curly_Shoot_X
+ 0003:0002CA28       Curly_Shoot_Y
+ 0003:0002CA2C       Super_X_Pos
+ 0003:0002CA30       Super_Y_Pos
+ 0003:0002CA34       NPC_Table
  0003:0002CA36       NPCStruct_Health
  0003:0002CA38       NPCStruct_Tileset
  0003:0002CA39       NPCStruct_DeathSnd
@@ -15758,7 +15110,7 @@
  0003:0002D0F4       dword_4BC0F4
  0003:0002D0F8       dword_4BC0F8
  0003:0002D0FC       dword_4BC0FC
- 0003:0002D110       byte_4BC110
+ 0003:0002D110       unk_4BC110
  0003:0002D118       dword_4BC118
  0003:0002D160       word_4BC160
  0003:0002D17C       dword_4BC17C
@@ -15778,7 +15130,7 @@
  0003:0002D244       dword_4BC244
  0003:0002D24C       dword_4BC24C
  0003:0002D254       dword_4BC254
- 0003:0002D268       byte_4BC268
+ 0003:0002D268       unk_4BC268
  0003:0002D270       dword_4BC270
  0003:0002D2DC       dword_4BC2DC
  0003:0002D314       byte_4BC314
@@ -15790,21 +15142,21 @@
  0003:0002D3A4       dword_4BC3A4
  0003:0002D3A8       dword_4BC3A8
  0003:0002D3AC       dword_4BC3AC
- 0003:0002D3C0       byte_4BC3C0
+ 0003:0002D3C0       unk_4BC3C0
  0003:0002D410       word_4BC410
  0003:0002D428       dword_4BC428
  0003:0002D42C       dword_4BC42C
  0003:0002D434       dword_4BC434
  0003:0002D44C       dword_4BC44C
  0003:0002D454       dword_4BC454
- 0003:0002D46C       byte_4BC46C
+ 0003:0002D46C       unk_4BC46C
  0003:0002D4BC       word_4BC4BC
  0003:0002D4D4       dword_4BC4D4
  0003:0002D4D8       dword_4BC4D8
  0003:0002D4E0       dword_4BC4E0
  0003:0002D4FC       dword_4BC4FC
  0003:0002D504       dword_4BC504
- 0003:0002D518       byte_4BC518
+ 0003:0002D518       unk_4BC518
  0003:0002D568       word_4BC568
  0003:0002D580       dword_4BC580
  0003:0002D584       dword_4BC584
@@ -15819,7 +15171,7 @@
  0003:0002D7DC       dword_4BC7DC
  0003:0002D7E0       dword_4BC7E0
  0003:0002D7E4       dword_4BC7E4
- 0003:0002D7E8       byte_4BC7E8
+ 0003:0002D7E8       unk_4BC7E8
  0003:0002D938       dword_4BC938
  0003:0002D93C       dword_4BC93C
  0003:0002D940       dword_4BC940
@@ -15855,7 +15207,7 @@
  0003:0002DB18       dword_4BCB18
  0003:0002DB28       dword_4BCB28
  0003:0002DB2C       dword_4BCB2C
- 0003:0002DB30       byte_4BCB30
+ 0003:0002DB30       unk_4BCB30
  0003:0002DB34       dword_4BCB34
  0003:0002DB38       dword_4BCB38
  0003:0002DB68       Locale
@@ -15878,7 +15230,7 @@
  0003:0002DF04       byte_4BCF04
  0003:0002E000       dword_4BD000
  0003:0002E004       dword_4BD004
- 0003:0002E008       memblock
+ 0003:0002E008       dword_4BD008
  0003:0002E00C       dword_4BD00C
  0003:0002E010       dword_4BD010
  0003:0002E014       dword_4BD014
@@ -15890,8 +15242,7 @@
  0003:0002E02C       HeapHandle
  0003:0002E030       dword_4BD030
  0003:0002E034       dword_4BD034
- 0003:0002E040       byte_4BD040
- 0003:0002F040       num
+ 0003:0002F040       dword_4BE040
  0003:0002F044       PcommandLine
 
 Program entry point at 0001:00080D27
