@@ -5,7 +5,7 @@ This disassembly aims to make the code easily understandable.
 
 Get IDA Freeware here : https://www.hex-rays.com/products/ida/support/download_freeware.shtml
 
-PS : You do not need the original .exe file to open the .i64 file.
+PS : You do not need the original .exe file to open the idb files.
 
 
 
