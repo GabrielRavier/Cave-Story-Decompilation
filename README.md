@@ -17,9 +17,9 @@ Doukutsu.idb : This file is the IDA database to open using the 32-bit version of
 
 All further files were produced by IDA :
 
-Doukutsu Typeinfo.idc : As indicated, this file contains the typeinfo of the .i64 in the idc scripting language
+Doukutsu Typeinfo.idc : As indicated, this file contains the typeinfo of the .i64 in the idc scripting language. For some reason, I can't get IDA to produce it, so it's not up to date.
 
-Doukustu.idc : This file contains the entire database, dumped to the idc format. If you want, you can manually open the .exe file, then run the idc file in IDA, though the results might not look good (I did this for conversion to .i64 format)
+Doukustu.idc : This file contains the entire database, dumped to the idc format. If you want, you can manually open the .exe file, then run the idc file in IDA, though the results might not look good (I did this for conversion to .i64 format). For some reason, I can't get IDA to produce it, so it's not up to date.
 
 Doukustu.asm : This file contains the disassembly done by IDA, in a possibly re-assemblable format (might have problems)
 
