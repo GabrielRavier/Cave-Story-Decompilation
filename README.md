@@ -1,4 +1,4 @@
-# Cave-Story-Disassembly
+# Cave-Story-Decompilation
 Decompilation of Cave Story. Can be opened with IDA Pro (freeware version).
 
 This decompilation aims to make the code easily understandable.
@@ -7,7 +7,7 @@ Get IDA Freeware here : https://www.hex-rays.com/products/ida/support/download_f
 
 PS : You do not need the original .exe file to open the idb files.
 
-
+DISCLAIMER: Any and all content presented in this repository is presented for informational and educational purposes only. Commercial usage is expressly prohibited. I claim no ownership of any code in these repositories. You assume any and all responsibility for using this content responsibly. I claim no responsibiliy or warranty.
 
 File details :
 
