@@ -1,4 +1,4 @@
-
+﻿
  Start         Length     Name                   Class
  0002:00000000 00008A8FFH .text                  CODE
  0003:00000000 000002B5AH .rdata                 DATA
@@ -8,9 +8,9 @@
 
   Address         Publics by Value
 
- 0001:00000000       Clear_Weapon_Data
- 0001:00000030       Clear_Item_Data
- 0001:00000050       Add_Weapon
+ 0001:00000000       clearWeaponData
+ 0001:00000030       clearItemData
+ 0001:00000050       addWeapon
  0001:0000005B       loc_40105B
  0001:00000074       loc_401074
  0001:00000085       loc_401085
@@ -19,7 +19,7 @@
  0001:000000D5       loc_4010D5
  0001:0000014C       loc_40114C
  0001:00000151       loc_401151
- 0001:00000160       Lose_Weapon
+ 0001:00000160       loseWeapon
  0001:0000016D       loc_40116D
  0001:00000176       loc_401176
  0001:0000018F       loc_40118F
@@ -29,20 +29,20 @@
  0001:000001AF       loc_4011AF
  0001:000001ED       loc_4011ED
  0001:0000020F       Return
- 0001:00000220       Trade_Weapon
+ 0001:00000220       tradeWeapon
  0001:0000022B       loc_40122B
  0001:00000244       loc_401244
  0001:0000024F       loc_40124F
  0001:00000259       loc_401259
  0001:000002C3       Return
- 0001:000002D0       Add_Item_Data
+ 0001:000002D0       addItemData
  0001:000002DB       loc_4012DB
  0001:000002F2       loc_4012F2
  0001:00000301       loc_401301
  0001:0000030C       loc_40130C
  0001:00000316       loc_401316
  0001:00000328       Return
- 0001:00000330       Sub_Item_Data
+ 0001:00000330       subItemData
  0001:0000033D       loc_40133D
  0001:00000346       loc_401346
  0001:0000035D       loc_40135D
@@ -52,7 +52,7 @@
  0001:0000037D       loc_40137D
  0001:00000399       loc_401399
  0001:000003B6       Return
- 0001:000003C0       Move_Inventory_Cursor
+ 0001:000003C0       moveInventoryCursor
  0001:000003D5       loc_4013D5
  0001:000003EF       loc_4013EF
  0001:00000407       loc_401407
@@ -84,7 +84,7 @@
  0001:000006A9       Play_YN_Change_Choice
  0001:000006D9       loc_4016D9
  0001:000006E6       Return
- 0001:000006F0       Draw_Inventory_Window
+ 0001:000006F0       drawInventoryWindow
  0001:000008CF       loc_4018CF
  0001:000008D8       loc_4018D8
  0001:00000902       loc_401902
@@ -105,7 +105,7 @@
  0001:00000C6F       loc_401C6F
  0001:00000C85       loc_401C85
  0001:00000D09       Return
- 0001:00000D10       Inventory_Loop
+ 0001:00000D10       inventoryLoop
  0001:00000D7E       loc_401D7E
  0001:00000D98       loc_401D98
  0001:00000DBD       loc_401DBD
@@ -123,31 +123,31 @@
  0001:00000EF0       loc_401EF0
  0001:00000EF5       loc_401EF5
  0001:00000F13       Return
- 0001:00000F20       Check_For_Item
+ 0001:00000F20       checkForItem
  0001:00000F2D       loc_401F2D
  0001:00000F36       loc_401F36
  0001:00000F52       jmp_401F2D
  0001:00000F54       Return_0
  0001:00000F56       Return
- 0001:00000F60       Check_For_Weapon
+ 0001:00000F60       checkForWeapon
  0001:00000F6D       loc_401F6D
  0001:00000F76       loc_401F76
  0001:00000F94       loc_401F94
  0001:00000F96       Return_0
  0001:00000F98       Return
- 0001:00000FA0       Use_Ammo
+ 0001:00000FA0       useAmmo
  0001:00000FBB       loc_401FBB
  0001:00000FD1       loc_401FD1
  0001:00001016       Return_1
  0001:0000101B       Return
- 0001:00001020       Add_Ammo
+ 0001:00001020       addAmmo
  0001:0000107F       Return_1
- 0001:00001090       Fill_Weapon_Ammo
+ 0001:00001090       fillWeaponAmmo
  0001:0000109D       loc_40209D
  0001:000010A6       loc_4020A6
  0001:000010BD       loc_4020BD
  0001:000010D7       Return
- 0001:000010E0       Switch_to_Next_Weap
+ 0001:000010E0       switchWeaponForward
  0001:000010EB       loc_4020EB
  0001:00001105       loc_402105
  0001:0000110F       loc_40210F
@@ -156,7 +156,7 @@
  0001:00001152       loc_402152
  0001:00001166       Play_Switch_Weapon
  0001:0000118B       Return
- 0001:00001190       Switch_to_Prev_Weap
+ 0001:00001190       switchWeaponBackwards
  0001:0000119B       loc_40219B
  0001:000011B5       loc_4021B5
  0001:000011BF       loc_4021BF
@@ -164,17 +164,17 @@
  0001:000011FF       loc_4021FF
  0001:0000120E       Play_Switch_Weapon
  0001:00001233       Return
- 0001:00001240       Change_To_First_Weapon
- 0001:00001270       Init_Background
+ 0001:00001240       resetSelectedWeapon
+ 0001:00001270       initBackground
  0001:000012D4       loc_4022D4
  0001:000012F8       loc_4022F8
  0001:00001349       loc_402349
  0001:00001360       Return
- 0001:00001370       Update_Background
+ 0001:00001370       updateBackground
  0001:00001390       loc_402390
  0001:000013A4       loc_4023A4
  0001:000013C6       Return
- 0001:000013D0       Draw_Background
+ 0001:000013D0       drawBackground
  0001:00001412       fixed_bk
  0001:0000141B       fixed_loop_full
  0001:00001427       enter_fixed_loop
@@ -204,9 +204,9 @@
  0001:000015FF       loc_4025FF
  0001:00001601       loc_402601
  0001:00001606       jmp_402809_case_6_7
- 0001:00001805       end_of_code
+ 0001:00001805       jmp_40240B_return
  0001:00001809       jmp_40240B_table
- 0001:00001830       Draw_Foreground
+ 0001:00001830       drawForeground
  0001:00001881       loc_402881
  0001:000018B4       loc_4028B4
  0001:000018BD       loc_4028BD
@@ -217,14 +217,14 @@
  0001:0000199D       loc_40299D
  0001:0000199F       loc_40299F
  0001:000019A4       loc_4029A4
- 0001:000019B0       Chk_Starblck_break
+ 0001:000019B0       checkStarblockBreak
  0001:00001A39       loc_402A39
  0001:00001A83       loc_402A83
  0001:00001AB2       loc_402AB2
  0001:00001ABB       loc_402ABB
  0001:00001B10       loc_402B10
  0001:00001B20       loc_402B20
- 0001:00001B30       Solid_Tile_Complicated
+ 0001:00001B30       solidTileTwoStageFilterThing
  0001:00001B51       loc_402B51
  0001:00001B5A       loc_402B5A
  0001:00001B76       loc_402B76
@@ -264,43 +264,43 @@
  0001:00001F26       loc_402F26
  0001:00001F28       loc_402F28
  0001:00001F3C       loc_402F3C
- 0001:00001F50       Sound_When_Bullet_Hits_Wall_Maybe
+ 0001:00001F50       makeSoundAndEffectOnHitWall
  0001:00001F6E       loc_402F6E
  0001:00001F8A       Play_Shot_Hit_Wall
  0001:00001F96       loc_402F96
- 0001:00001FC0       Bullet_Tile_Collision_Roof_Slope_1
+ 0001:00001FC0       bulletTileCollisionRoofSlope1
  0001:00002089       loc_403089
  0001:00002095       loc_403095
  0001:000020A1       loc_4030A1
- 0001:000020B0       Bullet_Tile_Collision_Roof_Slope_2
+ 0001:000020B0       bulletTileCollisionRoofSlope2
  0001:00002179       loc_403179
  0001:00002185       loc_403185
  0001:00002191       loc_403191
- 0001:000021A0       Bullet_Tile_Collision_Roof_Slope_3
+ 0001:000021A0       bulletTileCollisionRoofSlope3
  0001:00002267       loc_403267
  0001:00002273       loc_403273
  0001:0000227C       loc_40327C
- 0001:00002290       Bullet_Tile_Collision_Roof_Slope_4
+ 0001:00002290       bulletTileCollisionRoofSlope4
  0001:00002357       loc_403357
  0001:00002363       loc_403363
  0001:0000236C       loc_40336C
- 0001:00002380       Bullet_Tile_Collision_Floor_Slope_1
+ 0001:00002380       bulletTileCollisionFloorSlope1
  0001:0000244E       loc_40344E
  0001:0000245A       loc_40345A
  0001:00002463       loc_403463
- 0001:00002470       Bullet_Tile_Collision_Floor_Slope_2
+ 0001:00002470       bulletTileCollisionFloorSlope2
  0001:00002537       loc_403537
  0001:00002543       loc_403543
  0001:0000254C       loc_40354C
- 0001:00002560       Bullet_Tile_Collision_Floor_Slope_3
+ 0001:00002560       bulletTileCollisionFloorSlope3
  0001:00002629       loc_403629
  0001:00002635       loc_403635
  0001:0000263E       loc_40363E
- 0001:00002650       Bullet_Tile_Collision_Floor_Slope_4
+ 0001:00002650       bulletTileCollisionFloorSlope4
  0001:00002719       loc_403719
  0001:00002725       loc_403725
  0001:0000272E       loc_40372E
- 0001:00002740       Bul_Til_Coll_Algo
+ 0001:00002740       bulletTileCollisionAlgorithm
  0001:00002750       loc_403750
  0001:00002759       loc_403759
  0001:00002779       loc_403779
@@ -323,30 +323,30 @@
  0001:00002B90       loc_403B90
  0001:00002B95       jmp_4038D0_table
  0001:00002BBD       jmp_4038D0_indirect_table
- 0001:00002C00       Clear_All_Weapons_Object_Slots
+ 0001:00002C00       resetWeapons
  0001:00002C0D       loc_403C0D
  0001:00002C16       loc_403C16
  0001:00002C2E       loc_403C2E
- 0001:00002C40       Count_Weapon_Bullets
+ 0001:00002C40       countBullets
  0001:00002C56       loc_403C56
  0001:00002C5F       loc_403C5F
  0001:00002C9E       loc_403C9E
  0001:00002CA0       Return_Shot_Count
- 0001:00002CB0       Count_All_Slots_Using_Shot
+ 0001:00002CB0       countShots
  0001:00002CC6       Add_1_Var_8
  0001:00002CCF       loc_403CCF
  0001:00002D03       jmp_Add_1_Var_8
  0001:00002D05       Return_Var_4
- 0001:00002D10       Delete_Bullet
+ 0001:00002D10       deleteBullet
  0001:00002D26       Loop_Counter_Inc
  0001:00002D2F       Loop_Check
  0001:00002D75       jmp_Loop_Counter_Inc
  0001:00002D77       Return
- 0001:00002D80       Clear_Bullets
+ 0001:00002D80       resetBullets
  0001:00002D8D       loc_403D8D
  0001:00002D96       loc_403D96
  0001:00002DAE       loc_403DAE
- 0001:00002DC0       Render_Bullets
+ 0001:00002DC0       renderBullets
  0001:00002DCF       Restart_Loop
  0001:00002DD8       Start_For_Loop
  0001:00002E1E       jmp_403E17_case_0
@@ -357,18 +357,18 @@
  0001:00002F60       jmp_Restart_Loop
  0001:00002F65       Return
  0001:00002F69       jmp_403E17_table
- 0001:00002F80       Create_Bullet
+ 0001:00002F80       createBullet
  0001:00002F8B       loc_403F8B
  0001:00002FB0       loc_403FB0
  0001:00002FBB       loc_403FBB
  0001:0000315C       loc_40415C
- 0001:00003160       Bullet_01_Lvl_1_Snake
+ 0001:00003160       bullet1_Level1Snake
  0001:000031AF       loc_4041AF
  0001:000031F7       jmp_4041F0_case_0
  0001:00003203       jmp_4041F0_case_1
  0001:0000320F       jmp_4041F0_case_2
  0001:0000321B       jmp_4041F0_case_3
- 0001:00003225       jmp_4041F0_default
+ 0001:00003225       loc_404225
  0001:00003227       loc_404227
  0001:0000324B       loc_40424B
  0001:0000327C       loc_40427C
@@ -376,7 +376,7 @@
  0001:000033A5       loc_4043A5
  0001:000033CE       loc_4043CE
  0001:000033D2       jmp_4041F0_table
- 0001:000033F0       Bullet_02_03_Snake
+ 0001:000033F0       bullet2_3_SnakeLevel2_3
  0001:0000343C       loc_40443C
  0001:0000347F       jmp_404478_case_0
  0001:0000348B       jmp_404478_case_1
@@ -410,7 +410,7 @@
  0001:00003779       jmp_4044CF_table
  0001:00003789       jmp_404540_table
  0001:00003799       jmp_4045A8_table
- 0001:000037B0       Bullet_04_05_06_Polar_Star
+ 0001:000037B0       bullet4_5_6_PolarStar
  0001:000037FC       begin_bullet_code
  0001:0000382D       fire_Left
  0001:00003839       fire_Up
@@ -447,7 +447,7 @@
  0001:00003AFA       jmp_404826_table
  0001:00003B0A       jmp_404885_table
  0001:00003B1A       jmp_4048CF_table
- 0001:00003B30       Bullet_07_08_09_Fireball
+ 0001:00003B30       bullet7_8_9_Fireball
  0001:00003B7F       loc_404B7F
  0001:00003BA1       loc_404BA1
  0001:00003BBC       loc_404BBC
@@ -482,7 +482,7 @@
  0001:000040CC       loc_4050CC
  0001:000040FF       Return
  0001:00004103       jmp_404C67_table
- 0001:00004120       Bullet_0A_0B_0C_Machine_Gun
+ 0001:00004120       bulletA_B_C_MachineGun
  0001:000042EF       loc_4052EF
  0001:00004322       loc_405322
  0001:0000432E       loc_40532E
@@ -502,7 +502,7 @@
  0001:00004527       loc_405527
  0001:0000457F       loc_40557F
  0001:00004583       jmp_40536E_table
- 0001:000045A0       Bullet_0D_0E_0F_Missile_Launcher
+ 0001:000045A0       bulletD_E_F_MissileLauncher
  0001:000045EF       loc_4055EF
  0001:00004606       loc_405606
  0001:00004622       loc_405622
@@ -561,7 +561,7 @@
  0001:00004D4C       jmp_4058C0_table
  0001:00004D5C       jmp_405937_table
  0001:00004D6C       jmp_405A66_table
- 0001:00004D80       Bullet_10_11_12_Missile_Explosion
+ 0001:00004D80       bullet10_11_12_MissileExplosion
  0001:00004DA0       loc_405DA0
  0001:00004DC4       loc_405DC4
  0001:00004DD0       loc_405DD0
@@ -575,7 +575,7 @@
  0001:00004EB8       loc_405EB8
  0001:00004F07       loc_405F07
  0001:00004F29       Return
- 0001:00004F30       Bullet_13_Bubbler_Lvl1
+ 0001:00004F30       bullet13_BubblerLevel1
  0001:00004F6C       loc_405F6C
  0001:00004F7D       loc_405F7D
  0001:00004FA1       jmp_405F9A_case_0
@@ -594,7 +594,7 @@
  0001:00005168       loc_406168
  0001:0000516C       jmp_405F9A_table
  0001:0000517C       jmp_405FE2_table
- 0001:00005190       Bullet_14_Bubbler_Lvl2
+ 0001:00005190       bullet14_BubllerLevel2
  0001:000051B9       loc_4061B9
  0001:000051D6       loc_4061D6
  0001:000051F3       loc_4061F3
@@ -617,7 +617,7 @@
  0001:000054A2       loc_4064A2
  0001:000054A6       jmp_406274_table
  0001:000054B6       jmp_40631C_table
- 0001:000054D0       Bullet_15_Bubbler_Lvl3
+ 0001:000054D0       bullet15_BubblerLevel3
  0001:00005500       loc_406500
  0001:00005555       loc_406555
  0001:0000557A       loc_40657A
@@ -641,7 +641,7 @@
  0001:0000586A       loc_40686A
  0001:00005893       Return
  0001:00005897       jmp_4065D2_table
- 0001:000058B0       Bullet_16_Bubble_Spurs
+ 0001:000058B0       bullet16_BubblerSpurs
  0001:000058DD       loc_4068DD
  0001:00005906       loc_406906
  0001:00005937       jmp_406930_case_0
@@ -660,7 +660,7 @@
  0001:00005B83       jmp_406AD2_default_Return
  0001:00005B87       jmp_406930_table
  0001:00005B97       jmp_406AD2_table
- 0001:00005BB0       Bullet_19_Blade_Lvl_1
+ 0001:00005BB0       bullet19_BladeLevel1
  0001:00005BFF       loc_406BFF
  0001:00005C17       loc_406C17
  0001:00005C36       loc_406C36
@@ -676,7 +676,7 @@
  0001:00005E1A       loc_406E1A
  0001:00005E43       Return
  0001:00005E47       jmp_406D65_table
- 0001:00005E60       Bullet_1A_Blade_Lvl_2
+ 0001:00005E60       bullet1A_BladeLevel2
  0001:00005EAF       loc_406EAF
  0001:00005EC7       loc_406EC7
  0001:00005EE6       loc_406EE6
@@ -692,7 +692,7 @@
  0001:000060CA       loc_4070CA
  0001:000060F3       loc_4070F3
  0001:000060F7       jmp_406F15_table
- 0001:00006110       Bullet_1B_Blade_Lvl_3
+ 0001:00006110       bullet1B_BladeLevel3
  0001:00006229       loc_407229
  0001:00006247       loc_407247
  0001:0000626A       jmp_407263_case_0
@@ -721,7 +721,7 @@
  0001:000065B4       Return
  0001:000065B8       jmp_407263_table
  0001:000065C8       jmp_4074E2_table
- 0001:000065E0       Bullet_17_Blade_Slash
+ 0001:000065E0       bullet17_BladeSlash
  0001:0000660C       loc_40760C
  0001:00006646       loc_407646
  0001:00006657       loc_407657
@@ -733,9 +733,9 @@
  0001:000066FD       loc_4076FD
  0001:00006863       loc_407863
  0001:0000688F       loc_40788F
- 0001:000068A0       Bullet_18__Unused_
+ 0001:000068A0       bullet18_Unused
  0001:000068E4       loc_4078E4
- 0001:00006910       Bullet_1C_1D_1E_Sup_Mis_Launcher
+ 0001:00006910       bullet1C_1D_1E_SuperMissileLauncher
  0001:0000695F       loc_40795F
  0001:00006976       loc_407976
  0001:00006992       loc_407992
@@ -794,7 +794,7 @@
  0001:00007041       jmp_407C58_table
  0001:00007051       jmp_407CD7_table
  0001:00007061       jmp_407DFE_table
- 0001:00007080       Bullet_1F_20_21
+ 0001:00007080       bullet1F_20_21
  0001:000070A0       loc_4080A0
  0001:000070C4       loc_4080C4
  0001:000070D0       loc_4080D0
@@ -808,7 +808,7 @@
  0001:000071B8       loc_4081B8
  0001:00007207       loc_408207
  0001:00007229       Return
- 0001:00007230       Bullet_22_23_24_2B_Nemesis
+ 0001:00007230       bullet22_23_24_2B_Nemesis
  0001:0000727F       max_distance_not_reached
  0001:000072C3       Bullet_move_Left
  0001:000072CF       Bullet_move_up
@@ -837,7 +837,7 @@
  0001:000076DD       jmp_4082BC_table
  0001:000076ED       jmp_408378_table
  0001:000076FD       jmp_4085B2_table
- 0001:00007710       Bullet_25_26_27_ChargelessSpur_AllLevels
+ 0001:00007710       bullet25_26_27_ChargelessSpur
  0001:0000775C       loc_40875C
  0001:00007778       loc_408778
  0001:000077A9       jmp_4087A2_case_0
@@ -875,7 +875,7 @@
  0001:00007AA7       jmp_4087A2_table
  0001:00007AB7       jmp_408801_table
  0001:00007AC7       jmp_40884B_table
- 0001:00007AE0       Bullet_28_to_2A_NonMovingSpur_AllLevels
+ 0001:00007AE0       bullet28_29_2A_NonMovingSpur
  0001:00007B10       loc_408B10
  0001:00007B23       loc_408B23
  0001:00007B3F       loc_408B3F
@@ -891,12 +891,12 @@
  0001:00007EDA       loc_408EDA
  0001:00007F08       loc_408F08
  0001:00007F34       loc_408F34
- 0001:00007F40       Bullet_2C_Spur_Lvl_2
+ 0001:00007F40       bullet2C_SpurLevel2
  0001:00007F6C       loc_408F6C
  0001:00007F8A       loc_408F8A
- 0001:00007F90       Bullet_2D_Spur_Lvl_3
+ 0001:00007F90       bullet2D_SpurLevel3
  0001:00007FBA       loc_408FBA
- 0001:00007FC0       Run_Bullet_Code
+ 0001:00007FC0       runBulletCode
  0001:00007FCF       loc_408FCF
  0001:00007FD8       loc_408FD8
  0001:0000801B       loc_40901B
@@ -948,7 +948,7 @@
  0001:000084F8       jmp_409040_default_jmp_408FCF
  0001:000084FD       Return
  0001:00008501       jmp_409040_table
- 0001:000085C0       Is_some_bullet_active
+ 0001:000085C0       isSomeBulletActive
  0001:000085CF       For_Loop_Restart
  0001:000085D8       For_Loop_Check
  0001:00008621       Return_1
@@ -957,15 +957,15 @@
  0001:0000862C       Return
  0001:00008630       jmp_40961A_table
  0001:00008638       jmp_40961A_indirect_table
- 0001:00008650       Init_Effects
- 0001:00008670       No_Effect
- 0001:00008680       Effect_1_Random_Fountain_Pulsing_Disc_Particles
+ 0001:00008650       initEffects
+ 0001:00008670       effect0_Nothing
+ 0001:00008680       effect1_RandomFountainPulsingDiscParticles
  0001:00008772       Initiate_Disk
  0001:000087A9       Update_Position
  0001:0000881F       loc_40981F
  0001:00008853       loc_409853
  0001:0000887C       Return
- 0001:00008880       Effect_2_Rising_Disc_And_Exploding_Diamond
+ 0001:00008880       effect2_RisingDiscAndExplodingDiamond
  0001:00008A15       loc_409A15
  0001:00008A67       loc_409A67
  0001:00008A79       loc_409A79
@@ -974,14 +974,14 @@
  0001:00008AEA       loc_409AEA
  0001:00008B15       loc_409B15
  0001:00008B6F       Return
- 0001:00008B80       Effect_3_Star
+ 0001:00008B80       effect3_Star
  0001:00008C39       loc_409C39
- 0001:00008C70       Effect_4_Fireball_Impact
+ 0001:00008C70       effect4_FireballImpact
  0001:00008DC4       loc_409DC4
- 0001:00008E00       Effect_5_ZzZ___
+ 0001:00008E00       effect5_ZzZ
  0001:00008EFB       loc_409EFB
  0001:00008F0D       loc_409F0D
- 0001:00008F60       Effect_6_Booster_Smoke
+ 0001:00008F60       effect6_BoosterSmoke
  0001:0000906D       loc_40A06D
  0001:000090AF       jmp_40A0A8_case_0
  0001:000090C3       jmp_40A0A8_case_1
@@ -989,15 +989,15 @@
  0001:000090EB       jmp_40A0A8_case_3
  0001:000090FD       jmp_40A0A8_default_Return
  0001:00009101       jmp_40A0A8_table
- 0001:00009120       Effect_7_Drowned_Quote
+ 0001:00009120       effect7_DrownedQuote
  0001:00009186       loc_40A186
  0001:000091A3       Return
- 0001:000091B0       Effect_8_Exclamation_Mark
+ 0001:000091B0       effect8_ExclamationMark
  0001:00009218       loc_40A218
  0001:0000922A       loc_40A22A
  0001:00009252       loc_40A252
  0001:0000926F       Return
- 0001:00009280       Effect_9_Level_Up_Or_Down
+ 0001:00009280       effect9_LevelUpOrDown
  0001:00009328       loc_40A328
  0001:0000933A       loc_40A33A
  0001:0000933C       loc_40A33C
@@ -1007,12 +1007,12 @@
  0001:000093AD       loc_40A3AD
  0001:000093C4       loc_40A3C4
  0001:000093E7       Return
- 0001:000093F0       Effect_10_Red_Damage_Rings
+ 0001:000093F0       effect10_RedDamageRings
  0001:00009443       loc_40A443
  0001:0000956E       loc_40A56E
- 0001:000095A0       Effect_11_Big_Explosion
+ 0001:000095A0       effect11_BigExplosion
  0001:00009621       loc_40A621
- 0001:00009650       Effect_12_Headbump_Sparks
+ 0001:00009650       effect12_HeadbumpSparks
  0001:000096B8       loc_40A6B8
  0001:000096EA       loc_40A6EA
  0001:00009702       loc_40A702
@@ -1021,56 +1021,56 @@
  0001:00009786       loc_40A786
  0001:0000979D       loc_40A79D
  0001:000097DB       Return
- 0001:000097E0       Effect_13_Unknown_Unused
+ 0001:000097E0       effect13_UnknownUnused
  0001:000098B5       loc_40A8B5
- 0001:000098F0       Effect_14_Small_White_Explosion_Disc
+ 0001:000098F0       effect14_SmallWhiteExplosionDisc
  0001:000099A9       loc_40A9A9
- 0001:000099E0       Effect_15_Nothing
+ 0001:000099E0       effect15_Nothing
  0001:00009A48       loc_40AA48
  0001:00009A5A       loc_40AA5A
  0001:00009A71       loc_40AA71
- 0001:00009AA0       Effect_16_Push_Jump_Key
+ 0001:00009AA0       effect16_PushJumpKey
  0001:00009B00       loc_40AB00
  0001:00009B28       loc_40AB28
  0001:00009B45       loc_40AB45
- 0001:00009B50       Update_Effects
+ 0001:00009B50       updateEffects
  0001:00009B5F       loc_40AB5F
  0001:00009B68       loc_40AB68
  0001:00009BAB       loc_40ABAB
  0001:00009BAD       Return
- 0001:00009BC0       Draw_Effects
+ 0001:00009BC0       drawEffects
  0001:00009BCD       Loop_Restart
  0001:00009BD6       For_Loop_Check
  0001:00009C85       jmp_Loop_Restart
  0001:00009C8A       Return
- 0001:00009C90       Create_Effect
+ 0001:00009C90       createEffect
  0001:00009C9D       For_Loop_Restart
  0001:00009CA6       Search_For_Empty_Slot
  0001:00009CBD       jmp_For_Loop_Restart
  0001:00009CBF       Break
  0001:00009CCA       Clear_Found_Slot
  0001:00009D5B       Return
- 0001:00009D60       Load_Config_Data
+ 0001:00009D60       loadConfigData
  0001:00009DC1       Return_0
  0001:00009DC5       loc_40ADC5
  0001:00009E08       loc_40AE08
  0001:00009E1F       Return_1
  0001:00009E24       Return
- 0001:00009E30       Set_Default_Config_Data
- 0001:00009EC0       About_Dialog
+ 0001:00009E30       setDefaultConfigData
+ 0001:00009EC0       aboutDialog
  0001:00009EFB       loc_40AEFB
  0001:00009F81       loc_40AF81
  0001:00009F9E       loc_40AF9E
  0001:00009FAA       Return_0
  0001:00009FAC       Return
- 0001:00009FC0       Mute_Button
+ 0001:00009FC0       muteButton
  0001:00009FE7       loc_40AFE7
  0001:0000A0DD       loc_40B0DD
  0001:0000A0FC       loc_40B0FC
  0001:0000A10D       loc_40B10D
  0001:0000A1B9       Return_0
  0001:0000A1BB       Return
- 0001:0000A1D0       Debug_Save_Button
+ 0001:0000A1D0       debugSaveButton
  0001:0000A1F8       loc_40B1F8
  0001:0000A218       Return_1
  0001:0000A21F       loc_40B21F
@@ -1078,15 +1078,15 @@
  0001:0000A249       loc_40B249
  0001:0000A276       Return_0
  0001:0000A278       Return
- 0001:0000A290       Yes_No_Dialog
+ 0001:0000A290       yesNoDialog
  0001:0000A2B0       loc_40B2B0
  0001:0000A2D6       loc_40B2D6
  0001:0000A2F3       loc_40B2F3
  0001:0000A301       loc_40B301
  0001:0000A30D       Return_0
  0001:0000A30F       Return
- 0001:0000A320       Change_Screen_Offsets
- 0001:0000A340       Draw_Window
+ 0001:0000A320       changeScreenOffsets
+ 0001:0000A340       drawWindow
  0001:0000A343       loc_40B343
  0001:0000A35C       loc_40B35C
  0001:0000A37A       loc_40B37A
@@ -1095,7 +1095,7 @@
  0001:0000A3B0       loc_40B3B0
  0001:0000A445       loc_40B445
  0001:0000A44A       loc_40B44A
- 0001:0000A450       InitDirectDraw
+ 0001:0000A450       initDirectDraw
  0001:0000A46F       loc_40B46F
  0001:0000A4A0       loc_40B4A0
  0001:0000A4D1       loc_40B4D1
@@ -1104,7 +1104,7 @@
  0001:0000A604       loc_40B604
  0001:0000A66B       loc_40B66B
  0001:0000A6B9       loc_40B6B9
- 0001:0000A6C0       End_Direct_Draw
+ 0001:0000A6C0       deleteDirectDraw
  0001:0000A6CD       loc_40B6CD
  0001:0000A6D6       loc_40B6D6
  0001:0000A711       loc_40B711
@@ -1112,30 +1112,30 @@
  0001:0000A742       loc_40B742
  0001:0000A762       loc_40B762
  0001:0000A786       loc_40B786
- 0001:0000A7A0       Destroy_Bitmap_Obj_Maybe
+ 0001:0000A7A0       destroyBitmapObjectsMaybe
  0001:0000A7D8       loc_40B7D8
- 0001:0000A800       MakeSurface_From_Resource
+ 0001:0000A800       makeSurfaceFromResource
  0001:0000A816       loc_40B816
  0001:0000A82A       loc_40B82A
  0001:0000A858       loc_40B858
  0001:0000A8EF       loc_40B8EF
  0001:0000AAB7       loc_40BAB7
- 0001:0000AAC0       MakeSurface_From_File
+ 0001:0000AAC0       makeSurfaceFromFile
  0001:0000AB1C       loc_40BB1C
  0001:0000AB3A       loc_40BB3A
  0001:0000AB5F       loc_40BB5F
  0001:0000ABA1       loc_40BBA1
  0001:0000AE00       loc_40BE00
- 0001:0000AE10       Load_BMP_From_Resource_Onto_Existing_Surface
+ 0001:0000AE10       loadBMPFromResourceOntoExistingSurface
  0001:0000AE23       loc_40BE23
  0001:0000AE51       loc_40BE51
  0001:0000AFC2       loc_40BFC2
- 0001:0000AFD0       ReloadBitmap_From_File
+ 0001:0000AFD0       reloadBitmapFromFile
  0001:0000B029       loc_40C029
  0001:0000B047       loc_40C047
  0001:0000B089       loc_40C089
  0001:0000B1B6       loc_40C1B6
- 0001:0000B1D0       MakeSurface_Blank
+ 0001:0000B1D0       makeBlankSurface
  0001:0000B1E3       loc_40C1E3
  0001:0000B1F7       loc_40C1F7
  0001:0000B224       loc_40C224
@@ -1143,28 +1143,28 @@
  0001:0000B2EB       loc_40C2EB
  0001:0000B2FB       loc_40C2FB
  0001:0000B31A       loc_40C31A
- 0001:0000B320       Backup_Surface
- 0001:0000B3C0       Draw_Bitmap_With_Transparency
+ 0001:0000B320       backupSurface
+ 0001:0000B3C0       drawBitmapWithTransparency
  0001:0000B41F       loc_40C41F
  0001:0000B445       loc_40C445
  0001:0000B47F       loc_40C47F
  0001:0000B4A8       loc_40C4A8
- 0001:0000B5B0       Draw_Sprite_No_Tranparency
+ 0001:0000B5B0       drawSpriteNoTransparency
  0001:0000B60F       loc_40C60F
  0001:0000B635       loc_40C635
  0001:0000B66F       loc_40C66F
  0001:0000B698       loc_40C698
- 0001:0000B7A0       Draw_Sprite_Onto_Surface
- 0001:0000B8B0       Make_RGB
+ 0001:0000B7A0       drawSpriteOntoSurface
+ 0001:0000B8B0       makeRGB
  0001:0000B8D7       loc_40C8D7
  0001:0000B94E       loc_40C94E
  0001:0000B96F       loc_40C96F
  0001:0000B9A4       loc_40C9A4
  0001:0000B9CF       loc_40C9CF
- 0001:0000B9E0       Draw_Color_Fill
- 0001:0000BA80       Draw_Color_Fill_Onto_Surface
- 0001:0000BB30       Return_1
- 0001:0000BB60       Regenerate_Surfaces
+ 0001:0000B9E0       drawColorFill
+ 0001:0000BA80       drawColorFillOntoSurface
+ 0001:0000BB30       return1
+ 0001:0000BB60       regenerateSurfaces
  0001:0000BB7E       loc_40CB7E
  0001:0000BB8F       loc_40CB8F
  0001:0000BBCB       loc_40CBCB
@@ -1177,21 +1177,21 @@
  0001:0000BD36       loc_40CD36
  0001:0000BD3B       loc_40CD3B
  0001:0000BD3E       loc_40CD3E
- 0001:0000BD50       Init_Font_Object
+ 0001:0000BD50       initFontObject
  0001:0000BD6C       loc_40CD6C
  0001:0000BD7C       loc_40CD7C
  0001:0000BD8A       loc_40CD8A
  0001:0000BDF1       loc_40CDF1
  0001:0000BE00       Draw_String
- 0001:0000BEB0       Draw_String_Onto_Surface
- 0001:0000BF70       End_Font_Object
- 0001:0000BF90       Scroll_Credits_Text
+ 0001:0000BEB0       drawStringOntoSurface
+ 0001:0000BF70       deleteFontObject
+ 0001:0000BF90       scrollCreditsText
  0001:0000BF9D       Loop_Restart
  0001:0000BFA6       For_Loop_Check
  0001:0000BFE7       loc_40CFE7
  0001:0000C009       jmp_Loop_Restart
  0001:0000C00B       Return
- 0001:0000C010       Draw_From_Slot_0x25_Credits_Text_Maybe
+ 0001:0000C010       drawFromSlot0x25CreditsTextMaybe
  0001:0000C01F       Loop_Restart
  0001:0000C028       For_Loop_Check
  0001:0000C140       jmp_Loop_Restart
@@ -1203,30 +1203,30 @@
  0001:0000C186       loc_40D186
  0001:0000C191       loc_40D191
  0001:0000C230       Return
- 0001:0000C240       Draws_Some_Text
+ 0001:0000C240       drawsSomeText
  0001:0000C24F       Loop_Restart
  0001:0000C258       For_Loop_Check
  0001:0000C2C3       jmp_Loop_Restart
  0001:0000C2C5       Return
- 0001:0000C2D0       Slide_Credits_Picture
+ 0001:0000C2D0       slideCreditsPicture
  0001:0000C2F0       loc_40D2F0
  0001:0000C2FC       loc_40D2FC
  0001:0000C321       loc_40D321
  0001:0000C323       loc_40D323
  0001:0000C34B       Return
- 0001:0000C350       Draw_Credits_Image
- 0001:0000C3A0       Load_Credits_Illustration
- 0001:0000C3E0       InitCreditScript
- 0001:0000C410       Release_Credit_Script
+ 0001:0000C350       drawCreditsImage
+ 0001:0000C3A0       loadCreditsIllustration
+ 0001:0000C3E0       initCreditScript
+ 0001:0000C410       deleteCreditScript
  0001:0000C434       loc_40D434
- 0001:0000C440       Start_Credits_Script
+ 0001:0000C440       startCreditsScript
  0001:0000C472       loc_40D472
  0001:0000C4B6       loc_40D4B6
  0001:0000C4DA       loc_40D4DA
  0001:0000C50C       loc_40D50C
  0001:0000C590       loc_40D590
  0001:0000C5A9       loc_40D5A9
- 0001:0000C5C0       Credits_Related_Maybe
+ 0001:0000C5C0       creditsRelatedMaybe
  0001:0000C5D3       loc_40D5D3
  0001:0000C5EA       loc_40D5EA
  0001:0000C5F1       loc_40D5F1
@@ -1263,9 +1263,9 @@
  0001:0000CA76       jmp_40D67D_table
  0001:0000CA9A       jmp_40D67D_indirect_table
  0001:0000CB00       Credits_Related_3_Maybe
- 0001:0000CB40       Set_Credit_Illustration
- 0001:0000CB60       Cut_Credit_Illustration
- 0001:0000CB70       Scene_Island_Crash
+ 0001:0000CB40       setCreditIllustration
+ 0001:0000CB60       cutCreditIllustration
+ 0001:0000CB70       sceneIslandCrash
  0001:0000CBFD       loc_40DBFD
  0001:0000CC06       loc_40DC06
  0001:0000CC43       loc_40DC43
@@ -1280,7 +1280,7 @@
  0001:0000CD5A       loc_40DD5A
  0001:0000CD5F       loc_40DD5F
  0001:0000CD64       loc_40DD64
- 0001:0000CD70       Call_On_Escape
+ 0001:0000CD70       callOnEscape
  0001:0000CD92       loc_40DD92
  0001:0000CDC3       loc_40DDC3
  0001:0000CDE2       loc_40DDE2
@@ -1288,24 +1288,24 @@
  0001:0000CE48       loc_40DE48
  0001:0000CE4D       loc_40DE4D
  0001:0000CE4F       Return
- 0001:0000CE60       Init_Fade
- 0001:0000CE90       Set_Fade_Mask_
- 0001:0000CEA0       Reset_Fade_Vars
- 0001:0000CEC0       Start_Fade_Out
+ 0001:0000CE60       initFade
+ 0001:0000CE90       setFadeMask
+ 0001:0000CEA0       resetFadeVars
+ 0001:0000CEC0       startFadeOut
  0001:0000CEF5       loc_40DEF5
  0001:0000CEFE       loc_40DEFE
  0001:0000CF0D       loc_40DF0D
  0001:0000CF16       loc_40DF16
  0001:0000CF40       loc_40DF40
  0001:0000CF42       loc_40DF42
- 0001:0000CF50       Start_Fade_In
+ 0001:0000CF50       startFadeIn
  0001:0000CF85       loc_40DF85
  0001:0000CF8E       loc_40DF8E
  0001:0000CF9D       loc_40DF9D
  0001:0000CFA6       loc_40DFA6
  0001:0000CFD0       loc_40DFD0
  0001:0000CFD2       loc_40DFD2
- 0001:0000CFE0       Process_Fade
+ 0001:0000CFE0       processFade
  0001:0000D003       loc_40E003
  0001:0000D021       jmp_40E01A_case_0
  0001:0000D02A       loc_40E02A
@@ -1448,7 +1448,7 @@
  0001:0000D738       loc_40E738
  0001:0000D73C       jmp_40E01A_table
  0001:0000D750       off_40E750
- 0001:0000D770       Draw_Fade_Out_In
+ 0001:0000D770       drawFadeOutIn
  0001:0000D7A5       loc_40E7A5
  0001:0000D7B0       loc_40E7B0
  0001:0000D7B9       loc_40E7B9
@@ -1457,31 +1457,31 @@
  0001:0000D7DA       loc_40E7DA
  0001:0000D823       loc_40E823
  0001:0000D825       Return
- 0001:0000D830       Get_Fade_Mode
+ 0001:0000D830       getFadeMode
  0001:0000D83C       Return_0
  0001:0000D840       Return_1
  0001:0000D845       Return
- 0001:0000D850       Clear_Event_Flags
- 0001:0000D870       InitSkipFlags
+ 0001:0000D850       clearEventFlags
+ 0001:0000D870       initSkipFlags
  0001:0000D890       Set_NPC_Flag
  0001:0000D8AF       loc_40E8AF
- 0001:0000D8E0       Unset_NPC_Flag
+ 0001:0000D8E0       unsetNPCFlag
  0001:0000D8FF       loc_40E8FF
- 0001:0000D930       Get_NPC_Flag
+ 0001:0000D930       getNPCFlag
  0001:0000D956       loc_40E956
  0001:0000D968       Return_0
  0001:0000D96A       Return_1
- 0001:0000D970       Set_Skip_Flag
+ 0001:0000D970       setSkipFlag
  0001:0000D98F       loc_40E98F
- 0001:0000D9C0       Unset_Skip_Flag
+ 0001:0000D9C0       unsetSkipFlag
  0001:0000D9DF       loc_40E9DF
- 0001:0000DA10       Get_SkipFlag
+ 0001:0000DA10       getSkipFlag
  0001:0000DA36       loc_40EA36
  0001:0000DA48       loc_40EA48
  0001:0000DA4A       loc_40EA4A
- 0001:0000DA50       Init_Flash
- 0001:0000DA70       Start_Flash
- 0001:0000DAC0       Update_Boss_Explosion
+ 0001:0000DA50       initFlash
+ 0001:0000DA70       startFlash
+ 0001:0000DAC0       updateBossExplosion
  0001:0000DAE3       loc_40EAE3
  0001:0000DB88       loc_40EB88
  0001:0000DB95       loc_40EB95
@@ -1498,35 +1498,35 @@
  0001:0000DD9C       loc_40ED9C
  0001:0000DDC4       loc_40EDC4
  0001:0000DDD7       Return
- 0001:0000DDE0       Main_WhiteScreen_Handler
+ 0001:0000DDE0       mainWhiteScreenHandler
  0001:0000DDEF       loc_40EDEF
  0001:0000DE05       loc_40EE05
  0001:0000DE17       loc_40EE17
  0001:0000DE1C       loc_40EE1C
- 0001:0000DE20       Draw_Boss_Explosion
+ 0001:0000DE20       drawBossExplosion
  0001:0000DE2E       loc_40EE2E
  0001:0000DE55       Return
- 0001:0000DE60       Reset_Flash
- 0001:0000DE70       Update_Camera
+ 0001:0000DE60       resetFlash
+ 0001:0000DE70       updateCamera
  0001:0000DEF0       loc_40EEF0
  0001:0000DF0F       loc_40EF0F
  0001:0000DF43       loc_40EF43
  0001:0000DF76       Check_Hard_Quake
  0001:0000DFC4       Check_Soft_Quake
  0001:0000E00E       Return
- 0001:0000E020       Get_Camera_Position
- 0001:0000E040       Camera_Update
+ 0001:0000E020       getCameraPosition
+ 0001:0000E040       cameraUpdate
  0001:0000E09C       loc_40F09C
  0001:0000E0BB       loc_40F0BB
  0001:0000E0EF       loc_40F0EF
  0001:0000E122       Return
- 0001:0000E130       Set_Camera_Quote
+ 0001:0000E130       setCameraQuote
  0001:0000E195       loc_40F195
  0001:0000E1B4       loc_40F1B4
  0001:0000E1E7       loc_40F1E7
  0001:0000E219       Return
- 0001:0000E220       Set_Camera_Target_Quote
- 0001:0000E250       Set_Camera_Move_Ticks
+ 0001:0000E220       setCameraTargetQuote
+ 0001:0000E250       setCameraMoveTicks
  0001:0000E25D       Loop_Restart
  0001:0000E266       Loop_Check
  0001:0000E285       jmp_Loop_Restart
@@ -1534,11 +1534,11 @@
  0001:0000E292       loc_40F292
  0001:0000E2C3       Return
  0001:0000E2D0       TSC_FOB
- 0001:0000E310       Set_Quake
- 0001:0000E320       Set_Hard_Quake_Duration
- 0001:0000E330       Reset_Quake
- 0001:0000E350       Random
- 0001:0000E380       Draw_Numbers
+ 0001:0000E310       setQuake
+ 0001:0000E320       setHardQuakeDuration
+ 0001:0000E330       resetQuake
+ 0001:0000E350       random
+ 0001:0000E380       drawNumbers
  0001:0000E51F       For_Loop_Start
  0001:0000E533       For_Loop_Check
  0001:0000E547       loc_40F547
@@ -1547,7 +1547,7 @@
  0001:0000E5A1       loc_40F5A1
  0001:0000E5D1       Restart_Loop
  0001:0000E5E5       Return
- 0001:0000E5F0       Game_Loop_Selector
+ 0001:0000E5F0       gameModeSelector
  0001:0000E627       loc_40F627
  0001:0000E67C       loc_40F67C
  0001:0000E697       loc_40F697
@@ -1557,7 +1557,7 @@
  0001:0000E6DE       loc_40F6DE
  0001:0000E718       Return_1
  0001:0000E71D       Return
- 0001:0000E730       Game_Mode_Opening_Cutscene
+ 0001:0000E730       gameModeOpeningCutscene
  0001:0000E79D       loc_40F79D
  0001:0000E7E6       loc_40F7E6
  0001:0000E7ED       loc_40F7ED
@@ -1572,7 +1572,7 @@
  0001:0000E99B       loc_40F99B
  0001:0000E99D       loc_40F99D
  0001:0000E9A2       Return
- 0001:0000E9B0       Game_Loop_Title_Screen
+ 0001:0000E9B0       gameModeTitleScreen
  0001:0000EDE5       Mov_CursorPostion_0
  0001:0000EDEF       Chk_Hell_Less_Than_6_Minutes
  0001:0000EE19       Chk_Hell_Less_Than_5_Minutes
@@ -1619,7 +1619,7 @@
  0001:0000F3E3       Return_3
  0001:0000F3E8       Return
  0001:0000F3EC       off_4103EC
- 0001:0000F400       Game_Loop_Main_Game
+ 0001:0000F400       gameModeMainGame
  0001:0000F4A3       Return_0__
  0001:0000F4AA       loc_4104AA
  0001:0000F4AC       loc_4104AC
@@ -1653,49 +1653,49 @@
  0001:0000F890       loc_410890
  0001:0000F8A4       Return_0________
  0001:0000F8A6       Return
- 0001:0000F8B0       Get_Build_Data
+ 0001:0000F8B0       getBuildData
  0001:0000F940       loc_410940
  0001:0000F949       loc_410949
  0001:0000F96B       loc_41096B
  0001:0000F96D       Return
- 0001:0000F990       Get_Version_Number
+ 0001:0000F990       getVersionNumber
  0001:0000F9E1       loc_4109E1
  0001:0000F9FB       loc_4109FB
  0001:0000FA17       loc_410A17
  0001:0000FA33       loc_410A33
  0001:0000FA83       loc_410A83
  0001:0000FA95       loc_410A95
- 0001:0000FAB0       Check_For_SndVol32_exe
+ 0001:0000FAB0       openSndVol32
  0001:0000FB03       loc_410B03
  0001:0000FB27       loc_410B27
  0001:0000FBAA       loc_410BAA
  0001:0000FBAF       Return
- 0001:0000FBC0       Delete_Debug_txt
- 0001:0000FC10       Print_Debug
+ 0001:0000FBC0       deleteDebugTxt
+ 0001:0000FC10       debugPrint
  0001:0000FC5B       loc_410C5B
  0001:0000FC8D       Return
- 0001:0000FCA0       Param_Time_Check
+ 0001:0000FCA0       getDateLimit
  0001:0000FCE3       loc_410CE3
  0001:0000FD03       Return_1
  0001:0000FD0A       Return_0
  0001:0000FD0C       Return
- 0001:0000FD10       Check_File_Exists
+ 0001:0000FD10       doesFileExist
  0001:0000FD5F       loc_410D5F
  0001:0000FD70       loc_410D70
  0001:0000FD80       getFileSize
  0001:0000FDB4       loc_410DB4
  0001:0000FDD0       Return
- 0001:0000FDE0       Log_Error
+ 0001:0000FDE0       logError
  0001:0000FE32       loc_410E32
  0001:0000FE4F       Return_0
  0001:0000FE53       loc_410E53
  0001:0000FE78       Return_1
  0001:0000FE7D       Return
- 0001:0000FE90       Is_Shift_JIS
+ 0001:0000FE90       isShiftJIS
  0001:0000FEB1       loc_410EB1
  0001:0000FECF       Return_0
  0001:0000FED1       Return
- 0001:0000FEE0       Center_Window
+ 0001:0000FEE0       centerWindow
  0001:0000FF27       loc_410F27
  0001:0000FF37       loc_410F37
  0001:0000FF77       loc_410F77
@@ -1717,19 +1717,19 @@
  0001:000101D2       loc_4111D2
  0001:000101DE       Return_1
  0001:000101E3       Return
- 0001:000101F0       Save_Window_Rect_File
+ 0001:000101F0       saveWindowRectFile
  0001:0001021A       loc_41121A
  0001:00010239       loc_411239
  0001:00010251       loc_411251
  0001:0001028F       loc_41128F
  0001:000102C8       loc_4112C8
- 0001:000102E0       IsEnableBitmap
+ 0001:000102E0       isEnableBitmap
  0001:00010319       Return_0
  0001:0001031D       loc_41131D
  0001:0001036E       Return_0_
  0001:00010372       Return_1
  0001:00010377       Return
- 0001:00010390       Load_Initial_Resources
+ 0001:00010390       loadInitialResources
  0001:000103CE       loc_4113CE
  0001:000103E8       loc_4113E8
  0001:00010402       loc_411402
@@ -1745,30 +1745,30 @@
  0001:00010506       loc_411506
  0001:00010522       loc_411522
  0001:00010DFC       Return
- 0001:00010E10       Activate_Direct_Input
+ 0001:00010E10       activateDirectInput
  0001:00010E37       loc_411E37
  0001:00010E5B       loc_411E5B
- 0001:00010E60       Release_Direct_Input
+ 0001:00010E60       releaseDirectInput
  0001:00010E83       loc_411E83
  0001:00010E85       loc_411E85
  0001:00010E9F       loc_411E9F
- 0001:00010EB0       Init_Direct_Input
+ 0001:00010EB0       initDirectInput
  0001:00010ED0       loc_411ED0
  0001:00010EE4       loc_411EE4
  0001:00010EE9       loc_411EE9
- 0001:00010EF0       Direct_Input_Something
+ 0001:00010EF0       directInputSomething
  0001:00010F49       loc_411F49
  0001:00010F53       loc_411F53
  0001:00010F7A       loc_411F7A
  0001:00010F99       loc_411F99
  0001:00010FAF       loc_411FAF
- 0001:00010FC0       Enum_Devices_Callback
+ 0001:00010FC0       enumDevicesCallback
  0001:00010FF3       loc_411FF3
  0001:00011030       loc_412030
  0001:00011064       loc_412064
  0001:00011088       loc_412088
  0001:000110DB       loc_4120DB
- 0001:000110F0       Read_Controller
+ 0001:000110F0       getJoystickStatus
  0001:0001110E       loc_41210E
  0001:0001112A       loc_41212A
  0001:0001115F       loc_41215F
@@ -1789,11 +1789,11 @@
  0001:000112B9       loc_4122B9
  0001:000112BD       loc_4122BD
  0001:000112D4       loc_4122D4
- 0001:000112E0       Get_Keys
- 0001:00011320       Set_Window_Title
- 0001:00011370       Display_FPS_Counter
+ 0001:000112E0       getKeys
+ 0001:00011320       setWindowTitle
+ 0001:00011370       displayFPSCounter
  0001:0001139A       Return
- 0001:000113A0       Count_FPS
+ 0001:000113A0       countFPS
  0001:000113C2       loc_4123C2
  0001:0001140F       Return_Timer1000Time
  0001:00011420       WinMain(x,x,x,x)
@@ -1839,13 +1839,13 @@
  0001:00011B83       loc_412B83
  0001:00011B92       JumpTable_Switch_412663
  0001:00011BAA       JumpTable_Switch_412780
- 0001:00011BC0       Windows_Focus_Lost
+ 0001:00011BC0       windowFocusLost
  0001:00011BE0       Play_Silent_And_Return
- 0001:00011BF0       Windows_Focus_Gained
+ 0001:00011BF0       windowFocusGained
  0001:00011C15       Play_Silent_And_Return
- 0001:00011C30       Load_Dropped_Profile
+ 0001:00011C30       loadDroppedProfile
  0001:00011C82       loc_412C82
- 0001:00011CA0       Window_Procedure
+ 0001:00011CA0       windowProcedure
  0001:00011CE7       loc_412CE7
  0001:00011CF9       loc_412CF9
  0001:00011D2E       loc_412D2E
@@ -1930,14 +1930,14 @@
  0001:00012453       Key_Release_Table
  0001:000124A3       byte_4134A3
  0001:00012553       off_413553
- 0001:00012570       MessageQueue
+ 0001:00012570       messageQueue
  0001:00012576       loc_413576
  0001:00012595       loc_413595
  0001:000125AD       loc_4135AD
  0001:000125C3       loc_4135C3
  0001:000125D1       loc_4135D1
  0001:000125D6       loc_4135D6
- 0001:000125E0       Joystick_Procedure
+ 0001:000125E0       joyStickProcedure
  0001:00012601       loc_413601
  0001:00012630       loc_413630
  0001:00012642       loc_413642
@@ -1954,34 +1954,34 @@
  0001:00012714       loc_413714
  0001:0001273D       loc_41373D
  0001:0001273F       loc_41373F
- 0001:00012750       Init_Map_Data
- 0001:00012770       Load_Map_Data
+ 0001:00012750       initMapData
+ 0001:00012770       loadMapData
  0001:000127C2       loc_4137C2
  0001:00012802       loc_413802
  0001:00012859       loc_413859
  0001:00012891       loc_413891
- 0001:000128A0       Load_Attribute_Data
+ 0001:000128A0       loadAttributeData
  0001:000128EF       loc_4138EF
  0001:00012918       loc_413918
- 0001:00012930       Kill_Level_Layout
- 0001:00012950       Destroy_Bitmap_Object_02
- 0001:00012960       Get_Map_Data
+ 0001:00012930       deleteMapData
+ 0001:00012950       destroyBitmapObject2
+ 0001:00012960       getMapData
  0001:00012974       loc_413974
  0001:00012986       loc_413986
  0001:00012999       loc_413999
- 0001:000129A0       Get_Tile_Attributes
+ 0001:000129A0       getTileAttributes
  0001:000129C8       loc_4139C8
  0001:000129CC       loc_4139CC
  0001:000129F0       Return
- 0001:00012A00       Delete_Tile
- 0001:00012A20       Shift_Map_Parts
- 0001:00012A60       Change_Map_Parts
+ 0001:00012A00       deleteTile
+ 0001:00012A20       shiftMapParts
+ 0001:00012A60       changeMapParts
  0001:00012A87       loc_413A87
  0001:00012AAA       loc_413AAA
  0001:00012AB3       loc_413AB3
  0001:00012AE3       loc_413AE3
  0001:00012AE8       loc_413AE8
- 0001:00012AF0       Draw_Stage_Background
+ 0001:00012AF0       drawStageBackground
  0001:00012B48       loc_413B48
  0001:00012B51       loc_413B51
  0001:00012B68       loc_413B68
@@ -1990,7 +1990,7 @@
  0001:00012BC8       loc_413BC8
  0001:00012C48       loc_413C48
  0001:00012C4D       Return
- 0001:00012C60       Draw_Stage_Foreground
+ 0001:00012C60       drawStageForeground
  0001:00012CD4       loc_413CD4
  0001:00012CDD       loc_413CDD
  0001:00012CF4       loc_413CF4
@@ -2001,7 +2001,7 @@
  0001:00012E27       loc_413E27
  0001:00012E2C       loc_413E2C
  0001:00012E31       loc_413E31
- 0001:00012E40       Draw_Map_Data_Vector
+ 0001:00012E40       drawMapDataVector
  0001:00012EA7       loc_413EA7
  0001:00012EB0       loc_413EB0
  0001:00012EC7       loc_413EC7
@@ -2020,17 +2020,17 @@
  0001:000130AF       Return
  0001:000130B3       off_4140B3
  0001:000130C7       byte_4140C7
- 0001:000130F0       Ready_Map_Name
+ 0001:000130F0       readyMapName
  0001:00013190       loc_414190
  0001:00013199       loc_414199
  0001:000131B3       loc_4141B3
  0001:000131B9       loc_4141B9
- 0001:00013250       Draw_Map_Name
+ 0001:00013250       drawMapName
  0001:000132BC       loc_4142BC
  0001:000132C5       MNA_Render_Graphics_On_Title_Screen?
  0001:00013302       loc_414302
- 0001:00013310       Start_Map_Name
- 0001:00013330       Redraw_Room_Text_To_Surface
+ 0001:00013310       startMapName
+ 0001:00013330       redrawRoomTextToSurface
  0001:000133C0       Render_Map_System_Green_Stuff
  0001:0001343F       loc_41443F
  0001:00013448       loc_414448
@@ -2041,7 +2041,7 @@
  0001:0001361D       loc_41461D
  0001:00013635       loc_414635
  0001:0001363A       Return
- 0001:00013640       Game_Loop_Map
+ 0001:00013640       gameLoopMap
  0001:000136AB       loc_4146AB
  0001:000136B4       loc_4146B4
  0001:000136F1       loc_4146F1
@@ -2068,14 +2068,14 @@
  0001:00013AEC       loc_414AEC
  0001:00013AF1       loc_414AF1
  0001:00013AF6       loc_414AF6
- 0001:00013B00       Check_Map_Flag
+ 0001:00013B00       checkMapFlag
  0001:00013B13       Return_0
  0001:00013B17       Return_1
  0001:00013B1C       Return
- 0001:00013B20       Memset_Map_Flags_0
- 0001:00013B40       Set_Map_Flag
- 0001:00013B50       Set_Quote_Initial_Values
- 0001:00013BF0       Do_Player_Animation
+ 0001:00013B20       clearMapFlagArray
+ 0001:00013B40       setMapFlag
+ 0001:00013B50       setQuoteinitialValues
+ 0001:00013BF0       doPlayerAnimation
  0001:00013F6A       loc_414F6A
  0001:00013F94       loc_414F94
  0001:00014014       Play_Quote_Walk
@@ -2101,11 +2101,11 @@
  0001:0001419F       loc_41519F
  0001:000141DD       loc_4151DD
  0001:0001420D       loc_41520D
- 0001:00014220       Show_Hide_Player
+ 0001:00014220       showHidePlayer
  0001:00014229       TSC_SMC
  0001:0001423A       TSC_HMC
  0001:0001424A       loc_41524A
- 0001:00014250       Draw_Quote_And_Gun
+ 0001:00014250       drawQuoteAndGun
  0001:00014270       jmp_Return
  0001:00014275       loc_415275
  0001:000142F6       loc_4152F6
@@ -2124,7 +2124,7 @@
  0001:00014628       loc_415628
  0001:0001464B       loc_41564B
  0001:000146B0       Return
- 0001:000146C0       Physics
+ 0001:000146C0       playerPhysics
  0001:000146D7       Agility_Code
  0001:000146E5       Underwater_Physics
  0001:0001471F       Normal_Physics
@@ -2288,12 +2288,12 @@
  0001:00015A65       loc_416A65
  0001:00015A7F       loc_416A7F
  0001:00015A95       Return
- 0001:00015AA0       Get_Quote_Pos
- 0001:00015AC0       Set_Quote_Position
- 0001:00015B30       Instantly_Set_X_Y_Pos
- 0001:00015B50       Make_Quote_X_Vel_0
- 0001:00015B60       Tsc_UNJ
- 0001:00015B70       Set_Player_Direction
+ 0001:00015AA0       getQuotePos
+ 0001:00015AC0       setQuotePosition
+ 0001:00015B30       setXAndYPos
+ 0001:00015B50       makeQuoteXVel0
+ 0001:00015B60       isInFishBattle
+ 0001:00015B70       setPlayerDirection
  0001:00015B92       loc_416B92
  0001:00015BB7       loc_416BB7
  0001:00015BC0       loc_416BC0
@@ -2304,24 +2304,24 @@
  0001:00015C18       loc_416C18
  0001:00015C22       loc_416C22
  0001:00015C36       Return
- 0001:00015C40       Change_Unit
- 0001:00015C50       Add_Quote_Y_Pos_4000h
- 0001:00015C70       Equip_Item
+ 0001:00015C40       changeUniverse
+ 0001:00015C50       moveQuote4000UnitsDown
+ 0001:00015C70       equipItem
  0001:00015C79       EQ_minus
  0001:00015C88       EQ_plus
  0001:00015C99       Return
- 0001:00015CA0       AND_Player_Flags_minus2
- 0001:00015CC0       Set_Noise
+ 0001:00015CA0       andQuoteFlagsMinus2
+ 0001:00015CC0       setNoise
  0001:00015CEC       loc_416CEC
  0001:00015D2A       Play_Helicopter_Blades
  0001:00015D36       Return
- 0001:00015D40       Cut_Noise
- 0001:00015D80       Play_Environmental_Sounds
+ 0001:00015D40       cutNoise
+ 0001:00015D80       playEnvironmentalSounds
  0001:00015D9A       loc_416D9A
  0001:00015DD9       Play_Helicopter_Blades
  0001:00015DE5       Return
- 0001:00015DF0       Play_Sound_40_41_58
- 0001:00015E20       Reset_Quote_Collision_Flags
+ 0001:00015DF0       playStreamNoiseAndHelicopterBlades
+ 0001:00015E20       resetQuoteCollisionFlags
  0001:00015E30       Quote_Collision_Block
  0001:00015EDC       loc_416EDC
  0001:00015EFC       loc_416EFC
@@ -2388,7 +2388,7 @@
  0001:00016DA5       loc_417DA5
  0001:00016DB0       Quote_Collision_Wind_Down
  0001:00016E35       loc_417E35
- 0001:00016E40       Do_Collision_Check_Player_Map
+ 0001:00016E40       doCollisionCheckPlayerMap
  0001:00016EC1       loc_417EC1
  0001:00016ECA       loc_417ECA
  0001:00016F2B       loc_417F2B
@@ -2460,7 +2460,7 @@
  0001:00017FAF       loc_418FAF
  0001:00017FFB       loc_418FFB
  0001:0001801F       Return
- 0001:00018030       Do_Collision_Check_Player_NPCs
+ 0001:00018030       doCollisionCheckPlayerNPCs
  0001:00018057       loc_419057
  0001:0001805C       loc_41905C
  0001:00018065       Loop_Counter_Inc
@@ -2482,7 +2482,7 @@
  0001:00018418       jmp_Loop_Counter_Inc
  0001:0001841D       loc_41941D
  0001:00018441       Return
- 0001:00018450       Do_Collision_Check_Player_Bosses
+ 0001:00018450       doCollisionCheckPlayerBosses
  0001:00018477       loc_419477
  0001:0001847C       loc_41947C
  0001:00018485       Loop_Counter_Inc
@@ -2510,12 +2510,12 @@
  0001:00018856       loc_419856
  0001:00018882       loc_419882
  0001:0001888C       loc_41988C
- 0001:00018890       Reset_Selected_Weapon_Level
+ 0001:00018890       resetSelectedWeaponLevel
  0001:000188C0       Check_Weapon_MAX
  0001:00018903       Return_1
  0001:0001890A       Return_0
  0001:0001890C       Return
- 0001:00018910       Damage_Player
+ 0001:00018910       damagePlayer
  0001:00018925       Check_for_Invincibility
  0001:00018935       Play_Quote_Hurt
  0001:00018951       Add_Invincibility
@@ -2529,7 +2529,7 @@
  0001:00018AE6       loc_419AE6
  0001:00018AEB       loc_419AEB
  0001:00018B48       Return
- 0001:00018B50       Reset_All_Weapons_EXP
+ 0001:00018B50       resetAllWeaponEXP
  0001:00018B5D       loc_419B5D
  0001:00018B66       loc_419B66
  0001:00018B8E       loc_419B8E
@@ -2540,11 +2540,11 @@
  0001:00018BF8       loc_419BF8
  0001:00018C00       loc_419C00
  0001:00018C4D       Return
- 0001:00018C60       Add_Life_Player
+ 0001:00018C60       addLifePlayer
  0001:00018C97       Not_exceeded_HP_limit
- 0001:00018CB0       Add_Max_Life_Player
+ 0001:00018CB0       addMaxLifePlayer
  0001:00018CDF       Not_exceeded_HP_limit
- 0001:00018D10       Draw_XP_Bar_And_Misc
+ 0001:00018D10       drawEXPBarAndMisc
  0001:00018DAB       loc_419DAB
  0001:00018DC3       loc_419DC3
  0001:00018E21       loc_419E21
@@ -2557,7 +2557,7 @@
  0001:00019053       loc_41A053
  0001:00019074       loc_41A074
  0001:000190A7       loc_41A0A7
- 0001:000190B0       Draw_HUD_Weapon_Icons
+ 0001:000190B0       drawHUDWeaponIcons
  0001:000190D9       loc_41A0D9
  0001:000190F3       loc_41A0F3
  0001:000190FE       loc_41A0FE
@@ -2568,7 +2568,7 @@
  0001:0001917A       loc_41A17A
  0001:0001918F       loc_41A18F
  0001:000191C8       loc_41A1C8
- 0001:000191D0       Draw_Health_Bar
+ 0001:000191D0       drawHealthBar
  0001:00019248       loc_41A248
  0001:00019251       loc_41A251
  0001:0001926D       loc_41A26D
@@ -2576,12 +2576,12 @@
  0001:000192A3       loc_41A2A3
  0001:000192AD       loc_41A2AD
  0001:00019340       Return
- 0001:00019350       Underwater_Timer
+ 0001:00019350       drawUnderwaterTimer
  0001:0001939D       loc_41A39D
  0001:000193DB       loc_41A3DB
  0001:0001940A       loc_41A40A
  0001:00019425       loc_41A425
- 0001:00019430       Draw_Nikamaru_Timer
+ 0001:00019430       drawNikamaruTimer
  0001:000194C0       loc_41A4C0
  0001:000194EF       loc_41A4EF
  0001:0001950A       loc_41A50A
@@ -2589,7 +2589,7 @@
  0001:00019527       loc_41A527
  0001:000195BD       loc_41A5BD
  0001:000195C7       Return
- 0001:000195D0       Save_Hell_Counter
+ 0001:000195D0       saveHellCounter
  0001:000195F7       loc_41A5F7
  0001:000196BB       loc_41A6BB
  0001:000196C4       Loop_Counter_Inc
@@ -2597,7 +2597,7 @@
  0001:0001976B       loc_41A76B
  0001:0001978C       loc_41A78C
  0001:000197B1       loc_41A7B1
- 0001:000197C0       Get_Hell_Time
+ 0001:000197C0       getHellTime
  0001:00019807       Return_0_
  0001:0001980E       loc_41A80E
  0001:00019837       Loop_Counter_Inc
@@ -2606,7 +2606,7 @@
  0001:000198C1       Return_0
  0001:000198CF       Return_Nikamaru_Time
  0001:000198DC       Return
- 0001:000198F0       _MakeSoundObject8
+ 0001:000198F0       makeSoundObject
  0001:0001990E       loc_41A90E
  0001:00019917       loc_41A917
  0001:00019920       loc_41A920
@@ -2624,7 +2624,7 @@
  0001:00019B84       loc_41AB84
  0001:00019B89       loc_41AB89
  0001:00019B8E       loc_41AB8E
- 0001:00019BA0       Change_Organ_Frequency
+ 0001:00019BA0       changeOrganFrequency
  0001:00019BB4       loc_41ABB4
  0001:00019BBD       loc_41ABBD
  0001:00019BC6       loc_41ABC6
@@ -2632,13 +2632,13 @@
  0001:00019BE2       loc_41ABE2
  0001:00019C61       loc_41AC61
  0001:00019C66       Return
- 0001:00019C70       Change_Organ_Pan
+ 0001:00019C70       changeOrganPan
  0001:00019C83       loc_41AC83
  0001:00019D0F       Return
- 0001:00019D20       Change_Organ_Volume
+ 0001:00019D20       changeOrganVolume
  0001:00019D33       loc_41AD33
  0001:00019DB5       loc_41ADB5
- 0001:00019DC0       Play_Organya_Object
+ 0001:00019DC0       playOrganyaObject
  0001:00019DD4       loc_41ADD4
  0001:00019E28       loc_41AE28
  0001:00019F09       jmp_Return
@@ -2650,31 +2650,31 @@
  0001:0001A16F       loc_41B16F
  0001:0001A20B       loc_41B20B
  0001:0001A291       Return
- 0001:0001A2A0       Release_Organya_Object
+ 0001:0001A2A0       releaseOrganyaObject
  0001:0001A2B2       loc_41B2B2
  0001:0001A2BB       loc_41B2BB
  0001:0001A2C4       loc_41B2C4
  0001:0001A31F       loc_41B31F
  0001:0001A370       loc_41B370
  0001:0001A375       loc_41B375
- 0001:0001A380       Init_Wave_Data_100
+ 0001:0001A380       initWaveData100
  0001:0001A393       loc_41B393
  0001:0001A3B2       loc_41B3B2
  0001:0001A3E3       loc_41B3E3
- 0001:0001A3F0       Make_Organya_Wave
+ 0001:0001A3F0       makeOrganyaWave
  0001:0001A400       loc_41B400
  0001:0001A40D       loc_41B40D
  0001:0001A43C       loc_41B43C
- 0001:0001A440       Change_Dram_Frequency
+ 0001:0001A440       changeDrumFrequency
  0001:0001A44E       loc_41B44E
  0001:0001A478       loc_41B478
- 0001:0001A480       Change_Dram_Pan
+ 0001:0001A480       changeDrumPan
  0001:0001A48E       loc_41B48E
  0001:0001A4C0       loc_41B4C0
- 0001:0001A4D0       Change_Dram_Volume
+ 0001:0001A4D0       changeDrumVolume
  0001:0001A4DE       loc_41B4DE
  0001:0001A505       loc_41B505
- 0001:0001A510       Play_Dram_Object
+ 0001:0001A510       playDrumObject
  0001:0001A522       loc_41B522
  0001:0001A54B       loc_41B54B
  0001:0001A587       loc_41B587
@@ -2721,7 +2721,7 @@
  0001:0001AA8B       loc_41BA8B
  0001:0001AAC8       loc_41BAC8
  0001:0001AACA       loc_41BACA
- 0001:0001AAD0       OrgData::InitMusicData(char *)
+ 0001:0001AAD0       OrgData::loadOrgFile(char *)
  0001:0001AB0D       loc_41BB0D
  0001:0001AB59       loc_41BB59
  0001:0001AB74       loc_41BB74
@@ -2764,16 +2764,16 @@
  0001:0001B10D       Loop_Counter_Inc
  0001:0001B116       loc_41C116
  0001:0001B16E       loc_41C16E
- 0001:0001B180       _InitMMTimer
+ 0001:0001B180       initMMTimer
  0001:0001B19F       loc_41C19F
  0001:0001B1B3       loc_41C1B3
  0001:0001B1CC       loc_41C1CC
  0001:0001B1D1       loc_41C1D1
- 0001:0001B1E0       _StartTimer
+ 0001:0001B1E0       startTimer
  0001:0001B217       loc_41C217
  0001:0001B226       loc_41C226
- 0001:0001B230       TimerProc
- 0001:0001B250       QuitMMTimer
+ 0001:0001B230       timerCallbackOrganya
+ 0001:0001B250       quitMMTimer
  0001:0001B261       loc_41C261
  0001:0001B283       loc_41C283
  0001:0001B29D       loc_41C29D
@@ -2806,41 +2806,41 @@
  0001:0001B668       loc_41C668
  0001:0001B6A0       loc_41C6A0
  0001:0001B6A2       loc_41C6A2
- 0001:0001B6C0       Start_Organya
+ 0001:0001B6C0       startOrganya
  0001:0001B6CC       Return_0
  0001:0001B6D0       loc_41C6D0
  0001:0001B6D9       Return_0_
  0001:0001B6DD       loc_41C6DD
  0001:0001B6EC       loc_41C6EC
- 0001:0001B6F0       Load_Organya
+ 0001:0001B6F0       loadOrganya
  0001:0001B6FC       Return_0_
  0001:0001B700       loc_41C700
  0001:0001B712       Return_0
  0001:0001B716       loc_41C716
  0001:0001B72C       Return
- 0001:0001B730       Set_Organya_Position
+ 0001:0001B730       setOrganyaPosition
  0001:0001B73E       loc_41C73E
  0001:0001B760       loc_41C760
- 0001:0001B770       Get_Organya_Position
+ 0001:0001B770       getOrganyaPosition
  0001:0001B77C       Return_0
  0001:0001B780       Return_Song_Current_Beat
  0001:0001B785       Return
- 0001:0001B790       Start_Organya_Playback
+ 0001:0001B790       startOrganyaPlayback
  0001:0001B79E       loc_41C79E
  0001:0001B7B8       loc_41C7B8
- 0001:0001B7C0       Change_Organya_Volume
+ 0001:0001B7C0       changeOrganyaVolume
  0001:0001B7D0       loc_41C7D0
  0001:0001B7DC       loc_41C7DC
  0001:0001B7E0       loc_41C7E0
  0001:0001B7ED       loc_41C7ED
- 0001:0001B7F0       Stop_Organya_Music
+ 0001:0001B7F0       stopOrganyaMusic
  0001:0001B7FF       loc_41C7FF
  0001:0001B80D       loc_41C80D
  0001:0001B816       loc_41C816
  0001:0001B830       loc_41C830
  0001:0001B86E       loc_41C86E
- 0001:0001B880       Fade_Music
- 0001:0001B890       End_Organya
+ 0001:0001B880       fadeMusic
+ 0001:0001B890       deleteOrganya
  0001:0001B89F       loc_41C89F
  0001:0001B8B7       loc_41C8B7
  0001:0001B8C0       loc_41C8C0
@@ -2896,26 +2896,26 @@
  0001:0001BF2E       loc_41CF2E
  0001:0001BF7F       loc_41CF7F
  0001:0001BFA2       Return
- 0001:0001BFC0       Check_Profile_dat
+ 0001:0001BFC0       checkForProfileDat
  0001:0001C019       Close_File
  0001:0001C028       Return
- 0001:0001C040       Save_Profile
+ 0001:0001C040       saveProfile
  0001:0001C07D       loc_41D07D
  0001:0001C09D       loc_41D09D
  0001:0001C0C1       loc_41D0C1
  0001:0001C246       loc_41D246
- 0001:0001C260       Load_Dropped_Profile_dat
+ 0001:0001C260       loadProfileDat
  0001:0001C291       loc_41D291
  0001:0001C2B1       loc_41D2B1
  0001:0001C2D5       loc_41D2D5
  0001:0001C30F       loc_41D30F
  0001:0001C42C       Load_Values_From_Profile_dat
  0001:0001C53F       loc_41D53F
- 0001:0001C550       Initialise_Game
+ 0001:0001C550       initialiseGame
  0001:0001C5C0       loc_41D5C0
  0001:0001C601       loc_41D601
- 0001:0001C610       Clear_Unlocked_Stages
- 0001:0001C630       Add_Permit_Stage
+ 0001:0001C610       clearUnlockedStages
+ 0001:0001C630       addPermitStage
  0001:0001C63B       loc_41D63B
  0001:0001C652       loc_41D652
  0001:0001C661       loc_41D661
@@ -2932,7 +2932,7 @@
  0001:0001C6ED       loc_41D6ED
  0001:0001C717       loc_41D717
  0001:0001C738       Return
- 0001:0001C740       Move_Stage_Select_Cursor
+ 0001:0001C740       moveStageSelectCursor
  0001:0001C74D       loc_41D74D
  0001:0001C765       loc_41D765
  0001:0001C785       loc_41D785
@@ -2942,7 +2942,7 @@
  0001:0001C7E9       loc_41D7E9
  0001:0001C818       loc_41D818
  0001:0001C837       loc_41D837
- 0001:0001C840       Draw_Teleporter_Menu
+ 0001:0001C840       drawTeleporterMenu
  0001:0001C8CC       loc_41D8CC
  0001:0001C8F1       loc_41D8F1
  0001:0001C909       loc_41D909
@@ -2951,7 +2951,7 @@
  0001:0001C990       loc_41D990
  0001:0001C9A7       loc_41D9A7
  0001:0001C9FB       Return
- 0001:0001CA00       Game_Loop_Stage_Select
+ 0001:0001CA00       gameLoopStageSelect
  0001:0001CA88       loc_41DA88
  0001:0001CAC2       loc_41DAC2
  0001:0001CAC9       loc_41DAC9
@@ -2964,7 +2964,7 @@
  0001:0001CB8B       loc_41DB8B
  0001:0001CB90       loc_41DB90
  0001:0001CBB6       loc_41DBB6
- 0001:0001CBD0       Snake
+ 0001:0001CBD0       shootSnake
  0001:0001CBF0       Set_Snake_Level_1
  0001:0001CBF9       Set_Snake_Level_2
  0001:0001CC02       Set_Snake_Level_3
@@ -2980,7 +2980,7 @@
  0001:0001CE06       loc_41DE06
  0001:0001CE50       loc_41DE50
  0001:0001CE5C       loc_41DE5C
- 0001:0001CE60       Polar_Star
+ 0001:0001CE60       shootPolarStar
  0001:0001CE80       loc_41DE80
  0001:0001CE89       loc_41DE89
  0001:0001CE92       loc_41DE92
@@ -2997,7 +2997,7 @@
  0001:0001D0E7       loc_41E0E7
  0001:0001D0FB       Play_Level_1_2_Shot
  0001:0001D107       Return
- 0001:0001D110       Fireball
+ 0001:0001D110       shootFireball
  0001:0001D130       loc_41E130
  0001:0001D144       loc_41E144
  0001:0001D14D       loc_41E14D
@@ -3015,7 +3015,7 @@
  0001:0001D36E       loc_41E36E
  0001:0001D3B8       loc_41E3B8
  0001:0001D3C4       loc_41E3C4
- 0001:0001D3D0       Machine_Gun
+ 0001:0001D3D0       shootMachineGun
  0001:0001D3EA       loc_41E3EA
  0001:0001D404       loc_41E404
  0001:0001D40D       loc_41E40D
@@ -3042,7 +3042,7 @@
  0001:0001D77E       loc_41E77E
  0001:0001D780       loc_41E780
  0001:0001D79D       Return
- 0001:0001D7B0       Missile_Launcher
+ 0001:0001D7B0       shootMissileLauncher
  0001:0001D7DA       loc_41E7DA
  0001:0001D7E3       loc_41E7E3
  0001:0001D7EC       loc_41E7EC
@@ -3092,7 +3092,7 @@
  0001:0001DF1E       loc_41EF1E
  0001:0001DFB2       loc_41EFB2
  0001:0001DFBE       Return
- 0001:0001DFD0       Bubbler_Lvl_1_
+ 0001:0001DFD0       shootBubblerLevel1
  0001:0001DFE7       loc_41EFE7
  0001:0001E03F       jmp_Return
  0001:0001E044       loc_41F044
@@ -3106,7 +3106,7 @@
  0001:0001E241       loc_41F241
  0001:0001E24F       loc_41F24F
  0001:0001E279       Return
- 0001:0001E280       Bubbler_Lvl_2_3
+ 0001:0001E280       shootBubblerLevel2_3
  0001:0001E297       loc_41F297
  0001:0001E2B5       loc_41F2B5
  0001:0001E2E4       loc_41F2E4
@@ -3122,7 +3122,7 @@
  0001:0001E53F       loc_41F53F
  0001:0001E54D       loc_41F54D
  0001:0001E579       Return
- 0001:0001E580       Blade
+ 0001:0001E580       shootBlade
  0001:0001E599       loc_41F599
  0001:0001E5B3       loc_41F5B3
  0001:0001E5BC       loc_41F5BC
@@ -3137,7 +3137,7 @@
  0001:0001E6D6       loc_41F6D6
  0001:0001E6FC       loc_41F6FC
  0001:0001E708       Return
- 0001:0001E710       Nemesis
+ 0001:0001E710       shootNemesis
  0001:0001E730       Set_Nemesis_Level_1
  0001:0001E739       Set_Nemesis_Level_2
  0001:0001E742       Set_Nemesis_Level_3
@@ -3156,9 +3156,9 @@
  0001:0001E9BF       loc_41F9BF
  0001:0001E9CD       loc_41F9CD
  0001:0001E9D9       Return
- 0001:0001E9E0       Reset_Spur_Charge
+ 0001:0001E9E0       resetSpurCharge
  0001:0001EA03       loc_41FA03
- 0001:0001EA10       Spur
+ 0001:0001EA10       shootSpur
  0001:0001EA45       loc_41FA45
  0001:0001EA4F       loc_41FA4F
  0001:0001EA74       loc_41FA74
@@ -3197,7 +3197,7 @@
  0001:0001EE2E       loc_41FE2E
  0001:0001EE32       off_41FE32
  0001:0001EE46       byte_41FE46
- 0001:0001EE70       Shoot_Bullet
+ 0001:0001EE70       shootBullet
  0001:0001EE8C       loc_41FE8C
  0001:0001EEA4       loc_41FEA4
  0001:0001EEC0       loc_41FEC0
@@ -3223,13 +3223,13 @@
  0001:0001F062       loc_420062
  0001:0001F07A       loc_42007A
  0001:0001F07E       off_42007E
- 0001:0001F0C0       Init_Direct_Sound
+ 0001:0001F0C0       initDirectSound
  0001:0001F0FC       loc_4200FC
  0001:0001F157       loc_420157
  0001:0001F160       loc_420160
  0001:0001F179       loc_420179
  0001:0001F191       loc_420191
- 0001:0001F1A0       End_Direct_Sound
+ 0001:0001F1A0       deleteDirectSound
  0001:0001F1B2       loc_4201B2
  0001:0001F1C0       loc_4201C0
  0001:0001F1C9       loc_4201C9
@@ -3238,13 +3238,13 @@
  0001:0001F215       loc_420215
  0001:0001F22F       loc_42022F
  0001:0001F239       Return
- 0001:0001F240       Init_Sound_Object
+ 0001:0001F240       loadWAVFile
  0001:0001F259       loc_420259
  0001:0001F27A       loc_42027A
  0001:0001F2ED       loc_4202ED
  0001:0001F35A       loc_42035A
  0001:0001F389       Return
- 0001:0001F390       Load_Sound_Object
+ 0001:0001F390       loadSoundObject
  0001:0001F3D8       loc_4203D8
  0001:0001F407       loc_420407
  0001:0001F444       loc_420444
@@ -3262,22 +3262,22 @@
  0001:0001F5B6       loc_4205B6
  0001:0001F5F1       loc_4205F1
  0001:0001F62F       Return
- 0001:0001F640       Play_Sound_Effect
+ 0001:0001F640       playSoundEffect
  0001:0001F652       loc_420652
  0001:0001F684       loc_420684
  0001:0001F6A0       loc_4206A0
  0001:0001F6F8       loc_4206F8
  0001:0001F718       loc_420718
- 0001:0001F720       Change_Sound_Frequency
+ 0001:0001F720       changeSoundFrequency
  0001:0001F72E       loc_42072E
  0001:0001F752       loc_420752
- 0001:0001F760       Change_Sound_Volume
+ 0001:0001F760       changeSoundVolume
  0001:0001F76E       loc_42076E
  0001:0001F793       Return
- 0001:0001F7A0       Change_Sound_Pan
+ 0001:0001F7A0       changeSoundPan
  0001:0001F7AE       loc_4207AE
  0001:0001F7D4       Return
- 0001:0001F7E0       Make_PixTone_Object
+ 0001:0001F7E0       makePixtoneObject
  0001:0001F7FE       loc_4207FE
  0001:0001F8E2       loc_4208E2
  0001:0001F8EB       loc_4208EB
@@ -3304,7 +3304,7 @@
  0001:0001FBB6       loc_420BB6
  0001:0001FBC8       loc_420BC8
  0001:0001FBCB       Return
- 0001:0001FBE0       Transfer_Stage
+ 0001:0001FBE0       changeStage
  0001:0001FC68       loc_420C68
  0001:0001FCAA       loc_420CAA
  0001:0001FCEC       loc_420CEC
@@ -3315,12 +3315,12 @@
  0001:0001FE55       loc_420E55
  0001:0001FE5F       loc_420E5F
  0001:0001FEC8       loc_420EC8
- 0001:0001FEE0       Change_Music
+ 0001:0001FEE0       changeMusic
  0001:0001FEF6       loc_420EF6
  0001:0001FF46       loc_420F46
- 0001:0001FF50       ReCall_Music
- 0001:0001FFA0       Init_Whimsical_Star
- 0001:00020040       Do_Whimsical_Star
+ 0001:0001FF50       recallMusic
+ 0001:0001FFA0       initWhimsicalStar
+ 0001:00020040       doWhimsicalStar
  0001:0002006D       Loop_Counter_Inc
  0001:00020076       loc_421076
  0001:000200C7       loc_4210C7
@@ -3342,20 +3342,20 @@
  0001:000202F6       loc_4212F6
  0001:00020399       Jmp_Loop_Counter_Inc
  0001:0002039E       Return
- 0001:000203B0       Draw_Whimsical_Star
+ 0001:000203B0       drawWhimsicalStar
  0001:0002041B       loc_42141B
  0001:0002042E       loc_42142E
  0001:00020437       loc_421437
  0001:00020440       loc_421440
  0001:000204CE       loc_4214CE
  0001:000204D3       loc_4214D3
- 0001:000204E0       Init_TSC
+ 0001:000204E0       initTSC
  0001:00020501       loc_421501
  0001:0002050A       loc_42150A
  0001:00020530       loc_421530
  0001:00020563       loc_421563
  0001:00020568       loc_421568
- 0001:00020570       End_TSC_Script
+ 0001:00020570       deleteTSC
  0001:00020595       loc_421595
  0001:0002059E       loc_42159E
  0001:000205B5       loc_4215B5
@@ -3368,7 +3368,7 @@
  0001:0002064E       loc_42164E
  0001:00020656       loc_421656
  0001:00020658       loc_421658
- 0001:00020660       Load_Special_TSC
+ 0001:00020660       loadSpecialTSC
  0001:000206B2       loc_4216B2
  0001:000206D3       loc_4216D3
  0001:00020735       loc_421735
@@ -3378,9 +3378,9 @@
  0001:00020842       loc_421842
  0001:00020863       loc_421863
  0001:000208D2       Return
- 0001:000208E0       GetTextScriptPath
- 0001:00020900       Get_TSC_Number
- 0001:00020990       Start_TSC_Event
+ 0001:000208E0       getTextScriptPath
+ 0001:00020900       getTSCNumber
+ 0001:00020990       startTSCEvent
  0001:00020A30       loc_421A30
  0001:00020A52       loc_421A52
  0001:00020A91       loc_421A91
@@ -3388,7 +3388,7 @@
  0001:00020AAE       loc_421AAE
  0001:00020AD2       loc_421AD2
  0001:00020AE4       Return
- 0001:00020AF0       Script_Jump
+ 0001:00020AF0       changeEvent
  0001:00020B38       loc_421B38
  0001:00020B41       loc_421B41
  0001:00020B88       loc_421B88
@@ -3399,13 +3399,13 @@
  0001:00020C0D       loc_421C0D
  0001:00020C30       loc_421C30
  0001:00020C44       Return
- 0001:00020C50       Stop_Text_Script
- 0001:00020C80       CheckNewLine
+ 0001:00020C50       stopTSC
+ 0001:00020C80       checkNewLine
  0001:00020C94       loc_421C94
  0001:00020CC7       loc_421CC7
  0001:00020CEF       loc_421CEF
  0001:00020D00       Return
- 0001:00020D10       Print_NUM
+ 0001:00020D10       printNumber
  0001:00020D57       loc_421D57
  0001:00020D60       loc_421D60
  0001:00020D7B       loc_421D7B
@@ -3414,11 +3414,11 @@
  0001:00020DE5       loc_421DE5
  0001:00020E1B       loc_421E1B
  0001:00020E7D       loc_421E7D
- 0001:00020E90       Clear_Text_Line
+ 0001:00020E90       clearTextLine
  0001:00020EBB       loc_421EBB
  0001:00020EC4       loc_421EC4
  0001:00020F0B       loc_421F0B
- 0001:00020F10       Draw_Text_Box
+ 0001:00020F10       drawTextBox
  0001:00020F29       loc_421F29
  0001:00020F3A       loc_421F3A
  0001:00020F5F       loc_421F5F
@@ -3443,7 +3443,7 @@
  0001:000214B2       loc_4224B2
  0001:000214B9       loc_4224B9
  0001:00021506       loc_422506
- 0001:00021510       TSC_Parser
+ 0001:00021510       TSCParser
  0001:00021573       jmp_42256C_case_0
  0001:000215AC       loc_4225AC
  0001:000215BA       loc_4225BA
@@ -3625,20 +3625,20 @@
  0001:00024760       Return_1
  0001:00024765       Return
  0001:00024771       off_425771
- 0001:00024790       Draw_Text_To_Text_Box_Surfaces
+ 0001:00024790       drawTextToTextBoxSurfaces
  0001:0002479D       loc_42579D
  0001:000247A6       loc_4257A6
  0001:000247E8       loc_4257E8
- 0001:000247F0       Init_Triangle_Table
+ 0001:000247F0       initTriangleTable
  0001:000247FF       loc_4257FF
  0001:00024808       loc_425808
  0001:00024845       loc_425845
  0001:0002484E       Loop_Counter_Inc
  0001:00024857       loc_425857
  0001:000248A8       Return
- 0001:000248B0       GetSin
- 0001:000248C0       GetCos
- 0001:000248E0       GetArcTan
+ 0001:000248B0       getSin
+ 0001:000248C0       getCos
+ 0001:000248E0       getArcTan
  0001:00024922       loc_425922
  0001:00024940       loc_425940
  0001:00024942       loc_425942
@@ -3666,12 +3666,12 @@
  0001:00024B03       loc_425B03
  0001:00024B22       loc_425B22
  0001:00024B30       loc_425B30
- 0001:00024B40       call_call_cos
- 0001:00024B60       call_cos
- 0001:00024B80       call_call_sin
- 0001:00024BA0       call_sin
- 0001:00024BC0       Clear_Value_View
- 0001:00024BF0       Set_Value_View
+ 0001:00024B40       callCallCos
+ 0001:00024B60       callCos
+ 0001:00024B80       callCallSin
+ 0001:00024BA0       callSin
+ 0001:00024BC0       clearValueView
+ 0001:00024BF0       setValueView
  0001:00024C05       loc_425C05
  0001:00024C14       loc_425C14
  0001:00024C5D       loc_425C5D
@@ -3698,7 +3698,7 @@
  0001:000252D7       loc_4262D7
  0001:00025307       loc_426307
  0001:00025353       Return
- 0001:00025360       Act_Value_View
+ 0001:00025360       actValueView
  0001:0002536D       loc_42636D
  0001:00025376       loc_426376
  0001:00025391       loc_426391
@@ -3706,14 +3706,14 @@
  0001:00025403       loc_426403
  0001:00025422       loc_426422
  0001:00025427       loc_426427
- 0001:00025430       Put_Value_View
+ 0001:00025430       putValueView
  0001:0002543F       loc_42643F
  0001:00025448       loc_426448
  0001:00025463       loc_426463
  0001:00025521       Return
  0001:00025530       NPC0_Nothing
  0001:00025580       Return
- 0001:000255B0       NPC1_Weapon_Energy
+ 0001:000255B0       NPC1_WeaponEnergy
  0001:000255CC       loc_4265CC
  0001:00025609       loc_426609
  0001:0002562A       loc_42662A
@@ -3747,7 +3747,7 @@
  0001:00025A9E       loc_426A9E
  0001:00025AC1       loc_426AC1
  0001:00025AE2       Return
- 0001:00025AF0       NPC2_Enemy_Behemoth
+ 0001:00025AF0       NPC2_EnemyBehemoth
  0001:00025CE0       loc_426CE0
  0001:00025CF5       loc_426CF5
  0001:00025D29       loc_426D29
@@ -3768,7 +3768,7 @@
  0001:00025F46       loc_426F46
  0001:00025F9E       loc_426F9E
  0001:00025FCA       loc_426FCA
- 0001:00025FD0       NPC3_Deletes_Itself
+ 0001:00025FD0       NPC3_DeletesItself
  0001:00025FF4       loc_426FF4
  0001:00026040       NPC4_Smoke
  0001:0002628F       loc_42728F
@@ -3780,7 +3780,7 @@
  0001:00026407       loc_427407
  0001:0002643C       loc_42743C
  0001:00026471       loc_427471
- 0001:00026480       NPC5_Enemy_Critter_Hopping_Green
+ 0001:00026480       NPC5_EnemyCritterHoppingGreen
  0001:0002654B       loc_42754B
  0001:00026567       loc_427567
  0001:00026581       loc_427581
@@ -3799,7 +3799,7 @@
  0001:000267D6       loc_4277D6
  0001:000267FF       loc_4277FF
  0001:00026803       off_427803
- 0001:00026820       NPC6_Enemy_Beetle_Horiz_Green
+ 0001:00026820       NPC6_EnemyBeetleHorizontalGreen
  0001:0002697F       loc_42797F
  0001:0002699E       loc_42799E
  0001:000269A8       loc_4279A8
@@ -3824,7 +3824,7 @@
  0001:00026C17       loc_427C17
  0001:00026C43       loc_427C43
  0001:00026C47       off_427C47
- 0001:00026C60       NPC7_Enemy_Basil
+ 0001:00026C60       NPC7_EnemyBasil
  0001:00026D32       loc_427D32
  0001:00026D52       loc_427D52
  0001:00026D5C       loc_427D5C
@@ -3842,7 +3842,7 @@
  0001:00026E9C       loc_427E9C
  0001:00026ED0       loc_427ED0
  0001:00026EF9       loc_427EF9
- 0001:00026F00       NPC8_Enemy_Beetle_Follow1
+ 0001:00026F00       NPC8_EnemyBeetleFollow1
  0001:00026F94       loc_427F94
  0001:00027028       loc_428028
  0001:00027044       loc_428044
@@ -3863,7 +3863,7 @@
  0001:000271FA       loc_4281FA
  0001:0002722E       loc_42822E
  0001:00027257       Return
- 0001:00027260       NPC9_Balrog_DropIn
+ 0001:00027260       NPC9_BalrogDropIn
  0001:0002728A       loc_42828A
  0001:0002729E       loc_42829E
  0001:000272C7       loc_4282C7
@@ -3878,7 +3878,7 @@
  0001:0002740C       loc_42840C
  0001:0002750C       loc_42850C
  0001:00027535       Return
- 0001:00027540       NPC10_Boss_Balrog_Shooting
+ 0001:00027540       NPC10_BossBalrogShooting
  0001:0002756F       loc_42856F
  0001:00027579       loc_428579
  0001:000275B9       loc_4285B9
@@ -3899,11 +3899,11 @@
  0001:00027963       loc_428963
  0001:0002798F       Return
  0001:00027993       off_428993
- 0001:000279B0       NPC11_Projectile_Balrog_Energy_Bounce
+ 0001:000279B0       NPC11_ProjectileBalrogEnergyBounce
  0001:000279E4       loc_4289E4
  0001:00027AA0       loc_428AA0
  0001:00027B04       loc_428B04
- 0001:00027B10       NPC12_Balrog_Cutscene
+ 0001:00027B10       NPC12_BalrogCutscene
  0001:00027B46       loc_428B46
  0001:00027B69       loc_428B69
  0001:00027B73       loc_428B73
@@ -3981,7 +3981,7 @@
  0001:00028940       NPC13_Forcefield
  0001:000289E7       loc_4299E7
  0001:000289FA       loc_4299FA
- 0001:00028A30       NPC14_Santas_Key
+ 0001:00028A30       NPC14_SantasKey
  0001:00028A9E       loc_429A9E
  0001:00028AC8       Loop_Counter_Inc
  0001:00028AD1       loc_429AD1
@@ -3989,7 +3989,7 @@
  0001:00028B6C       loc_429B6C
  0001:00028B7F       loc_429B7F
  0001:00028BA4       loc_429BA4
- 0001:00028BF0       NPC15_Treasure_Chest_Closed
+ 0001:00028BF0       NPC15_TreasureChestClosed
  0001:00028C72       loc_429C72
  0001:00028CB0       Loop_Counter_Inc
  0001:00028CB9       loc_429CB9
@@ -3999,7 +3999,7 @@
  0001:00028D7A       loc_429D7A
  0001:00028D97       loc_429D97
  0001:00028DBC       loc_429DBC
- 0001:00028E00       NPC16
+ 0001:00028E00       NPC16_SavePoint
  0001:00028F10       loc_429F10
  0001:00028F64       Loop_Counter_Inc
  0001:00028F73       loc_429F73
@@ -4008,7 +4008,7 @@
  0001:0002902F       loc_42A02F
  0001:00029042       loc_42A042
  0001:00029067       loc_42A067
- 0001:000290B0       NPC17
+ 0001:000290B0       NPC17_HealthAmmoRefill
  0001:0002910B       loc_42A10B
  0001:00029135       Loop_Counter_Inc
  0001:0002913E       loc_42A13E
@@ -4027,7 +4027,7 @@
  0001:0002930E       loc_42A30E
  0001:00029333       loc_42A333
  0001:00029349       off_42A349
- 0001:00029360       NPC18
+ 0001:00029360       NPC18_Door
  0001:000293B8       loc_42A3B8
  0001:000293E0       loc_42A3E0
  0001:000293FD       loc_42A3FD
@@ -4036,7 +4036,7 @@
  0001:00029414       loc_42A414
  0001:00029460       loc_42A460
  0001:00029487       loc_42A487
- 0001:00029490       NPC19
+ 0001:00029490       NPC19_BalrogBustsIn
  0001:000294BF       loc_42A4BF
  0001:000294C8       Loop_Counter_Inc
  0001:000294D1       loc_42A4D1
@@ -4054,21 +4054,21 @@
  0001:000297E7       loc_42A7E7
  0001:00029813       Return
  0001:00029817       off_42A817
- 0001:00029830       NPC20
+ 0001:00029830       NPC20_Computer
  0001:000298D7       loc_42A8D7
  0001:000298EA       loc_42A8EA
  0001:00029912       loc_42A912
  0001:0002993B       loc_42A93B
- 0001:00029940       NPC21
+ 0001:00029940       NPC21_TreasureChestOpen
  0001:00029974       loc_42A974
- 0001:000299C0       NPC22
+ 0001:000299C0       NPC22_Teleporter
  0001:00029A15       loc_42AA15
  0001:00029A21       loc_42AA21
  0001:00029A43       loc_42AA43
- 0001:00029A70       NPC23
+ 0001:00029A70       NPC23_TeleporterLights
  0001:00029B8A       loc_42AB8A
  0001:00029B9D       loc_42AB9D
- 0001:00029BD0       NPC24
+ 0001:00029BD0       NPC24_PowerCritter
  0001:00029D7F       loc_42AD7F
  0001:00029D9B       loc_42AD9B
  0001:00029E0C       loc_42AE0C
@@ -4109,7 +4109,7 @@
  0001:0002A235       loc_42B235
  0001:0002A261       Return
  0001:0002A265       off_42B265
- 0001:0002A280       NPC25
+ 0001:0002A280       NPC25_LiftPlatform
  0001:0002A2DB       loc_42B2DB
  0001:0002A30B       loc_42B30B
  0001:0002A33F       loc_42B33F
@@ -4137,7 +4137,7 @@
  0001:0002A5A0       off_42B5A0
  0001:0002A5C4       off_42B5C4
  0001:0002A5CC       byte_42B5CC
- 0001:0002A5E0       NPC26
+ 0001:0002A5E0       NPC26_EnemyBatBlackCircling
  0001:0002A61D       loc_42B61D
  0001:0002A6C3       loc_42B6C3
  0001:0002A6DD       loc_42B6DD
@@ -4160,8 +4160,8 @@
  0001:0002AA20       loc_42BA20
  0001:0002AA54       loc_42BA54
  0001:0002AA80       loc_42BA80
- 0001:0002AA90       NPC27
- 0001:0002AAE0       NPC28
+ 0001:0002AA90       NPC27_Deathtrap
+ 0001:0002AAE0       NPC28_EnemyCritterFlying
  0001:0002AC8F       loc_42BC8F
  0001:0002ACAB       loc_42BCAB
  0001:0002AD1C       loc_42BD1C
@@ -4203,14 +4203,14 @@
  0001:0002B150       loc_42C150
  0001:0002B17C       Return
  0001:0002B180       off_42C180
- 0001:0002B1A0       NPC29
+ 0001:0002B1A0       NPC29_Cthulhu
  0001:0002B230       loc_42C230
  0001:0002B24E       loc_42C24E
  0001:0002B2A8       loc_42C2A8
  0001:0002B2B2       loc_42C2B2
  0001:0002B2E6       loc_42C2E6
  0001:0002B30F       loc_42C30F
- 0001:0002B320       NPC30
+ 0001:0002B320       NPC30_HermitGunsmith
  0001:0002B3A4       loc_42C3A4
  0001:0002B3C2       loc_42C3C2
  0001:0002B3F1       loc_42C3F1
@@ -4219,7 +4219,7 @@
  0001:0002B421       loc_42C421
  0001:0002B44F       loc_42C44F
  0001:0002B490       loc_42C490
- 0001:0002B4C0       NPC31
+ 0001:0002B4C0       NPC31_EnemyBatBlackHanging
  0001:0002B61F       loc_42C61F
  0001:0002B629       loc_42C629
  0001:0002B658       loc_42C658
@@ -4252,18 +4252,18 @@
  0001:0002B9C1       loc_42C9C1
  0001:0002B9ED       loc_42C9ED
  0001:0002B9F1       off_42C9F1
- 0001:0002BA10       NPC32
+ 0001:0002BA10       NPC32_LifeCapsule
  0001:0002BA7F       loc_42CA7F
  0001:0002BA92       loc_42CA92
- 0001:0002BAC0       NPC33
+ 0001:0002BAC0       NPC33_ProjectileBalrogEnergyBounce
  0001:0002BAF3       loc_42CAF3
  0001:0002BB08       loc_42CB08
  0001:0002BBB7       loc_42CBB7
  0001:0002BC1B       loc_42CC1B
- 0001:0002BC20       NPC34
+ 0001:0002BC20       NPC34_Bed
  0001:0002BC86       loc_42CC86
  0001:0002BCA3       loc_42CCA3
- 0001:0002BCB0       NPC35
+ 0001:0002BCB0       NPC35_EnemyMannan
  0001:0002BD5A       loc_42CD5A
  0001:0002BD80       loc_42CD80
  0001:0002BDD2       loc_42CDD2
@@ -4280,7 +4280,7 @@
  0001:0002BFD0       loc_42CFD0
  0001:0002BFF9       loc_42CFF9
  0001:0002BFFD       off_42CFFD
- 0001:0002C010       NPC36
+ 0001:0002C010       NPC36_BossBalrogHovering
  0001:0002C03F       loc_42D03F
  0001:0002C049       loc_42D049
  0001:0002C089       loc_42D089
@@ -4316,10 +4316,10 @@
  0001:0002C704       loc_42D704
  0001:0002C730       loc_42D730
  0001:0002C734       off_42D734
- 0001:0002C760       NPC37
+ 0001:0002C760       NPC37_Signpost
  0001:0002C7CF       loc_42D7CF
  0001:0002C7E2       loc_42D7E2
- 0001:0002C810       NPC38
+ 0001:0002C810       NPC38_FireplaceFire
  0001:0002C8AA       loc_42D8AA
  0001:0002C8DB       loc_42D8DB
  0001:0002C8EE       loc_42D8EE
@@ -10077,7 +10077,7 @@
  0001:0006DA90       NPC360_Thank_You
  0001:0006DAEE       loc_46EAEE
  0001:0006DB29       loc_46EB29
- 0001:0006DB30       Init_NPCs
+ 0001:0006DB30       initNPCs
  0001:0006DB50       Load_Event
  0001:0006DBA2       loc_46EBA2
  0001:0006DBD6       loc_46EBD6
@@ -10091,16 +10091,16 @@
  0001:0006DE2B       loc_46EE2B
  0001:0006DE3C       loc_46EE3C
  0001:0006DE50       Set_Unique_Parameter
- 0001:0006DFD0       NPC_Create
+ 0001:0006DFD0       createNPC
  0001:0006DFDA       loc_46EFDA
  0001:0006E002       loc_46F002
  0001:0006E010       loc_46F010
  0001:0006E13F       loc_46F13F
- 0001:0006E150       Create_Dust_Clouds
+ 0001:0006E150       createDustClouds
  0001:0006E171       loc_46F171
  0001:0006E17A       loc_46F17A
  0001:0006E1D9       loc_46F1D9
- 0001:0006E200       Create_Dust_Clouds_Up
+ 0001:0006E200       createDustCloudsUp
  0001:0006E221       loc_46F221
  0001:0006E22A       loc_46F22A
  0001:0006E289       loc_46F289
@@ -10132,7 +10132,7 @@
  0001:0006E673       loc_46F673
  0001:0006E75B       loc_46F75B
  0001:0006E760       Vanish_NPC
- 0001:0006E810       Draw_NPCs
+ 0001:0006E810       drawNPCs
  0001:0006E823       loc_46F823
  0001:0006E82C       loc_46F82C
  0001:0006E88A       loc_46F88A
@@ -10142,12 +10142,12 @@
  0001:0006E943       loc_46F943
  0001:0006E9E8       loc_46F9E8
  0001:0006E9ED       Return
- 0001:0006EA00       Update_NPCs
+ 0001:0006EA00       updateNPCs
  0001:0006EA0F       loc_46FA0F
  0001:0006EA18       loc_46FA18
  0001:0006EAA1       jmp_46FA0F
  0001:0006EAA6       Return
- 0001:0006EAB0       Spawn_NPC
+ 0001:0006EAB0       spawnNPC
  0001:0006EABD       loc_46FABD
  0001:0006EAC6       loc_46FAC6
  0001:0006EC83       loc_46FC83
@@ -10157,7 +10157,7 @@
  0001:0006ECDC       loc_46FCDC
  0001:0006ECF9       loc_46FCF9
  0001:0006ECFE       loc_46FCFE
- 0001:0006ED10       Change_Checkable_NPC_By_Event
+ 0001:0006ED10       changeCheckableNPCByEvent
  0001:0006ED1D       loc_46FD1D
  0001:0006ED26       loc_46FD26
  0001:0006EF08       loc_46FF08
@@ -10167,7 +10167,7 @@
  0001:0006EF62       loc_46FF62
  0001:0006EF7F       jmp_46FD1D
  0001:0006EF84       Return
- 0001:0006EF90       Set_NPC_State
+ 0001:0006EF90       setNPCState
  0001:0006EF9B       loc_46FF9B
  0001:0006EFD2       loc_46FFD2
  0001:0006EFDD       loc_46FFDD
@@ -10177,7 +10177,7 @@
  0001:0006F047       loc_470047
  0001:0006F049       loc_470049
  0001:0006F05B       loc_47005B
- 0001:0006F060       Move_NPC
+ 0001:0006F060       moveNPC
  0001:0006F06B       loc_47006B
  0001:0006F0A2       loc_4700A2
  0001:0006F0AD       loc_4700AD
@@ -10187,7 +10187,7 @@
  0001:0006F12C       loc_47012C
  0001:0006F12E       loc_47012E
  0001:0006F141       loc_470141
- 0001:0006F150       Back_Step_Player
+ 0001:0006F150       backStepPlayer
  0001:0006F193       loc_470193
  0001:0006F1B2       loc_4701B2
  0001:0006F1E9       loc_4701E9
@@ -10195,12 +10195,12 @@
  0001:0006F1FF       loc_4701FF
  0001:0006F22C       loc_47022C
  0001:0006F240       Return
- 0001:0006F250       Delete_NPC_Event
+ 0001:0006F250       deleteNPCEvent
  0001:0006F25D       loc_47025D
  0001:0006F266       loc_470266
  0001:0006F2C3       loc_4702C3
  0001:0006F2C5       loc_4702C5
- 0001:0006F2D0       Kill_NPC
+ 0001:0006F2D0       killNPC
  0001:0006F2DF       loc_4702DF
  0001:0006F2E8       loc_4702E8
  0001:0006F39E       loc_47039E
@@ -10208,14 +10208,14 @@
  0001:0006F416       loc_470416
  0001:0006F450       loc_470450
  0001:0006F455       loc_470455
- 0001:0006F460       Get_NPC_Position
- 0001:0006F490       Is_NPC_code
+ 0001:0006F460       getNPCPosition
+ 0001:0006F490       isNPCType
  0001:0006F49D       loc_47049D
  0001:0006F4A6       loc_4704A6
  0001:0006F4E2       loc_4704E2
  0001:0006F4E4       loc_4704E4
  0001:0006F4E6       loc_4704E6
- 0001:0006F4F0       Check_NPC_alive
+ 0001:0006F4F0       checkNPCAlive
  0001:0006F4FD       Add_1_Var_4
  0001:0006F506       loc_470506
  0001:0006F53D       jmp_Add_1_Var_4
@@ -10260,7 +10260,7 @@
  0001:00070094       loc_471094
  0001:000700B0       NPC_Collision_Water
  0001:00070143       loc_471143
- 0001:00070160       Do_Collision_Check_NPCs_Map
+ 0001:00070160       doCollisionCheckNPCsMap
  0001:000701ED       loc_4711ED
  0001:000701F6       loc_4711F6
  0001:0007021D       loc_47121D
@@ -10320,7 +10320,7 @@
  0001:00070D3E       loc_471D3E
  0001:00070D40       loc_471D40
  0001:00070D46       loc_471D46
- 0001:00070D50       Entity_Bullet_Collision
+ 0001:00070D50       entityBulletCollision
  0001:00070D5F       loc_471D5F
  0001:00070D68       loc_471D68
  0001:00070D8F       loc_471D8F
@@ -10345,7 +10345,7 @@
  0001:000713C4       loc_4723C4
  0001:000713F3       loc_4723F3
  0001:000713F8       Return
- 0001:00071400       LoadNPCTable
+ 0001:00071400       loadNPCTable
  0001:00071422       loc_472422
  0001:00071455       loc_472455
  0001:0007148F       loc_47248F
@@ -10380,10 +10380,10 @@
  0001:000716C2       loc_4726C2
  0001:000716ED       loc_4726ED
  0001:000716FE       Return
- 0001:00071710       Free_NPC_Table
+ 0001:00071710       deleteNPCTable
  0001:00071734       loc_472734
- 0001:00071740       Init_Room_Boss
- 0001:00071770       Draw_Boss
+ 0001:00071740       initRoomBoss
+ 0001:00071770       drawBoss
  0001:00071783       loc_472783
  0001:0007178C       loc_47278C
  0001:000717E7       loc_4727E7
@@ -10393,8 +10393,8 @@
  0001:000718A0       loc_4728A0
  0001:00071935       loc_472935
  0001:0007193A       loc_47293A
- 0001:00071940       Set_Boss_Script_State
- 0001:00071950       Do_Collision_Check_Bosses_Bullets
+ 0001:00071940       setBossScriptState
+ 0001:00071950       doCollisionCheckBossesBullets
  0001:0007195F       loc_47295F
  0001:00071968       loc_472968
  0001:0007198C       loc_47298C
@@ -10422,14 +10422,14 @@
  0001:00071FDA       loc_472FDA
  0001:00071FDF       loc_472FDF
  0001:00071FE4       loc_472FE4
- 0001:00071FF0       Boss0_NoSpecialBoss
- 0001:00072000       Update_Boss
+ 0001:00071FF0       boss0_NoSpecialBoss
+ 0001:00072000       updateBoss
  0001:00072016       loc_473016
  0001:00072032       loc_473032
  0001:0007203B       loc_47303B
  0001:00072076       loc_473076
  0001:00072078       loc_473078
- 0001:00072080       Do_Collision_Check_Bosses_Map
+ 0001:00072080       doCollisionCheckBossesMap
  0001:00072198       loc_473198
  0001:000721A1       loc_4731A1
  0001:000721C5       loc_4731C5
@@ -10462,7 +10462,7 @@
  0001:000728D2       Return
  0001:000728DE       off_4738DE
  0001:0007292E       byte_47392E
- 0001:000729B0       Core_Sub_NPC_Face
+ 0001:000729B0       coreSubNPCFace
  0001:00072A53       loc_473A53
  0001:00072A8A       loc_473A8A
  0001:00072AAA       loc_473AAA
@@ -10473,7 +10473,7 @@
  0001:00072B58       loc_473B58
  0001:00072B5C       off_473B5C
  0001:00072B74       byte_473B74
- 0001:00072BD0       Core_Sub_NPC_Tail
+ 0001:00072BD0       coreSubNPCTail
  0001:00072C57       loc_473C57
  0001:00072C8E       loc_473C8E
  0001:00072CAE       loc_473CAE
@@ -10484,7 +10484,7 @@
  0001:00072D5C       loc_473D5C
  0001:00072D60       off_473D60
  0001:00072D78       byte_473D78
- 0001:00072DE0       Core_Sub_NPC_Mini
+ 0001:00072DE0       coreSubNPCMini
  0001:00072E74       loc_473E74
  0001:00072E94       loc_473E94
  0001:00072EF9       loc_473EF9
@@ -10507,14 +10507,14 @@
  0001:00073218       loc_474218
  0001:00073245       off_474245
  0001:00073271       byte_474271
- 0001:00073340       Core_Sub_NPC_Hit
+ 0001:00073340       coreSubNPCHit
  0001:00073361       loc_474361
  0001:00073381       loc_474381
  0001:000733A1       loc_4743A1
  0001:000733C7       loc_4743C7
  0001:000733E9       loc_4743E9
  0001:000733ED       off_4743ED
- 0001:00073400       Boss_4_Core
+ 0001:00073400       boss4_Core
  0001:00073453       loc_474453
  0001:00073488       loc_474488
  0001:000734A7       loc_4744A7
@@ -10585,7 +10585,7 @@
  0001:00074263       byte_475263
  0001:00074337       off_475337
  0001:0007434F       byte_47534F
- 0001:000743D0       Boss_7_Undead_Core
+ 0001:000743D0       boss7_UndeadCore
  0001:0007442C       loc_47542C
  0001:0007446E       loc_47546E
  0001:0007449A       loc_47549A
@@ -10669,7 +10669,7 @@
  0001:0007574C       off_47674C
  0001:0007575C       off_47675C
  0001:00075764       byte_476764
- 0001:00075790       Undead_Sub_NPC_Head
+ 0001:00075790       undeadSubNPCHead
  0001:00075833       loc_476833
  0001:0007586A       loc_47686A
  0001:0007588A       loc_47688A
@@ -10680,7 +10680,7 @@
  0001:0007591A       loc_47691A
  0001:0007591E       off_47691E
  0001:00075936       byte_476936
- 0001:000759A0       Undead_Sub_NPC_Tail
+ 0001:000759A0       undeadSubNPCTail
  0001:00075A27       loc_476A27
  0001:00075A5E       loc_476A5E
  0001:00075A7E       loc_476A7E
@@ -10691,7 +10691,7 @@
  0001:00075B0E       loc_476B0E
  0001:00075B12       off_476B12
  0001:00075B2A       byte_476B2A
- 0001:00075B90       Undead_Sub_NPC_Face
+ 0001:00075B90       undeadSubNPCFace
  0001:00075C46       loc_476C46
  0001:00075C55       loc_476C55
  0001:00075C64       loc_476C64
@@ -10708,7 +10708,7 @@
  0001:00075D8F       loc_476D8F
  0001:00075E0E       off_476E0E
  0001:00075E26       byte_476E26
- 0001:00075E50       Undead_Sub_NPC_Mini
+ 0001:00075E50       undeadSubNPCMini
  0001:00075EBA       loc_476EBA
  0001:00075EEB       loc_476EEB
  0001:00075F01       loc_476F01
@@ -10728,14 +10728,14 @@
  0001:0007613D       loc_47713D
  0001:00076142       off_477142
  0001:00076162       byte_477162
- 0001:00076230       Undead_Sub_NPC_Hit
+ 0001:00076230       undeadSubNPCHit
  0001:00076251       loc_477251
  0001:00076271       loc_477271
  0001:00076291       loc_477291
  0001:000762B7       loc_4772B7
  0001:000762D9       loc_4772D9
  0001:000762DD       off_4772DD
- 0001:000762F0       Boss_9_Ballos_Ball
+ 0001:000762F0       boss9_BallosBall
  0001:00076352       loc_477352
  0001:00076379       loc_477379
  0001:000763B6       loc_4773B6
@@ -10855,7 +10855,7 @@
  0001:00077A01       byte_478A01
  0001:00077A5F       off_478A5F
  0001:00077A83       byte_478A83
- 0001:00077AA0       Ballos_Sub_NPC_Eye
+ 0001:00077AA0       ballosSubNPCEye
  0001:00077C18       loc_478C18
  0001:00077C36       loc_478C36
  0001:00077C67       loc_478C67
@@ -10876,10 +10876,10 @@
  0001:00077E37       loc_478E37
  0001:00077E3B       off_478E3B
  0001:00077E57       byte_478E57
- 0001:00077F20       Ballos_Sub_NPC_Body
- 0001:00077FE0       Ballos_Sub_NPC_HITAI
- 0001:00078010       Ballos_Sub_NPC_HARA
- 0001:00078030       Boss_2_Balfrog
+ 0001:00077F20       ballosSubNPCBody
+ 0001:00077FE0       ballosSubNPCHITAI
+ 0001:00078010       ballosSubNPCHARA
+ 0001:00078030       boss2_Balfrog
  0001:000782EC       loc_4792EC
  0001:000783F0       loc_4793F0
  0001:00078477       Loop_Counter_Inc
@@ -10975,7 +10975,7 @@
  0001:00079588       loc_47A588
  0001:00079596       off_47A596
  0001:00079602       byte_47A602
- 0001:000796A0       Balfrog_Sub_NPC_1
+ 0001:000796A0       balfrogSubNPC1
  0001:000796B8       loc_47A6B8
  0001:000796BF       loc_47A6BF
  0001:000796E2       loc_47A6E2
@@ -10985,7 +10985,7 @@
  0001:000797AE       loc_47A7AE
  0001:000797D5       loc_47A7D5
  0001:000797D9       off_47A7D9
- 0001:00079800       Balfrog_Sub_NPC_2
+ 0001:00079800       balfrogSubNPC2
  0001:00079829       loc_47A829
  0001:00079879       loc_47A879
  0001:00079890       loc_47A890
@@ -11029,14 +11029,14 @@
  0001:0007A409       loc_47B409
  0001:0007A40B       loc_47B40B
  0001:0007A43D       loc_47B43D
- 0001:0007A450       Init_Boss_Life
- 0001:0007A460       Start_Boss_Life
+ 0001:0007A450       initBossLife
+ 0001:0007A460       startBossLife
  0001:0007A46B       loc_47B46B
  0001:0007A493       loc_47B493
  0001:0007A4A0       loc_47B4A0
  0001:0007A4ED       loc_47B4ED
- 0001:0007A500       Start_Boss_Life_2
- 0001:0007A540       Draw_Boss_Health
+ 0001:0007A500       startBossLife2
+ 0001:0007A540       drawBossHealth
  0001:0007A5E0       loc_47B5E0
  0001:0007A5F9       loc_47B5F9
  0001:0007A647       loc_47B647
@@ -11280,7 +11280,7 @@
  0001:0007D601       loc_47E601
  0001:0007D605       off_47E605
  0001:0007D61D       byte_47E61D
- 0001:0007D6F0       Boss_3_Monster_X
+ 0001:0007D6F0       boss3_MonsterX
  0001:0007D749       loc_47E749
  0001:0007D773       loc_47E773
  0001:0007D7B0       loc_47E7B0
@@ -11359,7 +11359,7 @@
  0001:0007E5BD       byte_47F5BD
  0001:0007E686       off_47F686
  0001:0007E69E       byte_47F69E
- 0001:0007E710       Monster_X_Sub_NPC_1
+ 0001:0007E710       monsterXSubNPC1
  0001:0007E8F4       loc_47F8F4
  0001:0007E92A       loc_47F92A
  0001:0007E94A       loc_47F94A
@@ -11406,7 +11406,7 @@
  0001:0007EEEC       byte_47FEEC
  0001:0007EFAB       off_47FFAB
  0001:0007EFC7       byte_47FFC7
- 0001:0007F090       Monster_X_Sub_NPC_Fish_Missiles
+ 0001:0007F090       monsterXSubNPCFishMissiles
  0001:0007F120       loc_480120
  0001:0007F13C       loc_48013C
  0001:0007F159       loc_480159
@@ -11417,7 +11417,7 @@
  0001:0007F1CC       loc_4801CC
  0001:0007F212       loc_480212
  0001:0007F286       off_480286
- 0001:0007F2A0       Monster_X_Sub_NPC_3
+ 0001:0007F2A0       monsterXSubNPC3
  0001:0007F2D3       loc_4802D3
  0001:0007F32C       loc_48032C
  0001:0007F331       loc_480331
@@ -11430,7 +11430,7 @@
  0001:0007F515       loc_480515
  0001:0007F519       off_480519
  0001:0007F52D       byte_48052D
- 0001:0007F550       Monster_X_Sub_NPC_4
+ 0001:0007F550       monsterXSubNPC4
  0001:0007F66B       loc_48066B
  0001:0007F68B       loc_48068B
  0001:0007F6B8       loc_4806B8
@@ -11445,7 +11445,7 @@
  0001:0007F852       loc_480852
  0001:0007F874       loc_480874
  0001:0007F8AD       off_4808AD
- 0001:0007F8C0       Monster_X_Sub_NPC_Head
+ 0001:0007F8C0       monsterXSubNPCHead
  0001:0007F93A       loc_48093A
  0001:0007F95A       loc_48095A
  0001:0007F987       loc_480987
@@ -13611,7 +13611,7 @@
  0002:000002BC       aVersion_D_D_D_
  0002:000002FC       String
  0002:00000304       aSS_pbm_0
- 0002:00000310       aSurfaceNo
+ 0002:00000310       Error_String
  0002:0000031C       aExisting
  0002:00000328       aSS_pbm_1
  0002:00000334       aSurfaceNo_0
@@ -13685,7 +13685,7 @@
  0002:000005BC       src
  0002:000005C4       aS_reverse
  0002:000005D0       CursorName
- 0002:000005E0       Icon_Name
+ 0002:000005E0       iconName
  0002:000005E4       IconName
  0002:000005F0       aMenu_main
  0002:000005FC       name
@@ -14394,31 +14394,19 @@
  0003:0000002C       asc_48F02C
  0003:00000030       asc_48F030
  0003:00000034       asc_48F034
- 0003:00000040       Weapon_Icon_X_Offset
- 0003:00000048       Weapon_Data_Damage
- 0003:00000049       Weapon_Data_Num_Impacts
- 0003:0000004C       Weapon_Data_Max_Distance
- 0003:00000050       Weapon_Data_Behaviour_Flags
- 0003:00000054       Weapon_Data_Bullet_Size_Width
- 0003:00000058       Weapon_Data_Bullet_Size_Height
- 0003:0000005C       Weapon_Data_Wall_Collision_X
- 0003:00000060       Weapon_Data_Wall_Collision_Y
- 0003:00000064       Weapon_Data_Pos_Offset_Left
- 0003:00000068       Weapon_Data_Pos_Offset_Up
- 0003:0000006C       Weapon_Data_Pos_Offset_Right
- 0003:00000070       Weapon_Data_Pos_Offset_Down
+ 0003:00000040       weaponIconXOffset
+ 0003:00000048       weaponDataDamage
  0003:00000180       aD_0
  0003:000001AC       aD_1
  0003:000001D8       aD_2
- 0003:00000830       Effect_Table_View_Left
- 0003:00000834       Effect_Table_View_Top
- 0003:000008C0       Effect_Function_Table
+ 0003:00000830       effectDataViewLeft
+ 0003:000008C0       effectFunctionTable
  0003:00000908       DOUKUTSU20041206
- 0003:0000090C       Config_dat
- 0003:00000910       oVersion_Thingy
- 0003:00000914       GraphicScale
+ 0003:0000090C       configDat
+ 0003:00000910       versionString
+ 0003:00000914       graphicScale
  0003:00000918       off_48F918
- 0003:0000091C       Rect_Game
+ 0003:0000091C       gameRect
  0003:00000924       RenderWidth
  0003:00000928       RenderHeight
  0003:0000092C       rect
@@ -14511,37 +14499,37 @@
  0003:000044C0       dword_4934C0
  0003:00004530       dword_493530
  0003:000045A0       dword_4935A0
- 0003:00004610       Key_Jump
- 0003:00004614       Key_Shoot
- 0003:00004618       Key_For_Next_Weapon
- 0003:0000461C       Key_For_Prev_Weapon
- 0003:00004620       Key_For_Menu
- 0003:00004624       Key_For_Minimap
- 0003:00004628       Key_Ok
- 0003:0000462C       Key_Cancel
- 0003:00004630       Key_Left
- 0003:00004634       Key_Up
- 0003:00004638       Key_Right
- 0003:0000463C       Key_Down
- 0003:00004640       Window_Name
+ 0003:00004610       keyJump
+ 0003:00004614       keyShoot
+ 0003:00004618       keyNextWeapon
+ 0003:0000461C       keyPreviousWeapon
+ 0003:00004620       keyMenu
+ 0003:00004624       keyForMap
+ 0003:00004628       keyOk
+ 0003:0000462C       keyCancel
+ 0003:00004630       keyLeft
+ 0003:00004634       keyUp
+ 0003:00004638       keyRight
+ 0003:0000463C       keyDown
+ 0003:00004640       windowName
  0003:00004644       dword_493644
- 0003:00004648       oDoukutsu
+ 0003:00004648       pDoukutsu
  0003:0000464C       PXM
  0003:00004650       stru_493650
  0003:00004660       Weapon_Level_Table
  0003:00004708       oct_wave
  0003:00004738       format_tbl2
- 0003:0000474C       freq_tbl
- 0003:00004764       pan_tbl
+ 0003:0000474C       frequencyTable
+ 0003:00004764       panTable
  0003:00004780       old_key
  0003:00004790       buf2
  0003:00004798       aOrg02
  0003:000047A0       ExactTime
- 0003:000047A4       Volume
- 0003:000047A8       Default_Name
- 0003:000047AC       offset_Profile_dat_check
- 0003:000047B0       Map_Headers
- 0003:000091E8       off_4981E8
+ 0003:000047A4       musicVolume
+ 0003:000047A8       defaultProfileName
+ 0003:000047AC       pProfileCheck
+ 0003:000047B0       mapHeaders
+ 0003:000091E8       songNames
  0003:00009290       unk_498290
  0003:00009298       unk_498298
  0003:0000929C       unk_49829C
@@ -14618,50 +14606,50 @@
  0003:0000A800       dbl_499800
  0003:0000A880       asc_499880
  0003:0000A9E0       byte_4999E0
- 0003:0000AB3C       Quote_Inventory_minus_1
- 0003:0000AB40       Quote_Inventory
- 0003:0000ABC0       Inventory_Active
- 0003:0000ABC4       Inventory_Label_Position
- 0003:0000ABC8       Weapons
- 0003:0000AC68       Selected_Weapon
- 0003:0000AC6C       Selected_Item
- 0003:0000AC70       MenuRectFlash
- 0003:0000AC74       Current_Background
- 0003:0000AC90       GlobalWaterDepth
+ 0003:0000AB3C       quoteInventoryMinus1
+ 0003:0000AB40       quoteInventory
+ 0003:0000ABC0       inventoryActive
+ 0003:0000ABC4       inventoryLabelPosition
+ 0003:0000ABC8       gWeapons
+ 0003:0000AC68       selectedWeapon
+ 0003:0000AC6C       selectedItem
+ 0003:0000AC70       menuRectFlash
+ 0003:0000AC74       currentBackground
+ 0003:0000AC90       globalWaterDepth
  0003:0000AC94       _color_black
- 0003:0000AC98       Bullet_Objects
+ 0003:0000AC98       bulletObjects
  0003:0000CC98       dword_49BC98
  0003:0000CC9C       dword_49BC9C
  0003:0000CCA0       dword_49BCA0
- 0003:0000CCA8       Effect_Objects
- 0003:0000DDA8       Screen_Offset_X
- 0003:0000DDAC       Screen_Offset_Y
- 0003:0000DDB0       Window_Idk
- 0003:0000DDC0       IsFullScreen
- 0003:0000DDC4       Clip_List_Maybe
- 0003:0000DDC8       Names_Thingy
+ 0003:0000CCA8       effectObjects
+ 0003:0000DDA8       screenOffsetX
+ 0003:0000DDAC       screenOffsetY
+ 0003:0000DDB0       windowIdk
+ 0003:0000DDC0       directDrawIsFullscreen
+ 0003:0000DDC4       clipListMaybe
+ 0003:0000DDC8       namesThingy
  0003:0000DDDC       dword_49CDDC
  0003:0000DDE0       dword_49CDE0
  0003:0000DDE4       dword_49CDE4
  0003:0000DDE8       dword_49CDE8
- 0003:0000E368       Font_Handle
- 0003:0000E374       Fullscreen_Surface_Height
- 0003:0000E378       Window_Surface_Width
- 0003:0000E37C       Direct_Draw_Obj
- 0003:0000E380       DD7_Final_Screen_Surface
- 0003:0000E384       DD7_Screen_Surface
- 0003:0000E388       Image_Res_Surface
+ 0003:0000E368       fontHandle
+ 0003:0000E374       fullscreenSurfaceHeight
+ 0003:0000E378       windowSurfaceWidth
+ 0003:0000E37C       directDrawObject
+ 0003:0000E380       directDrawFinalScreenSurface
+ 0003:0000E384       directDrawScreenSurface
+ 0003:0000E388       imageResSurface
  0003:0000E398       DD7_SurfaceB_Blt
  0003:0000E3C8       DD7_SurfaceB_GetDC
  0003:0000E3E8       DD7_SurfaceB_Lock
  0003:0000E3EC       DD7_SurfaceB_ReleaseDC
- 0003:0000E428       Final_Screen_Dist_Rects
- 0003:0000E438       Previous_Tick_Count
- 0003:0000E43C       Current_Tick_Count
+ 0003:0000E428       finalScreenDistRects
+ 0003:0000E438       previousTickCount
+ 0003:0000E43C       currentTickCount
  0003:0000E440       RECT_ScreenCopy
  0003:0000E450       DDBLTFX_ScreenCopy
- 0003:0000E4B4       Final_Dst_Rect_1
- 0003:0000E4C4       rcWork
+ 0003:0000E4B4       finalDestinationRect1
+ 0003:0000E4C4       rectWork
  0003:0000E4D4       Final_Dst_Rect_2
  0003:0000E4E4       Final_Src_Rect_2
  0003:0000E4F4       Final_Dst_Rect_3
@@ -14672,19 +14660,19 @@
  0003:0000E58C       Final_Dst_Rect_5
  0003:0000E5A0       Draw_Colour_Fill_Onto_Surface_DDBLTFX
  0003:0000E5F0       Draw_Colour_Fill_Onto_Surface_DDBLTFX_dxFillColor
- 0003:0000E608       Credit_Pic
- 0003:0000E610       Credit_Script
- 0003:0000E628       Text_Object_Array
+ 0003:0000E608       creditPicture
+ 0003:0000E610       creditScript
+ 0003:0000E628       textObjectArray
  0003:0000EB28       Mask_Color
- 0003:0000EB30       Fade_Obj
- 0003:0000ED98       SkipFlags
- 0003:0000EDA0       Event_Flags
+ 0003:0000EB30       fadeObject
+ 0003:0000ED98       skipFlags
+ 0003:0000EDA0       eventFlags
  0003:0000F188       Flash
  0003:0000F1C4       FlashColor
- 0003:0000F1C8       Camera
- 0003:0000F1E4       CursorPosition
- 0003:0000F1E8       Game_Flags
- 0003:0000F1EC       GameTime
+ 0003:0000F1C8       gCamera
+ 0003:0000F1E4       cursorPosition
+ 0003:0000F1E8       gameFlags
+ 0003:0000F1EC       gameTime
  0003:0000F1F0       DirectInputObj
  0003:0000F1F4       dword_49E1F4
  0003:0000F1F8       dword_49E1F8
@@ -14693,38 +14681,38 @@
  0003:0000F204       dword_49E204
  0003:0000F208       dword_49E208
  0003:0000F20C       dword_49E20C
- 0003:0000F210       Key_Held
- 0003:0000F214       Key_Pressed
- 0003:0000F218       LastKeyHeld
+ 0003:0000F210       keyHeld
+ 0003:0000F214       keyPressed
+ 0003:0000F218       lastKeyHeld
  0003:0000F220       dataPath
- 0003:0000F328       ExePath
- 0003:0000F42C       Joystick_Button_Table
- 0003:0000F44C       AppInstance
- 0003:0000F450       Window_Width
- 0003:0000F454       Window_Height
- 0003:0000F458       AppWinHandle
- 0003:0000F45C       Use_Joystick
- 0003:0000F460       Is_Fullscreen
- 0003:0000F464       FPS_Counter_Enabled
- 0003:0000F468       CanAcceptInput
+ 0003:0000F328       exePath
+ 0003:0000F42C       joystickButtonTable
+ 0003:0000F44C       appInstance
+ 0003:0000F450       windowWidth
+ 0003:0000F454       windowHeight
+ 0003:0000F458       appWinHandle
+ 0003:0000F45C       useJoystick
+ 0003:0000F460       isFullscreen
+ 0003:0000F464       FPSCounterEnabled
+ 0003:0000F468       canAcceptInput
  0003:0000F46C       Timer1000Time
  0003:0000F470       Timer1000Elapsed
  0003:0000F474       Timer1000Ticks
  0003:0000F478       hMutex
  0003:0000F47C       hObject
- 0003:0000F480       Current_Map
+ 0003:0000F480       currentMap
  0003:0000F58C       Draw_Map_Data_Vector__count
  0003:0000F590       Map_Name
- 0003:0000F5B8       Map_Flag_Array
- 0003:0000F638       Quote
+ 0003:0000F5B8       mapFlagArray
+ 0003:0000F638       quote
  0003:0000F6EC       Noise_Num
  0003:0000F6F0       Noise_Frequency
  0003:0000F6F4       Nikumaru_Counter
  0003:0000F6F8       byte_49E6F8
  0003:0000F700       wave_data
- 0003:00015B00       Play_Position
+ 0003:00015B00       playPosition
  0003:00015B08       np
- 0003:00015B48       lpORGANBUFFER
+ 0003:00015B48       organBuffer
  0003:00015D48       mute
  0003:00015D88       key_on
  0003:00015D98       key_twin
@@ -14732,8 +14720,8 @@
  0003:00015DAC       IsTimerActive
  0003:00015DB0       Note_Lengths
  0003:00015DD0       Track_Volume
- 0003:00015E10       Music_Fade_Flag_Maybe
- 0003:00015E18       Music_Object
+ 0003:00015E10       musicFadeFlagMaybe
+ 0003:00015E18       orgDataObject
  0003:00015F00       byte_4A4F00
  0003:00015F01       asc_4A4F01
  0003:00016100       byte_4A5100
@@ -14742,61 +14730,61 @@
  0003:00016400       byte_4A5400
  0003:000164F8       dword_4A54F8
  0003:000164FC       dword_4A54FC
- 0003:00016500       Unlocked_Stages
- 0003:00016540       Y_Position_Teleporter
- 0003:00016544       Selected_Stage
+ 0003:00016500       unlockedStages
+ 0003:00016540       teleporterYPos
+ 0003:00016544       selectedSurface
  0003:00016548       dword_4A5548
- 0003:0001654C       Empty_Effect_Timer
+ 0003:0001654C       emptyEffectTimer
  0003:00016550       dword_4A5550
  0003:00016554       Machine_Gun_Reload_Timer
  0003:00016558       Bubbler_Lvl_1_Refill_Timer
  0003:0001655C       dword_4A555C
  0003:00016560       dword_4A5560
  0003:00016564       dword_4A5564
- 0003:00016568       lpSECONDARYBUFFER
- 0003:000167C0       lpDRAMBUFFER
+ 0003:00016568       secondaryBuffer
+ 0003:000167C0       drumBuffer
  0003:000167E8       lpDS
  0003:000167EC       lpPRIMARYBUFFER
- 0003:000167F0       Current_Stage_Num
- 0003:000167F4       Current_Song_Number
- 0003:000167F8       Old_Song_Pos
- 0003:000167FC       Old_Song_Number
- 0003:00016800       Whimsical_Star
+ 0003:000167F0       currentStageNumber
+ 0003:000167F4       currentSongNumber
+ 0003:000167F8       oldSongPosition
+ 0003:000167FC       oldSongNumber
+ 0003:00016800       whimsicalStars
  0003:000168CC       CurrentStarID
  0003:000168D0       textBuffer
  0003:00016AD4       size
  0003:00016AD8       scriptBuffer
  0003:00016ADC       byte_4A5ADC
  0003:00016ADD       byte_4A5ADD
- 0003:00016AE0       Script_Pos
- 0003:00016AE4       TextColumn
+ 0003:00016AE0       scriptPosition
+ 0003:00016AE4       textColumn
  0003:00016AE8       dword_4A5AE8
  0003:00016AEC       dword_4A5AEC
  0003:00016AFC       dword_4A5AFC
  0003:00016B00       dword_4A5B00
  0003:00016B04       dword_4A5B04
  0003:00016B08       byte_4A5B08
- 0003:00016B0C       Face_Num
+ 0003:00016B0C       faceNumber
  0003:00016B10       dword_4A5B10
  0003:00016B14       dword_4A5B14
- 0003:00016B18       YPos
+ 0003:00016B18       textBoxRelatedYPos
  0003:00016B1C       rcView
  0003:00016B2C       dword_4A5B2C
  0003:00016B30       byte_4A5B30
- 0003:00016B34       NumberTextScript
- 0003:00016B48       Sin_Table
+ 0003:00016B34       numberTextScript
+ 0003:00016B48       sinTable
  0003:00016F48       gTan
- 0003:00016F90       Event_Index
- 0003:00016F98       Event_InUse
- 0003:00016F9C       Event_Collision
- 0003:00016FA0       Event_X_Position
- 0003:00016FA4       Event_Y_Position
- 0003:00016FA8       Event_X_Velocity
- 0003:00016FAC       Event_Y_Velocity
- 0003:00016FB0       Event_AltVel_X
- 0003:00016FB4       Event_AltVel_Y
- 0003:00016FB8       Event_Unknown1
- 0003:00016FBC       Event_Unknown2
+ 0003:00016F90       eventIndex
+ 0003:00016F98       eventInUse
+ 0003:00016F9C       eventCollision
+ 0003:00016FA0       eventXPos
+ 0003:00016FA4       eventYPos
+ 0003:00016FA8       eventXVel
+ 0003:00016FAC       eventYVel
+ 0003:00016FB0       eventAltXVel
+ 0003:00016FB4       eventAltYVel
+ 0003:00016FB8       eventUnknown1
+ 0003:00016FBC       eventUnknown2
  0003:00016FC0       Event_NPCID
  0003:00016FC4       Event_EntityID
  0003:00016FC8       Event_EventNum
@@ -14825,23 +14813,23 @@
  0003:0001703C       Event_Damage
  0003:00017040       Event_Parent
  0003:00017218       dword_4A6218
- 0003:00017220       NPC_Objects
- 0003:0002CA20       Curly_Shoot_Wait
- 0003:0002CA24       Curly_Shoot_X
- 0003:0002CA28       Curly_Shoot_Y
- 0003:0002CA2C       Super_X_Pos
- 0003:0002CA30       Super_Y_Pos
- 0003:0002CA34       NPC_Table
+ 0003:00017220       NPCObjects
+ 0003:0002CA20       curlyShootWait
+ 0003:0002CA24       curlyShootX
+ 0003:0002CA28       curlyShootY
+ 0003:0002CA2C       superXPos
+ 0003:0002CA30       superYPos
+ 0003:0002CA34       NPCTable
  0003:0002CA36       NPCStruct_Health
  0003:0002CA38       NPCStruct_Tileset
- 0003:0002CA39       NPCStruct_DeathSnd
+ 0003:0002CA39       npcStructDeathSound
  0003:0002CA3A       NPCStruct_HurtSnd
  0003:0002CA3B       NPCStruct_DeathAnim
- 0003:0002CA3C       NPCStruct_Exp
- 0003:0002CA40       NPCStruct_Damage
+ 0003:0002CA3C       NPCStructExp
+ 0003:0002CA40       NPCStructDamage
  0003:0002CA41       byte_4BBA41
- 0003:0002CA44       Boss_Thing
- 0003:0002CA58       Boss_Objects
+ 0003:0002CA44       bossThing
+ 0003:0002CA58       bossObjects
  0003:0002D7C8       byte_4BC7C8
  0003:0002D7C9       byte_4BC7C9
  0003:0002D7CC       dword_4BC7CC
