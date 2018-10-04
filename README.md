@@ -1,7 +1,9 @@
 # Cave-Story-Decompilation
-Decompilation of Cave Story. Can be opened with IDA Pro (freeware version).
+Decompilation of Cave Story. Can be opened with IDA Pro (freeware and pro version).
 
 This decompilation aims to make the code easily understandable.
+
+Also, this repo is basically dead, the recompilation is being done at https://github.com/GabrielRavier/CaveStoryRemake.
 
 Get IDA Freeware here : https://www.hex-rays.com/products/ida/support/download_freeware.shtml
 
